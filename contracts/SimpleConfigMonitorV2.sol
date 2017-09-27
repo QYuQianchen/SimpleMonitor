@@ -253,7 +253,7 @@ contract SimpleConfigMonitorV2 {
   }
 
   // I did not like the comment so I deleted and commented it...
-
+  // Another try
   /*
   function EnergyTransaction(uint fromCheckA, uint fromCheckB, uint toCheckA, uint toCheckB, uint vol){
     if (fromCheckA == 0){
