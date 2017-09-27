@@ -252,7 +252,7 @@ contract SimpleConfigMonitorV2 {
      }
   }
 
-  
+  // Im a comment
 
   /*
   function EnergyTransaction(uint fromCheckA, uint fromCheckB, uint toCheckA, uint toCheckB, uint vol){
