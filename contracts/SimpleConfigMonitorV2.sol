@@ -63,12 +63,12 @@ contract SimpleConfigMonitorV2 {
     houseArray[1].statusAt = statusAt;
     houseArray[2].statusAt = statusAt;
     batteryArray[0].statusAt = statusAt;
-  
+
   }
 
   function systemConfiguration(address adr0, address adr1, address adr2, address adr3, address adr4, address adr5) {
     // linke accounts to devices/households
-    
+
      /*pvMapping[adr0] = pvArray[0];
     pvMapping[adr1] = pvArray[1];
     houseMapping[adr2] = houseArray[0];
@@ -83,7 +83,7 @@ contract SimpleConfigMonitorV2 {
     houseArray[1].houseAddress = adr3;
     houseArray[2].houseAddress = adr4;
     batteryArray[0].batteryAddress = adr5;
-    
+
 
     // connect the system into pre-defined configuration
     pvArray[0].connectedHouse.length = 1;
@@ -148,7 +148,7 @@ contract SimpleConfigMonitorV2 {
     } else {
       return 9;
     }*/
-    
+
     if (pvArray[0].pvAddress == adr) {
       a = 0;
       b = 0;
@@ -199,7 +199,7 @@ contract SimpleConfigMonitorV2 {
     bool possibleToReceive;
     var (fromCheckA,fromCheckB) = checkInMapping(from_adr);
     var (toCheckA,toCheckB) = checkInMapping(to_adr);
-    
+
     // Sender's side
     if (fromCheckA == 0 && pvArray[fromCheckB].production >= vol) {
       // When from PV, enough production
@@ -217,7 +217,7 @@ contract SimpleConfigMonitorV2 {
       // When to battery, enough reserve
       possibleToReceive = true;
     }
-      
+
     // All together
     if (checkInConnection(from_adr,to_adr) && possibleToSend && possibleToReceive) {
       // Trigger the event EnergyTransaction
@@ -238,7 +238,7 @@ contract SimpleConfigMonitorV2 {
     //   return false;
     }
   }
-  
+
   function reducedStatus(uint8 arg, uint8 num, uint8 vol) returns (uint) {
      if (arg == uint8(deviceType.PVpannel)) {
        pvArray[num].production -= vol;
@@ -252,7 +252,7 @@ contract SimpleConfigMonitorV2 {
      }
   }
 
-  // Im a comment
+  // I did not like the comment so I deleted and commented it...
 
   /*
   function EnergyTransaction(uint fromCheckA, uint fromCheckB, uint toCheckA, uint toCheckB, uint vol){
@@ -267,5 +267,5 @@ contract SimpleConfigMonitorV2 {
       batteryArray[toCheckB].currentVolume += vol;
     }
   }*/
-  
+
 }
