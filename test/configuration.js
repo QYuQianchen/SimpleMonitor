@@ -14,15 +14,13 @@ contract('Configuration', function(accounts) {
       configuration = instance;
       configuration.addHouse(address_H0,3);
       configuration.addPV(address_PV0,-5);
-      return configuration.checkHouseAddress.call(address_H0);
+      return configuration.checkPVAdr.call(address_PV0);
     }).then(function(result){
-      console.log("checkHouseAddress",result);
+      console.log("checkPVAddress",result);
+      //configuration.linkHousePV(address_H0,address_PV0);
       return configuration.getPVConnection.call(address_PV0);
     }).then(function(result){
       console.log("PV0's connection (should be 0,0)",result[0].toNumber(),result[1].toNumber());
-      return configuration.checkHouseAddress.call(address_H0);
-    }).then(function(result){
-      console.log("checkHouseAddress",result);
     //  configuration.linkHousePV(address_H0,address_PV0);
     //  return configuration.getPVConnection.call(address_PV0);
     //}).then(function(result){

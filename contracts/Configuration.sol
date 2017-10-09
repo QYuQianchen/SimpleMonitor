@@ -100,8 +100,17 @@ contract Configuration {
   }
 
     // test functions
-    function checkHouseAddress(address adrHouse) returns (uint) {
+    function checkHouseCon(address adrHouse) returns (uint) {
         return (Houses[adrHouse].consumption);
+    }
+    function checkHouseAdr(address adrHouse) returns (address) {
+        return (Houses[adrHouse].Address);
+    }
+    function checkPVPro(address adrPV) returns (int) {
+        return (PVs[adrPV].production);
+    }
+    function checkPVAdr(address adrPV) returns (address) {
+        return (PVs[adrPV].Address);
     }
 
   function linkHousePV(address adrHouse, address adrPV) {
