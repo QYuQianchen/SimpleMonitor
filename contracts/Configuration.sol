@@ -119,7 +119,7 @@ contract Configuration {
   function linkHousePV(address adrHouse, address adrPV) {
       require(Houses[adrHouse].Address != 0x0); //  "Error: House does not exist!"
       require(PVs[adrPV].Address != 0x0); //  "Error: PV does not exist!"
-      require(Houses[adrHouse].connectedPV[adrPV].Address == 0x0); //  "Error: Already connected!"
+      require(Houses[adrHouse].connectedPV[adrPV].Address == address(0)); //  "Error: Already connected!"
       Houses[adrHouse].connectedPV[adrPV] = PVs[adrPV];
       PVs[adrPV].connectedHouse.push(adrHouse);
       LogConnection(adrHouse,adrPV);

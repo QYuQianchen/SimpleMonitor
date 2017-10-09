@@ -17,10 +17,10 @@ contract('Configuration', function(accounts) {
       return configuration.checkHousePVConnection.call(address_H0,address_PV0);
     }).then(function(result){
       console.log("checkHousePVConnection",result);
-      //configuration.linkHousePV(address_H0,address_PV0);
+      configuration.linkHousePV(address_H0,address_PV0);
       return configuration.getPVConnection.call(address_PV0);
     }).then(function(result){
-      console.log("PV0's connection (should be 0,0)",result[0].toNumber(),result[1].toNumber());
+      console.log("PV0's connection (should be 1,0)",result[0].toNumber(),result[1].toNumber());
     //  configuration.linkHousePV(address_H0,address_PV0);
     //  return configuration.getPVConnection.call(address_PV0);
     //}).then(function(result){
