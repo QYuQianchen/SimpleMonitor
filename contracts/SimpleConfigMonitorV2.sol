@@ -19,11 +19,13 @@ contract SimpleConfigMonitorV2 {
 
   struct House {
     address houseAddress;
-    string  name;             // name of the device
+    string  name;             // name of the house
     uint    consumption;      // Production of electricity
     uint    statusAt;         // timestamp of the update
     address[] connectedPV;    // List of households connected
     address[] connectedBattery;// List of batteries connected
+    //mapping(address=>PVpannel) connectedPV;       // List of PV connected
+    //mapping(address=>Battery) connectedBattery;   // List of batteries connected
   }
 
   struct Battery {
@@ -36,12 +38,9 @@ contract SimpleConfigMonitorV2 {
     address[] connectedPV;// List of batteries connected
   }
 
-  mapping(address=>PVpannel) pvMapping;
-  mapping(address=>House) houseMapping;
-  mapping(address=>Battery) batteryMapping;
-
   enum deviceType {PVpannel,House,Battery}
 
+  mapping(address=>House) Houses;
   House[3] public houseArray;
   PVpannel[2] public pvArray;
   Battery[1] public batteryArray;
@@ -224,15 +223,16 @@ contract SimpleConfigMonitorV2 {
       // event EnergyTransaction ({from: from, to: to, value: value, timestamp:statusAt})
       //EnergyTransaction(fromCheckA,fromCheckB,toCheckA,toCheckB,vol);
       if (fromCheckA == 0){
-          pvArray[fromCheckB].production -= vol;
-        } else if (fromCheckA == 2) {
-          batteryArray[fromCheckB].currentVolume -= vol;
-        }
-        if (toCheckA == 1){
-          houseArray[toCheckB].consumption -= vol;
-        } else if (toCheckA == 2) {
-          batteryArray[toCheckB].currentVolume += vol;
-        }
+        pvArray[fromCheckB].production -= vol;
+      } else if (fromCheckA == 2) {
+        batteryArray[fromCheckB].currentVolume -= vol;
+      }
+      if (toCheckA == 1){
+        houseArray[toCheckB].consumption -= vol;
+      } else if (toCheckA == 2) {
+        batteryArray[toCheckB].currentVolume += vol;
+      }
+      LogEnergyTransact(from_adr,to_adr,vol);
        //return true;
     // } else {
     //   return false;
@@ -251,6 +251,9 @@ contract SimpleConfigMonitorV2 {
        return batteryArray[num].currentVolume;
      }
   }
+
+  event LogEnergyTransact(address from_adr,address to_adr, uint amount);
+  event LogFinanceTransact(address from_adr,address to_adr, uint amount);
 
   // I did not like the comment so I deleted and commented it...
   // Another try
