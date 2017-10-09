@@ -14,9 +14,9 @@ contract('Configuration', function(accounts) {
       configuration = instance;
       configuration.addHouse(address_H0,3);
       configuration.addPV(address_PV0,-5);
-      return configuration.checkPVAdr.call(address_PV0);
+      return configuration.checkHousePVConnection.call(address_H0,address_PV0);
     }).then(function(result){
-      console.log("checkPVAddress",result);
+      console.log("checkHousePVConnection",result);
       //configuration.linkHousePV(address_H0,address_PV0);
       return configuration.getPVConnection.call(address_PV0);
     }).then(function(result){
