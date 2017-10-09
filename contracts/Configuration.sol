@@ -6,9 +6,9 @@ contract Configuration {
   uint8 public numHouseTotal;       // number of houses in the system
   uint8 public numPVTotal;          // number of PVs in the system
   uint8 public numBatteryTotal;     // number of batteries in the system
-  uint8 private numHouseCurrent;    // current houses in the system
-  uint8 private numPVCurrent;       // current PVs in the system
-  uint8 private numBatteryCurrent;    // current batteries in the system
+  uint8 private numHouseCurrent = 0;    // current houses in the system
+  uint8 private numPVCurrent = 0;       // current PVs in the system
+  uint8 private numBatteryCurrent = 0;    // current batteries in the system
 
   enum deviceType {PVpannel,House,Battery}
 
@@ -100,6 +100,7 @@ contract Configuration {
   }
 
     // test functions
+    /*
     function checkHouseCon(address adrHouse) returns (uint) {
         return (Houses[adrHouse].consumption);
     }
@@ -114,7 +115,7 @@ contract Configuration {
     }
     function checkHousePVConnection(address adrHouse, address adrPV) returns (address) {
         return (Houses[adrHouse].connectedPV[adrPV].Address);
-    }
+    }*/
 
   function linkHousePV(address adrHouse, address adrPV) {
       require(Houses[adrHouse].Address != 0x0); //  "Error: House does not exist!"

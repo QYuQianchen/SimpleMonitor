@@ -11,5 +11,5 @@ module.exports = function(deployer) {
   //deployer.deploy(MultiNumberBettingV2,2,3,4);  // Change the name to the new file
   //deployer.deploy(SimpleConfigMonitorV1,5,10,3,3,8,5); 
   //deployer.deploy(SimpleConfigMonitorV2,5,10,3,3,8,5);
-  deployer.deploy(Configuration,2,3,1);  
+  deployer.deploy(Configuration,3,3,1);  
 };
