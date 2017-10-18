@@ -1322,8 +1322,71 @@
       "links": {},
       "address": "0x39621158cf3fbd80736a35302dc41a7bf36d6eec",
       "updated_at": 1507909740886
+    },
+    "1507916809496": {
+      "events": {
+        "0x2f3512603ca90996b9ddcd6b28a9c368ecc39a291377875368438314d3c6c1c6": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "numHouses",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "numPV",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "numBattery",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "statusat",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogConfig",
+          "type": "event"
+        },
+        "0x65c506643f4516f3ef335c5dd71017b8e849268cd860c3235c7db2c62fd8e93b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "deviceAdr",
+              "type": "address"
+            }
+          ],
+          "name": "LogDevice",
+          "type": "event"
+        },
+        "0x2defa27bb08b7ca89bc5fb146b34db072eccd285461d98ae368b88088a6cb8ec": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "device1",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "device2",
+              "type": "address"
+            }
+          ],
+          "name": "LogConnection",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xc2aeb84d612c0439d8cd9d1c1013b3ef2c965c96",
+      "updated_at": 1507916820033
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1507912368787
+  "updated_at": 1507916820033
 }

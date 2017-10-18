@@ -40,7 +40,10 @@ contract('Configuration and ElecTransac', function(accounts) {
       //console.log("PV0's connection (should be 1,1)",result[0].toNumber(),result[1].toNumber());
       //return elecTransac.checkAvailability.call(address_PV1, address_H2,7,configuration.address);
       //return elecTransac.checkAvailability.call(address_PV1,address_H2,7,configuration.address);
-      elecTransac.changeStatus(address_PV1, address_H2,7,configuration.address);
+      
+      elecTransac.elecTransaction(address_PV1, address_H2,7,configuration.address, {from:address_PV1});
+      //elecTransac.elecTransaction(address_PV1, address_H2,7,configuration.address);
+      
       //return elecTransac.changeStatus.call(address_PV1, address_H2,7,configuration.address);
       //elecTransac.elecTransaction(address_PV1, address_H2,7,configuration.address);
       return configuration.checkPVPro.call(address_PV1);
