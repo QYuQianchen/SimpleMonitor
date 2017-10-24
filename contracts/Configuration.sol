@@ -16,7 +16,7 @@ contract Configuration {
   // Several types of devices in the system
   struct House {
     address Address;
-    string  name;             // name of the house
+    bytes32  name;             // name of the house
     uint    consumption;      // Production of electricity (consumption: positive)
     uint    statusAt;         // timestamp of the update
     //address[] connectedPV;    // List of PV connected
@@ -27,7 +27,7 @@ contract Configuration {
 
   struct PVpannel {
     address Address;
-    string  name;             // name of the device (Serie No.)
+    bytes32  name;             // name of the device (Serie No.)
     uint    production;        // Production of electricity (supply: negative)
     uint    statusAt;         // timestamp of the update
     address[] connectedHouse; // List of households connected
@@ -36,7 +36,7 @@ contract Configuration {
 
   struct Battery {
     address Address;
-    string  name;             // name of the device (Serie No.)
+    bytes32  name;             // name of the device (Serie No.)
     uint    capacity;         // Production of electricity
     uint    currentVolume;    // Production of electricity
     uint    statusAt;         // timestamp of the update
@@ -78,6 +78,8 @@ contract Configuration {
   }
 
   function addHouse(address adr, uint consum) ownerOnly {
+      // add only the contract address inside.
+      // uint consum should be added later inside the contract HOUSE
       require(numHouseCurrent < numHouseTotal);// "Error: House number maximun. Cannot add more houses."
       House memory tempHouse;
       tempHouse.Address = adr;
@@ -90,6 +92,7 @@ contract Configuration {
 
   function addPV(address adr, uint produc) ownerOnly {
       require(numPVCurrent < numPVTotal); //"Error: House number maximun. Cannot add more houses."
+      // create a PV contract instead of creating a new PV struct. Or, at the same time.
       PVpannel memory tempPV;
       tempPV.Address = adr;
       tempPV.production = produc;
