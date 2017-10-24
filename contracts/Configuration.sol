@@ -28,8 +28,8 @@ contract Configuration {
   struct PVpannel {
     address Address;
     bytes32  name;             // name of the device (Serie No.)
-    uint    production;        // Production of electricity (supply: negative)
-    uint    statusAt;         // timestamp of the update
+    uint    production;        // Production of electricity (supply: negative) -> tbd
+    uint    statusAt;         // creation time
     address[] connectedHouse; // List of households connected
     address[] connectedBattery;// List of batteries connected
   }
@@ -84,7 +84,7 @@ contract Configuration {
       House memory tempHouse;
       tempHouse.Address = adr;
       tempHouse.consumption = consum;
-      tempHouse.statusAt = statusAt;
+      tempHouse.statusAt = statusAt;    // creation time
       Houses[adr] = tempHouse;
       numHouseCurrent++;
       LogDevice(adr);
@@ -96,7 +96,7 @@ contract Configuration {
       PVpannel memory tempPV;
       tempPV.Address = adr;
       tempPV.production = produc;
-      tempPV.statusAt = statusAt;
+      tempPV.statusAt = statusAt;       // creation time
       PVs[adr] = tempPV;
       numPVCurrent++;
       LogDevice(adr);

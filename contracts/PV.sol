@@ -88,40 +88,56 @@ contract PV {
     priceStatusAt = now;
   }
 
-  function addConnectedHouse(address adrH) adminOnly {
-    //connectedHouse.push(adrH);
-    connectedHouse[adrH] = true;
-    connectedHouseNum++;
+  function addConnectedHouse(address adrH) adminOnly external {
+    connectedHouse.push(adrH);
   }
 
-  function deleteConnectedHouse(address adrH) adminOnly {
-    connectedHouse[adrH] = false;
-    connectedHouseNum--;
+  function deleteConnectedHouse(address adrH) adminOnly external {
+    for (var i = 0; i < connectedHouse.length; i++) {
+      if (adrH == connectedHouse[i]) {
+        delete connectedHouse[i];
+        if (i != connectedHouse.length-1) {
+          connectedHouse[i] = connectedHouse[connectedHouse.length-1];
+        }
+        connectedHouse.length--;
+      }
+    }
   }
 
-  function addConnectedBattery(address adrB) adminOnly {
-    //connectedHouse.push(adrH);
-    connectedBattery[adrB] = true;
-    connectedBatteryNum++;
+  function addConnectedBattery(address adrB) adminOnly external {
+    connectedBattery.push(adrB);
+
   }
 
-  function deleteConnectedBattery(address adrB) adminOnly {
-    connectedBattery[adrB] = false;
-    connectedBatteryNum--;
+  function deleteConnectedBattery(address adrB) adminOnly external {
+    for (var i = 0; i < connectedBattery.length; i++) {
+      if (adrH == connectedBattery[i]) {
+        delete connectedBattery[i];
+        if (i != connectedBattery.length-1) {
+          connectedBattery[i] = connectedBattery[connectedBattery.length-1];
+        }
+        connectedBattery.length--;
+      }
+    }
   }
 
-  function getProduction(uint queryTime) timed(queryTime,prodTimeOut) returns (uint prod, uint prodAt) {
+  function getProduction(uint queryTime) timed(queryTime,prodTimeOut) external returns (uint prod, uint prodAt) {
     prod = production;
     prodAt = prodStatusAt;
   }
 
-  function getPrice(uint queryTime) connectedHouseOnly returns (uint prs, uint prsAt, bool updatedOrNot) {
+  function getPrice(uint queryTime) connectedHouseOnly external returns (uint prs, uint prsAt, bool updatedOrNot, address adr) {
     prs = price;
     prsAt = priceStatusAt;
-    if (now < queryTime+priceTimeOut) {
+    if (priceStatusAt < queryTime+priceTimeOut) {
       updatedOrNot = true;
     } else {
       updatedOrNot = false;
     }
+    adr = Address;
+  }
+
+  function getPriceRanking(address adrH) ownerOnly {
+
   }
 }
