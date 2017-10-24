@@ -111,7 +111,7 @@ contract PV {
 
   function deleteConnectedBattery(address adrB) adminOnly external {
     for (var i = 0; i < connectedBattery.length; i++) {
-      if (adrH == connectedBattery[i]) {
+      if (adrB == connectedBattery[i]) {
         delete connectedBattery[i];
         if (i != connectedBattery.length-1) {
           connectedBattery[i] = connectedBattery[connectedBattery.length-1];
@@ -126,9 +126,9 @@ contract PV {
     prodAt = prodStatusAt;
   }
 
-  function getPrice(uint queryTime) connectedHouseOnly external returns (uint prs, uint prsAt, bool updatedOrNot, address adr) {
+  function getPrice(uint queryTime) connectedHouseOnly external returns (uint prs, bool updatedOrNot, address adr) {
     prs = price;
-    prsAt = priceStatusAt;
+    //prsAt = priceStatusAt;
     if (priceStatusAt < queryTime+priceTimeOut) {
       updatedOrNot = true;
     } else {
