@@ -1,6 +1,12 @@
 pragma solidity ^0.4.4;
 
-contract House {
+library Sort{
+  function compare(uint a, uint b){
+    
+  }
+}
+
+contract SingleHouse {
   
   // one contract is associated to one particular House in the network.
 
@@ -78,7 +84,7 @@ contract House {
   event ConsumptionLog(address adr, uint consum, uint consumAt);
   event ConfigurationLog(string confMod, uint statusAt);
 
-  function House (address adr, address adm) {
+  function SingleHouse (address adr, address adm) {
     // constructor
     Address = adr;
     Admin = adm;
@@ -139,5 +145,56 @@ contract House {
       return deviceAdr.call(bytes4(sha3("getPrice(uint)")),lastPriceQueryAt);
   }*/
 
+  function getConnectedPVCount() returns (uint){
+    return connectedPV.length;
+  }
+
+  function getconnectedBatteryCount() returns (uint){
+    return connectedBattery.length;
+  }
+
+  function getConnectPVAddress(uint a) returns (address) {
+    if (a<connectedPV.length) {
+      return connectedPV[a];
+    } else {
+      return 0x0;
+    }
+  }
+
+  function getconnectedBatteryAddress(uint a) returns (address) {
+    if (a<connectedBattery.length) {
+      return connectedBattery[a];
+    } else {
+      return 0x0;
+    }
+  }
+
+  function setPriceQueryInfo(address adr, uint prs, bool tf) {
+    require(assertInConnectedPV(adr) || assertInConnectedBattery(adr));
+    PriceTF memory tempPriceTF;
+    tempPriceTF.prs = prs;
+    tempPriceTF.updated = tf;
+    priceQueryInfo[adr] = tempPriceTF;
+  }
+
+  function assertInConnectedPV(address adr) returns (bool) {
+    for (var i = 0; i < connectedPV.length; i++) {
+      if (adr == connectedPV[i]) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  function assertInConnectedBattery(address adr) returns (bool) {
+    for (var i = 0; i < connectedBattery.length; i++) {
+      if (adr == connectedBattery[i]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function sort
 
 }

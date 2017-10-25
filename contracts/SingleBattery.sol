@@ -1,6 +1,6 @@
 pragma solidity ^0.4.4;
 
-contract Battery {
+contract SingleBattery {
 
   address Admin;                    // shall be defined at the creation of contract or to be defined manually
   address public Address;
@@ -70,7 +70,7 @@ contract Battery {
     }
   }
 
-  function Battery (address adr,  uint cap, address adm) {
+  function SingleBattery (address adr,  uint cap, address adm) {
     // constructor
     Address = adr;
     Admin = adm;

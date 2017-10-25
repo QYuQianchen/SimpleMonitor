@@ -1,6 +1,6 @@
 pragma solidity ^0.4.4;
 
-contract PV {
+contract SinglePV {
 
   // one contract is associated to one particular PV panel in the network.
   // later we need to modify the parent contract that creates each PV contract - configuration.sol
@@ -76,7 +76,7 @@ contract PV {
   event ConfigurationLog(string confMod, uint statusAt);
   event PriceUpdate(uint updateAt);
 
-  function PV(address adr, address adm) {
+  function SinglePV(address adr, address adm) {
     // constructor
     Address = adr;
     Admin = adm;

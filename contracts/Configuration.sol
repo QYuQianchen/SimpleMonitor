@@ -1,5 +1,9 @@
 pragma solidity ^0.4.4;
 
+import "./SingleHouse.sol";
+import "./SinglePV.sol";
+import "./SingleBattery.sol";
+
 contract Configuration {
 
   address public admin = msg.sender; // only the admin node can modify the configuration...
@@ -56,6 +60,10 @@ contract Configuration {
   //PVpannel[2] public pvArray;
   //Battery[1] public batteryArray;
 
+  //mapping(address=>MatchableHouse) mHouses;
+  SingleHouse[] mHouse;
+  SinglePV[] mPV;
+  SingleBattery[] mBattery;
 
   // Restricts execution by admin only
   modifier ownerOnly {
@@ -87,6 +95,7 @@ contract Configuration {
       tempHouse.statusAt = statusAt;    // creation time
       Houses[adr] = tempHouse;
       numHouseCurrent++;
+      mHouse.push(new SingleHouse(adr, admin));
       LogDevice(adr);
   }
 
