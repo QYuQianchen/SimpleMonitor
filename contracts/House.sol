@@ -13,6 +13,7 @@ contract House {
   address[] connectedPV;            // List of PV connected
   address[] connectedBattery;       // List of batteries connected
 
+  // ==== may be splited into another contract
   uint    lastPriceQueryAt;
   struct PriceTF {
     uint  prs;
@@ -20,7 +21,7 @@ contract House {
   }
   mapping(address=>PriceTF) priceQueryInfo;
   mapping(uint=>address) priceSort;
-
+// ====
   
   modifier ownerOnly {
     if (msg.sender == Address) {
@@ -74,6 +75,9 @@ contract House {
     }
   }
 
+  event ConsumptionLog(address adr, uint consum, uint consumAt);
+  event ConfigurationLog(string confMod, uint statusAt);
+
   function House (address adr, address adm) {
     // constructor
     Address = adr;
@@ -83,13 +87,15 @@ contract House {
   function setConsumption(uint consum) ownerOnly {
     consumption = consum;
     consumStatusAt = now;
+    ConsumptionLog(Address, consumption, consumStatusAt);
   }
 
   function addConnectedPV(address adrP) adminOnly external {
     connectedPV.push(adrP);
+    ConfigurationLog("PV Added",now);
   }
 
-  function deleteConnectedPV(address adrP) adminOnly external {
+  function deleteConnectedPV(address adrP) adminOnly external (bool) {
     for (var i = 0; i < connectedPV.length; i++) {
       if (adrP == connectedPV[i]) {
         delete connectedPV[i];
@@ -97,15 +103,19 @@ contract House {
           connectedPV[i] = connectedPV[connectedPV.length-1];
         }
         connectedPV.length--;
+        ConfigurationLog("PV Deleted",now);
+        return true;
       }
     }
+    return false;
   }
 
   function addConnectedBattery(address adrB) adminOnly external {
     connectedBattery.push(adrB);
+    ConfigurationLog("Battery Added",now);
   }
 
-  function deleteConnectedBattery(address adrB) adminOnly external {
+  function deleteConnectedBattery(address adrB) adminOnly external (bool) {
     for (var i = 0; i < connectedBattery.length; i++) {
       if (adrB == connectedBattery[i]) {
         delete connectedBattery[i];
@@ -113,8 +123,11 @@ contract House {
           connectedBattery[i] = connectedBattery[connectedBattery.length-1];
         }
         connectedBattery.length--;
+        ConfigurationLog("Battery Deleted",now);
+        return true;
       }
     }
+    return false;
   }
 
   function getConsumption(uint initTime) timed(initTime,consumTimeOut) external returns (uint consum, uint consumAt) {
@@ -122,32 +135,9 @@ contract House {
     consumAt = consumStatusAt;
   }
 
-  function getPVPrice(address deviceAdr) returns (uint, bool, address) {
+  /*function getPVPrice(address deviceAdr) returns (uint, bool, address) {
       return deviceAdr.call(bytes4(sha3("getPrice(uint)")),lastPriceQueryAt);
-  }
+  }*/
 
-  function queryPrice(address deviceAdr) ownerOnly {
-    PriceTF memory tempPriceTF;
-    uint prs;
-    bool updatedOrNot;
-    address adr;
-
-    lastPriceQueryAt = now;
-    for (var i = 0; i < connectedPV.length; i++) {
-      (prs, updatedOrNot, adr) = deviceAdr.call(bytes4(sha3("getPrice(uint)")),lastPriceQueryAt);
-      tempPriceTF.prs = prs;
-      tempPriceTF.updated = updatedOrNot;
-      priceQueryInfo[adr] = tempPriceTF;
-    }
-    for (var j = 0; j < connectedBattery.length; j++) {
-      (prs, updatedOrNot, adr) = deviceAdr.call(bytes4(sha3("getSalePrice(uint)")),lastPriceQueryAt);
-      tempPriceTF.prs = prs;
-      tempPriceTF.updated = updatedOrNot;
-      priceQueryInfo[adr] = tempPriceTF;
-    }
-
-
-
-  }
 
 }

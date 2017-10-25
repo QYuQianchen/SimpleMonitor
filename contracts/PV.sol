@@ -72,6 +72,10 @@ contract PV {
     }
   }
 
+  event ProductionLog(address adr, uint produc, uint prodAt);
+  event ConfigurationLog(string confMod, uint statusAt);
+  event PriceUpdate(uint updateAt);
+
   function PV(address adr, address adm) {
     // constructor
     Address = adr;
@@ -81,18 +85,21 @@ contract PV {
   function setProduction(uint produc) ownerOnly {
     production = produc;
     prodStatusAt = now;
+    ProductionLog(Address, production, prodStatusAt);
   }
 
   function setPrice(uint prs) ownerOnly {
     price = prs;
     priceStatusAt = now;
+    PriceUpdate(now);
   }
 
   function addConnectedHouse(address adrH) adminOnly external {
     connectedHouse.push(adrH);
+    ConfigurationLog("House Connected",now);
   }
 
-  function deleteConnectedHouse(address adrH) adminOnly external {
+  function deleteConnectedHouse(address adrH) adminOnly external (bool) {
     for (var i = 0; i < connectedHouse.length; i++) {
       if (adrH == connectedHouse[i]) {
         delete connectedHouse[i];
@@ -100,16 +107,20 @@ contract PV {
           connectedHouse[i] = connectedHouse[connectedHouse.length-1];
         }
         connectedHouse.length--;
+        ConfigurationLog("House Deleted",now);
+        return true;
       }
     }
+    return false;
   }
 
   function addConnectedBattery(address adrB) adminOnly external {
     connectedBattery.push(adrB);
+    ConfigurationLog("Battery Added",now);
 
   }
 
-  function deleteConnectedBattery(address adrB) adminOnly external {
+  function deleteConnectedBattery(address adrB) adminOnly external (bool) {
     for (var i = 0; i < connectedBattery.length; i++) {
       if (adrB == connectedBattery[i]) {
         delete connectedBattery[i];
@@ -117,8 +128,11 @@ contract PV {
           connectedBattery[i] = connectedBattery[connectedBattery.length-1];
         }
         connectedBattery.length--;
+        ConfigurationLog("Battery Deleted",now);
+        return true;
       }
     }
+    return false;
   }
 
   function getProduction(uint queryTime) timed(queryTime,prodTimeOut) external returns (uint prod, uint prodAt) {
