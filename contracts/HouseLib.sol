@@ -16,9 +16,9 @@ library HouseLib {
     return SingleHouse(_singleHouseContract).getConnectPVAddress(_id); //sha3(_id)
   }
 
-  function getconnectedBatteryAddress(address _singleHouseContract, uint a) constant returns (address) {
+  function getconnectedBatteryAddress(address _singleHouseContract, uint _id) constant returns (address) {
     return SingleHouse(_singleHouseContract).getconnectedBatteryAddress(_id); //sha3(_id)
   }
 
-  function set
+  //function set
 }

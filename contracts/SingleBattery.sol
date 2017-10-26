@@ -36,7 +36,7 @@ contract SingleBattery {
 
   modifier connectedPVOnly (address adrP) {
     var check = false;
-    for (var i = 0; i < connectedPV.length; i++) {
+    for (uint i = 0; i < connectedPV.length; i++) {
       if (msg.sender == connectedPV[i]) {
         check = true;
       }
@@ -50,7 +50,7 @@ contract SingleBattery {
 
   modifier connectedHouseOnly {
     var check = false;
-    for (var i = 0; i < connectedHouse.length; i++) {
+    for (uint i = 0; i < connectedHouse.length; i++) {
       if (msg.sender == connectedHouse[i]) {
         check = true;
       }
@@ -94,7 +94,7 @@ contract SingleBattery {
   }
 
   function deleteConnectedPV(address adrP) adminOnly external {
-    for (var i = 0; i < connectedPV.length; i++) {
+    for (uint i = 0; i < connectedPV.length; i++) {
       if (adrP == connectedPV[i]) {
         delete connectedPV[i];
         if (i != connectedPV.length-1) {
@@ -110,7 +110,7 @@ contract SingleBattery {
   }
 
   function deleteConnectedHouse(address adrH) adminOnly external {
-    for (var i = 0; i < connectedHouse.length; i++) {
+    for (uint i = 0; i < connectedHouse.length; i++) {
       if (adrH == connectedHouse[i]) {
         delete connectedHouse[i];
         if (i != connectedHouse.length-1) {

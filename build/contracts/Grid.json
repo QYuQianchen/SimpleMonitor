@@ -1,0 +1,81 @@
+{
+  "contract_name": "Grid",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "Address",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "prs",
+          "type": "uint256"
+        }
+      ],
+      "name": "setPrice",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "queryTime",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPrice",
+      "outputs": [
+        {
+          "name": "prs",
+          "type": "uint256"
+        },
+        {
+          "name": "updatedOrNot",
+          "type": "bool"
+        },
+        {
+          "name": "adr",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "adr",
+          "type": "address"
+        },
+        {
+          "name": "adm",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "constructor"
+    }
+  ],
+  "unlinked_binary": "0x606060405261012c600455341561001557600080fd5b60405160408061023983398101604052808051919060200180519150505b60018054600160a060020a03808516600160a060020a03199283161790925560008054928416929091169190911790555b50505b6101c3806100766000396000f300606060405263ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416633aeaccf5811461005357806391b7f5ed1461008f578063e7572230146100a7575b600080fd5b341561005e57600080fd5b6100666100f7565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b341561009a57600080fd5b6100a5600435610113565b005b34156100b257600080fd5b6100bd60043561014f565b604051928352901515602083015273ffffffffffffffffffffffffffffffffffffffff166040808301919091526060909101905180910390f35b60015473ffffffffffffffffffffffffffffffffffffffff1681565b6001543373ffffffffffffffffffffffffffffffffffffffff9081169116141561004e576002819055426003555b61014b565b600080fd5b5b50565b60008060006002549250600454840160035410156101705760019150610175565b600091505b5060015473ffffffffffffffffffffffffffffffffffffffff165b91939092505600a165627a7a72305820b9e733810ec36ae8689b8fc87870b1864deaa9b0d68304406ac9013ba73dcc060029",
+  "networks": {
+    "1509014256548": {
+      "links": {},
+      "events": {},
+      "updated_at": 1509055289515
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1509055289515
+}

@@ -1,17 +1,26 @@
-// var Calculator = artifacts.require("./Calculator.sol"); // Change the name
-// var MultiNumberBettingV1 = artifacts.require("./MultiNumberBettingV1.sol");
-// var MultiNumberBettingV2 = artifacts.require("./MultiNumberBettingV2.sol");
-// var SimpleConfigMonitorV1 = artifacts.require("./SimpleConfigMonitorV1.sol");
-// var SimpleConfigMonitorV2 = artifacts.require("./SimpleConfigMonitorV2.sol");
 var Configuration = artifacts.require("./Configuration.sol");
 var ElecTransac = artifacts.require("./ElecTransac.sol");
+var Grid = artifacts.require("./Grid.sol");
+var HouseLib = artifacts.require("./HouseLib.sol");
+var SortLib = artifacts.require("./SortLib.sol");
+var MatchableHouse = artifacts.require("./MatchableHouse.sol");
+var SingleBattery = artifacts.require("./SingleBattery.sol");
+var SingleHouse = artifacts.require("./SingleHouse.sol");
+var SinglePV = artifacts.require("./SinglePV.sol");
+
+
 
 module.exports = function(deployer) {
-  //deployer.deploy(Calculator,10);  // Change the name to the new file
-  //deployer.deploy(MultiNumberBettingV1,2,3,4);  // Change the name to the new file
-  //deployer.deploy(MultiNumberBettingV2,2,3,4);  // Change the name to the new file
-  //deployer.deploy(SimpleConfigMonitorV1,5,10,3,3,8,5); 
-  //deployer.deploy(SimpleConfigMonitorV2,5,10,3,3,8,5);
+  deployer.deploy(SortLib);
+  deployer.deploy(SinglePV);
+  deployer.link(SortLib,SingleHouse);
+  deployer.deploy(SingleHouse);
+  deployer.deploy(SingleBattery);
+  deployer.deploy(HouseLib);
+  deployer.link(SortLib,MatchableHouse);
+  deployer.link(HouseLib, MatchableHouse);
+  deployer.deploy(MatchableHouse);
+  deployer.link(SortLib,Configuration);
   deployer.deploy(Configuration,3,3,1);
   deployer.deploy(ElecTransac);
 };

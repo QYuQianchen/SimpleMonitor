@@ -1,10 +1,6 @@
 pragma solidity ^0.4.4;
 
-library Sort{
-  function compare(uint a, uint b){
-    
-  }
-}
+import "./SortLib.sol";
 
 contract SingleHouse {
   
@@ -20,13 +16,22 @@ contract SingleHouse {
   address[] connectedBattery;       // List of batteries connected
 
   // ==== may be splited into another contract
+
+  using SortLib for SortLib.PriceTF[];
+
+  SortLib.PriceTF[] prepPriceQueryInfo;
+  //SortLib.PriceTF[] sortedPriceQueryInfo;
+
   uint    lastPriceQueryAt;
-  struct PriceTF {
+
+  /*struct PriceTF {
     uint  prs;
     bool  updated;
-  }
-  mapping(address=>PriceTF) priceQueryInfo;
-  mapping(uint=>address) priceSort;
+  }*/
+
+  mapping(address=>SortLib.PriceTF) priceQueryInfo;
+  mapping(uint=>address) sortedPriceQueryInfo;
+  
 // ====
   
   modifier ownerOnly {
@@ -47,7 +52,7 @@ contract SingleHouse {
 
   modifier connectedPVOnly (address adrP) {
     var check = false;
-    for (var i = 0; i < connectedPV.length; i++) {
+    for (uint i = 0; i < connectedPV.length; i++) {
       if (msg.sender == connectedPV[i]) {
         check = true;
       }
@@ -61,7 +66,7 @@ contract SingleHouse {
 
   modifier connectedBatteryOnly (address adrB) {
     var check = false;
-    for (var i = 0; i < connectedBattery.length; i++) {
+    for (uint i = 0; i < connectedBattery.length; i++) {
       if (msg.sender == connectedBattery[i]) {
         check = true;
       }
@@ -101,8 +106,8 @@ contract SingleHouse {
     ConfigurationLog("PV Added",now);
   }
 
-  function deleteConnectedPV(address adrP) adminOnly external (bool) {
-    for (var i = 0; i < connectedPV.length; i++) {
+  function deleteConnectedPV(address adrP) adminOnly external returns (bool) {
+    for (uint i = 0; i < connectedPV.length; i++) {
       if (adrP == connectedPV[i]) {
         delete connectedPV[i];
         if (i != connectedPV.length-1) {
@@ -121,8 +126,8 @@ contract SingleHouse {
     ConfigurationLog("Battery Added",now);
   }
 
-  function deleteConnectedBattery(address adrB) adminOnly external (bool) {
-    for (var i = 0; i < connectedBattery.length; i++) {
+  function deleteConnectedBattery(address adrB) adminOnly external returns (bool) {
+    for (uint i = 0; i < connectedBattery.length; i++) {
       if (adrB == connectedBattery[i]) {
         delete connectedBattery[i];
         if (i != connectedBattery.length-1) {
@@ -171,14 +176,14 @@ contract SingleHouse {
 
   function setPriceQueryInfo(address adr, uint prs, bool tf) {
     require(assertInConnectedPV(adr) || assertInConnectedBattery(adr));
-    PriceTF memory tempPriceTF;
+    SortLib.PriceTF memory tempPriceTF;
     tempPriceTF.prs = prs;
     tempPriceTF.updated = tf;
     priceQueryInfo[adr] = tempPriceTF;
   }
 
   function assertInConnectedPV(address adr) returns (bool) {
-    for (var i = 0; i < connectedPV.length; i++) {
+    for (uint i = 0; i < connectedPV.length; i++) {
       if (adr == connectedPV[i]) {
         return true;
       }
@@ -187,7 +192,7 @@ contract SingleHouse {
   }
   
   function assertInConnectedBattery(address adr) returns (bool) {
-    for (var i = 0; i < connectedBattery.length; i++) {
+    for (uint i = 0; i < connectedBattery.length; i++) {
       if (adr == connectedBattery[i]) {
         return true;
       }
@@ -195,6 +200,57 @@ contract SingleHouse {
     return false;
   }
 
-  function sort
+  //------------------------------
+  // to Sort the received list of Price (from PV and Battery)
+  //------------------------------
+
+  function sortPriceList() {
+    createPriceList();
+    uint maxTemp;
+    uint totalLength = connectedPV.length + connectedBattery.length;
+    for (uint i=0; i<totalLength; i++) {
+      maxTemp = prepPriceQueryInfo.maxStruct();
+      swap(totalLength-1-i,i);
+      del(maxTemp);
+    }
+  }
+
+  function createPriceList() private {
+    prepPriceQueryInfo.length = connectedPV.length + connectedBattery.length;
+    //sortedPriceQueryInfo.length = prepPriceQueryInfo.length; => sortedPQI is using mapping now
+    for (uint i = 0; i < connectedPV.length; i++) {
+      prepPriceQueryInfo[i] = priceQueryInfo[connectedPV[i]];
+      sortedPriceQueryInfo[i] = connectedPV[i];
+    }
+    for (i = connectedPV.length; i < prepPriceQueryInfo.length; i++) {
+      prepPriceQueryInfo[i] = priceQueryInfo[connectedBattery[i-connectedPV.length]];
+      sortedPriceQueryInfo[i] = connectedBattery[i-connectedPV.length];
+    }
+  }
+
+  function del (uint _id) private {
+    if (_id != prepPriceQueryInfo.length) {
+      delete prepPriceQueryInfo[_id];
+      prepPriceQueryInfo[_id] = prepPriceQueryInfo[prepPriceQueryInfo.length-1];
+      prepPriceQueryInfo.length--;
+    } else {
+      delete prepPriceQueryInfo[_id];
+      prepPriceQueryInfo.length--;
+    }
+  }
+
+  function swap (uint _id1, uint _id2) private {
+    if (_id1 != _id2) {
+      address temp;
+      temp = sortedPriceQueryInfo[_id1];
+      sortedPriceQueryInfo[_id1] = sortedPriceQueryInfo[_id2];
+      sortedPriceQueryInfo[_id2] = temp;   
+    }
+  }
+
+  // ------------------------------
+
+  
+  
 
 }

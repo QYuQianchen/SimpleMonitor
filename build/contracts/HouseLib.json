@@ -1,0 +1,96 @@
+{
+  "contract_name": "HouseLib",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_singleHouseContract",
+          "type": "address"
+        },
+        {
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getconnectedBatteryAddress",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_singleHouseContract",
+          "type": "address"
+        },
+        {
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getConnectPVAddress",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_singleHouseContract",
+          "type": "address"
+        }
+      ],
+      "name": "getconnectedBatteryCount",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_singleHouseContract",
+          "type": "address"
+        }
+      ],
+      "name": "getConnectedPVCount",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x6060604052341561000f57600080fd5b5b6102df8061001f6000396000f300606060405263ffffffff60e060020a6000350416634a155cd4811461004557806387904bf414610078578063944d7d09146100ab578063af52fcb8146100d1575b600080fd5b61005c600160a060020a03600435166024356100f7565b604051600160a060020a03909116815260200160405180910390f35b61005c600160a060020a036004351660243561016b565b604051600160a060020a03909116815260200160405180910390f35b6100bf600160a060020a03600435166101df565b60405190815260200160405180910390f35b6100bf600160a060020a0360043516610249565b60405190815260200160405180910390f35b600082600160a060020a0316636756c7448360006040516020015260405160e060020a63ffffffff84160281526004810191909152602401602060405180830381600087803b151561014857600080fd5b6102c65a03f1151561015957600080fd5b50505060405180519150505b92915050565b600082600160a060020a031663e7e274108360006040516020015260405160e060020a63ffffffff84160281526004810191909152602401602060405180830381600087803b151561014857600080fd5b6102c65a03f1151561015957600080fd5b50505060405180519150505b92915050565b600081600160a060020a0316631d22b00e6000604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b151561022757600080fd5b6102c65a03f1151561023857600080fd5b50505060405180519150505b919050565b600081600160a060020a0316638c94c8486000604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b151561022757600080fd5b6102c65a03f1151561023857600080fd5b50505060405180519150505b9190505600a165627a7a7230582014ef7b2b637eef486c159b7090303d27b5396d0d3fea8b9defeb783ed525b8a00029",
+  "networks": {
+    "1509014256548": {
+      "events": {},
+      "links": {},
+      "address": "0x46ba3986aec0cc0489646744bd25f9a4f76daa8f",
+      "updated_at": 1509055289526
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1509055289526
+}
