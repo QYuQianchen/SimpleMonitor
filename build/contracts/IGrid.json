@@ -1,0 +1,26 @@
+{
+  "contract_name": "IGrid",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getPrice",
+      "outputs": [
+        {
+          "name": "prs",
+          "type": "uint256"
+        },
+        {
+          "name": "updatedOrNot",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1510009229871
+}

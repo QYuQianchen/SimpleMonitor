@@ -1,41 +1,45 @@
 pragma solidity ^0.4.4;
 
 import "./SortLib.sol";
+import "./IPV.sol";
+import "./IGrid.sol";
+import "./IBattery.sol";
+import "./IHouse.sol";
 
-contract SingleHouse {
+contract SingleHouse is IHouse {
   
   // one contract is associated to one particular House in the network.
 
-  address Admin;                    // shall be defined at the creation of contract or to be defined manually
-  address public Address;
+  address Admin;                    // shall be defined at the creation of contract or to be defined manually... now it doesn't work well. It captures the address of the Configuration contract.
+  address public owner;
   bytes32 public name;              // name of the device (Serie No.)
   uint    consumption;              // Production of electricity (consumption: positive)
   uint    consumStatusAt;           // timestamp of the update (consumption)
   uint    consumTimeOut = 5 minutes;
-  address[] connectedPV;            // List of PV connected
-  address[] connectedBattery;       // List of batteries connected
+  address grid = 0x0;                     // contract address of grid
+  address[] connectedPV;            // List of contract address of connected PV
+  address[] connectedBattery;       // List of contract address of connected batteries
 
-  // ==== may be splited into another contract
-
-  using SortLib for SortLib.PriceTF[];
-
-  SortLib.PriceTF[] prepPriceQueryInfo;
-  //SortLib.PriceTF[] sortedPriceQueryInfo;
-
-  uint    lastPriceQueryAt;
+  // may be splited into another contract
 
   /*struct PriceTF {
     uint  prs;
     bool  updated;
   }*/
 
+  using SortLib for SortLib.PriceTF[];
+
+  SortLib.PriceTF[] prepPriceQueryInfo;
+
+  uint    lastPriceQueryAt;
+
   mapping(address=>SortLib.PriceTF) priceQueryInfo;
   mapping(uint=>address) sortedPriceQueryInfo;
   
-// ====
+// ======= Modifiers =======
   
   modifier ownerOnly {
-    if (msg.sender == Address) {
+    if (msg.sender == owner) {
       _;
     } else {
       revert();
@@ -78,104 +82,74 @@ contract SingleHouse {
     }
   }
 
-  modifier timed (uint initialTime, uint allowedTimeOut) {
-    if(now < initialTime + allowedTimeOut) {
+  modifier timed (uint allowedTimeOut) {
+    if(now < consumStatusAt + allowedTimeOut) {
       _;
     } else {
       revert();
     }
   }
 
+// ======= Event Logs =======
   event ConsumptionLog(address adr, uint consum, uint consumAt);
   event ConfigurationLog(string confMod, uint statusAt);
 
-  function SingleHouse (address adr, address adm) {
-    // constructor
-    Address = adr;
-    Admin = adm;
-  }
+// ======= Basic Functionalities =======
 
-  function setConsumption(uint consum) ownerOnly {
-    consumption = consum;
-    consumStatusAt = now;
-    ConsumptionLog(Address, consumption, consumStatusAt);
-  }
+  // --- Upon contract creation and configuration ---
 
-  function addConnectedPV(address adrP) adminOnly external {
+  function SingleHouse (address adr) {
+    owner = adr;
+    Admin = msg.sender;
+  }
+  
+  function setGridAdr(address adr) adminOnly external{
+    grid = adr;
+  }
+  
+  function addConnectedPV(address adrP) adminOnly external{
     connectedPV.push(adrP);
-    ConfigurationLog("PV Added",now);
-  }
-
-  function deleteConnectedPV(address adrP) adminOnly external returns (bool) {
-    for (uint i = 0; i < connectedPV.length; i++) {
-      if (adrP == connectedPV[i]) {
-        delete connectedPV[i];
-        if (i != connectedPV.length-1) {
-          connectedPV[i] = connectedPV[connectedPV.length-1];
-        }
-        connectedPV.length--;
-        ConfigurationLog("PV Deleted",now);
-        return true;
-      }
-    }
-    return false;
+    ConfigurationLog("PV linked to House",now);
   }
 
   function addConnectedBattery(address adrB) adminOnly external {
     connectedBattery.push(adrB);
-    ConfigurationLog("Battery Added",now);
+    ConfigurationLog("Battery linked to House",now);
   }
 
-  function deleteConnectedBattery(address adrB) adminOnly external returns (bool) {
-    for (uint i = 0; i < connectedBattery.length; i++) {
-      if (adrB == connectedBattery[i]) {
-        delete connectedBattery[i];
-        if (i != connectedBattery.length-1) {
-          connectedBattery[i] = connectedBattery[connectedBattery.length-1];
-        }
-        connectedBattery.length--;
-        ConfigurationLog("Battery Deleted",now);
-        return true;
-      }
-    }
-    return false;
+  // --- Regular usage ---
+
+  function setConsumption(uint consum) ownerOnly {
+    consumption = consum;
+    consumStatusAt = now;
+    ConsumptionLog(owner, consumption, consumStatusAt);
   }
 
-  function getConsumption(uint initTime) timed(initTime,consumTimeOut) external returns (uint consum, uint consumAt) {
+  function getConsumption()  external timed(consumTimeOut) returns (uint consum, uint consumAt) { //
     consum = consumption;
     consumAt = consumStatusAt;
   }
 
-  /*function getPVPrice(address deviceAdr) returns (uint, bool, address) {
-      return deviceAdr.call(bytes4(sha3("getPrice(uint)")),lastPriceQueryAt);
-  }*/
+  // 
 
-  function getConnectedPVCount() returns (uint){
-    return connectedPV.length;
-  }
-
-  function getconnectedBatteryCount() returns (uint){
-    return connectedBattery.length;
-  }
-
-  function getConnectPVAddress(uint a) returns (address) {
-    if (a<connectedPV.length) {
-      return connectedPV[a];
-    } else {
-      return 0x0;
+  function askForPrice() {
+    // House query price info to all the connected PV/Battery. 
+    // If the house is connected to grid (most of the time), the price of Grid will be automatically added to the end of the sorted list.
+    uint tP = 0;
+    bool tF = false;
+    for (uint i = 0; i < connectedPV.length; i++) {
+      (tP,tF) = IPV(connectedPV[i]).getPrice();
+      setPriceQueryInfo(connectedPV[i],tP,tF);
     }
-  }
-
-  function getconnectedBatteryAddress(uint a) returns (address) {
-    if (a<connectedBattery.length) {
-      return connectedBattery[a];
-    } else {
-      return 0x0;
+    for (i = 0; i < connectedBattery.length; i++) {
+      (tP,tF) = IBattery(connectedBattery[i]).getSalePrice();
+      setPriceQueryInfo(connectedBattery[i],tP,tF);
     }
+    lastPriceQueryAt = now;
   }
 
   function setPriceQueryInfo(address adr, uint prs, bool tf) {
-    require(assertInConnectedPV(adr) || assertInConnectedBattery(adr));
+    //require(assertInConnectedPV(adr) || assertInConnectedBattery(adr));
     SortLib.PriceTF memory tempPriceTF;
     tempPriceTF.prs = prs;
     tempPriceTF.updated = tf;
@@ -203,6 +177,7 @@ contract SingleHouse {
   //------------------------------
   // to Sort the received list of Price (from PV and Battery)
   //------------------------------
+  
 
   function sortPriceList() {
     createPriceList();
@@ -210,8 +185,16 @@ contract SingleHouse {
     uint totalLength = connectedPV.length + connectedBattery.length;
     for (uint i=0; i<totalLength; i++) {
       maxTemp = prepPriceQueryInfo.maxStruct();
-      swap(totalLength-1-i,i);
+      swap(totalLength-1-i,maxTemp);
       del(maxTemp);
+    }
+    // if the grid is connected -> add the price from the grid to the end of the sorted list 
+    if (grid != 0x0) {
+      uint tP = 0;
+      bool tF = false;
+      (tP,tF) = IGrid(grid).getPrice();
+      setPriceQueryInfo(grid,tP,tF);
+      sortedPriceQueryInfo[totalLength] = grid;
     }
   }
 
@@ -248,9 +231,90 @@ contract SingleHouse {
     }
   }
 
-  // ------------------------------
+  //------------------------------
+  // Once sorted, actively send to all the connected devices.
+  //------------------------------
 
-  
-  
+  function getSortedPosition (address adr) returns (uint) { // should be private, here the "private" is temporarily removed due to testing
+    require(adr != 0x0);      // Sometimes with this line, there will be error in the configuration.js test... sometimes not.... sometimes need to _migrate_ twice to eliminate the error.... Don't know why
+    for (uint i=0; i<connectedPV.length + connectedBattery.length+1; i++) {
+      if (adr == sortedPriceQueryInfo[i]) {
+        return (i+1);
+      }
+    }
+    return 0;
+  }
 
+  function getSortedInfo() returns(uint consum, uint rank, uint tot, bool updated) {
+    return  getSortedHInfo(msg.sender);
+  }
+
+  function getSortedHInfo(address adr) returns(uint consum, uint rank, uint tot, bool updated) {  // should be private, here the "private" is temporarily removed due to testing
+    //address adr = msg.sender;
+    consum = consumption;
+    rank = getSortedPosition(adr);
+    if (grid != 0x0) {
+      tot = connectedPV.length + connectedBattery.length+1;
+    } else {
+      tot = connectedPV.length + connectedBattery.length;
+    }
+    if (lastPriceQueryAt + consumTimeOut < now) {
+      updated = false;    // The house may be inactive for a while, so the list stored is outdated.
+    } else {
+      updated = true;      
+    }
+  }
+
+
+  // ------------Functions used in testing------------------
+/*
+  function getSortedPriceList (uint _id) returns (address) {
+    return sortedPriceQueryInfo[_id];
+  }
+
+  function getAskedPrice(address adr) returns (uint,bool) {
+    return (priceQueryInfo[adr].prs,priceQueryInfo[adr].updated) ;
+  }
+
+  function askForPricePV(uint i) returns (uint,bool) {
+    return IPV(connectedPV[i]).getPrice();
+  }
+
+  function askForPriceB(uint i) returns (uint,bool) {
+    return IBattery(connectedBattery[i]).getSalePrice();
+  }
+
+  function getOwnerAdmin() returns (address, address){
+    return (owner,Admin);
+  }
+
+  function getConnectedPVCount() returns (uint){
+    return connectedPV.length;
+  }
+
+  function getconnectedBatteryCount() returns (uint){
+    return connectedBattery.length;
+  }
+
+  function getConnectPVAddress(uint a) returns (address) {
+    if (a<connectedPV.length) {
+      return connectedPV[a];
+    } else {
+      return 0x0;
+    }
+  }
+
+  function getconnectedBatteryAddress(uint a) returns (address) {
+    if (a<connectedBattery.length) {
+      return connectedBattery[a];
+    } else {
+      return 0x0;
+   
+    }
+  }
+  */
+
+  function getConnectPVAddress(uint a) returns (address) {
+      return connectedPV[a];
+  }
 }

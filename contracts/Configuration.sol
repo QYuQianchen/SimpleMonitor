@@ -3,47 +3,38 @@ pragma solidity ^0.4.4;
 import "./SingleHouse.sol";
 import "./SinglePV.sol";
 import "./SingleBattery.sol";
+import "./Grid.sol";
 
 contract Configuration {
 
   address public admin = msg.sender; // only the admin node can modify the configuration...
-  uint public statusAt; // timestamp of the update
+  uint public statusAt; // timestamp of the creation of Configuration instance
   uint8 public numHouseTotal;       // number of houses in the system
   uint8 public numPVTotal;          // number of PVs in the system
   uint8 public numBatteryTotal;     // number of batteries in the system
+  address private gridAdr;          // store the address of grid...(address of the transformer that links to the grid... not the contract address)
   uint8 private numHouseCurrent = 0;    // current houses in the system
   uint8 private numPVCurrent = 0;       // current PVs in the system
   uint8 private numBatteryCurrent = 0;    // current batteries in the system
 
-  enum deviceType {House,PVpannel,Battery}
-
   // Several types of devices in the system
   struct House {
-    address Address;
-    bytes32  name;             // name of the house
-    uint    consumption;      // Production of electricity (consumption: positive)
+    address Address;          // address of the contract
     uint    statusAt;         // timestamp of the update
-    //address[] connectedPV;    // List of PV connected
-    //address[] connectedBattery;// List of batteries connected
     mapping(address=>PVpannel) connectedPV;       // List of PV connected
     mapping(address=>Battery) connectedBattery;   // List of batteries connected
   }
 
   struct PVpannel {
-    address Address;
-    bytes32  name;             // name of the device (Serie No.)
-    uint    production;        // Production of electricity (supply: negative) -> tbd
+    address Address;          // address of the contract
     uint    statusAt;         // creation time
     address[] connectedHouse; // List of households connected
     address[] connectedBattery;// List of batteries connected
   }
 
   struct Battery {
-    address Address;
-    bytes32  name;             // name of the device (Serie No.)
-    uint    capacity;         // Production of electricity
-    uint    currentVolume;    // Production of electricity
-    uint    statusAt;         // timestamp of the update
+    address Address;          // address of the contract
+    uint    statusAt;         // creation time
     address[] connectedHouse; // List of households connected
     address[] connectedPV;// List of PV connected
   }
@@ -53,20 +44,18 @@ contract Configuration {
   event LogConnection(address device1, address device2);
 
 
-  mapping(address=>House) Houses;
+  mapping(address=>House) Houses;       
   mapping(address=>PVpannel) PVs;
   mapping(address=>Battery) Batteries;
-  //House[3] public houseArray;
-  //PVpannel[2] public pvArray;
-  //Battery[1] public batteryArray;
 
-  //mapping(address=>MatchableHouse) mHouses;
-  SingleHouse[] mHouse;
-  SinglePV[] mPV;
-  SingleBattery[] mBattery;
+  //mapping(address=>address) mHouse;     // IP address of the owner (or device... this makes more sense? or just an identifier of the physical device) -> address of the contract
+  //mapping(address=>address) mPV;        // Or... mapping(bytes32=>address).... where the bytes32 is a hashed indentifier of the device serie number / address of house...
+  //mapping(address=>address) mBattery;
+
+  mapping(address=>address) contractList;   // now putting all the linkage to real contract address into this mapping
 
   // Restricts execution by admin only
-  modifier ownerOnly {
+  modifier adminOnly {
     if(msg.sender == admin){
       _;
     } else {
@@ -76,64 +65,88 @@ contract Configuration {
     }
   }
 
-  function Configuration(uint8 numHouse, uint8 numPV, uint8 numBattery) ownerOnly {
+  function Configuration(uint8 numHouse, uint8 numPV, uint8 numBattery) adminOnly {
       // constructor
       numHouseTotal = numHouse;
       numPVTotal = numPV;
       numBatteryTotal = numBattery;
       statusAt = now;
+      // create the grid contract
       LogConfig(numHouseTotal,numPVTotal,numBatteryTotal,statusAt);
   }
 
-  function addHouse(address adr, uint consum) ownerOnly {
-      // add only the contract address inside.
-      // uint consum should be added later inside the contract HOUSE
+  function addGrid(address adr) adminOnly{
+      contractList[adr] = new Grid(adr);
+      gridAdr = address(contractList[adr]);
+  }
+
+  function addHouse(address adr, bool g) adminOnly {
       require(numHouseCurrent < numHouseTotal);// "Error: House number maximun. Cannot add more houses."
+      //mHouse[adr] = new SingleHouse(adr);   // create a SingleHouse contract and store it on the mHouse mapping
+      contractList[adr] = new SingleHouse(adr);
+      // creates a minimature (Struct House) that also stores the address and connection information, which is a private attribute in the Configuration.sol
       House memory tempHouse;
-      tempHouse.Address = adr;
-      tempHouse.consumption = consum;
-      tempHouse.statusAt = statusAt;    // creation time
+      //tempHouse.Address = address(mHouse[adr]);
+      tempHouse.Address = address(contractList[adr]);
+      tempHouse.statusAt = now;
       Houses[adr] = tempHouse;
+      if (g) {
+          SingleHouse(contractList[adr]).setGridAdr(gridAdr);
+      }
       numHouseCurrent++;
-      mHouse.push(new SingleHouse(adr, admin));
       LogDevice(adr);
   }
 
-  function addPV(address adr, uint produc) ownerOnly {
+  function getContractAddress(address adr) adminOnly returns(address) {
+      return address(contractList[adr]);
+  }
+
+  function addPV(address adr, bool g) adminOnly {
       require(numPVCurrent < numPVTotal); //"Error: House number maximun. Cannot add more houses."
-      // create a PV contract instead of creating a new PV struct. Or, at the same time.
+      //mPV[adr] = new SinglePV(adr);     // create a SingleHouse contract and store it on the mHouse mapping
+      contractList[adr] = new SinglePV(adr);
+      // creates a minimature (Struct PV) that also stores the address and connection information, which is a private attribute in the Configuration.sol
       PVpannel memory tempPV;
-      tempPV.Address = adr;
-      tempPV.production = produc;
-      tempPV.statusAt = statusAt;       // creation time
+      //tempPV.Address = address(mPV[adr]);
+      tempPV.Address = address(contractList[adr]);
+      tempPV.statusAt = now;
       PVs[adr] = tempPV;
+      if (g) {
+          SinglePV(contractList[adr]).setGridAdr(gridAdr);
+      }
       numPVCurrent++;
       LogDevice(adr);
   }
-
-  function addBattery(address adr, uint capacity, uint currentVolume) ownerOnly {
-      require(numBatteryCurrent < numBatteryTotal); // "Error: House number maximun. Cannot add more houses."
+  
+  function addBattery(address adr, uint capacity, bool g) adminOnly {
+      require(numBatteryCurrent < numBatteryTotal); // "Error: Battery number maximun. Cannot add more Batteries."
+      //mBattery[adr] = new SingleBattery(adr, capacity);
+      contractList[adr] = new SingleBattery(adr, capacity);
       Battery memory tempBattery;
-      tempBattery.Address = adr;
-      tempBattery.capacity = capacity;
-      tempBattery.currentVolume = currentVolume;
-      tempBattery.statusAt = statusAt;
+      //tempBattery.Address = address(mBattery[adr]);
+      tempBattery.Address = address(contractList[adr]);
+      tempBattery.statusAt = now;
       Batteries[adr] = tempBattery;
+      if (g) {
+          SingleBattery(contractList[adr]).setGridAdr(gridAdr);
+      }
       numBatteryCurrent++;
       LogDevice(adr);
   }
 
     // test functions
     
-    function checkHouseCon(address adrHouse) returns (uint) {
+    /*function checkHouseCon(address adrHouse) returns (uint) {
         return (Houses[adrHouse].consumption);
-    }
+    }*/ 
     /*function checkHouseAdr(address adrHouse) returns (address) {
         return (Houses[adrHouse].Address);
     }*/
+    /*
     function checkPVPro(address adrPV) returns (uint) {
         return (PVs[adrPV].production);
-    }/*
+    }*/
+    /*
     function checkPVAdr(address adrPV) returns (address) {
         return (PVs[adrPV].Address);
     }
@@ -142,35 +155,61 @@ contract Configuration {
     }*/
     function getAdmin() constant returns (address) {
         return admin;
-    }    
+    } 
 
-  function linkHousePV(address adrHouse, address adrPV) ownerOnly {
-      require(Houses[adrHouse].Address != 0x0); //  "Error: House does not exist!"
-      require(PVs[adrPV].Address != 0x0); //  "Error: PV does not exist!"
-      require(Houses[adrHouse].connectedPV[adrPV].Address == address(0)); //  "Error: Already connected!"
+    function getGridAdr() constant returns(address) {
+        return gridAdr;
+    }   
+
+  function linkHousePV(address adrHouse, address adrPV) adminOnly {     // the input shall be changed into hash info (device identifier)
+      require(Houses[adrHouse].Address != 0x0);                         // "Error: House contract does not exist!"
+      require(PVs[adrPV].Address != 0x0);                               // "Error: PV contract does not exist!"
+      require(Houses[adrHouse].connectedPV[adrPV].Address == address(0)); // "Error: Already connected!"
       Houses[adrHouse].connectedPV[adrPV] = PVs[adrPV];
       PVs[adrPV].connectedHouse.push(adrHouse);
+      // call functions in the contract
+      //SingleHouse(mHouse[adrHouse]).call(bytes4(sha3("addConnectedPV(address)")),adrPV);
+      //SinglePV(mPV[adrPV]).call(bytes4(sha3("addConnectedHouse(address)")),adrHouse);
+      // or
+      //SingleHouse(mHouse[adrHouse]).addConnectedPV(mPV[adrPV]);
+      //SinglePV(mPV[adrPV]).addConnectedHouse(mHouse[adrHouse]);
+      // or
+      SingleHouse(address(contractList[adrHouse])).addConnectedPV(address(contractList[adrPV]));
+      SinglePV(address(contractList[adrPV])).addConnectedHouse(address(contractList[adrHouse]));
       LogConnection(adrHouse,adrPV);
   }
 
-  function linkHouseBattery(address adrHouse, address adrBattery) ownerOnly {
-      require(Houses[adrHouse].Address != 0x0); //   "Error: House does not exist!"
-      require(Batteries[adrBattery].Address != 0x0); //    "Error: Battery does not exist!"
-      require(Houses[adrHouse].connectedBattery[adrBattery].Address == 0x0); //    "Error: Already connected!"
+
+  function linkHouseBattery(address adrHouse, address adrBattery) adminOnly {   // the input shall be changed into hash info (device identifier)
+      require(Houses[adrHouse].Address != 0x0);                                 // "Error: House does not exist!"
+      require(Batteries[adrBattery].Address != 0x0);                            // "Error: Battery does not exist!"
+      require(Houses[adrHouse].connectedBattery[adrBattery].Address == 0x0);    // "Error: Already connected!"
       Houses[adrHouse].connectedBattery[adrBattery] = Batteries[adrBattery];
       Batteries[adrBattery].connectedHouse.push(adrHouse);
+      // call functions in the contract
+      //SingleHouse(mHouse[adrHouse]).addConnectedBattery(mBattery[adrBattery]);
+      //SingleBattery(mBattery[adrBattery]).addConnectedHouse(mHouse[adrHouse]);
+      //or
+      SingleHouse(contractList[adrHouse]).addConnectedBattery(contractList[adrBattery]);
+      SingleBattery(contractList[adrBattery]).addConnectedHouse(contractList[adrHouse]);
       LogConnection(adrHouse,adrBattery);
   }
 
-  function linkPVBattery(address adrPV, address adrBattery) {
-      require(PVs[adrPV].Address != 0x0); //   "Error: PV does not exist!"
-      require(Batteries[adrBattery].Address != 0x0); //    "Error: Battery does not exist!"
-      require(msg.sender == admin);     // "Error: someone else wants to add a battery into the system"
+
+  function linkPVBattery(address adrPV, address adrBattery) adminOnly{          // the input shall be changed into hash info (device identifier)
+      require(PVs[adrPV].Address != 0x0);                                       // "Error: PV does not exist!"
+      require(Batteries[adrBattery].Address != 0x0);                            // "Error: Battery does not exist!"
       for (uint k = 0;k<PVs[adrPV].connectedBattery.length;k++) {
-           require(PVs[adrPV].connectedBattery[k] != adrBattery); //    "Error: Already connected!"
+           require(PVs[adrPV].connectedBattery[k] != adrBattery);               // "Error: Already connected!"
       }
       PVs[adrPV].connectedBattery.push(adrBattery);
       Batteries[adrBattery].connectedPV.push(adrPV);
+      // call functions in the contract
+      //SinglePV(mPV[adrPV]).addConnectedBattery(mBattery[adrBattery]);
+      //SingleBattery(mBattery[adrBattery]).addConnectedPV(mPV[adrPV]);
+      // or
+      SinglePV(contractList[adrPV]).addConnectedBattery(contractList[adrBattery]);
+      SingleBattery(contractList[adrBattery]).addConnectedPV(contractList[adrPV]);
       LogConnection(adrPV,adrBattery);
   }
 
@@ -178,7 +217,7 @@ contract Configuration {
       numConnectedHouse = PVs[adrPV].connectedHouse.length;
       numConnectedBattery = PVs[adrPV].connectedBattery.length;
   }
-
+/*
   function getBatteryConnection(address adrBattery) returns (uint numConnectedHouse, uint numConnectedPV) {
       numConnectedHouse = Batteries[adrBattery].connectedHouse.length;
       numConnectedPV = Batteries[adrBattery].connectedPV.length;
@@ -223,7 +262,6 @@ contract Configuration {
       }
       return false;
   }
-
     function getDeviceType(address adr) returns (uint8) {
         // deviceType {House,PVpannel,Battery}
         if (Houses[adr].Address != 0x0) {
@@ -236,7 +274,6 @@ contract Configuration {
             return 15;   // when the address corresponds no device in the configuration...
         }
   }
-
     function isConnected(address adr1, address adr2) external returns (bool) {
         if (Houses[adr1].Address != 0x0) {
             return assertHouseConnection(adr1,adr2);
@@ -247,82 +284,5 @@ contract Configuration {
         } else {
             return false;   // when the address corresponds no device in the configuration...
         }
-  }
-
-    function canTransactEnergy(address adr1, address adr2) external returns (bool availability, uint productCap, uint consumpCap) {
-        var dT1 = getDeviceType(adr1);
-        var dT2 = getDeviceType(adr2);
-        if (dT1 == 0 || dT1 == 15) {
-            return(false,0,0);
-        } else if (dT1 == 1) {
-            // from PV panels to ...
-            if (dT2 == 0) {
-                availability = assertPVConnection(adr1,adr2);
-                productCap = PVs[adr1].production;
-                consumpCap = Houses[adr2].consumption;
-            } else if (dT2 == 2) {
-                availability = assertPVConnection(adr1,adr2);
-                productCap = PVs[adr1].production;
-                consumpCap = Batteries[adr2].capacity-Batteries[adr2].currentVolume;
-            } else {
-                return(false,0,0);
-            }
-        } else if (dT1 == 2) {
-            // from Storage to ...
-            if (dT2 == 0) {
-                availability = assertBatteryConnection(adr1,adr2);
-                productCap = Batteries[adr1].currentVolume;
-                consumpCap = Houses[adr2].consumption;
-            } else if (dT2 == 2) {
-                availability = assertBatteryConnection(adr1,adr2);
-                productCap = Batteries[adr1].currentVolume;
-                consumpCap = Batteries[adr2].capacity-Batteries[adr2].currentVolume;
-            } else {
-                return(false,0,0);
-            }
-        }
-    }
-
- /*   function canTransactEnergyExtA(address adr1, address adr2) external returns (bool) {
-        var (a,b,c) = canTransactEnergy(adr1, adr2);
-        return a;
-    }
-
-    function canTransactEnergyExtB(address adr1, address adr2) external returns (uint) {
-        var (a,b,c) = canTransactEnergy(adr1, adr2);
-        return b;
-    }
-    function canTransactEnergyExtC(address adr1, address adr2) external returns (uint) {
-        var (a,b,c) = canTransactEnergy(adr1, adr2);
-        return c;
-    }
-*/
-
-    function changeStatus (address _from, address _to, uint8 _value) returns (bool) {
-    var dT1 = getDeviceType(_from);
-    var dT2 = getDeviceType(_to);
-
-    if (dT1 == 1) {
-      // from PV panels to ...
-      if (dT2 == 0) {
-        Houses[_to].consumption -= _value;
-      } else { // if (dT2 == 2) 
-        Batteries[_to].currentVolume -= _value;
-      }
-      PVs[_from].production -= _value;
-      return true;
-    } else if (dT1 == 2) {
-      // from Storage to ...
-      if (dT2 == 0) {
-        Houses[_to].consumption -= _value;
-      } else { // if (dT2 == 2)
-        Batteries[_to].currentVolume -= _value;
-      }
-      Batteries[_from].currentVolume -= _value;
-      return true;
-    } else {
-      return false;
-    }
-    
-  }   
+    }*/
 }

@@ -1,0 +1,74 @@
+{
+  "contract_name": "IBattery",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getSalePrice",
+      "outputs": [
+        {
+          "name": "prs",
+          "type": "uint256"
+        },
+        {
+          "name": "updatedOrNot",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getSortedPVInfo",
+      "outputs": [
+        {
+          "name": "consum",
+          "type": "uint256"
+        },
+        {
+          "name": "rank",
+          "type": "uint256"
+        },
+        {
+          "name": "tot",
+          "type": "uint256"
+        },
+        {
+          "name": "updated",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getExcess",
+      "outputs": [
+        {
+          "name": "prs",
+          "type": "uint256"
+        },
+        {
+          "name": "cap",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x",
+  "networks": {
+    "1510007715085": {
+      "links": {},
+      "events": {},
+      "updated_at": 1510008414599
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1510009229871
+}

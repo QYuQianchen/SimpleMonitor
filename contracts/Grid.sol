@@ -1,26 +1,28 @@
 pragma solidity ^0.4.4;
 
-contract Grid {
+import "./IGrid.sol";
+
+contract Grid is IGrid {
 
   address Admin;                    // shall be defined at the creation of contract or to be defined manually
-  address public Address;
+  address public owner;
   uint    price;
   uint    priceStatusAt;            // timestamp of the update (price)
   uint    priceTimeOut = 5 minutes;
 
   modifier ownerOnly {
-    if (msg.sender == Address) {
+    if (msg.sender == owner) {
       _;
     } else {
       revert();
     }
   }
 
-  function Grid(address adr, address adm) {
+  function Grid(address adr) {
     // constructor
     // Assuming that the Grid can be connected by all the devices
-    Address = adr;
-    Admin = adm;
+    owner = adr;
+    Admin = msg.sender;
   }
 
   function setPrice(uint prs) ownerOnly {
@@ -28,14 +30,14 @@ contract Grid {
     priceStatusAt = now;
   }
 
-  function getPrice(uint queryTime) external returns (uint prs, bool updatedOrNot, address adr) {
+  function getPrice() returns (uint prs, bool updatedOrNot) {
     prs = price;
     //prsAt = priceStatusAt;
-    if (priceStatusAt < queryTime+priceTimeOut) {
-      updatedOrNot = true;
-    } else {
+    if (priceStatusAt + priceTimeOut < now) {
       updatedOrNot = false;
+    } else {
+      updatedOrNot = true;
     }
-    adr = Address;
+    //adr = owner;
   }
 }
