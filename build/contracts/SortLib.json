@@ -1,0 +1,38 @@
+{
+  "contract_name": "SortLib",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "adrL",
+          "type": "address[]"
+        },
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "AddInList",
+      "outputs": [
+        {
+          "name": "ind",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x6060604052341561000f57600080fd5b5b60dd8061001e6000396000f300606060405263ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663e6596b358114603c575b600080fd5b609660046024813581810190830135806020818102016040519081016040528093929190818152602001838360200280828437509496505050923573ffffffffffffffffffffffffffffffffffffffff16925060a8915050565b60405190815260200160405180910390f35b60005b929150505600a165627a7a72305820493559e83a739c15ed0535f7c64425036535ce3985d75f702736f885fc3f82050029",
+  "networks": {
+    "1510045781822": {
+      "events": {},
+      "links": {},
+      "address": "0xddebc48f7e3349047e481c4d211c90f0e907d97e",
+      "updated_at": 1510045796964
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1510045993912
+}
