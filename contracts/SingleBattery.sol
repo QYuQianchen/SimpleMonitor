@@ -1,25 +1,90 @@
 pragma solidity ^0.4.4;
 
-contract SingleBattery {
+import "./IBattery.sol";
+import "./SortLib.sol"; 
+//For simplicity, we do not use the sorting functions here, as in our configuration, there is only one battery and there's only one PV connected.  
+import "./IPV.sol";
+import "./IGrid.sol";
+
+contract SingleBattery is IBattery {
 
   address Admin;                    // shall be defined at the creation of contract or to be defined manually
-  address public Address;
+  address public owner;
   bytes32 public name;              // name of the device (Serie No.)
-  uint    capacity;                 // Production of electricity
+  uint    capacity;                 // Cap of the device
   uint    currentVolume;            // Production of electricity
+  uint    buyVolume;                // Amount of electricity that this battery would like to buy. Will first participate in the supply competition 
+                                    //and will be finally (anyway) fulfilled b either the network or from the grid...
   uint    volTimeOut = 5 minutes;
   uint    volStatusAt;              // timestamp of the update
   
   uint    priceStatusAt;            // timestamp of the update (price)
   uint    priceTimeOut = 5 minutes;
   uint    priceForSale;
-  uint    priceForBuy;
-  uint    priceForExcessEnergy;     // lower than the normal price
+  uint    priceForBuy;              // lower than market price
+  uint    priceForExcessEnergy;     // lower than market price
+  address grid = 0x0;                     // contract address of grid
   address[] connectedHouse; // List of households connected
   address[] connectedPV;// List of PV connected
   
+  /*struct PriceTF {
+    uint  prs;
+    bool  updated;
+  }*/
+
+  using SortLib for SortLib.PriceTF[];
+  SortLib.PriceTF[] prepPriceQueryInfo;
+  uint    lastPriceQueryAt;
+
+  mapping(address=>SortLib.PriceTF) priceQueryInfo;
+  mapping(uint=>address) sortedPriceQueryInfo;
+
+  function askForPrice() {
+    // House query price info to all the connected PV/Battery. 
+    // If the house is connected to grid (most of the time), the price of Grid will be automatically added to the end of the sorted list.
+    uint tP = 0;
+    bool tF = false;
+    for (uint i = 0; i < connectedPV.length; i++) {
+      (tP,tF) = IPV(connectedPV[i]).getPrice();
+      setPriceQueryInfo(connectedPV[i],tP,tF);
+    }
+    lastPriceQueryAt = now;
+  }
+
+  function setPriceQueryInfo(address adr, uint prs, bool tf) {
+    //require(assertInConnectedPV(adr) || assertInConnectedBattery(adr));
+    SortLib.PriceTF memory tempPriceTF;
+    tempPriceTF.prs = prs;
+    tempPriceTF.updated = tf;
+    priceQueryInfo[adr] = tempPriceTF;
+  }
+
+  function sort() { // we are not doing sorting here -> as there is only 1 PV in the exercise layout
+    sortedPriceQueryInfo[0] = connectedPV[0];
+    if (grid != 0x0) {
+      sortedPriceQueryInfo[1] = grid;
+    } 
+  } 
+
+  function getSortedPVInfo() returns(uint consum, uint rank, uint tot, bool updated) {
+    address adr = msg.sender;     //If the PV is connected
+    consum = buyVolume;
+    rank = 1; // We only have one PV connnected (In the demo layout)
+    if (grid != 0x0) {
+      tot = connectedPV.length + 1;
+    } else {
+      tot = connectedPV.length;
+    }
+    if (lastPriceQueryAt + priceTimeOut < now) {
+      updated = false;    // The house may be inactive for a while, so the list stored is outdated.
+    } else {
+      updated = true;      
+    }
+  }
+
+
   modifier ownerOnly {
-    if (msg.sender == Address) {
+    if (msg.sender == owner) {
       _;
     } else {
       revert();
@@ -70,16 +135,26 @@ contract SingleBattery {
     }
   }
 
-  function SingleBattery (address adr,  uint cap, address adm) {
+  event VolLog(address adr, uint vol, uint volAt);
+  event ConfigurationLog(string confMod, uint statusAt);
+  event PriceUpdate(uint updateAt);
+
+  function SingleBattery (address adr,  uint cap) {
     // constructor
-    Address = adr;
-    Admin = adm;
+    owner = adr;
+    Admin = msg.sender;
     capacity = cap;
   }
 
+  function setGridAdr(address adr) adminOnly external{
+    grid = adr;
+  }
+
   function setVolume(uint vol) ownerOnly {
+    // Can only be triggered once....Should be moved to the constructor...Once the initial volumne is set, can only be changed by energy trading.
     currentVolume = vol;
     volStatusAt = now;
+    VolLog(owner,vol,volStatusAt);
   }
 
   function setPrice(uint prsSale, uint prsBuy, uint prsExcess) ownerOnly {
@@ -87,13 +162,21 @@ contract SingleBattery {
     priceForBuy = prsBuy;
     priceForExcessEnergy = prsExcess;
     priceStatusAt = now;
+    PriceUpdate(priceStatusAt);
   }
+
+  function setBuyVolume(uint v) ownerOnly {
+    buyVolume = v;
+  }
+
+  // function askForPrice() {} // to ask for prices set by PVs...
 
   function addConnectedPV(address adrP) adminOnly external {
     connectedPV.push(adrP);
+    ConfigurationLog("PV linked to Battery",now);
   }
 
-  function deleteConnectedPV(address adrP) adminOnly external {
+  /*function deleteConnectedPV(address adrP) adminOnly external {
     for (uint i = 0; i < connectedPV.length; i++) {
       if (adrP == connectedPV[i]) {
         delete connectedPV[i];
@@ -103,13 +186,14 @@ contract SingleBattery {
         connectedPV.length--;
       }
     }
-  }
+  }*/
 
   function addConnectedHouse(address adrH) adminOnly external {
     connectedHouse.push(adrH);
+    ConfigurationLog("House linked to Battery",now);
   }
 
-  function deleteConnectedHouse(address adrH) adminOnly external {
+  /*function deleteConnectedHouse(address adrH) adminOnly external {
     for (uint i = 0; i < connectedHouse.length; i++) {
       if (adrH == connectedHouse[i]) {
         delete connectedHouse[i];
@@ -119,7 +203,7 @@ contract SingleBattery {
         connectedHouse.length--;
       }
     }
-  }
+  }*/
 
   function getVolumeCapacity (uint initTime) timed(initTime,volTimeOut) external returns (uint vol, uint volAt, uint cap) {
     vol = currentVolume;
@@ -127,14 +211,20 @@ contract SingleBattery {
     cap = capacity;
   }
 
-  function getSalePrice(uint queryTime) connectedHouseOnly external returns (uint prs, bool updatedOrNot, address adr) {
+  function getSalePrice() returns (uint prs, bool updatedOrNot) { // connectedHouseOnly external
     prs = priceForSale;
     //prsAt = priceStatusAt;
-    if (priceStatusAt < queryTime+priceTimeOut) {
-      updatedOrNot = true;
-    } else {
+    if (priceStatusAt + priceTimeOut < now) {
       updatedOrNot = false;
+    } else {
+      updatedOrNot = true;
     }
-    adr = Address;
+    //adr = owner;
   }
+
+  function getExcess() returns (uint prs, uint cap) {
+    prs = priceForExcessEnergy;
+    cap = capacity - currentVolume;
+  }
+
 }

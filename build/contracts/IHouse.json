@@ -1,0 +1,40 @@
+{
+  "contract_name": "IHouse",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getSortedInfo",
+      "outputs": [
+        {
+          "name": "consum",
+          "type": "uint256"
+        },
+        {
+          "name": "rank",
+          "type": "uint256"
+        },
+        {
+          "name": "tot",
+          "type": "uint256"
+        },
+        {
+          "name": "updated",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x",
+  "networks": {
+    "1510007715085": {
+      "links": {},
+      "events": {},
+      "updated_at": 1510008414599
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1510009229871
+}
