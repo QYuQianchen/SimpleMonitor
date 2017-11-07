@@ -236,7 +236,7 @@ contract SingleHouse is IHouse {
   //------------------------------
 
   function getSortedPosition (address adr) returns (uint) { // should be private, here the "private" is temporarily removed due to testing
-    require(adr != 0x0);      // Sometimes with this line, there will be error in the configuration.js test... sometimes not.... sometimes need to _migrate_ twice to eliminate the error.... Don't know why
+    //require(adr != 0x0);      // Sometimes with this line, there will be error in the configuration.js test... sometimes not.... sometimes need to _migrate_ twice to eliminate the error.... Don't know why
     for (uint i=0; i<connectedPV.length + connectedBattery.length+1; i++) {
       if (adr == sortedPriceQueryInfo[i]) {
         return (i+1);
