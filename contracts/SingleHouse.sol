@@ -1,6 +1,7 @@
 pragma solidity ^0.4.4;
 
 import "./SortLib.sol";
+import "./AdrLib.sol";
 import "./IPV.sol";
 import "./IGrid.sol";
 import "./IBattery.sol";
@@ -10,12 +11,14 @@ contract SingleHouse is IHouse {
   
   // one contract is associated to one particular House in the network.
 
+  using AdrLib for address[];
+
   //address Admin;                    // shall be defined at the creation of contract or to be defined manually... now it doesn't work well. It captures the address of the Configuration contract.
   address public owner;
   bytes32 public name;              // name of the device (Serie No.)
   uint    consumption;              // Production of electricity (consumption: positive)
   uint    consumStatusAt;           // timestamp of the update (consumption)
-  uint    consumTimeOut = 5 minutes;
+  //uint    consumTimeOut = 5 minutes;
   //address grid = 0x0;                     // contract address of grid
   address[] connectedPV;            // List of contract address of connected PV
   address[] connectedBattery;       // List of contract address of connected batteries
@@ -55,13 +58,13 @@ contract SingleHouse is IHouse {
   }*/
 
   modifier connectedPVOnly (address adrP) {
-    var check = false;
+    /*var check = false;
     for (uint i = 0; i < connectedPV.length; i++) {
       if (msg.sender == connectedPV[i]) {
         check = true;
       }
-    }
-    if (check == true) {
+    }*/
+    if (connectedPV.AssertInside(adrP) == true) {
       _;
     } else {
       revert();

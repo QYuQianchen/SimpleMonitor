@@ -3,7 +3,8 @@ pragma solidity ^0.4.4;
 contract IHouse {
   
   address Admin; 
-  address grid = 0x0;  
+  address grid = 0x0;
+  uint    consumTimeOut = 5 minutes;
 
   modifier adminOnly {
     if (msg.sender == Admin) {
