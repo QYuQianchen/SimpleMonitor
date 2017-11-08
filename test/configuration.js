@@ -207,6 +207,7 @@ contract('Configuration', function(accounts) {
   it("Price communication House<->PV (2. House send out info)", function() {
     /*return singleHouse2.getSortedHInfo.call(singlePV1_adr)
       console.log("returned sorted information from sH2 is (from singlePV1_adr)",result[0].toNumber(),result[1].toNumber(),result[2].toNumber(),result[3]);*/
+      console.log("Test starts");
       return singleHouse2.getSortedInfo.call({from: singlePV1_adr}).then(function(result){
       console.log("returned sorted information from sH2 is (from singlePV1_adr)",result[0].toNumber(),result[1].toNumber(),result[2].toNumber(),result[3]);
       /*return singleHouse2.getSortedInfo.call({from: singlePV0_adr});

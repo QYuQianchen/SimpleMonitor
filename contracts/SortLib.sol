@@ -25,4 +25,15 @@ library SortLib {
     }
     ind = _id;
   }
+
+  function del (PriceTF[] storage self, uint _id) {
+    if (_id != self.length) {
+      delete self[_id];
+      self[_id] = self[self.length-1];
+      self.length--;
+    } else {
+      delete self[_id];
+      self.length--;
+    }
+  }
 }

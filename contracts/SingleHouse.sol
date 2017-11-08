@@ -10,13 +10,13 @@ contract SingleHouse is IHouse {
   
   // one contract is associated to one particular House in the network.
 
-  address Admin;                    // shall be defined at the creation of contract or to be defined manually... now it doesn't work well. It captures the address of the Configuration contract.
+  //address Admin;                    // shall be defined at the creation of contract or to be defined manually... now it doesn't work well. It captures the address of the Configuration contract.
   address public owner;
   bytes32 public name;              // name of the device (Serie No.)
   uint    consumption;              // Production of electricity (consumption: positive)
   uint    consumStatusAt;           // timestamp of the update (consumption)
   uint    consumTimeOut = 5 minutes;
-  address grid = 0x0;                     // contract address of grid
+  //address grid = 0x0;                     // contract address of grid
   address[] connectedPV;            // List of contract address of connected PV
   address[] connectedBattery;       // List of contract address of connected batteries
 
@@ -28,7 +28,6 @@ contract SingleHouse is IHouse {
   }*/
 
   using SortLib for SortLib.PriceTF[];
-
   SortLib.PriceTF[] prepPriceQueryInfo;
 
   uint    lastPriceQueryAt;
@@ -46,13 +45,14 @@ contract SingleHouse is IHouse {
     }
   }
 
-  modifier adminOnly {
+
+/*  modifier adminOnly {
     if (msg.sender == Admin) {
       _;
     } else {
       revert();
     }
-  }
+  }*/
 
   modifier connectedPVOnly (address adrP) {
     var check = false;
@@ -103,11 +103,11 @@ contract SingleHouse is IHouse {
     Admin = msg.sender;
   }
   
-  function setGridAdr(address adr) adminOnly external{
+  /*function setGridAdr(address adr) adminOnly external {
     grid = adr;
-  }
+  }*/
   
-  function addConnectedPV(address adrP) adminOnly external{
+  function addConnectedPV(address adrP) adminOnly external {
     connectedPV.push(adrP);
     ConfigurationLog("PV linked to House",now);
   }
@@ -186,7 +186,7 @@ contract SingleHouse is IHouse {
     for (uint i=0; i<totalLength; i++) {
       maxTemp = prepPriceQueryInfo.maxStruct();
       swap(totalLength-1-i,maxTemp);
-      del(maxTemp);
+      prepPriceQueryInfo.del(maxTemp);
     }
     // if the grid is connected -> add the price from the grid to the end of the sorted list 
     if (grid != 0x0) {
@@ -211,7 +211,7 @@ contract SingleHouse is IHouse {
     }
   }
 
-  function del (uint _id) private {
+  /*function del (uint _id) private {
     if (_id != prepPriceQueryInfo.length) {
       delete prepPriceQueryInfo[_id];
       prepPriceQueryInfo[_id] = prepPriceQueryInfo[prepPriceQueryInfo.length-1];
@@ -220,7 +220,7 @@ contract SingleHouse is IHouse {
       delete prepPriceQueryInfo[_id];
       prepPriceQueryInfo.length--;
     }
-  }
+  }*/
 
   function swap (uint _id1, uint _id2) private {
     if (_id1 != _id2) {
