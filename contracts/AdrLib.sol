@@ -5,13 +5,13 @@ library AdrLib {
     
   }*/
 
-  function AssertInside(address[] storage adrL, address adr) returns (bool tF) {
-    var check = false;
+  function AssertInside(address[] storage adrL, address adr) returns (bool) {
     for (uint i = 0; i < adrL.length; i++) {
       if (adr == adrL[i]) {
-        check = true;
+        return true;
       }
     }
+    return false;
   }
 
 }

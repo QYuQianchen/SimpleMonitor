@@ -2,11 +2,14 @@ pragma solidity ^0.4.4;
 
 import "./IBattery.sol";
 import "./SortLib.sol"; 
+import "./AdrLib.sol"; 
 //For simplicity, we do not use the sorting functions here, as in our configuration, there is only one battery and there's only one PV connected.  
 import "./IPV.sol";
 import "./IGrid.sol";
 
 contract SingleBattery is IBattery {
+  
+  using AdrLib for address[];
 
   address Admin;                    // shall be defined at the creation of contract or to be defined manually
   address public owner;
@@ -46,17 +49,9 @@ contract SingleBattery is IBattery {
     bool tF = false;
     for (uint i = 0; i < connectedPV.length; i++) {
       (tP,tF) = IPV(connectedPV[i]).getPrice();
-      setPriceQueryInfo(connectedPV[i],tP,tF);
+      priceQueryInfo[connectedPV[i]] = SortLib.PriceTF(tP,tF);
     }
     lastPriceQueryAt = now;
-  }
-
-  function setPriceQueryInfo(address adr, uint prs, bool tf) {
-    //require(assertInConnectedPV(adr) || assertInConnectedBattery(adr));
-    SortLib.PriceTF memory tempPriceTF;
-    tempPriceTF.prs = prs;
-    tempPriceTF.updated = tf;
-    priceQueryInfo[adr] = tempPriceTF;
   }
 
   function sort() { // we are not doing sorting here -> as there is only 1 PV in the exercise layout
@@ -67,7 +62,7 @@ contract SingleBattery is IBattery {
   } 
 
   function getSortedPVInfo() returns(uint consum, uint rank, uint tot, bool updated) {
-    address adr = msg.sender;     //If the PV is connected
+    // address adr = msg.sender;     //If the PV is connected
     consum = buyVolume;
     rank = 1; // We only have one PV connnected (In the demo layout)
     if (grid != 0x0) {
@@ -100,13 +95,7 @@ contract SingleBattery is IBattery {
   }
 
   modifier connectedPVOnly (address adrP) {
-    var check = false;
-    for (uint i = 0; i < connectedPV.length; i++) {
-      if (msg.sender == connectedPV[i]) {
-        check = true;
-      }
-    }
-    if (check == true) {
+    if (connectedPV.AssertInside(adrP) == true) {
       _;
     } else {
       revert();
@@ -114,13 +103,7 @@ contract SingleBattery is IBattery {
   }
 
   modifier connectedHouseOnly {
-    var check = false;
-    for (uint i = 0; i < connectedHouse.length; i++) {
-      if (msg.sender == connectedHouse[i]) {
-        check = true;
-      }
-    }
-    if (check == true) {
+    if (connectedPV.AssertInside(msg.sender) == true) {
       _;
     } else {
       revert();

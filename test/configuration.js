@@ -167,17 +167,21 @@ contract('Configuration', function(accounts) {
     }).then(function(result){
       console.log("The price of connectedBattery[0] is (from House_H2)",result[0].toNumber(),result[1]);*/
       singleHouse2.askForPrice();
-    }).then(function(result){
-      console.log("ask for price");
       singleHouse2.sortPriceList();
+    }).then(function(result){
+      console.log("House 2 asked and sorted");
+      singleHouse0.askForPrice();
+      singleHouse0.sortPriceList();
     }).then(function(){
-      console.log("sort price list");
+      console.log("House 0 asked and sorted");
+      singleHouse1.askForPrice();
+      singleHouse1.sortPriceList();
+    }).then(function(){
+      console.log("House 1 asked and sorted");
       singleBattery0.askForPrice();
-    }).then(function(){
-      console.log("asl for price");
       singleBattery0.sort();
     }).then(function(){
-      console.log("sort price list");
+      console.log("Battery 0 asked and sorted");
       //return singleHouse2.getAskedPrice.call(singlePV1_adr);
       /*return singleHouse2.getSortedPriceList.call(0);
     }).then(function(result){
@@ -227,22 +231,30 @@ contract('Configuration', function(accounts) {
 
   it("Price communication House<->PV (3. PV collect Info)", function() {
     // Let the rest of the houses calculate their preference list (given the price of PV/Battery/Grid)
-    singleHouse0.askForPrice();
-    singleHouse0.sortPriceList();
-    singleHouse1.askForPrice();
-    singleHouse1.sortPriceList();
-    singlePV1.askForRank();
-    /*singlePV1.sortRankList();*/
-
-    /*singleHouse0.askForPrice().then(function(result){
-      console.log("H0 ask for price");
+    return singleHouse1.getSortedInfo.call({from: singlePV1_adr}).then(function(result){
+      console.log("returned sorted information from sH1 is (from singlePV1_adr)",result[0].toNumber(),result[1].toNumber(),result[2].toNumber(),result[3]);
       singlePV1.askForRank();
     }).then(function(result){
-      console.log("PV is collecting the preference list");
-      singlePV1.sortRankList();
+      console.log("PV collected the information");
+      return singlePV1.getSortedInfo.call(0);
     }).then(function(result){
-      console.log("PV is sorting the collected preference lists internally");
-    });*/
+      console.log("PV collected the information. num is", result[0],result[1].toNumber(),result[2].toNumber(),result[3].toNumber());
+      return singlePV1.getSortedInfo.call(1);
+    }).then(function(result){
+      console.log("PV collected the information. num is", result[0],result[1].toNumber(),result[2].toNumber(),result[3].toNumber());
+      singlePV1.sortRankList();  
+    }).then(function(result){
+      console.log("PV sorted the information");
+      return singlePV1.getSortedInfo.call(0);
+    }).then(function(result){
+      console.log("The sorted result at 0 is", result[0],result[1].toNumber(),result[2].toNumber(),result[3].toNumber());
+      return singlePV1.getSortedInfo.call(1);
+    }).then(function(result){
+      console.log("The sorted result at 1 is", result[0],result[1].toNumber(),result[2].toNumber(),result[3].toNumber());
+      return singlePV1.getSortedInfo.call(2);
+    }).then(function(result){
+      console.log("The sorted result at 2 is", result[0],result[1].toNumber(),result[2].toNumber(),result[3].toNumber());
+    });
   });
 
 });

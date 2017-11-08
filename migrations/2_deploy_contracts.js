@@ -20,16 +20,15 @@ module.exports = function(deployer) {
   // No need to deploy abstract contract?!?
   deployer.deploy(SortRLib);
   deployer.link(SortRLib,[SinglePV,Configuration]);
-//deployer.link(SortRLib,SinglePV);
-  deployer.deploy(SinglePV);
 
   deployer.deploy(SortLib);
   deployer.link(SortLib,[SingleHouse,Configuration]);
-  //deployer.link(SortLib,SingleHouse);
+
   deployer.deploy(AdrLib);
-  deployer.link(AdrLib,[SingleHouse,Configuration]);
+  deployer.link(AdrLib,[SingleHouse,SinglePV,SingleBattery,Configuration]);
+
+  deployer.deploy(SinglePV);
   deployer.deploy(SingleHouse);
-  
   deployer.deploy(SingleBattery);
   deployer.deploy(Grid);
   //deployer.deploy(HouseLib);

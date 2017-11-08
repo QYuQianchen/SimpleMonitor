@@ -14,7 +14,7 @@ contract IHouse {
     }
   }
 
-  function getSortedInfo() returns(uint consum, uint rank, uint tot, bool updated);
+  function getSortedInfo() external returns(uint consum, uint rank, uint tot, bool updated);
 
   function setGridAdr(address adr) adminOnly external {
     grid = adr;

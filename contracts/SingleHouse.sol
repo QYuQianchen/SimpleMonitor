@@ -14,12 +14,12 @@ contract SingleHouse is IHouse {
   using AdrLib for address[];
 
   //address Admin;                    // shall be defined at the creation of contract or to be defined manually... now it doesn't work well. It captures the address of the Configuration contract.
+  //uint    consumTimeOut = 5 minutes;
+  //address grid = 0x0;               // contract address of grid
   address public owner;
   bytes32 public name;              // name of the device (Serie No.)
   uint    consumption;              // Production of electricity (consumption: positive)
   uint    consumStatusAt;           // timestamp of the update (consumption)
-  //uint    consumTimeOut = 5 minutes;
-  //address grid = 0x0;                     // contract address of grid
   address[] connectedPV;            // List of contract address of connected PV
   address[] connectedBattery;       // List of contract address of connected batteries
 
@@ -58,13 +58,7 @@ contract SingleHouse is IHouse {
   }*/
 
   modifier connectedPVOnly (address adrP) {
-    /*var check = false;
-    for (uint i = 0; i < connectedPV.length; i++) {
-      if (msg.sender == connectedPV[i]) {
-        check = true;
-      }
-    }*/
-    if (connectedPV.AssertInside(adrP) == true) {
+    if (connectedPV.AssertInside(adrP)) {
       _;
     } else {
       revert();
@@ -72,13 +66,7 @@ contract SingleHouse is IHouse {
   }
 
   modifier connectedBatteryOnly (address adrB) {
-    var check = false;
-    for (uint i = 0; i < connectedBattery.length; i++) {
-      if (msg.sender == connectedBattery[i]) {
-        check = true;
-      }
-    }
-    if (check == true) {
+    if (connectedBattery.AssertInside(adrB)) {
       _;
     } else {
       revert();
@@ -142,39 +130,13 @@ contract SingleHouse is IHouse {
     bool tF = false;
     for (uint i = 0; i < connectedPV.length; i++) {
       (tP,tF) = IPV(connectedPV[i]).getPrice();
-      setPriceQueryInfo(connectedPV[i],tP,tF);
+      priceQueryInfo[connectedPV[i]] = SortLib.PriceTF(tP,tF);
     }
     for (i = 0; i < connectedBattery.length; i++) {
       (tP,tF) = IBattery(connectedBattery[i]).getSalePrice();
-      setPriceQueryInfo(connectedBattery[i],tP,tF);
+      priceQueryInfo[connectedBattery[i]] = SortLib.PriceTF(tP,tF);
     }
     lastPriceQueryAt = now;
-  }
-
-  function setPriceQueryInfo(address adr, uint prs, bool tf) {
-    //require(assertInConnectedPV(adr) || assertInConnectedBattery(adr));
-    SortLib.PriceTF memory tempPriceTF;
-    tempPriceTF.prs = prs;
-    tempPriceTF.updated = tf;
-    priceQueryInfo[adr] = tempPriceTF;
-  }
-
-  function assertInConnectedPV(address adr) returns (bool) {
-    for (uint i = 0; i < connectedPV.length; i++) {
-      if (adr == connectedPV[i]) {
-        return true;
-      }
-    }
-    return false;
-  }
-  
-  function assertInConnectedBattery(address adr) returns (bool) {
-    for (uint i = 0; i < connectedBattery.length; i++) {
-      if (adr == connectedBattery[i]) {
-        return true;
-      }
-    }
-    return false;
   }
 
   //------------------------------
@@ -186,7 +148,7 @@ contract SingleHouse is IHouse {
     createPriceList();
     uint maxTemp;
     uint totalLength = connectedPV.length + connectedBattery.length;
-    for (uint i=0; i<totalLength; i++) {
+    for (uint i = 0; i < totalLength; i++) {
       maxTemp = prepPriceQueryInfo.maxStruct();
       swap(totalLength-1-i,maxTemp);
       prepPriceQueryInfo.del(maxTemp);
@@ -196,7 +158,8 @@ contract SingleHouse is IHouse {
       uint tP = 0;
       bool tF = false;
       (tP,tF) = IGrid(grid).getPrice();
-      setPriceQueryInfo(grid,tP,tF);
+      priceQueryInfo[grid] = SortLib.PriceTF(tP,tF);
+      //setPriceQueryInfo(grid,tP,tF);
       sortedPriceQueryInfo[totalLength] = grid;
     }
   }
@@ -213,17 +176,6 @@ contract SingleHouse is IHouse {
       sortedPriceQueryInfo[i] = connectedBattery[i-connectedPV.length];
     }
   }
-
-  /*function del (uint _id) private {
-    if (_id != prepPriceQueryInfo.length) {
-      delete prepPriceQueryInfo[_id];
-      prepPriceQueryInfo[_id] = prepPriceQueryInfo[prepPriceQueryInfo.length-1];
-      prepPriceQueryInfo.length--;
-    } else {
-      delete prepPriceQueryInfo[_id];
-      prepPriceQueryInfo.length--;
-    }
-  }*/
 
   function swap (uint _id1, uint _id2) private {
     if (_id1 != _id2) {
@@ -248,7 +200,7 @@ contract SingleHouse is IHouse {
     return 0;
   }
 
-  function getSortedInfo() returns(uint consum, uint rank, uint tot, bool updated) {
+  function getSortedInfo() external returns(uint consum, uint rank, uint tot, bool updated) {
     return  getSortedHInfo(msg.sender);
   }
 

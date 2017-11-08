@@ -4,25 +4,27 @@ import "./IPV.sol";
 import "./IHouse.sol";
 import "./IBattery.sol";
 import "./SortRLib.sol";
+import "./AdrLib.sol";
 
 contract SinglePV is IPV {
-
+  
+  using AdrLib for address[];
   // one contract is associated to one particular PV panel in the network.
   // later we need to modify the parent contract that creates each PV contract - configuration.sol
-  address Admin;                    // shall be defined at the creation of contract or to be defined manually
+  //address Admin;                    // shall be defined at the creation of contract or to be defined manually
   address public owner;
   bytes32 public name;              // name of the device (Serie No.)
   uint    production;               // Production of electricity (supply: negative)
   uint    prodStatusAt;             // timestamp of the update (prod)
-  uint    prodTimeOut = 5 minutes;
+  //uint    prodTimeOut = 5 minutes;
   uint    price;
   uint    priceStatusAt;            // timestamp of the update (price)
-  uint    priceTimeOut = 5 minutes;
+  //uint    priceTimeOut = 5 minutes;
   //mapping(address=>bool) connectedHouse;      // List of households connected
   // mapping(address=>bool) connectedBattery;   // List of batteries connected
   //uint    connectedHouseNum;
   //uint    connectedBatteryNum;  
-  address grid = 0x0;                     // contract address of grid
+  //address grid = 0x0;                     // contract address of grid
   address[] connectedHouse;         // List of households connected
   address[] connectedBattery;       // List of batteries connected
 
@@ -34,31 +36,67 @@ contract SinglePV is IPV {
 
   using SortRLib for SortRLib.Request[];
   SortRLib.Request[] prepRankingInfo;
+
   uint    rLength;
   uint    lastRankingAt;
   mapping(address=>SortRLib.Request) RankingInfo;
   mapping(uint=>address) sortedRankingInfo;
 
-  function askForRank(){
+  /*function askForRankTEST() returns (uint, uint) {
+    uint consum;
+    uint rank;
+    uint tot;
+    bool updated;
+    uint num1 = 0;
+    uint num2 = 0;
+    prepRankingInfo.length = connectedHouse.length+connectedBattery.length;
+
+    for (uint i = 0; i < connectedHouse.length; i++) {
+      
+      (consum, rank, tot, updated) = IHouse(connectedHouse[i]).getSortedInfo();
+      GetSortedInfo(connectedHouse[i], consum, rank, tot, updated);
+      RankingInfo[connectedHouse[i]] = SortRLib.Request(consum, rank, tot);
+
+      prepRankingInfo[num1] = RankingInfo[connectedHouse[i]];
+      num1++;
+    }
+
+    for (i = 0; i < connectedBattery.length; i++) {
+        num2++;
+    }
+
+    return (num1, num2);
+  }*/
+
+  function getPrepInfo(uint _id) returns(uint consum, uint rank, uint tot) {
+    consum = prepRankingInfo[_id].consump;
+    rank = prepRankingInfo[_id].rank;
+    tot = prepRankingInfo[_id].total;
+  }
+
+  function askForRank() {
     // ask and prepare for sorting the ranking...
     uint consum;
     uint rank;
     uint tot;
     bool updated;
     uint num;
+    prepRankingInfo.length = connectedHouse.length+connectedBattery.length;
     for (uint i = 0; i < connectedHouse.length; i++) {
       (consum, rank, tot, updated) = IHouse(connectedHouse[i]).getSortedInfo();
+      //GetSortedInfo(connectedHouse[i], consum, rank, tot, updated);
       if (updated) {
-        setRankingInfo(connectedHouse[i],consum, rank, tot); 
+        RankingInfo[connectedHouse[i]] = SortRLib.Request(consum, rank, tot);
         prepRankingInfo[num] = RankingInfo[connectedHouse[i]];
         sortedRankingInfo[num] = connectedHouse[i];
         num++;
       }
     }
     for (i = 0; i < connectedBattery.length; i++) {
-      (consum, rank, tot, updated) = IBattery(connectedBattery[i]).getSortedPVInfo();
+      (consum,rank,tot,updated) = IBattery(connectedBattery[i]).getSortedPVInfo();
+      //GetSortedInfo(connectedBattery[i], consum, rank, tot, updated);
       if (updated) {
-        setRankingInfo(connectedBattery[i],consum, rank, tot);
+        RankingInfo[connectedBattery[i]] = SortRLib.Request(consum, rank, tot);
         prepRankingInfo[num] = RankingInfo[connectedBattery[i]];
         sortedRankingInfo[num] = connectedBattery[i];
         num++;
@@ -68,26 +106,8 @@ contract SinglePV is IPV {
     prepRankingInfo.length = num;
     lastRankingAt = now;
   }
-
-  function setRankingInfo(address adr, uint c, uint r, uint tot) {
-    //require(assertInconnectedHouse(adr) || assertInConnectedBattery(adr));
-    SortRLib.Request memory tempRank;
-    tempRank.consump = c;
-    tempRank.rank = r;
-    tempRank.total = tot;
-    RankingInfo[adr] = tempRank;
-  }
-
-  function del (uint _id) private {
-    if (_id != prepRankingInfo.length) {
-      delete prepRankingInfo[_id];
-      prepRankingInfo[_id] = prepRankingInfo[prepRankingInfo.length-1];
-      prepRankingInfo.length--;
-    } else {
-      delete prepRankingInfo[_id];
-      prepRankingInfo.length--;
-    }
-  }
+  // This event is only for testing reason
+  //event GetSortedInfo(address device, uint consum, uint rank, uint tot, bool updated);
 
   function swap (uint _id1, uint _id2) private {
     if (_id1 != _id2) {
@@ -102,8 +122,8 @@ contract SinglePV is IPV {
     uint minTemp;
     for (uint i=0; i<rLength; i++) {
       minTemp = prepRankingInfo.minStruct();
-      swap(i,minTemp);
-      del(minTemp);
+      swap(i,i+minTemp);
+      prepRankingInfo.del(minTemp);
     }
     /*
     // In case there is still excess, need to ask connectedBattery to buy for the extra...as much as possible
@@ -135,7 +155,6 @@ contract SinglePV is IPV {
   }
   
   
-  
   modifier ownerOnly {
     if (msg.sender == owner) {
       _;
@@ -144,22 +163,8 @@ contract SinglePV is IPV {
     }
   }
 
-  modifier adminOnly {
-    if (msg.sender == Admin) {
-      _;
-    } else {
-      revert();
-    }
-  }
-
   modifier connectedHouseOnly {
-    var check = false;
-    for (uint i = 0; i < connectedHouse.length; i++) {
-      if (msg.sender == connectedHouse[i]) {
-        check = true;
-      }
-    }
-    if (check == true) {
+    if (connectedHouse.AssertInside(msg.sender) == true) {
       _;
     } else {
       revert();
@@ -210,7 +215,7 @@ contract SinglePV is IPV {
     PriceUpdate(now);
   }
 
-  function setGridAdr(address adr) adminOnly external{
+  function setGridAdr(address adr) adminOnly external {
     grid = adr;
   }
 
