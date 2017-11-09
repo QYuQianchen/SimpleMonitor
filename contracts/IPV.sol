@@ -7,6 +7,7 @@ contract IPV {
   address grid = 0x0;
   uint    prodTimeOut = 5 minutes;
   uint    priceTimeOut = 5 minutes;
+  int     wallet;                   // To record loss & gain
 
   modifier adminOnly {
     if (msg.sender == Admin) {

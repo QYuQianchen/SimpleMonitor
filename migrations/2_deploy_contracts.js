@@ -1,6 +1,7 @@
 var SortLib = artifacts.require("./SortLib.sol");
 var SortRLib = artifacts.require("./SortRLib.sol");
 var AdrLib = artifacts.require("./AdrLib.sol");
+var TransacLib = artifacts.require("./TransactLib.sol");
 var IPV = artifacts.require("./IPV.sol");
 var IHouse = artifacts.require("./IHouse.sol");
 var IBattery = artifacts.require("./IBattery.sol");
@@ -26,6 +27,9 @@ module.exports = function(deployer) {
 
   deployer.deploy(AdrLib);
   deployer.link(AdrLib,[SingleHouse,SinglePV,SingleBattery,Configuration]);
+
+  deployer.deploy(TransacLib);
+  deployer.link(TransacLib,[SingleHouse,SinglePV,SingleBattery,Configuration]);
 
   deployer.deploy(SinglePV);
   deployer.deploy(SingleHouse);

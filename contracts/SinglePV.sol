@@ -5,10 +5,12 @@ import "./IHouse.sol";
 import "./IBattery.sol";
 import "./SortRLib.sol";
 import "./AdrLib.sol";
+import "./TransactLib.sol";
 
 contract SinglePV is IPV {
   
   using AdrLib for address[];
+  using TransactLib for *;
   // one contract is associated to one particular PV panel in the network.
   // later we need to modify the parent contract that creates each PV contract - configuration.sol
   //address Admin;                    // shall be defined at the creation of contract or to be defined manually
@@ -154,6 +156,27 @@ contract SinglePV is IPV {
     tot = RankingInfo[adr].total;
   }
   
+  function initiateTransaction(uint _id) returns (uint, uint) {
+    uint giveoutVol;
+    address adr;
+    uint whatDeviceAccept;
+    uint receivedMoney;
+    //for (uint i = 0; i < rLength; i++) {
+      adr = sortedRankingInfo[_id];
+      giveoutVol = production.calculatePVGiveoutVolume(RankingInfo[adr].consump);
+      if (connectedBattery.AssertInside(adr)) {
+        whatDeviceAccept = 99;
+      } else if (connectedHouse.AssertInside(adr)) {
+        whatDeviceAccept = IHouse(adr).goNoGo(giveoutVol);
+        production -= whatDeviceAccept;
+        receivedMoney = whatDeviceAccept*price;
+        wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
+      } else {
+        whatDeviceAccept = 0; 
+      }
+      return(giveoutVol, whatDeviceAccept);
+    //}
+  }
   
   modifier ownerOnly {
     if (msg.sender == owner) {
@@ -196,6 +219,7 @@ contract SinglePV is IPV {
   event ProductionLog(address adr, uint produc, uint prodAt);
   event ConfigurationLog(string confMod, uint statusAt);
   event PriceUpdate(uint updateAt);
+  
 
   function SinglePV(address adr) { // Here we are still using adr in the constructor, but later maybe we should change the adr input into byte32, by a harshed device identifier
     // constructor

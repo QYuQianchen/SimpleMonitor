@@ -2,6 +2,7 @@ pragma solidity ^0.4.4;
 
 import "./SortLib.sol";
 import "./AdrLib.sol";
+import "./TransactLib.sol";
 import "./IPV.sol";
 import "./IGrid.sol";
 import "./IBattery.sol";
@@ -12,13 +13,14 @@ contract SingleHouse is IHouse {
   // one contract is associated to one particular House in the network.
 
   using AdrLib for address[];
+  using TransactLib for uint;
 
   //address Admin;                    // shall be defined at the creation of contract or to be defined manually... now it doesn't work well. It captures the address of the Configuration contract.
   //uint    consumTimeOut = 5 minutes;
   //address grid = 0x0;               // contract address of grid
   address public owner;
   bytes32 public name;              // name of the device (Serie No.)
-  uint    consumption;              // Production of electricity (consumption: positive)
+  
   uint    consumStatusAt;           // timestamp of the update (consumption)
   address[] connectedPV;            // List of contract address of connected PV
   address[] connectedBattery;       // List of contract address of connected batteries
@@ -84,6 +86,7 @@ contract SingleHouse is IHouse {
 // ======= Event Logs =======
   event ConsumptionLog(address adr, uint consum, uint consumAt);
   event ConfigurationLog(string confMod, uint statusAt);
+  event EnergyTransferLog(address adrFrom, address adrTo, uint eVol, uint transferAt);
 
 // ======= Basic Functionalities =======
 
@@ -218,6 +221,19 @@ contract SingleHouse is IHouse {
     } else {
       updated = true;      
     }
+  }
+
+  // ------------Functions used in transaction------------------
+  function goNoGo(uint giveoutvol) returns (uint) {
+    address adrDevice = msg.sender;
+    uint takeoutvol;
+    require(connectedBattery.AssertInside(adrDevice) || connectedPV.AssertInside(adrDevice));
+    takeoutvol = consumption.calculateHouseReceivedVolume(giveoutvol);
+    consumption = consumption.clearEnergyTransfer(takeoutvol, address(this));
+    //EnergyTransferLog(adrDevice,address(this), takeoutvol, consumption);
+    //wallet = wallet.clearMoneyTransfer(-int(takeoutvol*priceQueryInfo[adrDevice].prs), adrDevice);
+    wallet -= int(takeoutvol*priceQueryInfo[adrDevice].prs);
+    return (takeoutvol); 
   }
 
 

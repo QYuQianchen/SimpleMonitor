@@ -12,8 +12,8 @@
         }
       ],
       "payable": false,
-      "type": "function",
-      "stateMutability": "view"
+      "stateMutability": "view",
+      "type": "function"
     },
     {
       "constant": false,
@@ -26,8 +26,8 @@
       "name": "setPrice",
       "outputs": [],
       "payable": false,
-      "type": "function",
-      "stateMutability": "nonpayable"
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
       "constant": false,
@@ -44,8 +44,8 @@
         }
       ],
       "payable": false,
-      "type": "function",
-      "stateMutability": "nonpayable"
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
       "inputs": [
@@ -55,13 +55,13 @@
         }
       ],
       "payable": false,
-      "type": "constructor",
-      "stateMutability": "nonpayable"
+      "stateMutability": "nonpayable",
+      "type": "constructor"
     }
   ],
-  "bytecode": "0x606060405261012c600455341561001557600080fd5b6040516020806101e08339810160405280805160018054600160a060020a03928316600160a060020a03199182161790915560008054339093169290911691909117905550506101768061006a6000396000f3006060604052600436106100565763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416638da5cb5b811461005b57806391b7f5ed1461009757806398d5fdca146100af575b600080fd5b341561006657600080fd5b61006e6100dc565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b34156100a257600080fd5b6100ad6004356100f8565b005b34156100ba57600080fd5b6100c2610125565b604051918252151560208201526040908101905180910390f35b60015473ffffffffffffffffffffffffffffffffffffffff1681565b6001543373ffffffffffffffffffffffffffffffffffffffff908116911614156100565760025542600355565b600254600454600354600091429101101561014257506000610146565b5060015b90915600a165627a7a723058205b451aab16bcd6fd80bdaf36eda01e2bee3e266abf62b911a72a057db7601a7a0029",
-  "deployedBytecode": "0x6060604052600436106100565763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416638da5cb5b811461005b57806391b7f5ed1461009757806398d5fdca146100af575b600080fd5b341561006657600080fd5b61006e6100dc565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b34156100a257600080fd5b6100ad6004356100f8565b005b34156100ba57600080fd5b6100c2610125565b604051918252151560208201526040908101905180910390f35b60015473ffffffffffffffffffffffffffffffffffffffff1681565b6001543373ffffffffffffffffffffffffffffffffffffffff908116911614156100565760025542600355565b600254600454600354600091429101101561014257506000610146565b5060015b90915600a165627a7a723058205b451aab16bcd6fd80bdaf36eda01e2bee3e266abf62b911a72a057db7601a7a0029",
-  "sourceMap": "48:891:2:-;;;321:9;298:32;;438:158;;;;;;;;;;;;;;;;;;;;;;556:5;:11;;-1:-1:-1;;;;;556:11:2;;;-1:-1:-1;;;;;;556:11:2;;;;;;;:5;573:18;;581:10;573:18;;;;;;;;;;;;;-1:-1:-1;;48:891:2;;;;;;",
+  "bytecode": "0x606060405261012c600555341561001557600080fd5b6040516020806101e08339810160405280805160028054600160a060020a03928316600160a060020a03199182161790915560018054339093169290911691909117905550506101768061006a6000396000f3006060604052600436106100565763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416638da5cb5b811461005b57806391b7f5ed1461009757806398d5fdca146100af575b600080fd5b341561006657600080fd5b61006e6100dc565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b34156100a257600080fd5b6100ad6004356100f8565b005b34156100ba57600080fd5b6100c2610125565b604051918252151560208201526040908101905180910390f35b60025473ffffffffffffffffffffffffffffffffffffffff1681565b6002543373ffffffffffffffffffffffffffffffffffffffff908116911614156100565760035542600455565b600354600554600454600091429101101561014257506000610146565b5060015b90915600a165627a7a723058203717dcf24dac087293a5977c308a0954ab2953d9223a7a502e2d25de116d247e0029",
+  "deployedBytecode": "0x6060604052600436106100565763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416638da5cb5b811461005b57806391b7f5ed1461009757806398d5fdca146100af575b600080fd5b341561006657600080fd5b61006e6100dc565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b34156100a257600080fd5b6100ad6004356100f8565b005b34156100ba57600080fd5b6100c2610125565b604051918252151560208201526040908101905180910390f35b60025473ffffffffffffffffffffffffffffffffffffffff1681565b6002543373ffffffffffffffffffffffffffffffffffffffff908116911614156100565760035542600455565b600354600554600454600091429101101561014257506000610146565b5060015b90915600a165627a7a723058203717dcf24dac087293a5977c308a0954ab2953d9223a7a502e2d25de116d247e0029",
+  "sourceMap": "48:891:2:-;;;321:9;298:32;;438:158;;;;;;;;;;;;;;;;;;;;;;556:5;:11;;-1:-1:-1;;;;;556:11:2;;;-1:-1:-1;;;;;;556:11:2;;;;;;;;573:18;;581:10;573:18;;;;;;;;;;;;;-1:-1:-1;;48:891:2;;;;;;",
   "deployedSourceMap": "48:891:2:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;186:20;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;600:85;;;;;;;;;;;;;;;;689:248;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;186:20;;;;;;:::o;600:85::-;378:5;;364:10;378:5;364:19;;;378:5;;364:19;360:70;;;644:5;:11;677:3;661:13;:19;600:85::o;689:248::-;759:5;;819:12;;803:13;;718:8;;834:3;803:28;;:34;799:115;;;-1:-1:-1;862:5:2;799:115;;;-1:-1:-1;903:4:2;799:115;689:248;;:::o",
   "source": "pragma solidity ^0.4.4;\n\nimport \"./IGrid.sol\";\n\ncontract Grid is IGrid {\n\n  address Admin;                    // shall be defined at the creation of contract or to be defined manually\n  address public owner;\n  uint    price;\n  uint    priceStatusAt;            // timestamp of the update (price)\n  uint    priceTimeOut = 5 minutes;\n\n  modifier ownerOnly {\n    if (msg.sender == owner) {\n      _;\n    } else {\n      revert();\n    }\n  }\n\n  function Grid(address adr) {\n    // constructor\n    // Assuming that the Grid can be connected by all the devices\n    owner = adr;\n    Admin = msg.sender;\n  }\n\n  function setPrice(uint prs) ownerOnly {\n    price = prs;\n    priceStatusAt = now;\n  }\n\n  function getPrice() returns (uint prs, bool updatedOrNot) {\n    prs = price;\n    //prsAt = priceStatusAt;\n    if (priceStatusAt + priceTimeOut < now) {\n      updatedOrNot = false;\n    } else {\n      updatedOrNot = true;\n    }\n    //adr = owner;\n  }\n}\n",
   "sourcePath": "C:\\Users\\qianc\\Documents\\Thesis\\Code\\SimpleMonitor\\contracts\\Grid.sol",
@@ -90,7 +90,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 889,
+          "SourceUnit": 893,
           "absolutePath": "/C/Users/qianc/Documents/Thesis/Code/SimpleMonitor/contracts/IGrid.sol",
           "file": "./IGrid.sol",
           "scope": 851,
@@ -106,14 +106,14 @@
       {
         "attributes": {
           "contractDependencies": [
-            888
+            892
           ],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
             850,
-            888
+            892
           ],
           "name": "Grid",
           "scope": 851
@@ -130,7 +130,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "IGrid",
-                  "referencedDeclaration": 888,
+                  "referencedDeclaration": 892,
                   "type": "contract IGrid"
                 },
                 "id": 764,
@@ -342,7 +342,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3181,
+                                  "referencedDeclaration": 3504,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -416,7 +416,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3185,
+                                      "referencedDeclaration": 3508,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -612,7 +612,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3181,
+                                  "referencedDeclaration": 3504,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -814,7 +814,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 3183,
+                              "referencedDeclaration": 3506,
                               "type": "uint256",
                               "value": "now"
                             },
@@ -854,7 +854,7 @@
               "payable": false,
               "scope": 850,
               "stateMutability": "nonpayable",
-              "superFunction": 887,
+              "superFunction": 891,
               "visibility": "public"
             },
             "children": [
@@ -1052,7 +1052,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 3183,
+                              "referencedDeclaration": 3506,
                               "type": "uint256",
                               "value": "now"
                             },
@@ -1220,15 +1220,9 @@
     "4447": {
       "events": {},
       "links": {},
-      "address": "0xfb88de099e13c3ed21f80a7a1e49f8caecf10df6"
-    },
-    "1510161302988": {
-      "events": {},
-      "links": {},
-      "address": "0xf5390574d1fb5bdc896cdaf6d0354ea93590424e",
-      "updated_at": 1510161319555
+      "address": "0xaa588d3737b611bafd7bd713445b314bd453a5c8"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-08T17:16:34.585Z"
+  "updatedAt": "2017-11-09T21:36:50.179Z"
 }

@@ -257,4 +257,30 @@ contract('Configuration', function(accounts) {
     });
   });
 
+  it("Price communication House<->PV (4. PV intiate Transaction)", function() {
+    // Let the rest of the houses calculate their preference list (given the price of PV/Battery/Grid)
+    singlePV1.initiateTransaction(0).then(function(result){
+      console.log("when initiate transaction");
+      return singleHouse1.getConsumption.call();
+    }).then(function(result){
+      console.log("Now SH1 consumes",result[0].toNumber(),result[1].toNumber());
+      return singleHouse2.getConsumption.call();
+    }).then(function(result){
+      console.log("Now SH2 consumes",result[0].toNumber(),result[1].toNumber());
+      return singleHouse2.getWallet();
+    }).then(function(result){
+      console.log("Now SH2 wallet is",result.toNumber());
+      singlePV1.initiateTransaction(1);
+      return singleHouse1.getConsumption.call();
+    }).then(function(result){
+      console.log("Now SH1 consumes",result[0].toNumber(),result[1].toNumber());
+      return singleHouse2.getConsumption.call();
+    }).then(function(result){
+      console.log("Now SH2 consumes",result[0].toNumber(),result[1].toNumber());
+      return singleHouse2.getWallet();
+    }).then(function(result){
+      console.log("Now SH2 wallet is",result.toNumber());
+    });
+  });
+
 });

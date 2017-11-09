@@ -3,6 +3,7 @@ pragma solidity ^0.4.4;
 import "./IBattery.sol";
 import "./SortLib.sol"; 
 import "./AdrLib.sol"; 
+import "./TransactLib.sol";
 //For simplicity, we do not use the sorting functions here, as in our configuration, there is only one battery and there's only one PV connected.  
 import "./IPV.sol";
 import "./IGrid.sol";
