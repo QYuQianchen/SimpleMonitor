@@ -92,30 +92,32 @@ contract Configuration {
       Houses[adr] = tempHouse;
       if (g) {
           SingleHouse(contractList[adr]).setGridAdr(gridAdr);
+          Grid(gridAdr).addH(contractList[adr]);
       }
       numHouseCurrent++;
       LogDevice(adr);
   }
 
-  function getContractAddress(address adr) adminOnly returns(address) {
+    function getContractAddress(address adr) adminOnly returns(address) {
       return address(contractList[adr]);
-  }
+    }
 
-  function addPV(address adr, bool g) adminOnly {
-      require(numPVCurrent < numPVTotal); //"Error: House number maximun. Cannot add more houses."
-      //mPV[adr] = new SinglePV(adr);     // create a SingleHouse contract and store it on the mHouse mapping
-      contractList[adr] = new SinglePV(adr);
-      // creates a minimature (Struct PV) that also stores the address and connection information, which is a private attribute in the Configuration.sol
-      PVpannel memory tempPV;
-      //tempPV.Address = address(mPV[adr]);
-      tempPV.Address = address(contractList[adr]);
-      tempPV.statusAt = now;
-      PVs[adr] = tempPV;
-      if (g) {
-          SinglePV(contractList[adr]).setGridAdr(gridAdr);
-      }
-      numPVCurrent++;
-      LogDevice(adr);
+    function addPV(address adr, bool g) adminOnly {
+        require(numPVCurrent < numPVTotal); //"Error: House number maximun. Cannot add more houses."
+        //mPV[adr] = new SinglePV(adr);     // create a SingleHouse contract and store it on the mHouse mapping
+        contractList[adr] = new SinglePV(adr);
+        // creates a minimature (Struct PV) that also stores the address and connection information, which is a private attribute in the Configuration.sol
+        PVpannel memory tempPV;
+        //tempPV.Address = address(mPV[adr]);
+        tempPV.Address = address(contractList[adr]);
+        tempPV.statusAt = now;
+        PVs[adr] = tempPV;
+        if (g) {
+            SinglePV(contractList[adr]).setGridAdr(gridAdr);
+            Grid(gridAdr).addPV(contractList[adr]);
+        }
+        numPVCurrent++;
+         LogDevice(adr);
   }
   
   function addBattery(address adr, uint capacity, bool g) adminOnly {
@@ -129,6 +131,7 @@ contract Configuration {
       Batteries[adr] = tempBattery;
       if (g) {
           SingleBattery(contractList[adr]).setGridAdr(gridAdr);
+          Grid(gridAdr).addB(contractList[adr]);
       }
       numBatteryCurrent++;
       LogDevice(adr);

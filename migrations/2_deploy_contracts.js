@@ -23,13 +23,13 @@ module.exports = function(deployer) {
   deployer.link(SortRLib,[SinglePV,Configuration]);
 
   deployer.deploy(SortLib);
-  deployer.link(SortLib,[SingleHouse,Configuration]);
+  deployer.link(SortLib,[SingleHouse,SingleBattery,Configuration]);
 
   deployer.deploy(AdrLib);
   deployer.link(AdrLib,[SingleHouse,SinglePV,SingleBattery,Configuration]);
 
   deployer.deploy(TransacLib);
-  deployer.link(TransacLib,[SingleHouse,SinglePV,SingleBattery,Configuration]);
+  deployer.link(TransacLib,[SingleHouse,SinglePV,SingleBattery,Grid,Configuration]);
 
   deployer.deploy(SinglePV);
   deployer.deploy(SingleHouse);

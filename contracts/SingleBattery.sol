@@ -11,8 +11,9 @@ import "./IGrid.sol";
 contract SingleBattery is IBattery {
   
   using AdrLib for address[];
+  using TransactLib for uint;
 
-  address Admin;                    // shall be defined at the creation of contract or to be defined manually
+  
   address public owner;
   bytes32 public name;              // name of the device (Serie No.)
   uint    capacity;                 // Cap of the device
@@ -27,7 +28,7 @@ contract SingleBattery is IBattery {
   uint    priceForSale;
   uint    priceForBuy;              // lower than market price
   uint    priceForExcessEnergy;     // lower than market price
-  address grid = 0x0;                     // contract address of grid
+  
   address[] connectedHouse; // List of households connected
   address[] connectedPV;// List of PV connected
   
@@ -45,27 +46,85 @@ contract SingleBattery is IBattery {
 
   function askForPrice() {
     // House query price info to all the connected PV/Battery. 
-    // If the house is connected to grid (most of the time), the price of Grid will be automatically added to the end of the sorted list.
+    // If the house is connected to grid (most of the time), the price of Grid also participates in the sorting (it's not less favored anymore)
     uint tP = 0;
     bool tF = false;
     for (uint i = 0; i < connectedPV.length; i++) {
       (tP,tF) = IPV(connectedPV[i]).getPrice();
       priceQueryInfo[connectedPV[i]] = SortLib.PriceTF(tP,tF);
     }
+    if (grid != 0x0) {
+      (tP,tF) = IGrid(grid).getPrice();
+      priceQueryInfo[grid] = SortLib.PriceTF(tP,tF);
+    }
     lastPriceQueryAt = now;
   }
 
+  function getSortedPosition (address adr) returns (uint) { // should be private, here the "private" is temporarily removed due to testing
+    //require(adr != 0x0);      // Sometimes with this line, there will be error in the configuration.js test... sometimes not.... sometimes need to _migrate_ twice to eliminate the error.... Don't know why
+    uint _l;
+    if (grid != 0x0) {
+      _l = connectedPV.length+1;
+    } else {
+      _l = connectedPV.length;
+    }
+    for (uint i=0; i<_l; i++) {
+      if (adr == sortedPriceQueryInfo[i]) {
+        return (i+1);
+      }
+    }
+    return 0;
+  }
+
   function sort() { // we are not doing sorting here -> as there is only 1 PV in the exercise layout
-    sortedPriceQueryInfo[0] = connectedPV[0];
+    /*sortedPriceQueryInfo[0] = connectedPV[0];
     if (grid != 0x0) {
       sortedPriceQueryInfo[1] = grid;
-    } 
+    }*/
+    createPriceList();
+    uint maxTemp;
+    uint totalLength;
+    if (grid != 0x0) {
+      totalLength = connectedPV.length+1;
+    } else {
+      totalLength = connectedPV.length;
+    }
+    for (uint i = 0; i < totalLength; i++) {
+      maxTemp = prepPriceQueryInfo.maxStruct();
+      swap(totalLength-1-i,maxTemp);
+      prepPriceQueryInfo.del(maxTemp);
+    }
   } 
 
+  function createPriceList() private {
+    if (grid != 0x0) {
+      prepPriceQueryInfo.length = connectedPV.length+1;
+    } else {
+      prepPriceQueryInfo.length = connectedPV.length;
+    }
+    for (uint i = 0; i < connectedPV.length; i++) {
+      prepPriceQueryInfo[i] = priceQueryInfo[connectedPV[i]];
+      sortedPriceQueryInfo[i] = connectedPV[i];
+    }
+    for (i = connectedPV.length; i < prepPriceQueryInfo.length; i++) {
+      prepPriceQueryInfo[i] = priceQueryInfo[grid];
+      sortedPriceQueryInfo[i] = grid;
+    }
+  }
+
+  function swap (uint _id1, uint _id2) private {
+    if (_id1 != _id2) {
+      address temp;
+      temp = sortedPriceQueryInfo[_id1];
+      sortedPriceQueryInfo[_id1] = sortedPriceQueryInfo[_id2];
+      sortedPriceQueryInfo[_id2] = temp;   
+    }
+  }
+
   function getSortedPVInfo() returns(uint consum, uint rank, uint tot, bool updated) {
-    // address adr = msg.sender;     //If the PV is connected
+    address adr = msg.sender;     //If the PV is connected
     consum = buyVolume;
-    rank = 1; // We only have one PV connnected (In the demo layout)
+    rank = getSortedPosition(adr); // We only have one PV connnected (In the demo layout)
     if (grid != 0x0) {
       tot = connectedPV.length + 1;
     } else {
@@ -78,6 +137,17 @@ contract SingleBattery is IBattery {
     }
   }
 
+// start transaction
+  function goNoGo(uint giveoutvol) returns (uint) {
+    address adrDevice = msg.sender;
+    uint takeoutvol;
+    require(connectedPV.AssertInside(adrDevice) || adrDevice == grid);
+    takeoutvol = buyVolume.calculateHouseReceivedVolume(giveoutvol);
+    buyVolume = buyVolume.clearEnergyTransfer(takeoutvol, address(this));
+    wallet -= int(takeoutvol*priceQueryInfo[adrDevice].prs);
+    return (takeoutvol); 
+  }
+
 
   modifier ownerOnly {
     if (msg.sender == owner) {
@@ -87,13 +157,7 @@ contract SingleBattery is IBattery {
     }
   }
 
-  modifier adminOnly {
-    if (msg.sender == Admin) {
-      _;
-    } else {
-      revert();
-    }
-  }
+  
 
   modifier connectedPVOnly (address adrP) {
     if (connectedPV.AssertInside(adrP) == true) {
@@ -108,7 +172,7 @@ contract SingleBattery is IBattery {
       _;
     } else {
       revert();
-    }
+    } 
   }
 
   modifier timed (uint initialTime, uint allowedTimeOut) {
@@ -130,9 +194,7 @@ contract SingleBattery is IBattery {
     capacity = cap;
   }
 
-  function setGridAdr(address adr) adminOnly external{
-    grid = adr;
-  }
+  
 
   function setVolume(uint vol) ownerOnly {
     // Can only be triggered once....Should be moved to the constructor...Once the initial volumne is set, can only be changed by energy trading.
@@ -150,6 +212,7 @@ contract SingleBattery is IBattery {
   }
 
   function setBuyVolume(uint v) ownerOnly {
+    require(currentVolume + v <= capacity);
     buyVolume = v;
   }
 
@@ -210,5 +273,9 @@ contract SingleBattery is IBattery {
     prs = priceForExcessEnergy;
     cap = capacity - currentVolume;
   }
+
+  function getBuyVol() returns (uint) {return buyVolume;}
+
+
 
 }

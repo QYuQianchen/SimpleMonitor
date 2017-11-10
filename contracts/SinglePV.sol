@@ -165,7 +165,10 @@ contract SinglePV is IPV {
       adr = sortedRankingInfo[_id];
       giveoutVol = production.calculatePVGiveoutVolume(RankingInfo[adr].consump);
       if (connectedBattery.AssertInside(adr)) {
-        whatDeviceAccept = 99;
+        whatDeviceAccept = IBattery(adr).goNoGo(giveoutVol);
+        production -= whatDeviceAccept;
+        receivedMoney = whatDeviceAccept*price;
+        wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else if (connectedHouse.AssertInside(adr)) {
         whatDeviceAccept = IHouse(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;

@@ -13,15 +13,15 @@ library SortLib {
     bool stat;
     for (uint i = 0; i < self.length; i++) {
       var x = self[i].prs;
-      if (x > max) {
+      if (x >= max) { // Small perference to put houses before battery.
         max = x;
         _id = i;
         stat = self[i].updated;
-      } else if (x == max && self[i].updated == false) {
+      } /*else if (x == max && self[i].updated == false) {
         max = x;
         _id = i;
         stat = self[i].updated;
-      }
+      }*/
     }
     ind = _id;
   }
