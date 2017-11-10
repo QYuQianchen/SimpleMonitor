@@ -22,5 +22,7 @@ contract IPV {
   function setGridAdr(address adr) adminOnly external {
     grid = adr;
   }
+
+  function getWallet() returns (int) {return wallet;}
   
 }

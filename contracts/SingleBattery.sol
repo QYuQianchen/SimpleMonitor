@@ -1,17 +1,22 @@
 pragma solidity ^0.4.4;
 
 import "./IBattery.sol";
+import "./IPV.sol";
+import "./IGrid.sol";
+import "./IHouse.sol";
+
+import "./SortRLib.sol";
 import "./SortLib.sol"; 
 import "./AdrLib.sol"; 
 import "./TransactLib.sol";
+
+
 //For simplicity, we do not use the sorting functions here, as in our configuration, there is only one battery and there's only one PV connected.  
-import "./IPV.sol";
-import "./IGrid.sol";
 
 contract SingleBattery is IBattery {
   
   using AdrLib for address[];
-  using TransactLib for uint;
+  using TransactLib for *;
 
   
   address public owner;
@@ -26,8 +31,7 @@ contract SingleBattery is IBattery {
   uint    priceStatusAt;            // timestamp of the update (price)
   uint    priceTimeOut = 5 minutes;
   uint    priceForSale;
-  uint    priceForBuy;              // lower than market price
-  uint    priceForExcessEnergy;     // lower than market price
+  uint    priceForBuy;              // lower than market price (ForExcessEnergy)
   
   address[] connectedHouse; // List of households connected
   address[] connectedPV;// List of PV connected
@@ -43,6 +47,15 @@ contract SingleBattery is IBattery {
 
   mapping(address=>SortLib.PriceTF) priceQueryInfo;
   mapping(uint=>address) sortedPriceQueryInfo;
+
+  using SortRLib for SortRLib.Request[];
+  SortRLib.Request[] prepRankingInfo;
+
+
+  uint    lastRankingAt;
+  uint    rLength;
+  mapping(address=>SortRLib.Request) RankingInfo;
+  mapping(uint=>address) sortedRankingInfo;
 
   function askForPrice() {
     // House query price info to all the connected PV/Battery. 
@@ -142,7 +155,8 @@ contract SingleBattery is IBattery {
     address adrDevice = msg.sender;
     uint takeoutvol;
     require(connectedPV.AssertInside(adrDevice) || adrDevice == grid);
-    takeoutvol = buyVolume.calculateHouseReceivedVolume(giveoutvol);
+    takeoutvol = buyVolume.findMin(giveoutvol);
+    currentVolume += takeoutvol;
     buyVolume = buyVolume.clearEnergyTransfer(takeoutvol, address(this));
     wallet -= int(takeoutvol*priceQueryInfo[adrDevice].prs);
     return (takeoutvol); 
@@ -203,10 +217,9 @@ contract SingleBattery is IBattery {
     VolLog(owner,vol,volStatusAt);
   }
 
-  function setPrice(uint prsSale, uint prsBuy, uint prsExcess) ownerOnly {
+  function setPrice(uint prsSale, uint prsBuy) ownerOnly {
     priceForSale = prsSale;
     priceForBuy = prsBuy;
-    priceForExcessEnergy = prsExcess;
     priceStatusAt = now;
     PriceUpdate(priceStatusAt);
   }
@@ -252,7 +265,7 @@ contract SingleBattery is IBattery {
     }
   }*/
 
-  function getVolumeCapacity (uint initTime) timed(initTime,volTimeOut) external returns (uint vol, uint volAt, uint cap) {
+  function getVolumeCapacity () external returns (uint vol, uint volAt, uint cap) { // timed(initTime,volTimeOut) 
     vol = currentVolume;
     volAt = volStatusAt;
     cap = capacity;
@@ -269,12 +282,77 @@ contract SingleBattery is IBattery {
     //adr = owner;
   }
 
-  function getExcess() returns (uint prs, uint cap) {
-    prs = priceForExcessEnergy;
-    cap = capacity - currentVolume;
+  function goExcess(uint vol) returns (uint takeVol, uint prs) {
+    prs = priceForBuy;
+    takeVol = vol.findMin(capacity-currentVolume);
+    currentVolume = currentVolume.clearExcessTransfer(takeVol, address(this));
+    wallet -= int(takeVol*prs);
   }
 
+
   function getBuyVol() returns (uint) {return buyVolume;}
+
+  // Battery also provides energy to houses
+  function askForRank() {
+    // ask and prepare for sorting the ranking...
+    uint consum;
+    uint rank;
+    uint tot;
+    bool updated;
+    uint num;
+
+    prepRankingInfo.length = connectedHouse.length;
+    for (uint i = 0; i < connectedHouse.length; i++) {
+      (consum, rank, tot, updated) = IHouse(connectedHouse[i]).getSortedInfo();
+      //GetSortedInfo(connectedHouse[i], consum, rank, tot, updated);
+      if (updated) {
+        RankingInfo[connectedHouse[i]] = SortRLib.Request(consum, rank, tot);
+        prepRankingInfo[num] = RankingInfo[connectedHouse[i]];
+        sortedRankingInfo[num] = connectedHouse[i];
+        num++;
+      }
+    }
+    prepRankingInfo.length = num;
+    rLength = num;
+    lastRankingAt = now;
+  }
+
+  function sortRankList() {
+    uint minTemp;
+    for (uint i=0; i<rLength; i++) {
+      minTemp = prepRankingInfo.minStruct();
+      swap(i,i+minTemp);
+      prepRankingInfo.del(minTemp);
+    }
+  }
+
+
+  function getSortedInfo(uint _id) returns(address adr, uint consum, uint rank, uint tot) {
+    adr = sortedRankingInfo[_id];
+    consum = RankingInfo[adr].consump;
+    rank = RankingInfo[adr].rank;
+    tot = RankingInfo[adr].total;
+  }
+  
+  function initiateTransaction(uint _id) returns (uint, uint) {
+    uint giveoutVol;
+    address adr;
+    uint whatDeviceAccept;
+    uint receivedMoney;
+    //for (uint i = 0; i < rLength; i++) {
+      adr = sortedRankingInfo[_id];
+      giveoutVol = currentVolume.findMin(RankingInfo[adr].consump);
+      if (connectedHouse.AssertInside(adr)) {
+        whatDeviceAccept = IHouse(adr).goNoGo(giveoutVol);
+        currentVolume -= whatDeviceAccept;
+        receivedMoney = whatDeviceAccept*priceForSale;
+        wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
+      } else {
+        whatDeviceAccept = 0; 
+      }
+      return(giveoutVol, whatDeviceAccept);
+    //}
+  }
 
 
 

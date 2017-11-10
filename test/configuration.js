@@ -124,8 +124,8 @@ contract('Configuration', function(accounts) {
     singlePV0.setPrice(20, {from: address_PV0});
     singlePV1.setPrice(15, {from: address_PV1});
     singlePV2.setPrice(30, {from: address_PV2});
-    singleBattery0.setPrice(20, 15, 1, {from: address_B0});
-    grid_c.setPrice(10, {from: address_G});
+    singleBattery0.setPrice(20, 3, {from: address_B0});
+    grid_c.setPrice(10, 1, {from: address_G});
       return singleHouse0.getConsumption.call().then(function(result){
       console.log("The consumption of House0 is ",result[0].toNumber(),result[1].toNumber());
       return singleHouse1.getConsumption.call();
@@ -266,19 +266,27 @@ contract('Configuration', function(accounts) {
       singlePV0.sortRankList();
       singlePV2.askForRank();
       singlePV2.sortRankList();
+      singleBattery0.askForRank();
+      singleBattery0.sortRankList();
     });
   });
   it("Price communication House<->PV (4. Grid check battery)", function() {
     return singleBattery0.getBuyVol.call().then(function(result){
       console.log("Now B0 wants to buy",result.toNumber());
+      return singleBattery0.getVolumeCapacity.call();
+    }).then(function(result){
+      console.log("Its volume and capacity are",result[0].toNumber(),result[1].toNumber(),result[2].toNumber());
       grid_c.needTBCharged();
       return singleBattery0.getBuyVol.call();
     }).then(function(result){
       console.log("Now B0 wants to buy",result.toNumber());
+      return singleBattery0.getVolumeCapacity.call();
+    }).then(function(result){
+      console.log("Its volume and capacity are",result[0].toNumber(),result[1].toNumber(),result[2].toNumber());
     });
   });
 
-  it("Price communication House<->PV (5. PV intiate Transaction)", function() {
+  it("Price communication House<->PV (5. PV and Battery intiate Transaction)", function() {
     // Let the rest of the houses calculate their preference list (given the price of PV/Battery/Grid)
     return singleHouse0.getConsumption.call().then(function(result){
     console.log("Now SH0 consumes",result[0].toNumber(),result[1].toNumber());
@@ -292,6 +300,8 @@ contract('Configuration', function(accounts) {
     singlePV1.initiateTransaction(1);
     singlePV0.initiateTransaction(0);
     singlePV0.initiateTransaction(1);
+    singleBattery0.initiateTransaction(0);
+    singleBattery0.initiateTransaction(1);
     singlePV2.initiateTransaction(0);
     singlePV2.initiateTransaction(1);
     return singleHouse0.getConsumption.call();
@@ -303,6 +313,9 @@ contract('Configuration', function(accounts) {
     return singleHouse2.getConsumption.call();
   }).then(function(result){
     console.log("Now SH2 consumes",result[0].toNumber(),result[1].toNumber());
+    return singleBattery0.getVolumeCapacity.call();
+  }).then(function(result){
+    console.log("Its volume and capacity are",result[0].toNumber(),result[1].toNumber(),result[2].toNumber());
 /*
     singlePV1.initiateTransaction(0).then(function(result){
       console.log("when initiate transaction");
@@ -334,4 +347,53 @@ contract('Configuration', function(accounts) {
     });
   });
 
+  it("Price communication House<->PV (5. PV and Battery intiate Transaction)", function() {
+    return singlePV0.getProduction.call().then(function(result){
+      console.log("PV0 still has",result[0].toNumber(),result[1].toNumber());
+      return singlePV1.getProduction.call();
+    }).then(function(result){
+      console.log("PV1 still has",result[0].toNumber(),result[1].toNumber());
+      return singlePV2.getProduction.call();
+    }).then(function(result){
+      console.log("PV2 still has",result[0].toNumber(),result[1].toNumber());
+    });
+  });
+
+  it("Price communication House<->PV (6. PV sell excess energy)", function() {
+    return singlePV0.getWallet.call().then(function(result){
+      console.log("PV0's wallet",result.toNumber());
+      return singlePV1.getWallet.call();
+    }).then(function(result){
+      console.log("PV1's wallet",result.toNumber());
+      return singlePV2.getWallet.call();
+    }).then(function(result){
+      console.log("PV2's wallet",result.toNumber());
+      singlePV0.sellExcess();
+      singlePV1.sellExcess();
+      singlePV2.sellExcess();
+      return singlePV0.getProduction.call();
+    }).then(function(result){
+      console.log("After selling excess energy...");
+      console.log("PV0 still has",result[0].toNumber(),result[1].toNumber());
+        return singlePV1.getProduction.call();
+      }).then(function(result){
+        console.log("PV1 still has",result[0].toNumber(),result[1].toNumber());
+        return singlePV2.getProduction.call();
+      }).then(function(result){
+        console.log("PV2 still has",result[0].toNumber(),result[1].toNumber());
+      return singlePV0.getWallet.call();
+    }).then(function(result){
+      console.log("PV0's wallet",result.toNumber());
+      return singlePV1.getWallet.call();
+    }).then(function(result){
+      console.log("PV1's wallet",result.toNumber());
+      return singlePV2.getWallet.call();
+    }).then(function(result){
+      console.log("PV2's wallet",result.toNumber());
+    });
+  });
+
+  it("Price communication House<->PV (7. House buy energy from Grid)", function() {
+    
+  });
 });

@@ -13,9 +13,9 @@ contract IBattery {
       revert();
     }
   }
-  
+
   function getSalePrice() returns (uint prs, bool updatedOrNot);
-  function getExcess() returns (uint prs, uint cap);
+  function goExcess(uint vol) returns ( uint takeVol, uint prs);
   function getSortedPVInfo() returns(uint consum, uint rank, uint tot, bool updated);
   function goNoGo(uint giveoutvol) returns (uint);
 

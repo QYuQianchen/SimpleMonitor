@@ -3,6 +3,7 @@ pragma solidity ^0.4.4;
 import "./IPV.sol";
 import "./IHouse.sol";
 import "./IBattery.sol";
+import "./IGrid.sol";
 import "./SortRLib.sol";
 import "./AdrLib.sol";
 import "./TransactLib.sol";
@@ -163,7 +164,7 @@ contract SinglePV is IPV {
     uint receivedMoney;
     //for (uint i = 0; i < rLength; i++) {
       adr = sortedRankingInfo[_id];
-      giveoutVol = production.calculatePVGiveoutVolume(RankingInfo[adr].consump);
+      giveoutVol = production.findMin(RankingInfo[adr].consump);
       if (connectedBattery.AssertInside(adr)) {
         whatDeviceAccept = IBattery(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;
@@ -179,6 +180,32 @@ contract SinglePV is IPV {
       }
       return(giveoutVol, whatDeviceAccept);
     //}
+  }
+
+  function sellExcess() {
+    // after all, if there's still excess and the connected Battery still have the capacity.
+    uint whatDeviceAccept;
+    uint receivedMoney;
+    uint unitPrs;
+    address adr;
+    if (production > 0) {
+      //ToBattery
+      if (connectedBattery.length != 0) {
+        for (uint i = 0; i < connectedBattery.length; i++) {
+          adr = connectedBattery[i];
+          (whatDeviceAccept, unitPrs) = IBattery(adr).goExcess(production);
+          production -= whatDeviceAccept;
+          receivedMoney = whatDeviceAccept*unitPrs;
+          wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
+        }
+      } else {
+        //ToGrid (by default, it's connected to grid)
+        (whatDeviceAccept, unitPrs) = IGrid(grid).goExcess(production);
+        production -= whatDeviceAccept;
+        receivedMoney = whatDeviceAccept*unitPrs;
+        wallet = wallet.clearMoneyTransfer(receivedMoney,grid, address(this));
+      }
+    }
   }
   
   modifier ownerOnly {
@@ -289,10 +316,10 @@ contract SinglePV is IPV {
     return false;
   }*/
 
-  /*function getProduction(uint queryTime) timed(queryTime,prodTimeOut) external returns (uint prod, uint prodAt) {
+  function getProduction() external returns (uint prod, uint prodAt) {//timed(queryTime,prodTimeOut)
     prod = production;
     prodAt = prodStatusAt;
-  }*/
+  }
 
   function getPrice() returns (uint prs, bool updatedOrNot) { //connectedHouseOnly external
     prs = price;

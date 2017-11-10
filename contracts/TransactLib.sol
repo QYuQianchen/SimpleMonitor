@@ -5,7 +5,7 @@ library TransactLib {
   event EnergyTransferLog(address adrFrom, address adrTo, uint eVol, uint transferAt);
   event MoneyTransferLog(address adrFrom, address adrTo, uint mAmount, uint transferAt);
 
-  function calculateHouseReceivedVolume(uint consum, uint giveoutvol) returns (uint takeoutvol) {
+  /*function calculateHouseReceivedVolume(uint consum, uint giveoutvol) returns (uint takeoutvol) {
     if (consum >= giveoutvol) { // house should take all what PV gives
       takeoutvol = giveoutvol;
     } else {
@@ -19,6 +19,15 @@ library TransactLib {
     } else {
       giveoutvol = prod;
     }
+  }*/
+
+  // calculateMin...
+  function findMin(uint a, uint b) returns (uint c) {
+    if (a >= b) {
+      c = b;      
+    } else {
+      c = a;      
+    }
   }
 
   function clearEnergyTransfer (uint consump, uint delta, address adr) returns (uint) {   // the receiver of energy triggers
@@ -31,5 +40,17 @@ library TransactLib {
     wallet = wallet + int(delta);
     MoneyTransferLog(adr1, adr2, delta, now);
     return wallet;
+  }
+
+  function clearExcessTransfer (uint currentvol, uint delta, address adr) returns (uint) {   // the receiver of energy triggers
+    currentvol = currentvol + delta;
+    EnergyTransferLog(msg.sender, adr, delta, now);
+    return currentvol;
+  }
+
+  function clearExtraTransfer (uint currentvol, uint delta, address adr) returns (uint) {   // the receiver of energy triggers
+    currentvol = currentvol - delta;
+    EnergyTransferLog(adr,msg.sender, delta, now);
+    return currentvol;
   }
 }

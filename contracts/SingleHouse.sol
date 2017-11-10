@@ -228,12 +228,26 @@ contract SingleHouse is IHouse {
     address adrDevice = msg.sender;
     uint takeoutvol;
     require(connectedBattery.AssertInside(adrDevice) || connectedPV.AssertInside(adrDevice));
-    takeoutvol = consumption.calculateHouseReceivedVolume(giveoutvol);
+    takeoutvol = consumption.findMin(giveoutvol);
     consumption = consumption.clearEnergyTransfer(takeoutvol, address(this));
     //EnergyTransferLog(adrDevice,address(this), takeoutvol, consumption);
     //wallet = wallet.clearMoneyTransfer(-int(takeoutvol*priceQueryInfo[adrDevice].prs), adrDevice);
     wallet -= int(takeoutvol*priceQueryInfo[adrDevice].prs);
     return (takeoutvol); 
+  }
+
+  function buyExtra() {
+    // when houses still have extra needs...
+    uint whatDeviceAccept;
+    uint receivedMoney;
+    uint unitPrs;
+    require(grid != 0x0);
+    if (consumption > 0) {
+      (whatDeviceAccept, unitPrs) = IGrid(grid).goExtra(consumption);
+      consumption = consumption.clearEnergyTransfer(whatDeviceAccept, address(this));
+      receivedMoney = whatDeviceAccept*unitPrs;
+      wallet -= int(receivedMoney);
+    }
   }
 
 

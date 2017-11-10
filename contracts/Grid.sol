@@ -11,6 +11,7 @@ contract Grid is IGrid {
   address Admin;                    // shall be defined at the creation of contract or to be defined manually
   address public owner;
   uint    price;
+  uint    priceFeedIn;
   uint    priceStatusAt;            // timestamp of the update (price)
 
   modifier ownerOnly {
@@ -28,8 +29,9 @@ contract Grid is IGrid {
     Admin = msg.sender;
   }
 
-  function setPrice(uint prs) ownerOnly {
+  function setPrice(uint prs, uint prsF) ownerOnly {
     price = prs;
+    priceFeedIn = prsF;
     priceStatusAt = now;
   }
 
@@ -64,5 +66,19 @@ contract Grid is IGrid {
         wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       }
     }
+  }
+
+  function goExcess(uint vol) returns (uint takeVol, uint prs) {
+    prs = priceFeedIn;
+    takeVol = vol.findMin(negBackup);
+    negBackup = negBackup.clearEnergyTransfer(takeVol, address(this));
+    wallet -= int(takeVol*prs);
+  }
+
+  function goExtra(uint vol) returns (uint takeVol, uint prs) { // when houses have not sufficient energy supply from microgrid
+    prs = price;
+    takeVol = vol.findMin(posBackup);
+    posBackup -= takeVol;
+    wallet = wallet.clearMoneyTransfer(takeVol*prs,msg.sender, address(this));
   }
 }
