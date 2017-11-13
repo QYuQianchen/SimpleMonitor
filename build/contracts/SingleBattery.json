@@ -15364,14 +15364,14 @@
         }
       },
       "links": {
-        "SortRLib": "0xdb5d05aedbd848ffaa2cd4c817e296db6bf2dd3b",
-        "SortLib": "0x65f6e46e1bca3c3d4f66cc5bc12d1c4ed1df51dd",
-        "AdrLib": "0xd177da9bc48017370f80dfa41df8b2e3e21232f5",
-        "TransactLib": "0xfefa8655077405209644da1205d0011bd01bc377"
+        "SortRLib": "0x345ca3e014aaf5dca488057592ee47305d9b3e10",
+        "SortLib": "0xf25186b5081ff5ce73482ad761db0eb0d25abfbf",
+        "AdrLib": "0x8f0483125fcb9aaaefa9209d8e9d7b9c8b9fb90f",
+        "TransactLib": "0x9fbda871d559710256a2502a2517b794b482db40"
       },
-      "address": "0x26074bf82d0f7a9442ae2cbf38a877b06a100d4b"
+      "address": "0xfb88de099e13c3ed21f80a7a1e49f8caecf10df6"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-10T21:31:08.177Z"
+  "updatedAt": "2017-11-13T17:01:43.329Z"
 }
