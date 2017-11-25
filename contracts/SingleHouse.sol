@@ -7,8 +7,9 @@ import "./IPV.sol";
 import "./IGrid.sol";
 import "./IBattery.sol";
 import "./IHouse.sol";
+import "./GeneralDevice.sol";
 
-contract SingleHouse is IHouse {
+contract SingleHouse is GeneralDevice, IHouse {
   
   // one contract is associated to one particular House in the network.
 
@@ -50,8 +51,8 @@ contract SingleHouse is IHouse {
     }
   }
 
-
-/*  modifier adminOnly {
+/*
+  modifier adminOnly {
     if (msg.sender == Admin) {
       _;
     } else {

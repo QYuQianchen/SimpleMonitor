@@ -7,8 +7,9 @@ import "./IGrid.sol";
 import "./SortRLib.sol";
 import "./AdrLib.sol";
 import "./TransactLib.sol";
+import "./GeneralDevice.sol";
 
-contract SinglePV is IPV {
+contract SinglePV is GeneralDevice, IPV {
   
   using AdrLib for address[];
   using TransactLib for *;

@@ -3,8 +3,9 @@ pragma solidity ^0.4.4;
 import "./IGrid.sol";
 import "./IBattery.sol";
 import "./TransactLib.sol";
+import "./GeneralDevice.sol";
 
-contract Grid is IGrid {
+contract Grid is GeneralDevice, IGrid {
 
   using TransactLib for *;
 

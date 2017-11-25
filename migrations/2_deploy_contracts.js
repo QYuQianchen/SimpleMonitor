@@ -2,6 +2,7 @@ var SortLib = artifacts.require("./SortLib.sol");
 var SortRLib = artifacts.require("./SortRLib.sol");
 var AdrLib = artifacts.require("./AdrLib.sol");
 var TransacLib = artifacts.require("./TransactLib.sol");
+var GeneralDevice = artifacts.require("./GeneralDevice.sol");
 var IPV = artifacts.require("./IPV.sol");
 var IHouse = artifacts.require("./IHouse.sol");
 var IBattery = artifacts.require("./IBattery.sol");
@@ -19,6 +20,7 @@ module.exports = function(deployer) {
   //deployer.link(IPV,[SinglePV,SingleHouse]);
   //deployer.link(IHouse,[SingleHouse]);
   // No need to deploy abstract contract?!?
+
   deployer.deploy(SortRLib);
   deployer.link(SortRLib,[SinglePV,SingleBattery,Configuration]);
 

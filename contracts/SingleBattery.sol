@@ -4,6 +4,7 @@ import "./IBattery.sol";
 import "./IPV.sol";
 import "./IGrid.sol";
 import "./IHouse.sol";
+import "./GeneralDevice.sol";
 
 import "./SortRLib.sol";
 import "./SortLib.sol"; 
@@ -13,7 +14,7 @@ import "./TransactLib.sol";
 
 //For simplicity, we do not use the sorting functions here, as in our configuration, there is only one battery and there's only one PV connected.  
 
-contract SingleBattery is IBattery {
+contract SingleBattery is GeneralDevice, IBattery {
   
   using AdrLib for address[];
   using TransactLib for *;

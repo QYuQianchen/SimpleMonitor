@@ -1,6 +1,8 @@
 pragma solidity ^0.4.4;
 
-contract IGrid {
+import "./GeneralDevice.sol";
+
+contract IGrid is GeneralDevice {
 
   int     wallet;                   // To record loss & gain
   uint    priceTimeOut = 5 minutes;
