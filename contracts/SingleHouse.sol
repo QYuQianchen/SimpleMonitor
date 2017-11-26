@@ -21,6 +21,7 @@ contract SingleHouse is GeneralDevice, IHouse {
   uint    consumStatusAt;           // timestamp of the update (consumption)
   address[] connectedPV;            // List of contract address of connected PV
   address[] connectedBattery;       // List of contract address of connected batteries
+  
 
   // may be splited into another contract
 

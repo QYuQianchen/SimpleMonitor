@@ -5,7 +5,7 @@ import "./GeneralDevice.sol";
 contract IPV is GeneralDevice {
   // this is the interface for SinglePV
 
-  address grid = 0x0;
+  //address grid = 0x0;
   uint    prodTimeOut = 5 minutes;
   uint    priceTimeOut = 5 minutes;
   int     wallet;                   // To record loss & gain
@@ -13,9 +13,9 @@ contract IPV is GeneralDevice {
   function getPrice() returns (uint prs, bool updatedOrNot);
   //function setRankingInfo(uint c, uint r, uint tot);
 
-  function setGridAdr(address adr) adminOnly external {
+  /*function setGridAdr(address adr) adminOnly external {
     grid = adr;
-  }
+  }*/
 
   function getWallet() returns (int) {return wallet;}
   

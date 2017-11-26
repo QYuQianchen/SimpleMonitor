@@ -260,9 +260,9 @@ contract SinglePV is GeneralDevice, IPV {
     PriceUpdate(now);
   }
 
-  function setGridAdr(address adr) adminOnly external {
+  /*function setGridAdr(address adr) adminOnly external {
     grid = adr;
-  }
+  }*/
 
   function addConnectedHouse(address adrH) adminOnly external {
     connectedHouse.push(adrH);

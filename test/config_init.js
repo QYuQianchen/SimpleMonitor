@@ -32,34 +32,76 @@ contract('Configuration', function(accounts) {
   var singleBattery0_adr;
   var grid_adr;
 
-  it("Create 3 SingleHouse contracts and link to 3 SinglePVs", function() {
+  it("I. Create 3 SingleHouse contracts and link to 3 SinglePVs", function() {
     // Here to allocate account information + display them on the screen 
     return Configuration.deployed().then(function(instance){
       configuration = instance;
       configuration.addGrid(address_G);
+    }).then(function(){
+      console.log("create instance");
+      configuration.addDevice(0, address_H0, 0, true);
+    }).then(function(){
+      console.log("add H0");
+      configuration.addDevice(0, address_H1, 0, true);
+    }).then(function(){
+      console.log("add H1");
+      configuration.addDevice(0, address_H2, 0, true);
+    }).then(function(){
+      console.log("add H2");
+      configuration.addDevice(1, address_PV0, 0, true);
+    }).then(function(){
+      console.log("add PV0");
+      configuration.addDevice(1, address_PV1, 0, true);
+    }).then(function(){
+      console.log("add PV1");
+      configuration.addDevice(1, address_PV2, 0, true);
+    }).then(function(){
+      console.log("add PV2");
+      configuration.addDevice(2, address_B0, 20, false);
+    }).then(function(){
+      console.log("add B0");
+      /*
       configuration.addHouse(address_H0, true);
       configuration.addHouse(address_H1, true);
       configuration.addHouse(address_H2, true);
       configuration.addPV(address_PV0, true);
       configuration.addPV(address_PV1, true);
       configuration.addPV(address_PV2, true);
-      configuration.addBattery(address_B0,20, false);
+      configuration.addBattery(address_B0,20, false);*/
       return configuration.getAdmin.call();
     }).then(function(result){
       console.log("Contract Creator=", result);
-      configuration.linkHousePV(address_H0,address_PV0);
-      configuration.linkHousePV(address_H1,address_PV1);
-      configuration.linkHousePV(address_H2,address_PV1);
-      configuration.linkHousePV(address_H1,address_PV2);
-      configuration.linkHousePV(address_H2,address_PV2);
-      configuration.linkPVBattery(address_PV0,address_B0);
-      configuration.linkHouseBattery(address_H0,address_B0);
-      configuration.linkHouseBattery(address_H2,address_B0);
+      configuration.linkDevices(address_H0,address_PV0);
+    }).then(function(){
+      console.log("H0 - PV0 linked");
+      configuration.linkDevices(address_H1,address_PV1);
+    }).then(function(){
+      console.log("H1 - PV1 linked");
+      configuration.linkDevices(address_H2,address_PV1);
+    }).then(function(){
+      console.log("H2 - PV1 linked");
+      configuration.linkDevices(address_H1,address_PV2);
+    }).then(function(){
+      console.log("H1 - PV2 linked");
+      configuration.linkDevices(address_H2,address_PV2);
+    }).then(function(){
+      console.log("H2 - PV2 linked");
+      configuration.linkDevices(address_PV0,address_B0);
+    }).then(function(){
+      console.log("B0 - PV0 linked");
+      configuration.linkDevices(address_H0,address_B0);
+    }).then(function(){
+      console.log("B0 - H0 linked");
+      configuration.linkDevices(address_H2,address_B0);
+    }).then(function(){
+      console.log("B0 - H2 linked");
       return configuration.getGridAdr.call();
     }).then(function(result){
       console.log("The address (method contractList) of Grid is ",result);
       grid_adr = result;
       grid_c = Grid.at(result);
+    }).then(function(){
+      console.log("Now we have the address of the Grid contract");
       return configuration.getContractAddress.call(address_H0);
     }).then(function(result){
       console.log("The address (method contractList) of House0 is ",result);
@@ -97,8 +139,8 @@ contract('Configuration', function(accounts) {
       singleBattery0 = SingleBattery.at(result);
     });    
   });
-
-  it("Set Production and price", function() {
+/*
+  it("II. Set Production and price", function() {
 
     // Basic input. Now we are simulating inputs at one moment in the system
     singleHouse0.setConsumption(3, {from: address_H0});
@@ -153,5 +195,5 @@ contract('Configuration', function(accounts) {
     }).then(function(result){
       console.log("The sale's price of the grid is ",result[0].toNumber(), result[1]);
     });
-  });
+  });*/
 });
