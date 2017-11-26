@@ -42,11 +42,11 @@ contract Grid is GeneralDevice, IGrid {
     uint whatDeviceAccept;
     uint receivedMoney;
     address adr;
-    for (uint i = 0; i < connectedBattery.length; i++) {
-      (consum,rank,tot,updated) = IBattery(connectedBattery[i]).getSortedPVInfo();
+    for (uint i = 0; i < connectedDevice[2].length; i++) {
+      (consum,rank,tot,updated) = IBattery(connectedDevice[2][i]).getSortedPVInfo();
       if (updated && consum != 0) {
         // transaction
-        adr = connectedBattery[i];
+        adr = connectedDevice[2][i];
         whatDeviceAccept = IBattery(adr).goNoGo(posBackup);
         posBackup -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;

@@ -23,8 +23,6 @@ contract SinglePV is GeneralDevice, IPV {
   uint    priceStatusAt;            // timestamp of the update (price)
   //uint    priceTimeOut = 5 minutes;
 
-  address[] connectedHouse;         // List of households connected
-  address[] connectedBattery;       // List of batteries connected
 
   /*struct Request {
     uint  consump;
@@ -79,24 +77,24 @@ contract SinglePV is GeneralDevice, IPV {
     uint tot;
     bool updated;
     uint num;
-    prepRankingInfo.length = connectedHouse.length+connectedBattery.length;
-    for (uint i = 0; i < connectedHouse.length; i++) {
-      (consum, rank, tot, updated) = IHouse(connectedHouse[i]).getSortedInfo();
+    prepRankingInfo.length = connectedDevice[0].length+connectedDevice[2].length;
+    for (uint i = 0; i < connectedDevice[0].length; i++) {
+      (consum, rank, tot, updated) = IHouse(connectedDevice[0][i]).getSortedInfo();
       //GetSortedInfo(connectedHouse[i], consum, rank, tot, updated);
       if (updated) {
-        RankingInfo[connectedHouse[i]] = SortRLib.Request(consum, rank, tot);
-        prepRankingInfo[num] = RankingInfo[connectedHouse[i]];
-        sortedRankingInfo[num] = connectedHouse[i];
+        RankingInfo[connectedDevice[0][i]] = SortRLib.Request(consum, rank, tot);
+        prepRankingInfo[num] = RankingInfo[connectedDevice[0][i]];
+        sortedRankingInfo[num] = connectedDevice[0][i];
         num++;
       }
     }
-    for (i = 0; i < connectedBattery.length; i++) {
-      (consum,rank,tot,updated) = IBattery(connectedBattery[i]).getSortedPVInfo();
+    for (i = 0; i < connectedDevice[2].length; i++) {
+      (consum,rank,tot,updated) = IBattery(connectedDevice[2][i]).getSortedPVInfo();
       //GetSortedInfo(connectedBattery[i], consum, rank, tot, updated);
       if (updated) {
-        RankingInfo[connectedBattery[i]] = SortRLib.Request(consum, rank, tot);
-        prepRankingInfo[num] = RankingInfo[connectedBattery[i]];
-        sortedRankingInfo[num] = connectedBattery[i];
+        RankingInfo[connectedDevice[2][i]] = SortRLib.Request(consum, rank, tot);
+        prepRankingInfo[num] = RankingInfo[connectedDevice[2][i]];
+        sortedRankingInfo[num] = connectedDevice[2][i];
         num++;
       }
     }
@@ -160,12 +158,12 @@ contract SinglePV is GeneralDevice, IPV {
     //for (uint i = 0; i < rLength; i++) {
       adr = sortedRankingInfo[_id];
       giveoutVol = production.findMin(RankingInfo[adr].consump);
-      if (connectedBattery.AssertInside(adr)) {
+      if (connectedDevice[2].AssertInside(adr)) {
         whatDeviceAccept = IBattery(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;
         wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
-      } else if (connectedHouse.AssertInside(adr)) {
+      } else if (connectedDevice[0].AssertInside(adr)) {
         whatDeviceAccept = IHouse(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;
@@ -185,9 +183,9 @@ contract SinglePV is GeneralDevice, IPV {
     address adr;
     if (production > 0) {
       //ToBattery
-      if (connectedBattery.length != 0) {
-        for (uint i = 0; i < connectedBattery.length; i++) {
-          adr = connectedBattery[i];
+      if (connectedDevice[2].length != 0) {
+        for (uint i = 0; i < connectedDevice[2].length; i++) {
+          adr = connectedDevice[2][i];
           (whatDeviceAccept, unitPrs) = IBattery(adr).goExcess(production);
           production -= whatDeviceAccept;
           receivedMoney = whatDeviceAccept*unitPrs;
@@ -212,7 +210,7 @@ contract SinglePV is GeneralDevice, IPV {
   }*/
 
   modifier connectedHouseOnly {
-    if (connectedHouse.AssertInside(msg.sender) == true) {
+    if (connectedDevice[0].AssertInside(msg.sender) == true) {
       _;
     } else {
       revert();
@@ -221,8 +219,8 @@ contract SinglePV is GeneralDevice, IPV {
 
   modifier connectedBatteryOnly (address adrB) {
     var check = false;
-    for (uint i = 0; i < connectedBattery.length; i++) {
-      if (msg.sender == connectedBattery[i]) {
+    for (uint i = 0; i < connectedDevice[2].length; i++) {
+      if (msg.sender == connectedDevice[2][i]) {
         check = true;
       }
     }
@@ -259,53 +257,6 @@ contract SinglePV is GeneralDevice, IPV {
     priceStatusAt = now;
     PriceUpdate(now);
   }
-
-  /*function setGridAdr(address adr) adminOnly external {
-    grid = adr;
-  }*/
-
-  function addConnectedHouse(address adrH) adminOnly external {
-    connectedHouse.push(adrH);
-    ConfigurationLog("House linked to PV",now);
-  }
-
-  /*
-  function deleteConnectedHouse(address adrH) adminOnly external returns (bool) {
-    for (uint i = 0; i < connectedHouse.length; i++) {
-      if (adrH == connectedHouse[i]) {
-        delete connectedHouse[i];
-        if (i != connectedHouse.length-1) {
-          connectedHouse[i] = connectedHouse[connectedHouse.length-1];
-        }
-        connectedHouse.length--;
-        ConfigurationLog("House Deleted",now);
-        return true;
-      }
-    }
-    return false;
-  }*/
-
-  function addConnectedBattery(address adrB) adminOnly external {
-    connectedBattery.push(adrB);
-    ConfigurationLog("Battery linked to PV",now);
-
-  }
-
-  /*
-  function deleteConnectedBattery(address adrB) adminOnly external returns (bool) {
-    for (uint i = 0; i < connectedBattery.length; i++) {
-      if (adrB == connectedBattery[i]) {
-        delete connectedBattery[i];
-        if (i != connectedBattery.length-1) {
-          connectedBattery[i] = connectedBattery[connectedBattery.length-1];
-        }
-        connectedBattery.length--;
-        ConfigurationLog("Battery Deleted",now);
-        return true;
-      }
-    }
-    return false;
-  }*/
 
   function getProduction() external returns (uint prod, uint prodAt) {//timed(queryTime,prodTimeOut)
     prod = production;

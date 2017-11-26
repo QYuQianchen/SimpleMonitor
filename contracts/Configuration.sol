@@ -67,25 +67,17 @@ contract Configuration {
       if (_deviceType == 0) {   // addHouse
         contractList[adr] = new SingleHouse(adr);
         numHouseCurrent++;
-        if (g) {
-          GeneralDevice(contractList[adr]).setGridAdr(gridAdr);
-          Grid(gridAdr).addH(contractList[adr]);
-        }
       } else if (_deviceType == 1) {    //addPV
         contractList[adr] = new SinglePV(adr);
         numPVCurrent++;
-        if (g) {
-            GeneralDevice(contractList[adr]).setGridAdr(gridAdr);
-            Grid(gridAdr).addPV(contractList[adr]);
-        }
       } else {
         contractList[adr] = new SingleBattery(adr, capacity);
         numBatteryCurrent++;
-        if (g) {
-            GeneralDevice(contractList[adr]).setGridAdr(gridAdr);
-            Grid(gridAdr).addB(contractList[adr]);
-        }
       }
+      if (g) {
+          GeneralDevice(contractList[adr]).setGridAdr(gridAdr);
+          GeneralDevice(gridAdr).addConnectedDevice(_deviceType, contractList[adr]);
+        }
       EndUser memory tempEU;
       tempEU.dType = deviceType(_deviceType);
       tempEU.cAddress = address(contractList[adr]);

@@ -32,8 +32,6 @@ contract SingleBattery is GeneralDevice, IBattery {
   uint    priceForSale;
   uint    priceForBuy;              // lower than market price (ForExcessEnergy)
   
-  address[] connectedHouse; // List of households connected
-  address[] connectedPV;// List of PV connected
   
   /*struct PriceTF {
     uint  prs;
@@ -61,9 +59,9 @@ contract SingleBattery is GeneralDevice, IBattery {
     // If the house is connected to grid (most of the time), the price of Grid also participates in the sorting (it's not less favored anymore)
     uint tP = 0;
     bool tF = false;
-    for (uint i = 0; i < connectedPV.length; i++) {
-      (tP,tF) = IPV(connectedPV[i]).getPrice();
-      priceQueryInfo[connectedPV[i]] = SortLib.PriceTF(tP,tF);
+    for (uint i = 0; i < connectedDevice[1].length; i++) {
+      (tP,tF) = IPV(connectedDevice[1][i]).getPrice();
+      priceQueryInfo[connectedDevice[1][i]] = SortLib.PriceTF(tP,tF);
     }
     if (grid != 0x0) {
       (tP,tF) = IGrid(grid).getPrice();
@@ -76,9 +74,9 @@ contract SingleBattery is GeneralDevice, IBattery {
     //require(adr != 0x0);      // Sometimes with this line, there will be error in the configuration.js test... sometimes not.... sometimes need to _migrate_ twice to eliminate the error.... Don't know why
     uint _l;
     if (grid != 0x0) {
-      _l = connectedPV.length+1;
+      _l = connectedDevice[1].length+1;
     } else {
-      _l = connectedPV.length;
+      _l = connectedDevice[1].length;
     }
     for (uint i=0; i<_l; i++) {
       if (adr == sortedPriceQueryInfo[i]) {
@@ -89,7 +87,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   }
 
   function sort() { // we are not doing sorting here -> as there is only 1 PV in the exercise layout
-    /*sortedPriceQueryInfo[0] = connectedPV[0];
+    /*sortedPriceQueryInfo[0] = connectedDevice[1][0];
     if (grid != 0x0) {
       sortedPriceQueryInfo[1] = grid;
     }*/
@@ -97,9 +95,9 @@ contract SingleBattery is GeneralDevice, IBattery {
     uint maxTemp;
     uint totalLength;
     if (grid != 0x0) {
-      totalLength = connectedPV.length+1;
+      totalLength = connectedDevice[1].length+1;
     } else {
-      totalLength = connectedPV.length;
+      totalLength = connectedDevice[1].length;
     }
     for (uint i = 0; i < totalLength; i++) {
       maxTemp = prepPriceQueryInfo.maxStruct();
@@ -110,15 +108,15 @@ contract SingleBattery is GeneralDevice, IBattery {
 
   function createPriceList() private {
     if (grid != 0x0) {
-      prepPriceQueryInfo.length = connectedPV.length+1;
+      prepPriceQueryInfo.length = connectedDevice[1].length+1;
     } else {
-      prepPriceQueryInfo.length = connectedPV.length;
+      prepPriceQueryInfo.length = connectedDevice[1].length;
     }
-    for (uint i = 0; i < connectedPV.length; i++) {
-      prepPriceQueryInfo[i] = priceQueryInfo[connectedPV[i]];
-      sortedPriceQueryInfo[i] = connectedPV[i];
+    for (uint i = 0; i < connectedDevice[1].length; i++) {
+      prepPriceQueryInfo[i] = priceQueryInfo[connectedDevice[1][i]];
+      sortedPriceQueryInfo[i] = connectedDevice[1][i];
     }
-    for (i = connectedPV.length; i < prepPriceQueryInfo.length; i++) {
+    for (i = connectedDevice[1].length; i < prepPriceQueryInfo.length; i++) {
       prepPriceQueryInfo[i] = priceQueryInfo[grid];
       sortedPriceQueryInfo[i] = grid;
     }
@@ -138,9 +136,9 @@ contract SingleBattery is GeneralDevice, IBattery {
     consum = buyVolume;
     rank = getSortedPosition(adr); // We only have one PV connnected (In the demo layout)
     if (grid != 0x0) {
-      tot = connectedPV.length + 1;
+      tot = connectedDevice[1].length + 1;
     } else {
-      tot = connectedPV.length;
+      tot = connectedDevice[1].length;
     }
     if (lastPriceQueryAt + priceTimeOut < now) {
       updated = false;    // The house may be inactive for a while, so the list stored is outdated.
@@ -153,7 +151,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   function goNoGo(uint giveoutvol) returns (uint) {
     address adrDevice = msg.sender;
     uint takeoutvol;
-    require(connectedPV.AssertInside(adrDevice) || adrDevice == grid);
+    require(connectedDevice[1].AssertInside(adrDevice) || adrDevice == grid);
     takeoutvol = buyVolume.findMin(giveoutvol);
     currentVolume += takeoutvol;
     buyVolume = buyVolume.clearEnergyTransfer(takeoutvol, address(this));
@@ -163,7 +161,7 @@ contract SingleBattery is GeneralDevice, IBattery {
 
 
   modifier connectedPVOnly (address adrP) {
-    if (connectedPV.AssertInside(adrP) == true) {
+    if (connectedDevice[1].AssertInside(adrP) == true) {
       _;
     } else {
       revert();
@@ -171,7 +169,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   }
 
   modifier connectedHouseOnly {
-    if (connectedPV.AssertInside(msg.sender) == true) {
+    if (connectedDevice[1].AssertInside(msg.sender) == true) {
       _;
     } else {
       revert();
@@ -217,39 +215,6 @@ contract SingleBattery is GeneralDevice, IBattery {
 
   // function askForPrice() {} // to ask for prices set by PVs...
 
-  function addConnectedPV(address adrP) adminOnly external {
-    connectedPV.push(adrP);
-    ConfigurationLog("PV linked to Battery",now);
-  }
-
-  /*function deleteConnectedPV(address adrP) adminOnly external {
-    for (uint i = 0; i < connectedPV.length; i++) {
-      if (adrP == connectedPV[i]) {
-        delete connectedPV[i];
-        if (i != connectedPV.length-1) {
-          connectedPV[i] = connectedPV[connectedPV.length-1];
-        }
-        connectedPV.length--;
-      }
-    }
-  }*/
-
-  function addConnectedHouse(address adrH) adminOnly external {
-    connectedHouse.push(adrH);
-    ConfigurationLog("House linked to Battery",now);
-  }
-
-  /*function deleteConnectedHouse(address adrH) adminOnly external {
-    for (uint i = 0; i < connectedHouse.length; i++) {
-      if (adrH == connectedHouse[i]) {
-        delete connectedHouse[i];
-        if (i != connectedHouse.length-1) {
-          connectedHouse[i] = connectedHouse[connectedHouse.length-1];
-        }
-        connectedHouse.length--;
-      }
-    }
-  }*/
 
   function getVolumeCapacity () external returns (uint vol, uint volAt, uint cap) { // timed(initTime,volTimeOut) 
     vol = currentVolume;
@@ -287,14 +252,14 @@ contract SingleBattery is GeneralDevice, IBattery {
     bool updated;
     uint num;
 
-    prepRankingInfo.length = connectedHouse.length;
-    for (uint i = 0; i < connectedHouse.length; i++) {
-      (consum, rank, tot, updated) = IHouse(connectedHouse[i]).getSortedInfo();
-      //GetSortedInfo(connectedHouse[i], consum, rank, tot, updated);
+    prepRankingInfo.length = connectedDevice[0].length;
+    for (uint i = 0; i < connectedDevice[0].length; i++) {
+      (consum, rank, tot, updated) = IHouse(connectedDevice[0][i]).getSortedInfo();
+      //GetSortedInfo(connectedDevice[0][i], consum, rank, tot, updated);
       if (updated) {
-        RankingInfo[connectedHouse[i]] = SortRLib.Request(consum, rank, tot);
-        prepRankingInfo[num] = RankingInfo[connectedHouse[i]];
-        sortedRankingInfo[num] = connectedHouse[i];
+        RankingInfo[connectedDevice[0][i]] = SortRLib.Request(consum, rank, tot);
+        prepRankingInfo[num] = RankingInfo[connectedDevice[0][i]];
+        sortedRankingInfo[num] = connectedDevice[0][i];
         num++;
       }
     }
@@ -328,7 +293,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     //for (uint i = 0; i < rLength; i++) {
       adr = sortedRankingInfo[_id];
       giveoutVol = currentVolume.findMin(RankingInfo[adr].consump);
-      if (connectedHouse.AssertInside(adr)) {
+      if (connectedDevice[0].AssertInside(adr)) {
         whatDeviceAccept = IHouse(adr).goNoGo(giveoutVol);
         currentVolume -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*priceForSale;

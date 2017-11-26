@@ -37,4 +37,6 @@ contract GeneralDevice {
   function addConnectedDevice(uint a, address adr) adminOnly {
     connectedDevice[a].push(adr);
   }
+
+  // a function that disconnects devices can be added here, if needed
 }

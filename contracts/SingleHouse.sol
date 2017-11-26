@@ -19,8 +19,6 @@ contract SingleHouse is GeneralDevice, IHouse {
   //uint    consumTimeOut = 5 minutes;
 
   uint    consumStatusAt;           // timestamp of the update (consumption)
-  address[] connectedPV;            // List of contract address of connected PV
-  address[] connectedBattery;       // List of contract address of connected batteries
   
 
   // may be splited into another contract
@@ -42,7 +40,7 @@ contract SingleHouse is GeneralDevice, IHouse {
   
 
   modifier connectedPVOnly (address adrP) {
-    if (connectedPV.AssertInside(adrP)) {
+    if (connectedDevice[1].AssertInside(adrP)) {
       _;
     } else {
       revert();
@@ -50,7 +48,7 @@ contract SingleHouse is GeneralDevice, IHouse {
   }
 
   modifier connectedBatteryOnly (address adrB) {
-    if (connectedBattery.AssertInside(adrB)) {
+    if (connectedDevice[2].AssertInside(adrB)) {
       _;
     } else {
       revert();
@@ -76,20 +74,6 @@ contract SingleHouse is GeneralDevice, IHouse {
 
   function SingleHouse (address adr) GeneralDevice(adr) { }
   
-  /*function setGridAdr(address adr) adminOnly external {
-    grid = adr;
-  }*/
-  
-  function addConnectedPV(address adrP) adminOnly external {
-    connectedPV.push(adrP);
-    ConfigurationLog("PV linked to House",now);
-  }
-
-  function addConnectedBattery(address adrB) adminOnly external {
-    connectedBattery.push(adrB);
-    ConfigurationLog("Battery linked to House",now);
-  }
-
   // --- Regular usage ---
 
   function setConsumption(uint consum) ownerOnly {
@@ -110,13 +94,13 @@ contract SingleHouse is GeneralDevice, IHouse {
     // If the house is connected to grid (most of the time), the price of Grid will be automatically added to the end of the sorted list.
     uint tP = 0;
     bool tF = false;
-    for (uint i = 0; i < connectedPV.length; i++) {
-      (tP,tF) = IPV(connectedPV[i]).getPrice();
-      priceQueryInfo[connectedPV[i]] = SortLib.PriceTF(tP,tF);
+    for (uint i = 0; i < connectedDevice[1].length; i++) {
+      (tP,tF) = IPV(connectedDevice[1][i]).getPrice();
+      priceQueryInfo[connectedDevice[1][i]] = SortLib.PriceTF(tP,tF);
     }
-    for (i = 0; i < connectedBattery.length; i++) {
-      (tP,tF) = IBattery(connectedBattery[i]).getSalePrice();
-      priceQueryInfo[connectedBattery[i]] = SortLib.PriceTF(tP,tF);
+    for (i = 0; i < connectedDevice[2].length; i++) {
+      (tP,tF) = IBattery(connectedDevice[2][i]).getSalePrice();
+      priceQueryInfo[connectedDevice[2][i]] = SortLib.PriceTF(tP,tF);
     }
     lastPriceQueryAt = now;
   }
@@ -129,7 +113,7 @@ contract SingleHouse is GeneralDevice, IHouse {
   function sortPriceList() {
     createPriceList();
     uint maxTemp;
-    uint totalLength = connectedPV.length + connectedBattery.length;
+    uint totalLength = connectedDevice[1].length + connectedDevice[2].length;
     for (uint i = 0; i < totalLength; i++) {
       maxTemp = prepPriceQueryInfo.maxStruct();
       swap(totalLength-1-i,maxTemp);
@@ -147,15 +131,15 @@ contract SingleHouse is GeneralDevice, IHouse {
   }
 
   function createPriceList() private {
-    prepPriceQueryInfo.length = connectedPV.length + connectedBattery.length;
+    prepPriceQueryInfo.length = connectedDevice[1].length + connectedDevice[2].length;
     //sortedPriceQueryInfo.length = prepPriceQueryInfo.length; => sortedPQI is using mapping now
-    for (uint i = 0; i < connectedPV.length; i++) {
-      prepPriceQueryInfo[i] = priceQueryInfo[connectedPV[i]];
-      sortedPriceQueryInfo[i] = connectedPV[i];
+    for (uint i = 0; i < connectedDevice[1].length; i++) {
+      prepPriceQueryInfo[i] = priceQueryInfo[connectedDevice[1][i]];
+      sortedPriceQueryInfo[i] = connectedDevice[1][i];
     }
-    for (i = connectedPV.length; i < prepPriceQueryInfo.length; i++) {
-      prepPriceQueryInfo[i] = priceQueryInfo[connectedBattery[i-connectedPV.length]];
-      sortedPriceQueryInfo[i] = connectedBattery[i-connectedPV.length];
+    for (i = connectedDevice[1].length; i < prepPriceQueryInfo.length; i++) {
+      prepPriceQueryInfo[i] = priceQueryInfo[connectedDevice[2][i-connectedDevice[1].length]];
+      sortedPriceQueryInfo[i] = connectedDevice[2][i-connectedDevice[1].length];
     }
   }
 
@@ -174,7 +158,7 @@ contract SingleHouse is GeneralDevice, IHouse {
 
   function getSortedPosition (address adr) returns (uint) { // should be private, here the "private" is temporarily removed due to testing
     //require(adr != 0x0);      // Sometimes with this line, there will be error in the configuration.js test... sometimes not.... sometimes need to _migrate_ twice to eliminate the error.... Don't know why
-    for (uint i=0; i<connectedPV.length + connectedBattery.length+1; i++) {
+    for (uint i=0; i<connectedDevice[1].length + connectedDevice[2].length+1; i++) {
       if (adr == sortedPriceQueryInfo[i]) {
         return (i+1);
       }
@@ -191,9 +175,9 @@ contract SingleHouse is GeneralDevice, IHouse {
     consum = consumption;
     rank = getSortedPosition(adr);
     if (grid != 0x0) {
-      tot = connectedPV.length + connectedBattery.length+1;
+      tot = connectedDevice[1].length + connectedDevice[2].length+1;
     } else {
-      tot = connectedPV.length + connectedBattery.length;
+      tot = connectedDevice[1].length + connectedDevice[2].length;
     }
     if (lastPriceQueryAt + consumTimeOut < now) {
       updated = false;    // The house may be inactive for a while, so the list stored is outdated.
@@ -206,7 +190,7 @@ contract SingleHouse is GeneralDevice, IHouse {
   function goNoGo(uint giveoutvol) returns (uint) {
     address adrDevice = msg.sender;
     uint takeoutvol;
-    require(connectedBattery.AssertInside(adrDevice) || connectedPV.AssertInside(adrDevice));
+    require(connectedDevice[2].AssertInside(adrDevice) || connectedDevice[1].AssertInside(adrDevice));
     takeoutvol = consumption.findMin(giveoutvol);
     consumption = consumption.clearEnergyTransfer(takeoutvol, address(this));
     //EnergyTransferLog(adrDevice,address(this), takeoutvol, consumption);
@@ -241,11 +225,11 @@ contract SingleHouse is GeneralDevice, IHouse {
   }
 
   function askForPricePV(uint i) returns (uint,bool) {
-    return IPV(connectedPV[i]).getPrice();
+    return IPV(connectedDevice[1][i]).getPrice();
   }
 
   function askForPriceB(uint i) returns (uint,bool) {
-    return IBattery(connectedBattery[i]).getSalePrice();
+    return IBattery(connectedDevice[2][i]).getSalePrice();
   }
 
   function getOwnerAdmin() returns (address, address){
@@ -253,24 +237,24 @@ contract SingleHouse is GeneralDevice, IHouse {
   }
 
   function getConnectedPVCount() returns (uint){
-    return connectedPV.length;
+    return connectedDevice[1].length;
   }
 
   function getconnectedBatteryCount() returns (uint){
-    return connectedBattery.length;
+    return connectedDevice[2].length;
   }
 
   function getConnectPVAddress(uint a) returns (address) {
-    if (a<connectedPV.length) {
-      return connectedPV[a];
+    if (a<connectedDevice[1].length) {
+      return connectedDevice[1][a];
     } else {
       return 0x0;
     }
   }
 
   function getconnectedBatteryAddress(uint a) returns (address) {
-    if (a<connectedBattery.length) {
-      return connectedBattery[a];
+    if (a<connectedDevice[2].length) {
+      return connectedDevice[2][a];
     } else {
       return 0x0;
    
@@ -279,6 +263,6 @@ contract SingleHouse is GeneralDevice, IHouse {
   */
 
   function getConnectPVAddress(uint a) returns (address) {
-      return connectedPV[a];
+      return connectedDevice[1][a];
   }
 }
