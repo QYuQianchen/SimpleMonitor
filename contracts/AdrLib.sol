@@ -5,7 +5,7 @@ library AdrLib {
     
   }*/
 
-  function AssertInside(address[] storage adrL, address adr) returns (bool) {
+  function assertInside(address[] storage adrL, address adr) public view returns (bool) {
     for (uint i = 0; i < adrL.length; i++) {
       if (adr == adrL[i]) {
         return true;

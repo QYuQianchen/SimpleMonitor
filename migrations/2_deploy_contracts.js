@@ -42,6 +42,7 @@ module.exports = function(deployer) {
   //deployer.link(HouseLib, MatchableHouse);
   //deployer.deploy(MatchableHouse);
   //deployer.link(SortLib,Configuration);
-  deployer.deploy(Configuration,3,3,1);
+  //deployer.deploy(Configuration,3,3,1);
+  deployer.deploy(Configuration);
   //deployer.deploy(ElecTransac);
 };

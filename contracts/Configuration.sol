@@ -11,11 +11,7 @@ contract Configuration {
   address public gridAdr;          // store the address of grid...(address of the transformer that links to the grid... not the contract address)
   uint public statusAt; // timestamp of the creation of Configuration instance
 
-  // The variables below should be deleted...
-  uint8 public numHouseTotal;       // number of houses in the system
-  uint8 public numPVTotal;          // number of PVs in the system
-  uint8 public numBatteryTotal;     // number of batteries in the system
-  
+  // The variables below should be deleted... 
   uint8 private numHouseCurrent = 0;    // current houses in the system
   uint8 private numPVCurrent = 0;       // current PVs in the system
   uint8 private numBatteryCurrent = 0;    // current batteries in the system
@@ -43,18 +39,11 @@ contract Configuration {
     }
   }
   
-  event LogConfig(uint numHouses, uint numPV, uint numBattery, uint statusat);
   event LogDevice(address deviceAdr);
   event LogConnection(address device1, address device2);
 
-  function Configuration(uint8 numHouse, uint8 numPV, uint8 numBattery) adminOnly {
-      // constructor
-      numHouseTotal = numHouse;
-      numPVTotal = numPV;
-      numBatteryTotal = numBattery;
+  function Configuration() adminOnly {
       statusAt = now;
-      // create the grid contract
-      LogConfig(numHouseTotal,numPVTotal,numBatteryTotal,statusAt);
   }
 
   function addGrid(address adr) adminOnly {

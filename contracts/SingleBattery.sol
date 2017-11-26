@@ -151,7 +151,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   function goNoGo(uint giveoutvol) returns (uint) {
     address adrDevice = msg.sender;
     uint takeoutvol;
-    require(connectedDevice[1].AssertInside(adrDevice) || adrDevice == grid);
+    require(connectedDevice[1].assertInside(adrDevice) || adrDevice == grid);
     takeoutvol = buyVolume.findMin(giveoutvol);
     currentVolume += takeoutvol;
     buyVolume = buyVolume.clearEnergyTransfer(takeoutvol, address(this));
@@ -159,22 +159,6 @@ contract SingleBattery is GeneralDevice, IBattery {
     return (takeoutvol); 
   }
 
-
-  modifier connectedPVOnly (address adrP) {
-    if (connectedDevice[1].AssertInside(adrP) == true) {
-      _;
-    } else {
-      revert();
-    }
-  }
-
-  modifier connectedHouseOnly {
-    if (connectedDevice[1].AssertInside(msg.sender) == true) {
-      _;
-    } else {
-      revert();
-    } 
-  }
 
   modifier timed (uint initialTime, uint allowedTimeOut) {
     if(now < initialTime + allowedTimeOut) {
@@ -192,23 +176,21 @@ contract SingleBattery is GeneralDevice, IBattery {
     capacity = cap;
   }
 
-  
-
-  function setVolume(uint vol) ownerOnly {
+  function setVolume(uint vol) public ownerOnly {
     // Can only be triggered once....Should be moved to the constructor...Once the initial volumne is set, can only be changed by energy trading.
     currentVolume = vol;
     volStatusAt = now;
     VolLog(owner,vol,volStatusAt);
   }
 
-  function setPrice(uint prsSale, uint prsBuy) ownerOnly {
+  function setPrice(uint prsSale, uint prsBuy) public ownerOnly {
     priceForSale = prsSale;
     priceForBuy = prsBuy;
     priceStatusAt = now;
     PriceUpdate(priceStatusAt);
   }
 
-  function setBuyVolume(uint v) ownerOnly {
+  function setBuyVolume(uint v) public ownerOnly {
     require(currentVolume + v <= capacity);
     buyVolume = v;
   }
@@ -216,13 +198,13 @@ contract SingleBattery is GeneralDevice, IBattery {
   // function askForPrice() {} // to ask for prices set by PVs...
 
 
-  function getVolumeCapacity () external returns (uint vol, uint volAt, uint cap) { // timed(initTime,volTimeOut) 
+  function getVolumeCapacity () external view returns (uint vol, uint volAt, uint cap) { // timed(initTime,volTimeOut) 
     vol = currentVolume;
     volAt = volStatusAt;
     cap = capacity;
   }
 
-  function getSalePrice() returns (uint prs, bool updatedOrNot) { // connectedHouseOnly external
+  function getSalePrice() public view returns (uint prs, bool updatedOrNot) { // connectedHouseOnly external
     prs = priceForSale;
     //prsAt = priceStatusAt;
     if (priceStatusAt + priceTimeOut < now) {
@@ -293,7 +275,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     //for (uint i = 0; i < rLength; i++) {
       adr = sortedRankingInfo[_id];
       giveoutVol = currentVolume.findMin(RankingInfo[adr].consump);
-      if (connectedDevice[0].AssertInside(adr)) {
+      if (connectedDevice[0].assertInside(adr)) {
         whatDeviceAccept = IHouse(adr).goNoGo(giveoutVol);
         currentVolume -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*priceForSale;

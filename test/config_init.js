@@ -37,64 +37,24 @@ contract('Configuration', function(accounts) {
     return Configuration.deployed().then(function(instance){
       configuration = instance;
       configuration.addGrid(address_G);
-    }).then(function(){
-      console.log("create instance");
       configuration.addDevice(0, address_H0, 0, true);
-    }).then(function(){
-      console.log("add H0");
       configuration.addDevice(0, address_H1, 0, true);
-    }).then(function(){
-      console.log("add H1");
       configuration.addDevice(0, address_H2, 0, true);
-    }).then(function(){
-      console.log("add H2");
       configuration.addDevice(1, address_PV0, 0, true);
-    }).then(function(){
-      console.log("add PV0");
       configuration.addDevice(1, address_PV1, 0, true);
-    }).then(function(){
-      console.log("add PV1");
       configuration.addDevice(1, address_PV2, 0, true);
-    }).then(function(){
-      console.log("add PV2");
       configuration.addDevice(2, address_B0, 20, false);
-    }).then(function(){
-      console.log("add B0");
-      /*
-      configuration.addHouse(address_H0, true);
-      configuration.addHouse(address_H1, true);
-      configuration.addHouse(address_H2, true);
-      configuration.addPV(address_PV0, true);
-      configuration.addPV(address_PV1, true);
-      configuration.addPV(address_PV2, true);
-      configuration.addBattery(address_B0,20, false);*/
       return configuration.getAdmin.call();
     }).then(function(result){
       console.log("Contract Creator=", result);
       configuration.linkDevices(address_H0,address_PV0);
-    }).then(function(){
-      console.log("H0 - PV0 linked");
       configuration.linkDevices(address_H1,address_PV1);
-    }).then(function(){
-      console.log("H1 - PV1 linked");
       configuration.linkDevices(address_H2,address_PV1);
-    }).then(function(){
-      console.log("H2 - PV1 linked");
       configuration.linkDevices(address_H1,address_PV2);
-    }).then(function(){
-      console.log("H1 - PV2 linked");
       configuration.linkDevices(address_H2,address_PV2);
-    }).then(function(){
-      console.log("H2 - PV2 linked");
       configuration.linkDevices(address_PV0,address_B0);
-    }).then(function(){
-      console.log("B0 - PV0 linked");
       configuration.linkDevices(address_H0,address_B0);
-    }).then(function(){
-      console.log("B0 - H0 linked");
       configuration.linkDevices(address_H2,address_B0);
-    }).then(function(){
-      console.log("B0 - H2 linked");
       return configuration.getGridAdr.call();
     }).then(function(result){
       console.log("The address (method contractList) of Grid is ",result);
@@ -139,7 +99,7 @@ contract('Configuration', function(accounts) {
       singleBattery0 = SingleBattery.at(result);
     });    
   });
-/*
+
   it("II. Set Production and price", function() {
 
     // Basic input. Now we are simulating inputs at one moment in the system
@@ -195,5 +155,27 @@ contract('Configuration', function(accounts) {
     }).then(function(result){
       console.log("The sale's price of the grid is ",result[0].toNumber(), result[1]);
     });
-  });*/
+  });
+
+  it("III. Price communication House<->PV (1. House ask for price info)", function() {
+    // Key device collect information and start sorting
+    singleHouse2.askForPrice();
+      singleHouse2.sortPriceList().then(function(result){
+    }).then(function(result){
+      console.log("House 2 asked and sorted");
+      singleHouse0.askForPrice();
+      singleHouse0.sortPriceList();
+    }).then(function(){
+      console.log("House 0 asked and sorted");
+      singleHouse1.askForPrice();
+      singleHouse1.sortPriceList();
+    }).then(function(){
+      console.log("House 1 asked and sorted");
+      singleBattery0.askForPrice();
+      singleBattery0.sort();
+    }).then(function(){
+      console.log("Battery 0 asked and sorted");
+    });
+  });
+
 });

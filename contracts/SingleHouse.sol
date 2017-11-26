@@ -37,23 +37,6 @@ contract SingleHouse is GeneralDevice, IHouse {
   mapping(uint=>address) sortedPriceQueryInfo;
   
 // ======= Modifiers =======
-  
-
-  modifier connectedPVOnly (address adrP) {
-    if (connectedDevice[1].AssertInside(adrP)) {
-      _;
-    } else {
-      revert();
-    }
-  }
-
-  modifier connectedBatteryOnly (address adrB) {
-    if (connectedDevice[2].AssertInside(adrB)) {
-      _;
-    } else {
-      revert();
-    }
-  }
 
   modifier timed (uint allowedTimeOut) {
     if(now < consumStatusAt + allowedTimeOut) {
@@ -76,13 +59,13 @@ contract SingleHouse is GeneralDevice, IHouse {
   
   // --- Regular usage ---
 
-  function setConsumption(uint consum) ownerOnly {
+  function setConsumption(uint consum) public ownerOnly {
     consumption = consum;
     consumStatusAt = now;
     ConsumptionLog(owner, consumption, consumStatusAt);
   }
 
-  function getConsumption()  external timed(consumTimeOut) returns (uint consum, uint consumAt) { //
+  function getConsumption() external view timed(consumTimeOut) returns (uint consum, uint consumAt) { 
     consum = consumption;
     consumAt = consumStatusAt;
   }
@@ -190,7 +173,7 @@ contract SingleHouse is GeneralDevice, IHouse {
   function goNoGo(uint giveoutvol) returns (uint) {
     address adrDevice = msg.sender;
     uint takeoutvol;
-    require(connectedDevice[2].AssertInside(adrDevice) || connectedDevice[1].AssertInside(adrDevice));
+    require(connectedDevice[2].assertInside(adrDevice) || connectedDevice[1].assertInside(adrDevice));
     takeoutvol = consumption.findMin(giveoutvol);
     consumption = consumption.clearEnergyTransfer(takeoutvol, address(this));
     //EnergyTransferLog(adrDevice,address(this), takeoutvol, consumption);

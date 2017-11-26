@@ -158,12 +158,12 @@ contract SinglePV is GeneralDevice, IPV {
     //for (uint i = 0; i < rLength; i++) {
       adr = sortedRankingInfo[_id];
       giveoutVol = production.findMin(RankingInfo[adr].consump);
-      if (connectedDevice[2].AssertInside(adr)) {
+      if (connectedDevice[2].assertInside(adr)) {
         whatDeviceAccept = IBattery(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;
         wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
-      } else if (connectedDevice[0].AssertInside(adr)) {
+      } else if (connectedDevice[0].assertInside(adr)) {
         whatDeviceAccept = IHouse(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;
@@ -200,36 +200,7 @@ contract SinglePV is GeneralDevice, IPV {
       }
     }
   }
-  /*
-  modifier ownerOnly {
-    if (msg.sender == owner) {
-      _;
-    } else {
-      revert();
-    }
-  }*/
 
-  modifier connectedHouseOnly {
-    if (connectedDevice[0].AssertInside(msg.sender) == true) {
-      _;
-    } else {
-      revert();
-    }
-  }
-
-  modifier connectedBatteryOnly (address adrB) {
-    var check = false;
-    for (uint i = 0; i < connectedDevice[2].length; i++) {
-      if (msg.sender == connectedDevice[2][i]) {
-        check = true;
-      }
-    }
-    if (check == true) {
-      _;
-    } else {
-      revert();
-    }
-  }
 
   modifier timed (uint initialTime, uint allowedTimeOut){
     if(now < initialTime + allowedTimeOut){
@@ -239,31 +210,35 @@ contract SinglePV is GeneralDevice, IPV {
     }
   }
 
+// ======= Event Logs =======
   event ProductionLog(address adr, uint produc, uint prodAt);
   event ConfigurationLog(string confMod, uint statusAt);
   event PriceUpdate(uint updateAt);
   
+// ======= Basic Functionalities =======
 
+  // --- Upon contract creation and configuration ---
   function SinglePV(address adr) GeneralDevice(adr) { }
 
-  function setProduction(uint produc) ownerOnly {
+  // --- Regular usage ---
+  function setProduction(uint produc) public ownerOnly {
     production = produc;
     prodStatusAt = now;
     ProductionLog(owner, production, prodStatusAt);
   }
 
-  function setPrice(uint prs) ownerOnly {
+  function setPrice(uint prs) public ownerOnly {
     price = prs;
     priceStatusAt = now;
     PriceUpdate(now);
   }
 
-  function getProduction() external returns (uint prod, uint prodAt) {//timed(queryTime,prodTimeOut)
+  function getProduction() external view returns (uint prod, uint prodAt) {//timed(queryTime,prodTimeOut)
     prod = production;
     prodAt = prodStatusAt;
   }
 
-  function getPrice() returns (uint prs, bool updatedOrNot) { //connectedHouseOnly external
+  function getPrice() public view returns (uint prs, bool updatedOrNot) { //connectedHouseOnly external
     prs = price;
     //prsAt = priceStatusAt;
     if (priceStatusAt + priceTimeOut < now) {

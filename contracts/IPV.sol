@@ -10,7 +10,7 @@ contract IPV is GeneralDevice {
   uint    priceTimeOut = 5 minutes;
   int     wallet;                   // To record loss & gain
 
-  function getPrice() returns (uint prs, bool updatedOrNot);
+  function getPrice() public view returns (uint prs, bool updatedOrNot);
   //function setRankingInfo(uint c, uint r, uint tot);
 
   /*function setGridAdr(address adr) adminOnly external {
