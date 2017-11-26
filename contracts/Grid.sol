@@ -9,26 +9,12 @@ contract Grid is GeneralDevice, IGrid {
 
   using TransactLib for *;
 
-  address Admin;                    // shall be defined at the creation of contract or to be defined manually
-  address public owner;
   uint    price;
   uint    priceFeedIn;
   uint    priceStatusAt;            // timestamp of the update (price)
 
-  modifier ownerOnly {
-    if (msg.sender == owner) {
-      _;
-    } else {
-      revert();
-    }
-  }
 
-  function Grid(address adr) {
-    // constructor
-    // Assuming that the Grid can be connected by all the devices
-    owner = adr;
-    Admin = msg.sender;
-  }
+  function Grid(address adr) GeneralDevice(adr) { }
 
   function setPrice(uint prs, uint prsF) ownerOnly {
     price = prs;

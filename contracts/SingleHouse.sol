@@ -16,12 +16,8 @@ contract SingleHouse is GeneralDevice, IHouse {
   using AdrLib for address[];
   using TransactLib for uint;
 
-  //address Admin;                    // shall be defined at the creation of contract or to be defined manually... now it doesn't work well. It captures the address of the Configuration contract.
   //uint    consumTimeOut = 5 minutes;
-  //address grid = 0x0;               // contract address of grid
-  address public owner;
-  bytes32 public name;              // name of the device (Serie No.)
-  
+
   uint    consumStatusAt;           // timestamp of the update (consumption)
   address[] connectedPV;            // List of contract address of connected PV
   address[] connectedBattery;       // List of contract address of connected batteries
@@ -43,22 +39,6 @@ contract SingleHouse is GeneralDevice, IHouse {
   
 // ======= Modifiers =======
   
-  modifier ownerOnly {
-    if (msg.sender == owner) {
-      _;
-    } else {
-      revert();
-    }
-  }
-
-/*
-  modifier adminOnly {
-    if (msg.sender == Admin) {
-      _;
-    } else {
-      revert();
-    }
-  }*/
 
   modifier connectedPVOnly (address adrP) {
     if (connectedPV.AssertInside(adrP)) {
@@ -93,10 +73,7 @@ contract SingleHouse is GeneralDevice, IHouse {
 
   // --- Upon contract creation and configuration ---
 
-  function SingleHouse (address adr) {
-    owner = adr;
-    Admin = msg.sender;
-  }
+  function SingleHouse (address adr) GeneralDevice(adr) { }
   
   /*function setGridAdr(address adr) adminOnly external {
     grid = adr;

@@ -19,9 +19,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   using AdrLib for address[];
   using TransactLib for *;
 
-  
-  address public owner;
-  bytes32 public name;              // name of the device (Serie No.)
+
   uint    capacity;                 // Cap of the device
   uint    currentVolume;            // Production of electricity
   uint    buyVolume;                // Amount of electricity that this battery would like to buy. Will first participate in the supply competition 
@@ -164,16 +162,6 @@ contract SingleBattery is GeneralDevice, IBattery {
   }
 
 
-  modifier ownerOnly {
-    if (msg.sender == owner) {
-      _;
-    } else {
-      revert();
-    }
-  }
-
-  
-
   modifier connectedPVOnly (address adrP) {
     if (connectedPV.AssertInside(adrP) == true) {
       _;
@@ -202,10 +190,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   event ConfigurationLog(string confMod, uint statusAt);
   event PriceUpdate(uint updateAt);
 
-  function SingleBattery (address adr,  uint cap) {
-    // constructor
-    owner = adr;
-    Admin = msg.sender;
+  function SingleBattery (address adr,  uint cap) GeneralDevice(adr) {
     capacity = cap;
   }
 

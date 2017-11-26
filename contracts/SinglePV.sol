@@ -15,20 +15,14 @@ contract SinglePV is GeneralDevice, IPV {
   using TransactLib for *;
   // one contract is associated to one particular PV panel in the network.
   // later we need to modify the parent contract that creates each PV contract - configuration.sol
-  //address Admin;                    // shall be defined at the creation of contract or to be defined manually
-  address public owner;
-  bytes32 public name;              // name of the device (Serie No.)
+
   uint    production;               // Production of electricity (supply: negative)
   uint    prodStatusAt;             // timestamp of the update (prod)
   //uint    prodTimeOut = 5 minutes;
   uint    price;
   uint    priceStatusAt;            // timestamp of the update (price)
   //uint    priceTimeOut = 5 minutes;
-  //mapping(address=>bool) connectedHouse;      // List of households connected
-  // mapping(address=>bool) connectedBattery;   // List of batteries connected
-  //uint    connectedHouseNum;
-  //uint    connectedBatteryNum;  
-  //address grid = 0x0;                     // contract address of grid
+
   address[] connectedHouse;         // List of households connected
   address[] connectedBattery;       // List of batteries connected
 
@@ -208,14 +202,14 @@ contract SinglePV is GeneralDevice, IPV {
       }
     }
   }
-  
+  /*
   modifier ownerOnly {
     if (msg.sender == owner) {
       _;
     } else {
       revert();
     }
-  }
+  }*/
 
   modifier connectedHouseOnly {
     if (connectedHouse.AssertInside(msg.sender) == true) {
@@ -252,11 +246,7 @@ contract SinglePV is GeneralDevice, IPV {
   event PriceUpdate(uint updateAt);
   
 
-  function SinglePV(address adr) { // Here we are still using adr in the constructor, but later maybe we should change the adr input into byte32, by a harshed device identifier
-    // constructor
-    owner = adr;
-    Admin = msg.sender;
-  }
+  function SinglePV(address adr) GeneralDevice(adr) { }
 
   function setProduction(uint produc) ownerOnly {
     production = produc;

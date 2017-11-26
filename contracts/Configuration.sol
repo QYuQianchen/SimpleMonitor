@@ -75,7 +75,7 @@ contract Configuration {
       LogConfig(numHouseTotal,numPVTotal,numBatteryTotal,statusAt);
   }
 
-  function addGrid(address adr) adminOnly{
+  function addGrid(address adr) adminOnly {
       contractList[adr] = new Grid(adr);
       gridAdr = address(contractList[adr]);
   }
