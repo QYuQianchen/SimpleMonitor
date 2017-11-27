@@ -33,6 +33,7 @@ contract SingleHouse is GeneralDevice, IHouse {
   }
 
 // ======= Event Logs =======
+
   event ConsumptionLog(address adr, uint consum, uint consumAt);
   //event ConfigurationLog(string confMod, uint statusAt);
   event EnergyTransferLog(address adrFrom, address adrTo, uint eVol, uint transferAt);
@@ -73,7 +74,7 @@ contract SingleHouse is GeneralDevice, IHouse {
     lastPriceQueryAt = now;
   }
 
-  // --- 3. House sort all the information internally ---
+  // --- 3. House sorts all the information internally ---
 
   function sortPrice() {
     draftPriceMap.sortPrsTable();
@@ -86,9 +87,10 @@ contract SingleHouse is GeneralDevice, IHouse {
     }
   }
 
-  function getSortedInfo() external view returns(uint consum, uint rank, uint tot, bool updated) {
+  function getSortedPrice() external returns(uint consum, uint rank, uint tot, bool updated) {
+    address adr = msg.sender;
     consum = consumption;
-    (rank,tot,updated) = draftPriceMap.getPrsTable(msg.sender);
+    (rank,tot,updated) = draftPriceMap.getPrsTable(adr);
   }
 
   // --- 4. PV/Battery ask House to confirm energy transaction ---
@@ -141,7 +143,7 @@ contract SingleHouse is GeneralDevice, IHouse {
   }
   */
 
-  function getConnectPVAddress(uint a) returns (address) {
+  /*function getConnectPVAddress(uint a) returns (address) {
       return connectedDevice[1][a];
   }
 
@@ -154,5 +156,5 @@ contract SingleHouse is GeneralDevice, IHouse {
 
   function getSrtList(uint a) public returns(address, uint, bool) { //address, uint, bool
     return draftPriceMap.getSortedList(a);
-  }
+  }*/
 }

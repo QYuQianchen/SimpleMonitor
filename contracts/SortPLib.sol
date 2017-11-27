@@ -10,20 +10,17 @@ library SortPLib {
   struct PriceMap {
     mapping(address=>PriceTF) prsTable;
     mapping(uint=>address) sortedPrs;
-    //PriceTF[] prepPrs;
     uint totalLength;
     uint fLength;
   } 
 
   function initPrsTable(PriceMap storage _prm) {
-    //_prm.prepPrs = new PriceTF[](0);
     _prm.totalLength = 0;
     _prm.fLength = 0;
   }
 
   function addToPrsTable(PriceMap storage _prm, address _adr, uint _p, bool _tf) {
     _prm.prsTable[_adr] = PriceTF(_p,_tf);
-    //_prm.prepPrs.push(PriceTF(_p,_tf));
     if (_tf == false) {
       _prm.fLength++;
     }
@@ -31,26 +28,9 @@ library SortPLib {
     _prm.totalLength++;
   }
 
-  function getPrsTable(PriceMap storage _prm, address _adr) returns (uint rank, uint tot, bool updated) {
-    for (var i = 0; i < _prm.totalLength; i++) {
-      if (_adr == _prm.sortedPrs[i]) {
-        return (i+1,_prm.totalLength,_prm.prsTable[_adr].updated);
-      }
-    } 
-    return (0,_prm.totalLength,false);
-  }
-
-  function getSortedList(PriceMap storage _prm, uint a) returns(address adr, uint p, bool tF) {
-    adr = _prm.sortedPrs[a];
-    p = _prm.prsTable[_prm.sortedPrs[a]].prs;
-    tF = _prm.prsTable[_prm.sortedPrs[a]].updated;
-  }
-
   function sortPrsTable(PriceMap storage _prm) {
     uint minTemp;
     uint _id;
-    //bool _stat = true;
-    // sort the price list according to the price
     for (uint i = 0; i < _prm.totalLength-1; i++) {
       minTemp = _prm.prsTable[_prm.sortedPrs[i]].prs; 
       _id = i;
@@ -85,4 +65,21 @@ library SortPLib {
       _prm.sortedPrs[_id2] = temp;   
     }
   }
+
+// getter
+  function getPrsTable(PriceMap storage _prm, address _adr) returns (uint rank, uint tot, bool updated) {
+    for (var i = 0; i < _prm.totalLength; i++) {
+      if (_adr == _prm.sortedPrs[i]) {
+        return (i+1,_prm.totalLength,_prm.prsTable[_adr].updated);
+      }
+    } 
+    return (0,_prm.totalLength,false);
+  }
+
+  function getSortedList(PriceMap storage _prm, uint a) returns(address adr, uint p, bool tF) {
+    adr = _prm.sortedPrs[a];
+    p = _prm.prsTable[_prm.sortedPrs[a]].prs;
+    tF = _prm.prsTable[_prm.sortedPrs[a]].updated;
+  }
+
 }

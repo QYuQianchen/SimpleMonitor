@@ -43,7 +43,7 @@ contract Grid is GeneralDevice, IGrid {
     uint receivedMoney;
     address adr;
     for (uint i = 0; i < connectedDevice[2].length; i++) {
-      (consum,rank,tot,updated) = IBattery(connectedDevice[2][i]).getSortedPVInfo();
+      (consum,rank,tot,updated) = IBattery(connectedDevice[2][i]).getSortedPrice();
       if (updated && consum != 0) {
         // transaction
         adr = connectedDevice[2][i];

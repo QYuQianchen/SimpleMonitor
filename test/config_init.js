@@ -43,7 +43,7 @@ contract('Configuration', function(accounts) {
       configuration.addDevice(1, address_PV0, 0, true);
       configuration.addDevice(1, address_PV1, 0, true);
       configuration.addDevice(1, address_PV2, 0, true);
-      configuration.addDevice(2, address_B0, 20, false);
+      configuration.addDevice(2, address_B0, 20, true);
       return configuration.getAdmin.call();
     }).then(function(result){
       console.log("Contract Creator=", result);
@@ -158,31 +158,31 @@ contract('Configuration', function(accounts) {
     });
   });
 
-  it("III. Price communication House<->PV (1. House ask for price info)", function() {
+  it("III. Price communication House<->PV (1. House ask for price info and sort)", function() {
     // Key device collect information and start sorting
-    var currentHouse;
-    currentHouse = singleHouse1;
+ /*   var currentHouse;
+    currentHouse = singleBattery0;
     currentHouse.askForPrice().then(function(result){
       console.log("asked for price");
-      return currentHouse.getDraftPrsMap.call(singlePV1_adr);
+ */     /*return currentHouse.getDraftPrsMap.call(singlePV1_adr);
     }).then(function(result){
       console.log("House 2 asked price from PV1", result[0].toNumber(),result[1]);
       return currentHouse.getDraftPrsMap.call(singlePV2_adr);
     }).then(function(result){
-      console.log("House 2 asked price from PV2", result[0].toNumber(),result[1]);
-      currentHouse.sortPrice();
-      return currentHouse.getSrtPosition.call(singlePV1_adr);
+      console.log("House 2 asked price from PV2", result[0].toNumber(),result[1]);*/
+/*      currentHouse.sortPrice();
+      return currentHouse.getSortedPrice.call({from: singlePV1_adr});
     }).then(function(result){
-      console.log("PV1's position for H2", result[0].toNumber(), result[1].toNumber(), result[2]);
-      return currentHouse.getSrtPosition.call(singlePV2_adr);
+      console.log("PV1's position for H2", result[0].toNumber(), result[1].toNumber(), result[2].toNumber(), result[3]);
+      return currentHouse.getSortedPrice.call({from: singlePV2_adr});
     }).then(function(result){
-      console.log("PV2's position for H2", result[0].toNumber(), result[1].toNumber(), result[2]);
-      return currentHouse.getSrtPosition.call(singleBattery0_adr);
+      console.log("PV2's position for H2", result[0].toNumber(), result[1].toNumber(), result[2].toNumber(), result[3]);
+      return currentHouse.getSortedPrice.call({from: singleBattery0_adr});
     }).then(function(result){
-      console.log("B0's position for H2", result[0].toNumber(), result[1].toNumber(), result[2]);
-      return currentHouse.getSrtPosition.call(grid_adr);
+      console.log("B0's position for H2", result[0].toNumber(), result[1].toNumber(), result[2].toNumber(), result[3]);
+      return currentHouse.getSortedPrice.call({from: grid_adr});
     }).then(function(result){
-      console.log("Grid's position for H2", result[0].toNumber(), result[1].toNumber(), result[2]);
+      console.log("Grid's position for H2", result[0].toNumber(), result[1].toNumber(), result[2].toNumber(), result[3]);
       return currentHouse.getSrtList.call(0);
     }).then(function(result){
       console.log("On H2's list, position 0", result[0], result[1].toNumber(), result[2]);
@@ -204,23 +204,69 @@ contract('Configuration', function(accounts) {
       return currentHouse.getSrtList.call(6);
     }).then(function(result){
       console.log("On H2's list, position 6", result[0], result[1].toNumber(), result[2]);
-
-    /*  singleHouse2.sortPriceList().then(function(result){
+*/
+      singleHouse2.askForPrice();
+      singleHouse2.sortPrice().then(function(result){
     }).then(function(result){
       console.log("House 2 asked and sorted");
       singleHouse0.askForPrice();
-      singleHouse0.sortPriceList();
+      singleHouse0.sortPrice();
     }).then(function(){
       console.log("House 0 asked and sorted");
       singleHouse1.askForPrice();
-      singleHouse1.sortPriceList();
+      singleHouse1.sortPrice();
     }).then(function(){
       console.log("House 1 asked and sorted");
       singleBattery0.askForPrice();
-      singleBattery0.sort();
+      singleBattery0.sortPrice();
     }).then(function(){
-      console.log("Battery 0 asked and sorted");*/
+      console.log("Battery 0 asked and sorted");
     });
   });
+
+  it("III. Price communication House<->PV (2. PV collect Info)", function() {
+    // Let the rest of the houses calculate their preference list (given the price of PV/Battery/Grid)
+    var currentPV;
+    currentPV = singlePV1;
+    return singleHouse1.getSortedPrice.call({from: singlePV1_adr}).then(function(result){
+      //console.log("The query is from singlePV1_adr", singlePV1_adr);
+      console.log("returned sorted information from sH1 is",result[0].toNumber(),result[1].toNumber(),result[2].toNumber(),result[3]);
+      currentPV.askForRank();
+    /*}).then(function(result){
+      console.log("PV collected the information");
+      return currentPV.getSortedRank.call(0);
+    }).then(function(result){
+      console.log("PV collected the information. num is", result[0],result[1].toNumber(),result[2].toNumber(),result[3].toNumber());
+      return currentPV.getSortedRank.call(1);
+    }).then(function(result){
+      console.log("PV collected the information. num is", result[0],result[1].toNumber(),result[2].toNumber(),result[3].toNumber());*/
+      currentPV.sortRank();  
+    }).then(function(result){
+      console.log("PV sorted the information");
+      return currentPV.getSortedRank.call(0);
+    }).then(function(result){
+      console.log("The sorted result at 0 is", result[0],result[1].toNumber(),result[2].toNumber(),result[3].toNumber());
+      return currentPV.getSortedRank.call(1);
+    }).then(function(result){
+      console.log("The sorted result at 1 is", result[0],result[1].toNumber(),result[2].toNumber(),result[3].toNumber());
+      return currentPV.getSortedRank.call(2);
+    }).then(function(result){
+      console.log("The sorted result at 2 is", result[0],result[1].toNumber(),result[2].toNumber(),result[3].toNumber());
+      singlePV0.askForRank();
+      singlePV0.sortRank();
+      //singlePV1.askForRank();
+      //singlePV1.sortRank();
+      singlePV2.askForRank();
+      singlePV2.sortRank();
+      singleBattery0.askForRank();
+      singleBattery0.sortRank();
+    });
+  });
+/*
+  it("III. Price communication House<->PV (3. Grid check battery)", function() {
+    grid_c.needTBCharged().then(function(result){
+      console.log("Grid has asked Battery and supply the necessary amount of energy it required");
+    });
+  });*/
 
 });

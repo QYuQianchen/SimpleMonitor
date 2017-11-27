@@ -23,6 +23,32 @@
     {
       "constant": true,
       "inputs": [],
+      "name": "getSortedPrice",
+      "outputs": [
+        {
+          "name": "consum",
+          "type": "uint256"
+        },
+        {
+          "name": "rank",
+          "type": "uint256"
+        },
+        {
+          "name": "tot",
+          "type": "uint256"
+        },
+        {
+          "name": "updated",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
       "name": "getSalePrice",
       "outputs": [
         {
@@ -96,32 +122,6 @@
     {
       "constant": true,
       "inputs": [],
-      "name": "getSortedPVInfo",
-      "outputs": [
-        {
-          "name": "consum",
-          "type": "uint256"
-        },
-        {
-          "name": "rank",
-          "type": "uint256"
-        },
-        {
-          "name": "tot",
-          "type": "uint256"
-        },
-        {
-          "name": "updated",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
       "name": "Admin",
       "outputs": [
         {
@@ -138,7 +138,7 @@
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "pragma solidity ^0.4.4;\r\n\r\nimport \"./GeneralDevice.sol\";\r\n\r\ncontract IBattery is GeneralDevice {\r\n\r\n  int     wallet;                   // To record loss & gain \r\n  //address grid = 0x0;                     // contract address of grid\r\n\r\n  function getSalePrice() public view returns (uint prs, bool updatedOrNot);\r\n  function goExcess(uint vol) returns ( uint takeVol, uint prs);\r\n  //function getSortedPVInfo() returns(uint consum, uint rank, uint tot, bool updated);\r\n  function getSortedPVInfo() external view returns(uint consum, uint rank, uint tot, bool updated);\r\n  function goNoGo(uint giveoutvol) returns (uint);\r\n\r\n  /*function setGridAdr(address adr) adminOnly external{\r\n    grid = adr;\r\n  }*/\r\n}\r\n",
+  "source": "pragma solidity ^0.4.4;\r\n\r\nimport \"./GeneralDevice.sol\";\r\n\r\ncontract IBattery is GeneralDevice {\r\n\r\n  int     wallet;                   // To record loss & gain \r\n  //address grid = 0x0;                     // contract address of grid\r\n\r\n  function getSalePrice() public view returns (uint prs, bool updatedOrNot);\r\n  function goExcess(uint vol) returns ( uint takeVol, uint prs);\r\n  //function getSortedPVInfo() returns(uint consum, uint rank, uint tot, bool updated);\r\n  function getSortedPrice() external view returns(uint consum, uint rank, uint tot, bool updated);\r\n  function goNoGo(uint giveoutvol) returns (uint);\r\n\r\n  /*function setGridAdr(address adr) adminOnly external{\r\n    grid = adr;\r\n  }*/\r\n}\r\n",
   "sourcePath": "C:\\Users\\qianc\\Documents\\Thesis\\Code\\SimpleMonitor\\contracts\\IBattery.sol",
   "ast": {
     "attributes": {
@@ -458,7 +458,7 @@
               "modifiers": [
                 null
               ],
-              "name": "getSortedPVInfo",
+              "name": "getSortedPrice",
               "payable": false,
               "scope": 910,
               "stateMutability": "view",
@@ -475,7 +475,7 @@
                 "children": [],
                 "id": 892,
                 "name": "ParameterList",
-                "src": "497:2:4"
+                "src": "496:2:4"
               },
               {
                 "children": [
@@ -498,12 +498,12 @@
                         },
                         "id": 893,
                         "name": "ElementaryTypeName",
-                        "src": "522:4:4"
+                        "src": "521:4:4"
                       }
                     ],
                     "id": 894,
                     "name": "VariableDeclaration",
-                    "src": "522:11:4"
+                    "src": "521:11:4"
                   },
                   {
                     "attributes": {
@@ -524,12 +524,12 @@
                         },
                         "id": 895,
                         "name": "ElementaryTypeName",
-                        "src": "535:4:4"
+                        "src": "534:4:4"
                       }
                     ],
                     "id": 896,
                     "name": "VariableDeclaration",
-                    "src": "535:9:4"
+                    "src": "534:9:4"
                   },
                   {
                     "attributes": {
@@ -550,12 +550,12 @@
                         },
                         "id": 897,
                         "name": "ElementaryTypeName",
-                        "src": "546:4:4"
+                        "src": "545:4:4"
                       }
                     ],
                     "id": 898,
                     "name": "VariableDeclaration",
-                    "src": "546:8:4"
+                    "src": "545:8:4"
                   },
                   {
                     "attributes": {
@@ -576,22 +576,22 @@
                         },
                         "id": 899,
                         "name": "ElementaryTypeName",
-                        "src": "556:4:4"
+                        "src": "555:4:4"
                       }
                     ],
                     "id": 900,
                     "name": "VariableDeclaration",
-                    "src": "556:12:4"
+                    "src": "555:12:4"
                   }
                 ],
                 "id": 901,
                 "name": "ParameterList",
-                "src": "521:48:4"
+                "src": "520:48:4"
               }
             ],
             "id": 902,
             "name": "FunctionDefinition",
-            "src": "473:97:4"
+            "src": "473:96:4"
           },
           {
             "attributes": {
@@ -631,17 +631,17 @@
                         },
                         "id": 903,
                         "name": "ElementaryTypeName",
-                        "src": "590:4:4"
+                        "src": "589:4:4"
                       }
                     ],
                     "id": 904,
                     "name": "VariableDeclaration",
-                    "src": "590:15:4"
+                    "src": "589:15:4"
                   }
                 ],
                 "id": 905,
                 "name": "ParameterList",
-                "src": "589:17:4"
+                "src": "588:17:4"
               },
               {
                 "children": [
@@ -664,32 +664,32 @@
                         },
                         "id": 906,
                         "name": "ElementaryTypeName",
-                        "src": "616:4:4"
+                        "src": "615:4:4"
                       }
                     ],
                     "id": 907,
                     "name": "VariableDeclaration",
-                    "src": "616:4:4"
+                    "src": "615:4:4"
                   }
                 ],
                 "id": 908,
                 "name": "ParameterList",
-                "src": "615:6:4"
+                "src": "614:6:4"
               }
             ],
             "id": 909,
             "name": "FunctionDefinition",
-            "src": "574:48:4"
+            "src": "573:48:4"
           }
         ],
         "id": 910,
         "name": "ContractDefinition",
-        "src": "60:649:4"
+        "src": "60:648:4"
       }
     ],
     "id": 911,
     "name": "SourceUnit",
-    "src": "0:711:4"
+    "src": "0:710:4"
   },
   "compiler": {
     "name": "solc",
@@ -697,5 +697,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-27T16:12:56.791Z"
+  "updatedAt": "2017-11-27T23:12:35.036Z"
 }

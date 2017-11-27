@@ -13,6 +13,8 @@ contract SinglePV is GeneralDevice, IPV {
   
   using AdrLib for address[];
   using TransactLib for *;
+  using SortRLib for *;
+
   // one contract is associated to one particular PV panel in the network.
   // later we need to modify the parent contract that creates each PV contract - configuration.sol
 
@@ -23,52 +25,64 @@ contract SinglePV is GeneralDevice, IPV {
   uint    priceStatusAt;            // timestamp of the update (price)
   //uint    priceTimeOut = 5 minutes;
 
+  SortRLib.RankMap draftRankMap;
 
-  /*struct Request {
-    uint  consump;
-    uint  rank;
-    uint  total;
-  } */
-
-  using SortRLib for SortRLib.Request[];
-  SortRLib.Request[] prepRankingInfo;
-
-  uint    rLength;
   uint    lastRankingAt;
-  mapping(address=>SortRLib.Request) RankingInfo;
-  mapping(uint=>address) sortedRankingInfo;
 
-  /*function askForRankTEST() returns (uint, uint) {
-    uint consum;
-    uint rank;
-    uint tot;
-    bool updated;
-    uint num1 = 0;
-    uint num2 = 0;
-    prepRankingInfo.length = connectedHouse.length+connectedBattery.length;
+// ======= Modifiers =======
 
-    for (uint i = 0; i < connectedHouse.length; i++) {
-      
-      (consum, rank, tot, updated) = IHouse(connectedHouse[i]).getSortedInfo();
-      GetSortedInfo(connectedHouse[i], consum, rank, tot, updated);
-      RankingInfo[connectedHouse[i]] = SortRLib.Request(consum, rank, tot);
-
-      prepRankingInfo[num1] = RankingInfo[connectedHouse[i]];
-      num1++;
+  modifier timed (uint initialTime, uint allowedTimeOut){
+    if(now < initialTime + allowedTimeOut){
+      _;
+    } else {
+      revert();
     }
-
-    for (i = 0; i < connectedBattery.length; i++) {
-        num2++;
-    }
-
-    return (num1, num2);
-  }*/
-
-  function getPrepInfo(uint _id) returns(uint consum, uint rank, uint tot) {
-    consum = prepRankingInfo[_id].consump;
-    rank = prepRankingInfo[_id].rank;
-    tot = prepRankingInfo[_id].total;
   }
+
+// ======= Event Logs =======
+
+  event ProductionLog(address adr, uint produc, uint prodAt);
+  event ConfigurationLog(string confMod, uint statusAt);
+  event PriceUpdate(uint updateAt);
+  
+// ======= Basic Functionalities =======
+
+  // --- 0. Upon contract creation and configuration ---
+
+  function SinglePV(address adr) GeneralDevice(adr) { }
+
+  // --- 1. set and get PV price & production every 15 min (or less) ---
+
+  function setProduction(uint produc) public ownerOnly {
+    production = produc;
+    prodStatusAt = now;
+    ProductionLog(owner, production, prodStatusAt);
+  }
+
+  function setPrice(uint prs) public ownerOnly {
+    price = prs;
+    priceStatusAt = now;
+    PriceUpdate(now);
+  }
+
+  function getProduction() external view returns (uint prod, uint prodAt) {//timed(queryTime,prodTimeOut)
+    prod = production;
+    prodAt = prodStatusAt;
+  }
+
+  function getPrice() public view returns (uint prs, bool updatedOrNot) { //connectedHouseOnly external
+    prs = price;
+    //prsAt = priceStatusAt;
+    if (priceStatusAt + priceTimeOut < now) {
+      updatedOrNot = false;
+    } else {
+      updatedOrNot = true;
+    }
+    //adr = owner;
+  }
+
+  // --- 3. PV can provide energy to houses. --- 
+  // ---    Sort the list of ranks. --- 
 
   function askForRank() {
     // ask and prepare for sorting the ranking...
@@ -76,51 +90,24 @@ contract SinglePV is GeneralDevice, IPV {
     uint rank;
     uint tot;
     bool updated;
-    uint num;
-    prepRankingInfo.length = connectedDevice[0].length+connectedDevice[2].length;
+    draftRankMap.initRnkTable();
     for (uint i = 0; i < connectedDevice[0].length; i++) {
-      (consum, rank, tot, updated) = IHouse(connectedDevice[0][i]).getSortedInfo();
-      //GetSortedInfo(connectedHouse[i], consum, rank, tot, updated);
+      (consum, rank, tot, updated) = IHouse(connectedDevice[0][i]).getSortedPrice();
       if (updated) {
-        RankingInfo[connectedDevice[0][i]] = SortRLib.Request(consum, rank, tot);
-        prepRankingInfo[num] = RankingInfo[connectedDevice[0][i]];
-        sortedRankingInfo[num] = connectedDevice[0][i];
-        num++;
+        draftRankMap.addToRnkTable(connectedDevice[0][i],consum, rank, tot);
       }
     }
     for (i = 0; i < connectedDevice[2].length; i++) {
-      (consum,rank,tot,updated) = IBattery(connectedDevice[2][i]).getSortedPVInfo();
-      //GetSortedInfo(connectedBattery[i], consum, rank, tot, updated);
+      (consum,rank,tot,updated) = IBattery(connectedDevice[2][i]).getSortedPrice();
       if (updated) {
-        RankingInfo[connectedDevice[2][i]] = SortRLib.Request(consum, rank, tot);
-        prepRankingInfo[num] = RankingInfo[connectedDevice[2][i]];
-        sortedRankingInfo[num] = connectedDevice[2][i];
-        num++;
+        draftRankMap.addToRnkTable(connectedDevice[2][i],consum, rank, tot);
       }
     }
-    rLength = num;
-    prepRankingInfo.length = num;
     lastRankingAt = now;
   }
-  // This event is only for testing reason
-  //event GetSortedInfo(address device, uint consum, uint rank, uint tot, bool updated);
 
-  function swap (uint _id1, uint _id2) private {
-    if (_id1 != _id2) {
-      address temp;
-      temp = sortedRankingInfo[_id1];
-      sortedRankingInfo[_id1] = sortedRankingInfo[_id2];
-      sortedRankingInfo[_id2] = temp;   
-    }
-  }
-
-  function sortRankList() {
-    uint minTemp;
-    for (uint i=0; i<rLength; i++) {
-      minTemp = prepRankingInfo.minStruct();
-      swap(i,i+minTemp);
-      prepRankingInfo.del(minTemp);
-    }
+  function sortRank() {
+    draftRankMap.sortRnkTable();
     /*
     // In case there is still excess, need to ask connectedBattery to buy for the extra...as much as possible
     if (connectedBattery.length != 0) {
@@ -130,7 +117,6 @@ contract SinglePV is GeneralDevice, IPV {
         (prs, cap) = IBattery(grid).getExcess();
       
       }
-      
     }
     // if the grid is connected -> add the price from the grid to the end of the sorted list 
     if (grid != 0x0) {
@@ -143,21 +129,22 @@ contract SinglePV is GeneralDevice, IPV {
   }
 
 
-  function getSortedInfo(uint _id) returns(address adr, uint consum, uint rank, uint tot) {
-    adr = sortedRankingInfo[_id];
-    consum = RankingInfo[adr].consump;
-    rank = RankingInfo[adr].rank;
-    tot = RankingInfo[adr].total;
+  function getSortedRank(uint _id) returns(address adr, uint consum, uint rank, uint tot) {
+    return draftRankMap.getSortedList(_id);
   }
   
   function initiateTransaction(uint _id) returns (uint, uint) {
     uint giveoutVol;
     address adr;
+    uint consum;
+    uint rank;
+    uint tot;
     uint whatDeviceAccept;
     uint receivedMoney;
     //for (uint i = 0; i < rLength; i++) {
-      adr = sortedRankingInfo[_id];
-      giveoutVol = production.findMin(RankingInfo[adr].consump);
+      //adr = sortedRankingInfo[_id];
+      (adr,consum,rank,tot) = getSortedRank(_id);
+      giveoutVol = production.findMin(consum);
       if (connectedDevice[2].assertInside(adr)) {
         whatDeviceAccept = IBattery(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;
@@ -202,50 +189,4 @@ contract SinglePV is GeneralDevice, IPV {
   }
 
 
-  modifier timed (uint initialTime, uint allowedTimeOut){
-    if(now < initialTime + allowedTimeOut){
-      _;
-    } else {
-      revert();
-    }
-  }
-
-// ======= Event Logs =======
-  event ProductionLog(address adr, uint produc, uint prodAt);
-  event ConfigurationLog(string confMod, uint statusAt);
-  event PriceUpdate(uint updateAt);
-  
-// ======= Basic Functionalities =======
-
-  // --- Upon contract creation and configuration ---
-  function SinglePV(address adr) GeneralDevice(adr) { }
-
-  // --- Regular usage ---
-  function setProduction(uint produc) public ownerOnly {
-    production = produc;
-    prodStatusAt = now;
-    ProductionLog(owner, production, prodStatusAt);
-  }
-
-  function setPrice(uint prs) public ownerOnly {
-    price = prs;
-    priceStatusAt = now;
-    PriceUpdate(now);
-  }
-
-  function getProduction() external view returns (uint prod, uint prodAt) {//timed(queryTime,prodTimeOut)
-    prod = production;
-    prodAt = prodStatusAt;
-  }
-
-  function getPrice() public view returns (uint prs, bool updatedOrNot) { //connectedHouseOnly external
-    prs = price;
-    //prsAt = priceStatusAt;
-    if (priceStatusAt + priceTimeOut < now) {
-      updatedOrNot = false;
-    } else {
-      updatedOrNot = true;
-    }
-    //adr = owner;
-  }
 }
