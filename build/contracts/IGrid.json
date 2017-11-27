@@ -116,7 +116,7 @@
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "pragma solidity ^0.4.4;\n\nimport \"./GeneralDevice.sol\";\n\ncontract IGrid is GeneralDevice {\n\n  int     wallet;                   // To record loss & gain\n  uint    priceTimeOut = 5 minutes;\n  uint    posBackup = 100;         // Assume that the grid is ready to supply the microgrid for 100kwh\n  uint    negBackup = 100;         // Assume that the grid is ready to absort 100kwh of excess energy from microgrid \n  /*address[] connectedHouse; // List of households connected\n  address[] connectedPV;// List of PV connected\n  address[] connectedBattery;*/\n\n  function getPrice() public view returns (uint prs, bool updatedOrNot);\n  function goExcess(uint vol) returns ( uint takeVol, uint prs);    // when grid absorbing energy\n  function goExtra(uint vol) returns (uint takeVol, uint prs);      // when grid supplying energy\n\n  /*function addPV(address adr) {connectedPV.push(adr);}\n  function addH(address adr) {connectedHouse.push(adr);}\n  function addB(address adr) {connectedBattery.push(adr);}*/\n}\n",
+  "source": "pragma solidity ^0.4.4;\r\n\r\nimport \"./GeneralDevice.sol\";\r\n\r\ncontract IGrid is GeneralDevice {\r\n\r\n  int     wallet;                   // To record loss & gain\r\n  uint    priceTimeOut = 5 minutes;\r\n  uint    posBackup = 100;         // Assume that the grid is ready to supply the microgrid for 100kwh\r\n  uint    negBackup = 100;         // Assume that the grid is ready to absort 100kwh of excess energy from microgrid \r\n  /*address[] connectedHouse; // List of households connected\r\n  address[] connectedPV;// List of PV connected\r\n  address[] connectedBattery;*/\r\n\r\n  function getPrice() public view returns (uint prs, bool updatedOrNot);\r\n  function goExcess(uint vol) returns ( uint takeVol, uint prs);    // when grid absorbing energy\r\n  function goExtra(uint vol) returns (uint takeVol, uint prs);      // when grid supplying energy\r\n\r\n  /*function addPV(address adr) {connectedPV.push(adr);}\r\n  function addH(address adr) {connectedHouse.push(adr);}\r\n  function addB(address adr) {connectedBattery.push(adr);}*/\r\n}\r\n",
   "sourcePath": "C:\\Users\\qianc\\Documents\\Thesis\\Code\\SimpleMonitor\\contracts\\IGrid.sol",
   "ast": {
     "attributes": {
@@ -154,7 +154,7 @@
         },
         "id": 913,
         "name": "ImportDirective",
-        "src": "25:29:5"
+        "src": "27:29:5"
       },
       {
         "attributes": {
@@ -188,12 +188,12 @@
                 },
                 "id": 914,
                 "name": "UserDefinedTypeName",
-                "src": "74:13:5"
+                "src": "78:13:5"
               }
             ],
             "id": 915,
             "name": "InheritanceSpecifier",
-            "src": "74:13:5"
+            "src": "78:13:5"
           },
           {
             "attributes": {
@@ -214,12 +214,12 @@
                 },
                 "id": 916,
                 "name": "ElementaryTypeName",
-                "src": "93:3:5"
+                "src": "99:3:5"
               }
             ],
             "id": 917,
             "name": "VariableDeclaration",
-            "src": "93:14:5"
+            "src": "99:14:5"
           },
           {
             "attributes": {
@@ -239,7 +239,7 @@
                 },
                 "id": 918,
                 "name": "ElementaryTypeName",
-                "src": "154:4:5"
+                "src": "161:4:5"
               },
               {
                 "attributes": {
@@ -256,12 +256,12 @@
                 },
                 "id": 919,
                 "name": "Literal",
-                "src": "177:9:5"
+                "src": "184:9:5"
               }
             ],
             "id": 920,
             "name": "VariableDeclaration",
-            "src": "154:32:5"
+            "src": "161:32:5"
           },
           {
             "attributes": {
@@ -281,7 +281,7 @@
                 },
                 "id": 921,
                 "name": "ElementaryTypeName",
-                "src": "190:4:5"
+                "src": "198:4:5"
               },
               {
                 "attributes": {
@@ -298,12 +298,12 @@
                 },
                 "id": 922,
                 "name": "Literal",
-                "src": "210:3:5"
+                "src": "218:3:5"
               }
             ],
             "id": 923,
             "name": "VariableDeclaration",
-            "src": "190:23:5"
+            "src": "198:23:5"
           },
           {
             "attributes": {
@@ -323,7 +323,7 @@
                 },
                 "id": 924,
                 "name": "ElementaryTypeName",
-                "src": "293:4:5"
+                "src": "302:4:5"
               },
               {
                 "attributes": {
@@ -340,12 +340,12 @@
                 },
                 "id": 925,
                 "name": "Literal",
-                "src": "313:3:5"
+                "src": "322:3:5"
               }
             ],
             "id": 926,
             "name": "VariableDeclaration",
-            "src": "293:23:5"
+            "src": "302:23:5"
           },
           {
             "attributes": {
@@ -373,7 +373,7 @@
                 "children": [],
                 "id": 927,
                 "name": "ParameterList",
-                "src": "571:2:5"
+                "src": "585:2:5"
               },
               {
                 "children": [
@@ -396,12 +396,12 @@
                         },
                         "id": 928,
                         "name": "ElementaryTypeName",
-                        "src": "595:4:5"
+                        "src": "609:4:5"
                       }
                     ],
                     "id": 929,
                     "name": "VariableDeclaration",
-                    "src": "595:8:5"
+                    "src": "609:8:5"
                   },
                   {
                     "attributes": {
@@ -422,22 +422,22 @@
                         },
                         "id": 930,
                         "name": "ElementaryTypeName",
-                        "src": "605:4:5"
+                        "src": "619:4:5"
                       }
                     ],
                     "id": 931,
                     "name": "VariableDeclaration",
-                    "src": "605:17:5"
+                    "src": "619:17:5"
                   }
                 ],
                 "id": 932,
                 "name": "ParameterList",
-                "src": "594:29:5"
+                "src": "608:29:5"
               }
             ],
             "id": 933,
             "name": "FunctionDefinition",
-            "src": "554:70:5"
+            "src": "568:70:5"
           },
           {
             "attributes": {
@@ -477,17 +477,17 @@
                         },
                         "id": 934,
                         "name": "ElementaryTypeName",
-                        "src": "645:4:5"
+                        "src": "660:4:5"
                       }
                     ],
                     "id": 935,
                     "name": "VariableDeclaration",
-                    "src": "645:8:5"
+                    "src": "660:8:5"
                   }
                 ],
                 "id": 936,
                 "name": "ParameterList",
-                "src": "644:10:5"
+                "src": "659:10:5"
               },
               {
                 "children": [
@@ -510,12 +510,12 @@
                         },
                         "id": 937,
                         "name": "ElementaryTypeName",
-                        "src": "665:4:5"
+                        "src": "680:4:5"
                       }
                     ],
                     "id": 938,
                     "name": "VariableDeclaration",
-                    "src": "665:12:5"
+                    "src": "680:12:5"
                   },
                   {
                     "attributes": {
@@ -536,22 +536,22 @@
                         },
                         "id": 939,
                         "name": "ElementaryTypeName",
-                        "src": "679:4:5"
+                        "src": "694:4:5"
                       }
                     ],
                     "id": 940,
                     "name": "VariableDeclaration",
-                    "src": "679:8:5"
+                    "src": "694:8:5"
                   }
                 ],
                 "id": 941,
                 "name": "ParameterList",
-                "src": "663:25:5"
+                "src": "678:25:5"
               }
             ],
             "id": 942,
             "name": "FunctionDefinition",
-            "src": "627:62:5"
+            "src": "642:62:5"
           },
           {
             "attributes": {
@@ -591,17 +591,17 @@
                         },
                         "id": 943,
                         "name": "ElementaryTypeName",
-                        "src": "742:4:5"
+                        "src": "758:4:5"
                       }
                     ],
                     "id": 944,
                     "name": "VariableDeclaration",
-                    "src": "742:8:5"
+                    "src": "758:8:5"
                   }
                 ],
                 "id": 945,
                 "name": "ParameterList",
-                "src": "741:10:5"
+                "src": "757:10:5"
               },
               {
                 "children": [
@@ -624,12 +624,12 @@
                         },
                         "id": 946,
                         "name": "ElementaryTypeName",
-                        "src": "761:4:5"
+                        "src": "777:4:5"
                       }
                     ],
                     "id": 947,
                     "name": "VariableDeclaration",
-                    "src": "761:12:5"
+                    "src": "777:12:5"
                   },
                   {
                     "attributes": {
@@ -650,32 +650,32 @@
                         },
                         "id": 948,
                         "name": "ElementaryTypeName",
-                        "src": "775:4:5"
+                        "src": "791:4:5"
                       }
                     ],
                     "id": 949,
                     "name": "VariableDeclaration",
-                    "src": "775:8:5"
+                    "src": "791:8:5"
                   }
                 ],
                 "id": 950,
                 "name": "ParameterList",
-                "src": "760:24:5"
+                "src": "776:24:5"
               }
             ],
             "id": 951,
             "name": "FunctionDefinition",
-            "src": "725:60:5"
+            "src": "741:60:5"
           }
         ],
         "id": 952,
         "name": "ContractDefinition",
-        "src": "56:942:5"
+        "src": "60:959:5"
       }
     ],
     "id": 953,
     "name": "SourceUnit",
-    "src": "0:999:5"
+    "src": "0:1021:5"
   },
   "compiler": {
     "name": "solc",
@@ -683,5 +683,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-27T16:02:26.752Z"
+  "updatedAt": "2017-11-27T16:12:55.778Z"
 }

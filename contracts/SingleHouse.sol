@@ -1,6 +1,6 @@
 pragma solidity ^0.4.4;
 
-import "./SortLib.sol";
+import "./SortPLib.sol";
 import "./AdrLib.sol";
 import "./TransactLib.sol";
 import "./IPV.sol";
@@ -14,13 +14,13 @@ contract SingleHouse is GeneralDevice, IHouse {
 
   using AdrLib for address[];
   using TransactLib for uint;
-  using SortLib for *;
+  using SortPLib for *;
 
   //uint    consumTimeOut = 5 minutes;
   uint    consumStatusAt;           // timestamp of the update (consumption)
   uint    lastPriceQueryAt;
 
-  SortLib.PriceMap draftPriceMap;
+  SortPLib.PriceMap draftPriceMap;
 
 // ======= Modifiers =======
 

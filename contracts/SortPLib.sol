@@ -1,6 +1,6 @@
 pragma solidity ^0.4.4;
 
-library SortLib {
+library SortPLib {
 
   struct PriceTF {
     uint  prs;

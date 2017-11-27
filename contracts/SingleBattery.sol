@@ -7,7 +7,7 @@ import "./IHouse.sol";
 import "./GeneralDevice.sol";
 
 import "./SortRLib.sol";
-import "./SortLib.sol"; 
+import "./SortPLib.sol"; 
 import "./AdrLib.sol"; 
 import "./TransactLib.sol";
 
@@ -18,7 +18,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   
   using AdrLib for address[];
   using TransactLib for *;
-  using SortLib for *;
+  using SortPLib for *;
 
 
   uint    capacity;                 // Cap of the device
@@ -39,7 +39,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     bool  updated;
   }*/
 
-  SortLib.PriceMap draftPriceMap;
+  SortPLib.PriceMap draftPriceMap;
   uint    lastPriceQueryAt;
 
 /*
