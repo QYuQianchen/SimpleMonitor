@@ -12,7 +12,7 @@ contract IGrid is GeneralDevice {
   address[] connectedPV;// List of PV connected
   address[] connectedBattery;*/
 
-  function getPrice() returns (uint prs, bool updatedOrNot);
+  function getPrice() public view returns (uint prs, bool updatedOrNot);
   function goExcess(uint vol) returns ( uint takeVol, uint prs);    // when grid absorbing energy
   function goExtra(uint vol) returns (uint takeVol, uint prs);      // when grid supplying energy
 

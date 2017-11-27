@@ -22,7 +22,7 @@ contract Grid is GeneralDevice, IGrid {
     priceStatusAt = now;
   }
 
-  function getPrice() returns (uint prs, bool updatedOrNot) {
+  function getPrice() public view returns (uint prs, bool updatedOrNot) {
     prs = price;
     //prsAt = priceStatusAt;
     if (priceStatusAt + priceTimeOut < now) {

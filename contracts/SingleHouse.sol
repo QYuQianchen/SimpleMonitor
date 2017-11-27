@@ -17,7 +17,6 @@ contract SingleHouse is GeneralDevice, IHouse {
   using TransactLib for uint;
 
   //uint    consumTimeOut = 5 minutes;
-
   uint    consumStatusAt;           // timestamp of the update (consumption)
   
 
@@ -28,8 +27,10 @@ contract SingleHouse is GeneralDevice, IHouse {
     bool  updated;
   }*/
 
-  using SortLib for SortLib.PriceTF[];
+  //using SortLib for SortLib.PriceTF[];
+  using SortLib for *;
   SortLib.PriceTF[] prepPriceQueryInfo;
+  SortLib.PriceMap draftPriceMap;
 
   uint    lastPriceQueryAt;
 
@@ -77,15 +78,42 @@ contract SingleHouse is GeneralDevice, IHouse {
     // If the house is connected to grid (most of the time), the price of Grid will be automatically added to the end of the sorted list.
     uint tP = 0;
     bool tF = false;
+    draftPriceMap.initPrsTable();
+    for (i = 0; i < connectedDevice[2].length; i++) {
+      (tP,tF) = IBattery(connectedDevice[2][i]).getSalePrice(); 
+      priceQueryInfo[connectedDevice[2][i]] = SortLib.PriceTF(tP,tF);
+      draftPriceMap.addToPrsTable(connectedDevice[2][i],tP,tF);
+    }
     for (uint i = 0; i < connectedDevice[1].length; i++) {
       (tP,tF) = IPV(connectedDevice[1][i]).getPrice();
       priceQueryInfo[connectedDevice[1][i]] = SortLib.PriceTF(tP,tF);
+      draftPriceMap.addToPrsTable(connectedDevice[1][i],tP,tF);
     }
-    for (i = 0; i < connectedDevice[2].length; i++) {
-      (tP,tF) = IBattery(connectedDevice[2][i]).getSalePrice();
-      priceQueryInfo[connectedDevice[2][i]] = SortLib.PriceTF(tP,tF);
-    }
+
     lastPriceQueryAt = now;
+  }
+
+  function sortDraftPrsMap() {
+    draftPriceMap.sortPrsTable();
+    // if the grid is connected -> add the price from the grid to the end of the sorted list 
+    if (grid != 0x0) {
+      uint tP = 0;
+      bool tF = false;
+      (tP,tF) = IGrid(grid).getPrice();
+      draftPriceMap.addToPrsTable(grid,tP,tF);
+    }
+  }
+// test
+  function getDraftPrsMap(address adr) public view returns (uint, bool) {
+    //return (101,false);
+    return (draftPriceMap.prsTable[adr].prs, draftPriceMap.prsTable[adr].updated);
+  }
+  function getSrtPosition(address adr) public returns (uint) {
+    return draftPriceMap.getPrsTable(adr);
+  }
+
+  function getSrtList(uint a) public returns(address, uint, bool) { //address, uint, bool
+    return draftPriceMap.getSortedList(a);
   }
 
   //------------------------------

@@ -66,5 +66,7 @@ contract GeneralDevice {
     connectedDevice[a].push(adr);
   }
 
+
+
   // a function that disconnects devices can be added here, if needed
 }
