@@ -415,7 +415,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 4593,
+                                  "referencedDeclaration": 3857,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -489,7 +489,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4597,
+                                      "referencedDeclaration": 3861,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -581,7 +581,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 4593,
+                                  "referencedDeclaration": 3857,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -655,7 +655,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4597,
+                                      "referencedDeclaration": 3861,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -917,7 +917,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4597,
+                                      "referencedDeclaration": 3861,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1142,7 +1142,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4597,
+                                      "referencedDeclaration": 3861,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1367,7 +1367,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4597,
+                                      "referencedDeclaration": 3861,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1563,7 +1563,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 4593,
+                                  "referencedDeclaration": 3857,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -1985,5 +1985,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-27T15:20:11.501Z"
+  "updatedAt": "2017-11-27T16:02:27.641Z"
 }

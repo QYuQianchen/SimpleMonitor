@@ -160,46 +160,48 @@ contract('Configuration', function(accounts) {
 
   it("III. Price communication House<->PV (1. House ask for price info)", function() {
     // Key device collect information and start sorting
-    singleHouse2.askForPrice().then(function(result){
+    var currentHouse;
+    currentHouse = singleHouse1;
+    currentHouse.askForPrice().then(function(result){
       console.log("asked for price");
-      return singleHouse2.getDraftPrsMap.call(singlePV1_adr);
+      return currentHouse.getDraftPrsMap.call(singlePV1_adr);
     }).then(function(result){
       console.log("House 2 asked price from PV1", result[0].toNumber(),result[1]);
-      return singleHouse2.getDraftPrsMap.call(singlePV2_adr);
+      return currentHouse.getDraftPrsMap.call(singlePV2_adr);
     }).then(function(result){
       console.log("House 2 asked price from PV2", result[0].toNumber(),result[1]);
-      singleHouse2.sortDraftPrsMap();
-      return singleHouse2.getSrtPosition.call(singlePV1_adr);
+      currentHouse.sortPrice();
+      return currentHouse.getSrtPosition.call(singlePV1_adr);
     }).then(function(result){
-      console.log("PV1's position for H2", result.toNumber());
-      return singleHouse2.getSrtPosition.call(singlePV2_adr);
+      console.log("PV1's position for H2", result[0].toNumber(), result[1].toNumber(), result[2]);
+      return currentHouse.getSrtPosition.call(singlePV2_adr);
     }).then(function(result){
-      console.log("PV2's position for H2", result.toNumber());
-      return singleHouse2.getSrtPosition.call(singleBattery0_adr);
+      console.log("PV2's position for H2", result[0].toNumber(), result[1].toNumber(), result[2]);
+      return currentHouse.getSrtPosition.call(singleBattery0_adr);
     }).then(function(result){
-      console.log("B0's position for H2", result.toNumber());
-      return singleHouse2.getSrtPosition.call(grid_adr);
+      console.log("B0's position for H2", result[0].toNumber(), result[1].toNumber(), result[2]);
+      return currentHouse.getSrtPosition.call(grid_adr);
     }).then(function(result){
-      console.log("Grid's position for H2", result.toNumber());
-      return singleHouse2.getSrtList.call(0);
+      console.log("Grid's position for H2", result[0].toNumber(), result[1].toNumber(), result[2]);
+      return currentHouse.getSrtList.call(0);
     }).then(function(result){
       console.log("On H2's list, position 0", result[0], result[1].toNumber(), result[2]);
-      return singleHouse2.getSrtList.call(1);
+      return currentHouse.getSrtList.call(1);
     }).then(function(result){
       console.log("On H2's list, position 1", result[0], result[1].toNumber(), result[2]);
-      return singleHouse2.getSrtList.call(2);
+      return currentHouse.getSrtList.call(2);
     }).then(function(result){
       console.log("On H2's list, position 2", result[0], result[1].toNumber(), result[2]);
-      return singleHouse2.getSrtList.call(3);
+      return currentHouse.getSrtList.call(3);
     }).then(function(result){
       console.log("On H2's list, position 3", result[0], result[1].toNumber(), result[2]);
-      return singleHouse2.getSrtList.call(4);
+      return currentHouse.getSrtList.call(4);
     }).then(function(result){
       console.log("On H2's list, position 4", result[0], result[1].toNumber(), result[2]);
-      return singleHouse2.getSrtList.call(5);
+      return currentHouse.getSrtList.call(5);
     }).then(function(result){
       console.log("On H2's list, position 5", result[0], result[1].toNumber(), result[2]);
-      return singleHouse2.getSrtList.call(6);
+      return currentHouse.getSrtList.call(6);
     }).then(function(result){
       console.log("On H2's list, position 6", result[0], result[1].toNumber(), result[2]);
 

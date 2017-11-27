@@ -18,6 +18,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   
   using AdrLib for address[];
   using TransactLib for *;
+  using SortLib for *;
 
 
   uint    capacity;                 // Cap of the device
@@ -38,12 +39,16 @@ contract SingleBattery is GeneralDevice, IBattery {
     bool  updated;
   }*/
 
-  using SortLib for SortLib.PriceTF[];
-  SortLib.PriceTF[] prepPriceQueryInfo;
+  SortLib.PriceMap draftPriceMap;
   uint    lastPriceQueryAt;
 
+/*
+  using SortLib for SortLib.PriceTF[];
+  SortLib.PriceTF[] prepPriceQueryInfo;
+  
+
   mapping(address=>SortLib.PriceTF) priceQueryInfo;
-  mapping(uint=>address) sortedPriceQueryInfo;
+  mapping(uint=>address) sortedPriceQueryInfo;*/
 
   using SortRLib for SortRLib.Request[];
   SortRLib.Request[] prepRankingInfo;
@@ -59,17 +64,19 @@ contract SingleBattery is GeneralDevice, IBattery {
     // If the house is connected to grid (most of the time), the price of Grid also participates in the sorting (it's not less favored anymore)
     uint tP = 0;
     bool tF = false;
+    draftPriceMap.initPrsTable();
     for (uint i = 0; i < connectedDevice[1].length; i++) {
       (tP,tF) = IPV(connectedDevice[1][i]).getPrice();
-      priceQueryInfo[connectedDevice[1][i]] = SortLib.PriceTF(tP,tF);
+      //priceQueryInfo[connectedDevice[1][i]] = SortLib.PriceTF(tP,tF);
+      draftPriceMap.addToPrsTable(connectedDevice[1][i],tP,tF);
     }
-    if (grid != 0x0) {
+    /*if (grid != 0x0) {
       (tP,tF) = IGrid(grid).getPrice();
       priceQueryInfo[grid] = SortLib.PriceTF(tP,tF);
-    }
+    }*/
     lastPriceQueryAt = now;
   }
-
+/*
   function getSortedPosition (address adr) returns (uint) { // should be private, here the "private" is temporarily removed due to testing
     //require(adr != 0x0);      // Sometimes with this line, there will be error in the configuration.js test... sometimes not.... sometimes need to _migrate_ twice to eliminate the error.... Don't know why
     uint _l;
@@ -84,14 +91,25 @@ contract SingleBattery is GeneralDevice, IBattery {
       }
     }
     return 0;
+  }*/
+
+  function sortDraftPrsMap() {
+    draftPriceMap.sortPrsTable();
+    // if the grid is connected -> add the price from the grid to the end of the sorted list 
+    if (grid != 0x0) {
+      uint tP = 0;
+      bool tF = false;
+      (tP,tF) = IGrid(grid).getPrice();
+      draftPriceMap.addToPrsTable(grid,tP,tF);
+    }
   }
 
-  function sort() { // we are not doing sorting here -> as there is only 1 PV in the exercise layout
+  //function sort() { // we are not doing sorting here -> as there is only 1 PV in the exercise layout
     /*sortedPriceQueryInfo[0] = connectedDevice[1][0];
     if (grid != 0x0) {
       sortedPriceQueryInfo[1] = grid;
     }*/
-    createPriceList();
+   /* createPriceList();
     uint maxTemp;
     uint totalLength;
     if (grid != 0x0) {
@@ -129,9 +147,14 @@ contract SingleBattery is GeneralDevice, IBattery {
       sortedPriceQueryInfo[_id1] = sortedPriceQueryInfo[_id2];
       sortedPriceQueryInfo[_id2] = temp;   
     }
+  }*/
+
+  function getSortedPVInfo() external view returns(uint consum, uint rank, uint tot, bool updated) {
+    consum = buyVolume;
+    (rank,tot,updated) = draftPriceMap.getPrsTable(msg.sender);
   }
 
-  function getSortedPVInfo() returns(uint consum, uint rank, uint tot, bool updated) {
+ /* function getSortedPVInfo() returns(uint consum, uint rank, uint tot, bool updated) {
     address adr = msg.sender;     //If the PV is connected
     consum = buyVolume;
     rank = getSortedPosition(adr); // We only have one PV connnected (In the demo layout)
@@ -145,7 +168,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     } else {
       updated = true;      
     }
-  }
+  }*/
 
 // start transaction
   function goNoGo(uint giveoutvol) returns (uint) {
@@ -155,7 +178,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     takeoutvol = buyVolume.findMin(giveoutvol);
     currentVolume += takeoutvol;
     buyVolume = buyVolume.clearEnergyTransfer(takeoutvol, address(this));
-    wallet -= int(takeoutvol*priceQueryInfo[adrDevice].prs);
+    wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
     return (takeoutvol); 
   }
 
@@ -254,7 +277,13 @@ contract SingleBattery is GeneralDevice, IBattery {
     uint minTemp;
     for (uint i=0; i<rLength; i++) {
       minTemp = prepRankingInfo.minStruct();
-      swap(i,i+minTemp);
+      //swap(i,i+minTemp);
+      if (i != i+minTemp) {
+      address temp;
+      temp = sortedRankingInfo[i];
+      sortedRankingInfo[i] = sortedRankingInfo[i+minTemp];
+      sortedRankingInfo[i+minTemp] = temp;   
+      }
       prepRankingInfo.del(minTemp);
     }
   }

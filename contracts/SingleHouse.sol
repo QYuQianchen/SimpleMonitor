@@ -10,33 +10,18 @@ import "./IHouse.sol";
 import "./GeneralDevice.sol";
 
 contract SingleHouse is GeneralDevice, IHouse {
-  
   // one contract is associated to one particular House in the network.
 
   using AdrLib for address[];
   using TransactLib for uint;
+  using SortLib for *;
 
   //uint    consumTimeOut = 5 minutes;
   uint    consumStatusAt;           // timestamp of the update (consumption)
-  
-
-  // may be splited into another contract
-
-  /*struct PriceTF {
-    uint  prs;
-    bool  updated;
-  }*/
-
-  //using SortLib for SortLib.PriceTF[];
-  using SortLib for *;
-  SortLib.PriceTF[] prepPriceQueryInfo;
-  SortLib.PriceMap draftPriceMap;
-
   uint    lastPriceQueryAt;
 
-  mapping(address=>SortLib.PriceTF) priceQueryInfo;
-  mapping(uint=>address) sortedPriceQueryInfo;
-  
+  SortLib.PriceMap draftPriceMap;
+
 // ======= Modifiers =======
 
   modifier timed (uint allowedTimeOut) {
@@ -49,16 +34,16 @@ contract SingleHouse is GeneralDevice, IHouse {
 
 // ======= Event Logs =======
   event ConsumptionLog(address adr, uint consum, uint consumAt);
-  event ConfigurationLog(string confMod, uint statusAt);
+  //event ConfigurationLog(string confMod, uint statusAt);
   event EnergyTransferLog(address adrFrom, address adrTo, uint eVol, uint transferAt);
 
 // ======= Basic Functionalities =======
 
-  // --- Upon contract creation and configuration ---
+  // --- 0. Upon contract creation and configuration ---
 
   function SingleHouse (address adr) GeneralDevice(adr) { }
   
-  // --- Regular usage ---
+  // --- 1. set and get house consumption every 15 min (or less) ---
 
   function setConsumption(uint consum) public ownerOnly {
     consumption = consum;
@@ -71,29 +56,26 @@ contract SingleHouse is GeneralDevice, IHouse {
     consumAt = consumStatusAt;
   }
 
-  // 
+  // --- 2. ask for connected PV / batteries / grid for price of electricity supply ---
 
   function askForPrice() {
-    // House query price info to all the connected PV/Battery. 
-    // If the house is connected to grid (most of the time), the price of Grid will be automatically added to the end of the sorted list.
     uint tP = 0;
     bool tF = false;
     draftPriceMap.initPrsTable();
     for (i = 0; i < connectedDevice[2].length; i++) {
       (tP,tF) = IBattery(connectedDevice[2][i]).getSalePrice(); 
-      priceQueryInfo[connectedDevice[2][i]] = SortLib.PriceTF(tP,tF);
       draftPriceMap.addToPrsTable(connectedDevice[2][i],tP,tF);
     }
     for (uint i = 0; i < connectedDevice[1].length; i++) {
       (tP,tF) = IPV(connectedDevice[1][i]).getPrice();
-      priceQueryInfo[connectedDevice[1][i]] = SortLib.PriceTF(tP,tF);
       draftPriceMap.addToPrsTable(connectedDevice[1][i],tP,tF);
     }
-
     lastPriceQueryAt = now;
   }
 
-  function sortDraftPrsMap() {
+  // --- 3. House sort all the information internally ---
+
+  function sortPrice() {
     draftPriceMap.sortPrsTable();
     // if the grid is connected -> add the price from the grid to the end of the sorted list 
     if (grid != 0x0) {
@@ -103,101 +85,14 @@ contract SingleHouse is GeneralDevice, IHouse {
       draftPriceMap.addToPrsTable(grid,tP,tF);
     }
   }
-// test
-  function getDraftPrsMap(address adr) public view returns (uint, bool) {
-    //return (101,false);
-    return (draftPriceMap.prsTable[adr].prs, draftPriceMap.prsTable[adr].updated);
-  }
-  function getSrtPosition(address adr) public returns (uint) {
-    return draftPriceMap.getPrsTable(adr);
-  }
 
-  function getSrtList(uint a) public returns(address, uint, bool) { //address, uint, bool
-    return draftPriceMap.getSortedList(a);
-  }
-
-  //------------------------------
-  // to Sort the received list of Price (from PV and Battery)
-  //------------------------------
-  
-
-  function sortPriceList() {
-    createPriceList();
-    uint maxTemp;
-    uint totalLength = connectedDevice[1].length + connectedDevice[2].length;
-    for (uint i = 0; i < totalLength; i++) {
-      maxTemp = prepPriceQueryInfo.maxStruct();
-      swap(totalLength-1-i,maxTemp);
-      prepPriceQueryInfo.del(maxTemp);
-    }
-    // if the grid is connected -> add the price from the grid to the end of the sorted list 
-    if (grid != 0x0) {
-      uint tP = 0;
-      bool tF = false;
-      (tP,tF) = IGrid(grid).getPrice();
-      priceQueryInfo[grid] = SortLib.PriceTF(tP,tF);
-      //setPriceQueryInfo(grid,tP,tF);
-      sortedPriceQueryInfo[totalLength] = grid;
-    }
-  }
-
-  function createPriceList() private {
-    prepPriceQueryInfo.length = connectedDevice[1].length + connectedDevice[2].length;
-    //sortedPriceQueryInfo.length = prepPriceQueryInfo.length; => sortedPQI is using mapping now
-    for (uint i = 0; i < connectedDevice[1].length; i++) {
-      prepPriceQueryInfo[i] = priceQueryInfo[connectedDevice[1][i]];
-      sortedPriceQueryInfo[i] = connectedDevice[1][i];
-    }
-    for (i = connectedDevice[1].length; i < prepPriceQueryInfo.length; i++) {
-      prepPriceQueryInfo[i] = priceQueryInfo[connectedDevice[2][i-connectedDevice[1].length]];
-      sortedPriceQueryInfo[i] = connectedDevice[2][i-connectedDevice[1].length];
-    }
-  }
-
-  function swap (uint _id1, uint _id2) private {
-    if (_id1 != _id2) {
-      address temp;
-      temp = sortedPriceQueryInfo[_id1];
-      sortedPriceQueryInfo[_id1] = sortedPriceQueryInfo[_id2];
-      sortedPriceQueryInfo[_id2] = temp;   
-    }
-  }
-
-  //------------------------------
-  // Once sorted, actively send to all the connected devices.
-  //------------------------------
-
-  function getSortedPosition (address adr) returns (uint) { // should be private, here the "private" is temporarily removed due to testing
-    //require(adr != 0x0);      // Sometimes with this line, there will be error in the configuration.js test... sometimes not.... sometimes need to _migrate_ twice to eliminate the error.... Don't know why
-    for (uint i=0; i<connectedDevice[1].length + connectedDevice[2].length+1; i++) {
-      if (adr == sortedPriceQueryInfo[i]) {
-        return (i+1);
-      }
-    }
-    return 0;
-  }
-
-  function getSortedInfo() external returns(uint consum, uint rank, uint tot, bool updated) {
-    return  getSortedHInfo(msg.sender);
-  }
-
-  function getSortedHInfo(address adr) returns(uint consum, uint rank, uint tot, bool updated) {  // should be private, here the "private" is temporarily removed due to testing
-    //address adr = msg.sender;
+  function getSortedInfo() external view returns(uint consum, uint rank, uint tot, bool updated) {
     consum = consumption;
-    rank = getSortedPosition(adr);
-    if (grid != 0x0) {
-      tot = connectedDevice[1].length + connectedDevice[2].length+1;
-    } else {
-      tot = connectedDevice[1].length + connectedDevice[2].length;
-    }
-    if (lastPriceQueryAt + consumTimeOut < now) {
-      updated = false;    // The house may be inactive for a while, so the list stored is outdated.
-    } else {
-      updated = true;      
-    }
+    (rank,tot,updated) = draftPriceMap.getPrsTable(msg.sender);
   }
 
-  // ------------Functions used in transaction------------------
+  // --- 4. PV/Battery ask House to confirm energy transaction ---
+
   function goNoGo(uint giveoutvol) returns (uint) {
     address adrDevice = msg.sender;
     uint takeoutvol;
@@ -206,9 +101,11 @@ contract SingleHouse is GeneralDevice, IHouse {
     consumption = consumption.clearEnergyTransfer(takeoutvol, address(this));
     //EnergyTransferLog(adrDevice,address(this), takeoutvol, consumption);
     //wallet = wallet.clearMoneyTransfer(-int(takeoutvol*priceQueryInfo[adrDevice].prs), adrDevice);
-    wallet -= int(takeoutvol*priceQueryInfo[adrDevice].prs);
+    wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
     return (takeoutvol); 
   }
+
+  // --- 5. If house still has energy demand, ask grid for energy ---
 
   function buyExtra() {
     // when houses still have extra needs...
@@ -242,38 +139,20 @@ contract SingleHouse is GeneralDevice, IHouse {
   function askForPriceB(uint i) returns (uint,bool) {
     return IBattery(connectedDevice[2][i]).getSalePrice();
   }
-
-  function getOwnerAdmin() returns (address, address){
-    return (owner,Admin);
-  }
-
-  function getConnectedPVCount() returns (uint){
-    return connectedDevice[1].length;
-  }
-
-  function getconnectedBatteryCount() returns (uint){
-    return connectedDevice[2].length;
-  }
-
-  function getConnectPVAddress(uint a) returns (address) {
-    if (a<connectedDevice[1].length) {
-      return connectedDevice[1][a];
-    } else {
-      return 0x0;
-    }
-  }
-
-  function getconnectedBatteryAddress(uint a) returns (address) {
-    if (a<connectedDevice[2].length) {
-      return connectedDevice[2][a];
-    } else {
-      return 0x0;
-   
-    }
-  }
   */
 
   function getConnectPVAddress(uint a) returns (address) {
       return connectedDevice[1][a];
+  }
+
+  function getDraftPrsMap(address adr) public view returns (uint, bool) {
+    return (draftPriceMap.prsTable[adr].prs, draftPriceMap.prsTable[adr].updated);
+  }
+  function getSrtPosition(address adr) public returns (uint, uint, bool) {
+    return draftPriceMap.getPrsTable(adr);
+  }
+
+  function getSrtList(uint a) public returns(address, uint, bool) { //address, uint, bool
+    return draftPriceMap.getSortedList(a);
   }
 }
