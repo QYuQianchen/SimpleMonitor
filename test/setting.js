@@ -1,3 +1,6 @@
+import latestTime from './helpers/latestTime'
+import {increaseTimeTo, duration} from './helpers/increaseTime'
+
 var Configuration = artifacts.require("./Configuration.sol");
 var SingleHouse = artifacts.require("./SingleHouse.sol");
 var SinglePV = artifacts.require("./SinglePV.sol");
@@ -29,11 +32,19 @@ contract('Configuration', function(accounts) {
   var singlePV2_adr;
   var singleHouse0_adr;
   var singleHouse1_adr;
+  var singleHouse2_adr
   var singleBattery0_adr;
   var grid_adr;
 
+  var virtualTime;
+
   it("I. Create 3 SingleHouse contracts and link to 3 SinglePVs", function() {
     // Here to allocate account information + display them on the screen 
+
+    beforeEach(async function() {
+      this.startTime = latestTime();
+    });
+
     return Configuration.deployed().then(function(instance){
       configuration = instance;
       configuration.addGrid(address_G);
@@ -105,6 +116,11 @@ contract('Configuration', function(accounts) {
 
     // Basic input. Now we are simulating inputs at one moment in the system
     //singleHouse0.setConsumption(3, {from: address_H0});
+    /*beforeEach(function (done) {
+      setTimeout(function(){
+        done();
+      }, 500);
+    });*/
     return singleHouse0.getTime.call().then(function(result){
       console.log("The status of the global timer is ",result.toNumber());
       singleHouse0.setConsumption(3, {from: address_H0});
@@ -159,9 +175,115 @@ contract('Configuration', function(accounts) {
       return grid_c.getPrice.call();
     }).then(function(result){
       console.log("The sale's price of the grid is ",result[0].toNumber(), result[1]);
+      return singleHouse2.getNow.call();
+      }).then(function(result){
+        console.log("Now is", result.toNumber());
     });
   });
 
+  it("III. Price communication House<->PV (1. House ask for price info and sort)", function() {
+    // Key device collect information and start sorting
+ /*   var currentHouse;
+    currentHouse = singleBattery0;
+    currentHouse.askForPrice().then(function(result){
+      console.log("asked for price");
+ */     /*return currentHouse.getDraftPrsMap.call(singlePV1_adr);
+    }).then(function(result){
+      console.log("House 2 asked price from PV1", result[0].toNumber(),result[1]);
+      return currentHouse.getDraftPrsMap.call(singlePV2_adr);
+    }).then(function(result){
+      console.log("House 2 asked price from PV2", result[0].toNumber(),result[1]);*/
+/*      currentHouse.sortPrice();
+      return currentHouse.getSortedPrice.call({from: singlePV1_adr});
+    }).then(function(result){
+      console.log("PV1's position for H2", result[0].toNumber(), result[1].toNumber(), result[2].toNumber(), result[3]);
+      return currentHouse.getSortedPrice.call({from: singlePV2_adr});
+    }).then(function(result){
+      console.log("PV2's position for H2", result[0].toNumber(), result[1].toNumber(), result[2].toNumber(), result[3]);
+      return currentHouse.getSortedPrice.call({from: singleBattery0_adr});
+    }).then(function(result){
+      console.log("B0's position for H2", result[0].toNumber(), result[1].toNumber(), result[2].toNumber(), result[3]);
+      return currentHouse.getSortedPrice.call({from: grid_adr});
+    }).then(function(result){
+      console.log("Grid's position for H2", result[0].toNumber(), result[1].toNumber(), result[2].toNumber(), result[3]);
+      return currentHouse.getSrtList.call(0);
+    }).then(function(result){
+      console.log("On H2's list, position 0", result[0], result[1].toNumber(), result[2]);
+      return currentHouse.getSrtList.call(1);
+    }).then(function(result){
+      console.log("On H2's list, position 1", result[0], result[1].toNumber(), result[2]);
+      return currentHouse.getSrtList.call(2);
+    }).then(function(result){
+      console.log("On H2's list, position 2", result[0], result[1].toNumber(), result[2]);
+      return currentHouse.getSrtList.call(3);
+    }).then(function(result){
+      console.log("On H2's list, position 3", result[0], result[1].toNumber(), result[2]);
+      return currentHouse.getSrtList.call(4);
+    }).then(function(result){
+      console.log("On H2's list, position 4", result[0], result[1].toNumber(), result[2]);
+      return currentHouse.getSrtList.call(5);
+    }).then(function(result){
+      console.log("On H2's list, position 5", result[0], result[1].toNumber(), result[2]);
+      return currentHouse.getSrtList.call(6);
+    }).then(function(result){
+      console.log("On H2's list, position 6", result[0], result[1].toNumber(), result[2]);
+      
+*/  
+    //this.timeout(3000000);
+    this.startTime = latestTime();
+    increaseTimeTo(this.startTime + duration.seconds(70));
+    return singleHouse2.getNow.call().then(function(result){
+      console.log("Now is", result.toNumber());
+      return singleHouse2.getNow.call();
+    }).then(function(result){
+      console.log("Now is", result.toNumber());
+      return singleHouse0.getTime.call();
+    }).then(function(result){
+        console.log("The status of the global timer is ",result.toNumber());
+      singleHouse2.askForPrice();
+      singleHouse2.sortPrice();//.then(function(result){
+      return singleHouse2.getNow.call();
+    }).then(function(result){
+      console.log("House 2 asked and sorted");
+      console.log("Now is", result.toNumber());
+      singleHouse0.askForPrice();
+      singleHouse0.sortPrice();
+    }).then(function(){
+      console.log("House 0 asked and sorted");
+      singleHouse1.askForPrice();
+      singleHouse1.sortPrice();
+    }).then(function(){
+      console.log("House 1 asked and sorted");
+      singleBattery0.askForPrice();
+      singleBattery0.sortPrice();
+    }).then(function(){
+      console.log("Battery 0 asked and sorted");
+    });
+  });
+
+  it("Try another time delay", async function() {
+    
+    let nowTime = await singleHouse2.getNow.call();
+    console.log("Now is", nowTime.toNumber());
+    await increaseTimeTo(latestTime() + duration.seconds(150));
+    nowTime = await singleHouse2.getNow.call();
+    console.log("Now is", nowTime.toNumber());
+    let statTime = await singleHouse0.getTime.call();
+    console.log("The status of the global timer is ",statTime.toNumber());
+
+
+/*
+    increaseTimeTo(this.startTime + duration.seconds(100));
+    return singleHouse2.getNow.call().then(function(result){
+      console.log("Now is", result.toNumber());
+      return singleHouse2.getNow.call();
+    }).then(function(result){
+      console.log("Now is", result.toNumber());
+      return singleHouse0.getTime.call();
+    }).then(function(result){
+        console.log("The status of the global timer is ",result.toNumber());
+    });*/
+  });
 
     
 

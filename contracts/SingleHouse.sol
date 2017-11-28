@@ -162,4 +162,8 @@ contract SingleHouse is GeneralDevice, IHouse {
   function getTime() returns (uint) {
     return getTimerStatus();
   }
+
+  function getNow() returns (uint) {
+    return now;
+  }
 }
