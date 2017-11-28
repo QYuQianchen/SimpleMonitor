@@ -16,10 +16,6 @@ contract SingleHouse is GeneralDevice, IHouse {
   using TransactLib for uint;
   using SortPLib for *;
 
-  //uint    consumTimeOut = 5 minutes;
-  uint    consumStatusAt;           // timestamp of the update (consumption)
-  uint    lastPriceQueryAt;
-
   SortPLib.PriceMap draftPriceMap;
 
 // ======= Modifiers =======

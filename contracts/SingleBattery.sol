@@ -21,24 +21,15 @@ contract SingleBattery is GeneralDevice, IBattery {
   using SortPLib for *;
   using SortRLib for *;
 
-
   uint    capacity;                 // Cap of the device
   uint    currentVolume;            // Production of electricity
   uint    buyVolume;                // Amount of electricity that this battery would like to buy. Will first participate in the supply competition 
                                     //and will be finally (anyway) fulfilled b either the network or from the grid...
-  uint    volTimeOut = 5 minutes;
-  uint    volStatusAt;              // timestamp of the update
-  
-  uint    priceStatusAt;            // timestamp of the update (price)
-  uint    priceTimeOut = 5 minutes;
   uint    priceForSale;
   uint    priceForBuy;              // lower than market price (ForExcessEnergy)
-   
+
   SortPLib.PriceMap draftPriceMap;
   SortRLib.RankMap draftRankMap;
-
-  uint    lastPriceQueryAt;
-  uint    lastRankingAt;
 
 // ======= Modifiers =======
 
@@ -180,6 +171,8 @@ contract SingleBattery is GeneralDevice, IBattery {
     require(connectedDevice[1].assertInside(adrDevice) || adrDevice == grid);
     takeoutvol = buyVolume.findMin(giveoutvol);
     currentVolume += takeoutvol;
+    volStatusAt = now;
+    VolLog(owner,currentVolume,volStatusAt);
     buyVolume = buyVolume.clearEnergyTransfer(takeoutvol, address(this));
     wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
     return (takeoutvol); 
@@ -194,7 +187,6 @@ contract SingleBattery is GeneralDevice, IBattery {
 
 
   function getBuyVol() returns (uint) {return buyVolume;}
-
 
   
   function initiateTransaction(uint _id) returns (uint, uint) {
@@ -211,7 +203,10 @@ contract SingleBattery is GeneralDevice, IBattery {
       giveoutVol = currentVolume.findMin(consum);
       if (connectedDevice[0].assertInside(adr)) {
         whatDeviceAccept = IHouse(adr).goNoGo(giveoutVol);
+        //setVolume(currentVolume-whatDeviceAccept);
         currentVolume -= whatDeviceAccept;
+        volStatusAt = now;
+        VolLog(owner,currentVolume,volStatusAt);
         receivedMoney = whatDeviceAccept*priceForSale;
         wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else {

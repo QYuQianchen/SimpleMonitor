@@ -19,15 +19,9 @@ contract SinglePV is GeneralDevice, IPV {
   // later we need to modify the parent contract that creates each PV contract - configuration.sol
 
   uint    production;               // Production of electricity (supply: negative)
-  uint    prodStatusAt;             // timestamp of the update (prod)
-  //uint    prodTimeOut = 5 minutes;
   uint    price;
-  uint    priceStatusAt;            // timestamp of the update (price)
-  //uint    priceTimeOut = 5 minutes;
 
   SortRLib.RankMap draftRankMap;
-
-  uint    lastRankingAt;
 
 // ======= Modifiers =======
 
@@ -85,7 +79,6 @@ contract SinglePV is GeneralDevice, IPV {
   // ---    Sort the list of ranks. --- 
 
   function askForRank() {
-    // ask and prepare for sorting the ranking...
     uint consum;
     uint rank;
     uint tot;
@@ -128,10 +121,11 @@ contract SinglePV is GeneralDevice, IPV {
     }*/
   }
 
-
   function getSortedRank(uint _id) returns(address adr, uint consum, uint rank, uint tot) {
     return draftRankMap.getSortedList(_id);
   }
+ 
+  // --- 4. Initiate e transaction --- 
   
   function initiateTransaction(uint _id) returns (uint, uint) {
     uint giveoutVol;

@@ -4,9 +4,12 @@ import "./GeneralDevice.sol";
 
 contract IHouse is GeneralDevice {
   
+  uint    consumption;              // Production of electricity (consumption: positive)
 
   uint    consumTimeOut = 5 minutes;
-  uint    consumption;              // Production of electricity (consumption: positive)
+
+  uint    consumStatusAt;           // timestamp of the update (consumption)
+  uint    lastPriceQueryAt;
   //int     wallet;                   // To record loss & gain (that of house is negative -> need to pay others)      
 
   function getSortedPrice() external returns(uint consum, uint rank, uint tot, bool updated);

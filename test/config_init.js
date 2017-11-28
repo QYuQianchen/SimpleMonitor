@@ -260,13 +260,53 @@ contract('Configuration', function(accounts) {
       singlePV2.sortRank();
       singleBattery0.askForRank();
       singleBattery0.sortRank();
+    }).then(function(result){
+      console.log("Other devices sorted");
     });
   });
-/*
-  it("III. Price communication House<->PV (3. Grid check battery)", function() {
-    grid_c.needTBCharged().then(function(result){
-      console.log("Grid has asked Battery and supply the necessary amount of energy it required");
+
+  it("III. Price communication House<->PV (3. PV and Battery intiate Transaction)", function() {
+    // Let the rest of the houses calculate their preference list (given the price of PV/Battery/Grid)
+    return singleHouse0.getConsumption.call().then(function(result){
+      console.log("Now SH0 consumes",result[0].toNumber(),result[1].toNumber());
+      return singleHouse1.getConsumption.call();
+    }).then(function(result){
+      console.log("Now SH1 consumes",result[0].toNumber(),result[1].toNumber());
+      return singleHouse2.getConsumption.call();
+    }).then(function(result){
+      console.log("Now SH2 consumes",result[0].toNumber(),result[1].toNumber());
+      singlePV1.initiateTransaction(0);
+      singlePV1.initiateTransaction(1);
+      singlePV0.initiateTransaction(0);
+      singlePV0.initiateTransaction(1);
+      singleBattery0.initiateTransaction(0);
+      singleBattery0.initiateTransaction(1);
+      singlePV2.initiateTransaction(0);
+      singlePV2.initiateTransaction(1);
+      return singleHouse0.getConsumption.call();
+    }).then(function(result){
+      console.log("Now SH0 consumes",result[0].toNumber(),result[1].toNumber());
+      return singleHouse1.getConsumption.call();
+    }).then(function(result){
+      console.log("Now SH1 consumes",result[0].toNumber(),result[1].toNumber());
+      return singleHouse2.getConsumption.call();
+    }).then(function(result){
+      console.log("Now SH2 consumes",result[0].toNumber(),result[1].toNumber());
+      return singleBattery0.getVolumeCapacity.call();
+    }).then(function(result){
+      console.log("Its volume and capacity are",result[0].toNumber(),result[1].toNumber(),result[2].toNumber());
+      return singlePV0.getProduction.call();
+    }).then(function(result){
+      console.log("PV0 still has",result[0].toNumber(),result[1].toNumber());
+      return singlePV1.getProduction.call();
+    }).then(function(result){
+      console.log("PV1 still has",result[0].toNumber(),result[1].toNumber());
+      return singlePV2.getProduction.call();
+    }).then(function(result){
+      console.log("PV2 still has",result[0].toNumber(),result[1].toNumber());
     });
-  });*/
+  });
+
+    
 
 });

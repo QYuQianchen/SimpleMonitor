@@ -11,8 +11,6 @@ contract Grid is GeneralDevice, IGrid {
 
   uint    price;
   uint    priceFeedIn;
-  uint    priceStatusAt;            // timestamp of the update (price)
-
 
   function Grid(address adr) GeneralDevice(adr) { }
 
@@ -32,7 +30,7 @@ contract Grid is GeneralDevice, IGrid {
     }
     //adr = owner;
   }
-
+  // Does not need to be implemented if the clockLib works
   function needTBCharged() {
     //Grid ask if battery is actively buying energy from grid?
     uint consum;
