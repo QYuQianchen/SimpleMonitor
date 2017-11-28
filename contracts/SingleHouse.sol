@@ -20,8 +20,13 @@ contract SingleHouse is GeneralDevice, IHouse {
 
 // ======= Modifiers =======
 
-  modifier timed (uint allowedTimeOut) {
-    if(now < consumStatusAt + allowedTimeOut) {
+  modifier timed (uint shouldStatus) {
+    /*if(now < consumStatusAt + allowedTimeOut) {
+      _;
+    } else {
+      revert();
+    }*/
+    if(shouldStatus == getTimerStatus()) {
       _;
     } else {
       revert();
@@ -42,13 +47,13 @@ contract SingleHouse is GeneralDevice, IHouse {
   
   // --- 1. set and get house consumption every 15 min (or less) ---
 
-  function setConsumption(uint consum) public ownerOnly {
+  function setConsumption(uint consum) public timed(1) ownerOnly { //
     consumption = consum;
     consumStatusAt = now;
     ConsumptionLog(owner, consumption, consumStatusAt);
   }
 
-  function getConsumption() external view timed(consumTimeOut) returns (uint consum, uint consumAt) { 
+  function getConsumption() external view  returns (uint consum, uint consumAt) { //timed(consumTimeOut)
     consum = consumption;
     consumAt = consumStatusAt;
   }
@@ -153,4 +158,8 @@ contract SingleHouse is GeneralDevice, IHouse {
   function getSrtList(uint a) public returns(address, uint, bool) { //address, uint, bool
     return draftPriceMap.getSortedList(a);
   }*/
+
+  function getTime() returns (uint) {
+    return getTimerStatus();
+  }
 }

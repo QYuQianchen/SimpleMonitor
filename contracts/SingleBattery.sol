@@ -164,7 +164,6 @@ contract SingleBattery is GeneralDevice, IBattery {
 
   // --- 4. PV/Battery/Grid asks Battery to confirm energy transaction ---
 
-// start transaction
   function goNoGo(uint giveoutvol) returns (uint) {
     address adrDevice = msg.sender;
     uint takeoutvol;

@@ -1,0 +1,686 @@
+{
+  "contractName": "ClockLib",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_gc",
+          "type": "ClockLib.GlobalClock storage"
+        }
+      ],
+      "name": "initClock",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b6101288061001e6000396000f300606060405260043610603e5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663bb9cc4b981146043575b600080fd5b604c600435604e565b005b600080825560018201819055600282015560c0604051908101604090815260098252600160208301526002908201819052606082018190526005608083015260a082015260a0906003830190600660a4565b5050565b826006810192821560d4579160200282015b8281111560d4578251829060ff1690559160200191906001019060b6565b5060de92915060e2565b5090565b60f991905b8082111560de576000815560010160e7565b905600a165627a7a7230582049df6d323ccd4fb8eda645e911eaf4765c2b30576e0f4729d2254e82ed66e5040029",
+  "deployedBytecode": "0x606060405260043610603e5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663bb9cc4b981146043575b600080fd5b604c600435604e565b005b600080825560018201819055600282015560c0604051908101604090815260098252600160208301526002908201819052606082018190526005608083015260a082015260a0906003830190600660a4565b5050565b826006810192821560d4579160200282015b8281111560d4578251829060ff1690559160200191906001019060b6565b5060de92915060e2565b5090565b60f991905b8082111560de576000815560010160e7565b905600a165627a7a7230582049df6d323ccd4fb8eda645e911eaf4765c2b30576e0f4729d2254e82ed66e5040029",
+  "sourceMap": "25:325:1:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "25:325:1:-;;;;;;;;;;;;;;;;;;;;;;;187:161;;;;;;;;;252:1;237:16;;;259:11;;;:15;;;280;;;:19;305:37;;;;;;;;;;325:1;305:37;;328:1;305:37;;;;331:1;305:37;;;;;;;;;;;;337:1;305:37;;;;;;;;;;:16;;;;:37;;:::i;:::-;;187:161;:::o;25:325::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;25:325:1;;;-1:-1:-1;25:325:1;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.4.4;\n\nlibrary ClockLib {\n\n  struct GlobalClock {\n    uint statusNo;\n    uint maxLoop;\n    uint currentLoop;\n    uint[6] timeInterval; // = [9, 1, 2, 2, 5, 2]; \n  }\n\n\n  function initClock(GlobalClock storage _gc) {\n    _gc.statusNo = 0;\n    _gc.maxLoop = 0;\n    _gc.currentLoop = 0;\n    _gc.timeInterval = [9, 1, 2, 2, 5, 2]; \n  }\n}\n",
+  "sourcePath": "C:\\Users\\qianc\\Documents\\Thesis\\Code\\SimpleMonitor\\contracts\\ClockLib.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/C/Users/qianc/Documents/Thesis/Code/SimpleMonitor/contracts/ClockLib.sol",
+      "exportedSymbols": {
+        "ClockLib": [
+          87
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".4"
+          ]
+        },
+        "id": 39,
+        "name": "PragmaDirective",
+        "src": "0:23:1"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "library",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            87
+          ],
+          "name": "ClockLib",
+          "scope": 88
+        },
+        "children": [
+          {
+            "attributes": {
+              "canonicalName": "ClockLib.GlobalClock",
+              "name": "GlobalClock",
+              "scope": 87,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "statusNo",
+                  "scope": 50,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 40,
+                    "name": "ElementaryTypeName",
+                    "src": "72:4:1"
+                  }
+                ],
+                "id": 41,
+                "name": "VariableDeclaration",
+                "src": "72:13:1"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "maxLoop",
+                  "scope": 50,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 42,
+                    "name": "ElementaryTypeName",
+                    "src": "91:4:1"
+                  }
+                ],
+                "id": 43,
+                "name": "VariableDeclaration",
+                "src": "91:12:1"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "currentLoop",
+                  "scope": 50,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 44,
+                    "name": "ElementaryTypeName",
+                    "src": "109:4:1"
+                  }
+                ],
+                "id": 45,
+                "name": "VariableDeclaration",
+                "src": "109:16:1"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "timeInterval",
+                  "scope": 50,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256[6] storage pointer",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "uint256[6] storage pointer"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 46,
+                        "name": "ElementaryTypeName",
+                        "src": "131:4:1"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "hexvalue": "36",
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "subdenomination": null,
+                          "token": "number",
+                          "type": "int_const 6",
+                          "value": "6"
+                        },
+                        "id": 47,
+                        "name": "Literal",
+                        "src": "136:1:1"
+                      }
+                    ],
+                    "id": 48,
+                    "name": "ArrayTypeName",
+                    "src": "131:7:1"
+                  }
+                ],
+                "id": 49,
+                "name": "VariableDeclaration",
+                "src": "131:20:1"
+              }
+            ],
+            "id": 50,
+            "name": "StructDefinition",
+            "src": "47:135:1"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "initClock",
+              "payable": false,
+              "scope": 87,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_gc",
+                      "scope": 86,
+                      "stateVariable": false,
+                      "storageLocation": "storage",
+                      "type": "struct ClockLib.GlobalClock storage pointer",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "GlobalClock",
+                          "referencedDeclaration": 50,
+                          "type": "struct ClockLib.GlobalClock storage pointer"
+                        },
+                        "id": 51,
+                        "name": "UserDefinedTypeName",
+                        "src": "206:11:1"
+                      }
+                    ],
+                    "id": 52,
+                    "name": "VariableDeclaration",
+                    "src": "206:23:1"
+                  }
+                ],
+                "id": 53,
+                "name": "ParameterList",
+                "src": "205:25:1"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 54,
+                "name": "ParameterList",
+                "src": "231:0:1"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": true,
+                              "member_name": "statusNo",
+                              "referencedDeclaration": 41,
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 52,
+                                  "type": "struct ClockLib.GlobalClock storage pointer",
+                                  "value": "_gc"
+                                },
+                                "id": 55,
+                                "name": "Identifier",
+                                "src": "237:3:1"
+                              }
+                            ],
+                            "id": 57,
+                            "name": "MemberAccess",
+                            "src": "237:12:1"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "30",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 0",
+                              "value": "0"
+                            },
+                            "id": 58,
+                            "name": "Literal",
+                            "src": "252:1:1"
+                          }
+                        ],
+                        "id": 59,
+                        "name": "Assignment",
+                        "src": "237:16:1"
+                      }
+                    ],
+                    "id": 60,
+                    "name": "ExpressionStatement",
+                    "src": "237:16:1"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": true,
+                              "member_name": "maxLoop",
+                              "referencedDeclaration": 43,
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 52,
+                                  "type": "struct ClockLib.GlobalClock storage pointer",
+                                  "value": "_gc"
+                                },
+                                "id": 61,
+                                "name": "Identifier",
+                                "src": "259:3:1"
+                              }
+                            ],
+                            "id": 63,
+                            "name": "MemberAccess",
+                            "src": "259:11:1"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "30",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 0",
+                              "value": "0"
+                            },
+                            "id": 64,
+                            "name": "Literal",
+                            "src": "273:1:1"
+                          }
+                        ],
+                        "id": 65,
+                        "name": "Assignment",
+                        "src": "259:15:1"
+                      }
+                    ],
+                    "id": 66,
+                    "name": "ExpressionStatement",
+                    "src": "259:15:1"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": true,
+                              "member_name": "currentLoop",
+                              "referencedDeclaration": 45,
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 52,
+                                  "type": "struct ClockLib.GlobalClock storage pointer",
+                                  "value": "_gc"
+                                },
+                                "id": 67,
+                                "name": "Identifier",
+                                "src": "280:3:1"
+                              }
+                            ],
+                            "id": 69,
+                            "name": "MemberAccess",
+                            "src": "280:15:1"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "30",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 0",
+                              "value": "0"
+                            },
+                            "id": 70,
+                            "name": "Literal",
+                            "src": "298:1:1"
+                          }
+                        ],
+                        "id": 71,
+                        "name": "Assignment",
+                        "src": "280:19:1"
+                      }
+                    ],
+                    "id": 72,
+                    "name": "ExpressionStatement",
+                    "src": "280:19:1"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "uint256[6] storage ref"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": true,
+                              "member_name": "timeInterval",
+                              "referencedDeclaration": 49,
+                              "type": "uint256[6] storage ref"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 52,
+                                  "type": "struct ClockLib.GlobalClock storage pointer",
+                                  "value": "_gc"
+                                },
+                                "id": 73,
+                                "name": "Identifier",
+                                "src": "305:3:1"
+                              }
+                            ],
+                            "id": 75,
+                            "name": "MemberAccess",
+                            "src": "305:16:1"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isInlineArray": true,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "type": "uint8[6] memory"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "39",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 9",
+                                  "value": "9"
+                                },
+                                "id": 76,
+                                "name": "Literal",
+                                "src": "325:1:1"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "31",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 1",
+                                  "value": "1"
+                                },
+                                "id": 77,
+                                "name": "Literal",
+                                "src": "328:1:1"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "32",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 2",
+                                  "value": "2"
+                                },
+                                "id": 78,
+                                "name": "Literal",
+                                "src": "331:1:1"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "32",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 2",
+                                  "value": "2"
+                                },
+                                "id": 79,
+                                "name": "Literal",
+                                "src": "334:1:1"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "35",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 5",
+                                  "value": "5"
+                                },
+                                "id": 80,
+                                "name": "Literal",
+                                "src": "337:1:1"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "32",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 2",
+                                  "value": "2"
+                                },
+                                "id": 81,
+                                "name": "Literal",
+                                "src": "340:1:1"
+                              }
+                            ],
+                            "id": 82,
+                            "name": "TupleExpression",
+                            "src": "324:18:1"
+                          }
+                        ],
+                        "id": 83,
+                        "name": "Assignment",
+                        "src": "305:37:1"
+                      }
+                    ],
+                    "id": 84,
+                    "name": "ExpressionStatement",
+                    "src": "305:37:1"
+                  }
+                ],
+                "id": 85,
+                "name": "Block",
+                "src": "231:117:1"
+              }
+            ],
+            "id": 86,
+            "name": "FunctionDefinition",
+            "src": "187:161:1"
+          }
+        ],
+        "id": 87,
+        "name": "ContractDefinition",
+        "src": "25:325:1"
+      }
+    ],
+    "id": 88,
+    "name": "SourceUnit",
+    "src": "0:351:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2017-11-28T21:26:41.623Z"
+}

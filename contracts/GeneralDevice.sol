@@ -1,17 +1,22 @@
 pragma solidity ^0.4.4;
 
 import "./AdrLib.sol";
+//import "./ClockLib.sol";
+import "./ITimer.sol";
 
 contract GeneralDevice {
   using AdrLib for address[];
+  //using ClockLib for ClockLib.GlobalClock;
 
   address public Admin;               // the account address of the admin
   address internal owner;             // the account address of the owner. Here we are still using adr in the constructor, 
                                       // but later we may change the adr input into byte32, by a harshed device identifier
   bytes32 internal name;              // name of the device (Serie No.)
   address grid = 0x0;
+  address globalTimer = 0x0;
   int     wallet;                     // To record loss & gain (that of house is negative -> need to pay others)
   mapping(uint=>address[]) connectedDevice;
+  //ClockLib.GlobalClock globalTimer;
 
   modifier adminOnly {
     if (msg.sender == Admin) {
@@ -62,11 +67,23 @@ contract GeneralDevice {
     grid = adr;
   }
 
+  function setTimerAdr(address adr) adminOnly {
+    globalTimer = adr;
+  }
+
   function addConnectedDevice(uint a, address adr) adminOnly {
     connectedDevice[a].push(adr);
   }
-
-
-
   // a function that disconnects devices can be added here, if needed
+
+  function getTimerStatus() returns (uint) {
+    return ITimer(globalTimer).checkStatus();
+  }
+
+  //test
+
+  function getTimerAddress() returns (address) {
+    return globalTimer;
+  }
+
 }

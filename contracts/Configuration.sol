@@ -4,10 +4,12 @@ import "./SingleHouse.sol";
 import "./SinglePV.sol";
 import "./SingleBattery.sol";
 import "./Grid.sol";
+import "./GlobalTimer.sol";
 
 contract Configuration {
 
   address public admin = msg.sender; // only the admin node can modify the configuration...
+  address public globalTimerAdr;
   address public gridAdr;          // store the address of grid...(address of the transformer that links to the grid... not the contract address)
   uint public statusAt; // timestamp of the creation of Configuration instance
 
@@ -44,10 +46,13 @@ contract Configuration {
 
   function Configuration() adminOnly {
       statusAt = now;
+      globalTimerAdr = new GlobalTimer();
+
   }
 
   function addGrid(address adr) adminOnly {
       contractList[adr] = new Grid(adr);
+      GeneralDevice(contractList[adr]).setTimerAdr(globalTimerAdr);
       gridAdr = address(contractList[adr]);
   }
 
@@ -72,7 +77,7 @@ contract Configuration {
       tempEU.cAddress = address(contractList[adr]);
       tempEU.statusAt = now;
       userList[adr] = tempEU;
-
+      GeneralDevice(contractList[adr]).setTimerAdr(globalTimerAdr);
       LogDevice(adr);
   }
 
