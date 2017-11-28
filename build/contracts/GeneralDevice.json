@@ -147,7 +147,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1223,
+          "SourceUnit": 1294,
           "absolutePath": "/C/Users/qianc/Documents/Thesis/Code/SimpleMonitor/contracts/ITimer.sol",
           "file": "./ITimer.sol",
           "scope": 725,
@@ -514,7 +514,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3830,
+                                  "referencedDeclaration": 3907,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -588,7 +588,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3834,
+                                      "referencedDeclaration": 3911,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -680,7 +680,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3830,
+                                  "referencedDeclaration": 3907,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -754,7 +754,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3834,
+                                      "referencedDeclaration": 3911,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1016,7 +1016,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3834,
+                                      "referencedDeclaration": 3911,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1241,7 +1241,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3834,
+                                      "referencedDeclaration": 3911,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1466,7 +1466,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3834,
+                                      "referencedDeclaration": 3911,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1662,7 +1662,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3830,
+                                  "referencedDeclaration": 3907,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -2309,7 +2309,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "checkStatus",
-                              "referencedDeclaration": 1221,
+                              "referencedDeclaration": 1292,
                               "type": "function () external returns (uint256)"
                             },
                             "children": [
@@ -2339,7 +2339,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1222,
+                                      "referencedDeclaration": 1293,
                                       "type": "type(contract ITimer)",
                                       "value": "ITimer"
                                     },
@@ -2503,5 +2503,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-28T21:26:42.688Z"
+  "updatedAt": "2017-11-28T21:48:08.012Z"
 }

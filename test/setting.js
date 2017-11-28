@@ -115,7 +115,7 @@ contract('Configuration', function(accounts) {
       return singleHouse1.getConsumption.call();
     }).then(function(result){
       console.log("The consumption of House1 is ",result[0].toNumber(),result[1].toNumber());
-    /*  singleHouse2.setConsumption(8, {from: address_H2});
+      singleHouse2.setConsumption(8, {from: address_H2});
       return singleHouse2.getConsumption.call();
     }).then(function(result){
       console.log("The consumption of House2 is ",result[0].toNumber(),result[1].toNumber());
@@ -158,7 +158,7 @@ contract('Configuration', function(accounts) {
       grid_c.setPrice(10, 1, {from: address_G});
       return grid_c.getPrice.call();
     }).then(function(result){
-      console.log("The sale's price of the grid is ",result[0].toNumber(), result[1]);*/
+      console.log("The sale's price of the grid is ",result[0].toNumber(), result[1]);
     });
   });
 

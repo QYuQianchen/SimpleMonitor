@@ -33,8 +33,16 @@ contract SingleBattery is GeneralDevice, IBattery {
 
 // ======= Modifiers =======
 
-  modifier timed (uint initialTime, uint allowedTimeOut) {
+  /*modifier timed (uint initialTime, uint allowedTimeOut) {
     if(now < initialTime + allowedTimeOut) {
+      _;
+    } else {
+      revert();
+    }
+  }*/
+
+  modifier timed (uint shouldStatus) {
+    if(shouldStatus == getTimerStatus()) {
       _;
     } else {
       revert();
@@ -64,7 +72,7 @@ contract SingleBattery is GeneralDevice, IBattery {
 
   // --- 1. set and get the active purchase volume (if battery wants) and selling price every 15 min (or less) ---
 
-  function setPrice(uint prsSale, uint prsBuy) public ownerOnly {
+  function setPrice(uint prsSale, uint prsBuy) public timed(1) ownerOnly {
     priceForSale = prsSale;
     priceForBuy = prsBuy;
     priceStatusAt = now;
@@ -82,7 +90,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     //adr = owner;
   }
 
-  function setBuyVolume(uint v) public ownerOnly {
+  function setBuyVolume(uint v) public timed(1) ownerOnly {
     require(currentVolume + v <= capacity);
     buyVolume = v;
   }

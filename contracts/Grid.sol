@@ -12,9 +12,17 @@ contract Grid is GeneralDevice, IGrid {
   uint    price;
   uint    priceFeedIn;
 
+  modifier timed (uint shouldStatus) {
+    if(shouldStatus == getTimerStatus()) {
+      _;
+    } else {
+      revert();
+    }
+  }
+
   function Grid(address adr) GeneralDevice(adr) { }
 
-  function setPrice(uint prs, uint prsF) ownerOnly {
+  function setPrice(uint prs, uint prsF) timed(1) ownerOnly {
     price = prs;
     priceFeedIn = prsF;
     priceStatusAt = now;

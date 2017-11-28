@@ -25,8 +25,16 @@ contract SinglePV is GeneralDevice, IPV {
 
 // ======= Modifiers =======
 
-  modifier timed (uint initialTime, uint allowedTimeOut){
+  /*modifier timed (uint initialTime, uint allowedTimeOut){
     if(now < initialTime + allowedTimeOut){
+      _;
+    } else {
+      revert();
+    }
+  }*/
+
+  modifier timed (uint shouldStatus) {
+    if(shouldStatus == getTimerStatus()) {
       _;
     } else {
       revert();
@@ -47,13 +55,13 @@ contract SinglePV is GeneralDevice, IPV {
 
   // --- 1. set and get PV price & production every 15 min (or less) ---
 
-  function setProduction(uint produc) public ownerOnly {
+  function setProduction(uint produc) public timed(1) ownerOnly {
     production = produc;
     prodStatusAt = now;
     ProductionLog(owner, production, prodStatusAt);
   }
 
-  function setPrice(uint prs) public ownerOnly {
+  function setPrice(uint prs) public timed(1) ownerOnly {
     price = prs;
     priceStatusAt = now;
     PriceUpdate(now);

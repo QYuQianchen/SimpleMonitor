@@ -27,7 +27,7 @@
       "absolutePath": "/C/Users/qianc/Documents/Thesis/Code/SimpleMonitor/contracts/ITimer.sol",
       "exportedSymbols": {
         "ITimer": [
-          1222
+          1293
         ]
       }
     },
@@ -41,7 +41,7 @@
             ".4"
           ]
         },
-        "id": 1216,
+        "id": 1287,
         "name": "PragmaDirective",
         "src": "0:23:10"
       },
@@ -57,10 +57,10 @@
           "documentation": null,
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            1222
+            1293
           ],
           "name": "ITimer",
-          "scope": 1223
+          "scope": 1294
         },
         "children": [
           {
@@ -74,7 +74,7 @@
               ],
               "name": "checkStatus",
               "payable": false,
-              "scope": 1222,
+              "scope": 1293,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -87,7 +87,7 @@
                   ]
                 },
                 "children": [],
-                "id": 1217,
+                "id": 1288,
                 "name": "ParameterList",
                 "src": "115:2:10"
               },
@@ -97,7 +97,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 1221,
+                      "scope": 1292,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -110,32 +110,32 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 1218,
+                        "id": 1289,
                         "name": "ElementaryTypeName",
                         "src": "134:4:10"
                       }
                     ],
-                    "id": 1219,
+                    "id": 1290,
                     "name": "VariableDeclaration",
                     "src": "134:4:10"
                   }
                 ],
-                "id": 1220,
+                "id": 1291,
                 "name": "ParameterList",
                 "src": "133:6:10"
               }
             ],
-            "id": 1221,
+            "id": 1292,
             "name": "FunctionDefinition",
             "src": "95:45:10"
           }
         ],
-        "id": 1222,
+        "id": 1293,
         "name": "ContractDefinition",
         "src": "25:117:10"
       }
     ],
-    "id": 1223,
+    "id": 1294,
     "name": "SourceUnit",
     "src": "0:143:10"
   },
@@ -145,5 +145,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-28T21:26:42.741Z"
+  "updatedAt": "2017-11-28T21:48:08.032Z"
 }
