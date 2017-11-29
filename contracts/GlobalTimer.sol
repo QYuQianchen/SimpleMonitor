@@ -15,7 +15,7 @@ contract GlobalTimer is ITimer {
   function GlobalTimer() {
     // constructor
     statusNo = 0;
-    transactInterval = 5; // seconds
+    transactInterval = 10; // seconds
     timeLapse = 0;
     //maxLoop = 30;  // each rank take 1s to finish transaction (5 min/10s = 30 times)
     currentLoop = 0;
@@ -58,6 +58,7 @@ contract GlobalTimer is ITimer {
       timeLapse = now - startingTime - cumulatedTime[4] * 1 minutes;
       currentLoop = uint(timeLapse/transactInterval) + 1;
     }
-    return currentLoop;
+    //return currentLoop;
+    return 1;
   }
 }
