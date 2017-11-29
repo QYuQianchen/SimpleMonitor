@@ -58,6 +58,14 @@ contract GeneralDevice {
     }
   }
 
+  modifier timed (uint shouldStatus) {
+    if(shouldStatus == getTimerStatus()) {
+      _;
+    } else {
+      revert();
+    }
+  }
+
   function GeneralDevice (address adr) {
     owner = adr;
     Admin = msg.sender;

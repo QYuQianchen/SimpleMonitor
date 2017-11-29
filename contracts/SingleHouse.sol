@@ -20,18 +20,6 @@ contract SingleHouse is GeneralDevice, IHouse {
 
 // ======= Modifiers =======
 
-  modifier timed (uint shouldStatus) {
-    /*if(now < consumStatusAt + allowedTimeOut) {
-      _;
-    } else {
-      revert();
-    }*/
-    if(shouldStatus == getTimerStatus()) {
-      _;
-    } else {
-      revert();
-    }
-  }
 
 // ======= Event Logs =======
 
@@ -60,7 +48,7 @@ contract SingleHouse is GeneralDevice, IHouse {
 
   // --- 2. ask for connected PV / batteries / grid for price of electricity supply ---
 
-  function askForPrice() {
+  function askForPrice() timed(2) {
     uint tP = 0;
     bool tF = false;
     draftPriceMap.initPrsTable();
@@ -77,7 +65,7 @@ contract SingleHouse is GeneralDevice, IHouse {
 
   // --- 3. House sorts all the information internally ---
 
-  function sortPrice() {
+  function sortPrice() timed(2) {
     draftPriceMap.sortPrsTable();
     // if the grid is connected -> add the price from the grid to the end of the sorted list 
     if (grid != 0x0) {

@@ -33,22 +33,6 @@ contract SingleBattery is GeneralDevice, IBattery {
 
 // ======= Modifiers =======
 
-  /*modifier timed (uint initialTime, uint allowedTimeOut) {
-    if(now < initialTime + allowedTimeOut) {
-      _;
-    } else {
-      revert();
-    }
-  }*/
-
-  modifier timed (uint shouldStatus) {
-    if(shouldStatus == getTimerStatus()) {
-      _;
-    } else {
-      revert();
-    }
-  }
-
 // ======= Event Logs =======
 
   event VolLog(address adr, uint vol, uint volAt);
@@ -105,7 +89,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   // ---    Ask for connected PV / batteries / grid for price of electricity supply. --- 
   // ---    Sort the list of offers. --- 
 
-  function askForPrice() {
+  function askForPrice() timed(2) {
     // Battery query price info to all the connected PV/Battery. 
     uint tP = 0;
     bool tF = false;
@@ -117,7 +101,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     lastPriceQueryAt = now;
   }
 
-  function sortPrice() {
+  function sortPrice() timed(2) {
     draftPriceMap.sortPrsTable();
     // if the grid is connected -> add the price from the grid to the end of the sorted list 
     if (grid != 0x0) {
@@ -136,7 +120,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   // --- 3. Battery can also provide energy to houses. --- 
   // ---    Sort the list of ranks. --- 
 
-  function askForRank() {
+  function askForRank() timed(3) {
     uint consum;
     uint rank;
     uint tot;
@@ -151,7 +135,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     lastRankingAt = now;
   }
 
-  function sortRank() {
+  function sortRank() timed(3) {
     draftRankMap.sortRnkTable();
   }
 
@@ -196,7 +180,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   function getBuyVol() returns (uint) {return buyVolume;}
 
   
-  function initiateTransaction(uint _id) returns (uint, uint) {
+  function initiateTransaction(uint _id) timed(4) returns (uint, uint) {
     uint giveoutVol;
     address adr;
     uint consum;

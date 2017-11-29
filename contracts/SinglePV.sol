@@ -25,22 +25,6 @@ contract SinglePV is GeneralDevice, IPV {
 
 // ======= Modifiers =======
 
-  /*modifier timed (uint initialTime, uint allowedTimeOut){
-    if(now < initialTime + allowedTimeOut){
-      _;
-    } else {
-      revert();
-    }
-  }*/
-
-  modifier timed (uint shouldStatus) {
-    if(shouldStatus == getTimerStatus()) {
-      _;
-    } else {
-      revert();
-    }
-  }
-
 // ======= Event Logs =======
 
   event ProductionLog(address adr, uint produc, uint prodAt);
@@ -86,7 +70,7 @@ contract SinglePV is GeneralDevice, IPV {
   // --- 3. PV can provide energy to houses. --- 
   // ---    Sort the list of ranks. --- 
 
-  function askForRank() {
+  function askForRank() timed(3) {
     uint consum;
     uint rank;
     uint tot;
@@ -107,7 +91,7 @@ contract SinglePV is GeneralDevice, IPV {
     lastRankingAt = now;
   }
 
-  function sortRank() {
+  function sortRank() timed(3) {
     draftRankMap.sortRnkTable();
     /*
     // In case there is still excess, need to ask connectedBattery to buy for the extra...as much as possible
@@ -135,7 +119,7 @@ contract SinglePV is GeneralDevice, IPV {
  
   // --- 4. Initiate e transaction --- 
   
-  function initiateTransaction(uint _id) returns (uint, uint) {
+  function initiateTransaction(uint _id) timed(4) returns (uint, uint) {
     uint giveoutVol;
     address adr;
     uint consum;
