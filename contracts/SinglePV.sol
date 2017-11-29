@@ -118,6 +118,39 @@ contract SinglePV is GeneralDevice, IPV {
   }
  
   // --- 4. Initiate e transaction --- 
+
+  function sellEnergy() timed(4) {
+    uint counter = 0;
+    uint tL = draftRankMap.totalLength;
+    bool waiting = true;
+    uint i;
+
+    address adr;
+    uint consum;
+    uint rank;
+    uint tot;
+
+    while (waiting) {
+      i = getTimerIndex();
+      for (uint j = counter; j < tL; j++) {
+        (adr,consum,rank,tot) = getSortedRank(counter);
+        if (rank == i) {
+          // time to make transaction
+          initiateTransaction(counter);
+          counter++;
+        } else if (rank < i) {
+          // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
+          counter++;
+        } else {
+          // when rank > i, need to wait
+          break;
+        }
+      }
+      if (counter >= tL) {
+        waiting = false;
+      }
+    }
+  }
   
   function initiateTransaction(uint _id) timed(4) returns (uint, uint) {
     uint giveoutVol;
@@ -127,7 +160,6 @@ contract SinglePV is GeneralDevice, IPV {
     uint tot;
     uint whatDeviceAccept;
     uint receivedMoney;
-    //for (uint i = 0; i < rLength; i++) {
       //adr = sortedRankingInfo[_id];
       (adr,consum,rank,tot) = getSortedRank(_id);
       giveoutVol = production.findMin(consum);
@@ -145,7 +177,6 @@ contract SinglePV is GeneralDevice, IPV {
         whatDeviceAccept = 0; 
       }
       return(giveoutVol, whatDeviceAccept);
-    //}
   }
 
   function sellExcess() {

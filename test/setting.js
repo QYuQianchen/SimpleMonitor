@@ -41,9 +41,9 @@ contract('Configuration', function(accounts) {
   it("I. Create 3 SingleHouse contracts and link to 3 SinglePVs", function() {
     // Here to allocate account information + display them on the screen 
 
-    beforeEach(async function() {
+    /*beforeEach(async function() {
       this.startTime = latestTime();
-    });
+    });*/
 
     return Configuration.deployed().then(function(instance){
       configuration = instance;
@@ -222,10 +222,12 @@ contract('Configuration', function(accounts) {
     console.log("Now is", nowTime.toNumber());
     let statTime = await singleHouse0.getTime.call();
     console.log("The status of the global timer is ",statTime);
-/*
-    let currentPV = singlePV1;
+    
+
+    
     let result1 = await singleHouse1.getSortedPrice.call({from: singlePV1_adr});
     console.log("returned sorted information from sH1 is",result1[0].toNumber(),result1[1].toNumber(),result1[2].toNumber(),result1[3]);
+    let currentPV = singlePV1;
     await currentPV.askForRank();
     await currentPV.sortRank();
     let result2 = await currentPV.getSortedRank.call(0);
@@ -233,7 +235,14 @@ contract('Configuration', function(accounts) {
     let result3 = await currentPV.getSortedRank.call(1);
     console.log("The sorted result at 1 is", result3[0],result3[1].toNumber(),result3[2].toNumber(),result3[3].toNumber());
     let result4 = await currentPV.getSortedRank.call(2);
-    console.log("The sorted result at 2 is", result4[0],result4[1].toNumber(),result4[2].toNumber(),result4[3].toNumber());*/
+    console.log("The sorted result at 2 is", result4[0],result4[1].toNumber(),result4[2].toNumber(),result4[3].toNumber());
+    await singlePV0.askForRank();
+    await singlePV0.sortRank();
+    await singlePV2.askForRank();
+    await singlePV2.sortRank();
+    await singleBattery0.askForRank();
+    await singleBattery0.sortRank();
+    console.log("Other devices sorted");
 
 /*
     var currentPV;

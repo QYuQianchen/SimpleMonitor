@@ -88,6 +88,10 @@ contract GeneralDevice {
     return ITimer(globalTimer).checkStatus();
   }
 
+  function getTimerIndex() returns (uint) {
+    return ITimer(globalTimer).checkIndex();
+  }
+
   //test
 
   function getTimerAddress() returns (address) {
