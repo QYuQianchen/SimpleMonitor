@@ -79,6 +79,8 @@ contract SingleBattery is GeneralDevice, IBattery {
     buyVolume = v;
   }
 
+  function getBuyVol() returns (uint) {return buyVolume;}
+
   function getVolumeCapacity () external view returns (uint vol, uint volAt, uint cap) { // timed(initTime,volTimeOut) 
     vol = currentVolume;
     volAt = volStatusAt;
@@ -156,7 +158,7 @@ contract SingleBattery is GeneralDevice, IBattery {
 
   // --- 4. PV/Battery/Grid asks Battery to confirm energy transaction ---
 
-  function goNoGo(uint giveoutvol) returns (uint) {
+  function goNoGo(uint giveoutvol) timed(4) returns (uint) {
     address adrDevice = msg.sender;
     uint takeoutvol;
     require(connectedDevice[1].assertInside(adrDevice) || adrDevice == grid);
@@ -169,28 +171,49 @@ contract SingleBattery is GeneralDevice, IBattery {
     return (takeoutvol); 
   }
 
-  function goExcess(uint vol) returns (uint takeVol, uint prs) {
-    prs = priceForBuy;
-    takeVol = vol.findMin(capacity-currentVolume);
-    currentVolume = currentVolume.clearExcessTransfer(takeVol, address(this));
-    wallet -= int(takeVol*prs);
+  function sellEnergy() timed(4) {
+    uint counter = 0;
+    uint tL = draftRankMap.totalLength;
+    bool waiting = true;
+    uint i;
+
+    address adr;
+    uint consum;
+    uint rank;
+    uint tot;
+
+    while (waiting) {
+      i = getTimerIndex();
+      for (uint j = counter; j < tL; j++) {
+        (adr,consum,rank,tot) = getSortedRank(counter);
+        if (rank == i) {
+          // time to make transaction
+          initiateTransaction(counter);
+          counter++;
+        } else if (rank < i) {
+          // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
+          counter++;
+        } else {
+          // when rank > i, need to wait
+          break;
+        }
+      }
+      if (counter >= tL) {
+        waiting = false;
+      }
+    }
   }
 
-
-  function getBuyVol() returns (uint) {return buyVolume;}
-
-  
   function initiateTransaction(uint _id) timed(4) returns (uint, uint) {
     uint giveoutVol;
     address adr;
     uint consum;
     uint rank;
     uint tot;
-
     uint whatDeviceAccept;
     uint receivedMoney;
-    //for (uint i = 0; i < rLength; i++) {
-      (adr,consum,rank,tot) = getSortedRank(_id);//sortedRankingInfo[_id];
+ 
+      (adr,consum,rank,tot) = getSortedRank(_id);
       giveoutVol = currentVolume.findMin(consum);
       if (connectedDevice[0].assertInside(adr)) {
         whatDeviceAccept = IHouse(adr).goNoGo(giveoutVol);
@@ -207,6 +230,13 @@ contract SingleBattery is GeneralDevice, IBattery {
     //}
   }
 
+  // --- 5. Deal with excess energy --- 
 
+  function goExcess(uint vol) timed(5) returns (uint takeVol, uint prs) {
+    prs = priceForBuy;
+    takeVol = vol.findMin(capacity-currentVolume);
+    currentVolume = currentVolume.clearExcessTransfer(takeVol, address(this));
+    wallet -= int(takeVol*prs);
+  }
 
 }

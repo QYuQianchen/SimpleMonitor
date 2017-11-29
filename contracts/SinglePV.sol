@@ -179,7 +179,9 @@ contract SinglePV is GeneralDevice, IPV {
       return(giveoutVol, whatDeviceAccept);
   }
 
-  function sellExcess() {
+  // --- 5. Deal with excess energy --- 
+
+  function sellExcess() timed(5) {
     // after all, if there's still excess and the connected Battery still have the capacity.
     uint whatDeviceAccept;
     uint receivedMoney;

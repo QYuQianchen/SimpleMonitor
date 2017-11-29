@@ -12,13 +12,7 @@ contract Grid is GeneralDevice, IGrid {
   uint    price;
   uint    priceFeedIn;
 
-  modifier timed (uint shouldStatus) {
-    if(shouldStatus == getTimerStatus()) {
-      _;
-    } else {
-      revert();
-    }
-  }
+  
 
   function Grid(address adr) GeneralDevice(adr) { }
 
@@ -61,14 +55,14 @@ contract Grid is GeneralDevice, IGrid {
     }
   }
 
-  function goExcess(uint vol) returns (uint takeVol, uint prs) {
+  function goExcess(uint vol) timed(5) returns (uint takeVol, uint prs) {
     prs = priceFeedIn;
     takeVol = vol.findMin(negBackup);
     negBackup = negBackup.clearEnergyTransfer(takeVol, address(this));
     wallet -= int(takeVol*prs);
   }
 
-  function goExtra(uint vol) returns (uint takeVol, uint prs) { // when houses have not sufficient energy supply from microgrid
+  function goExtra(uint vol) timed(5) returns (uint takeVol, uint prs) { // when houses have not sufficient energy supply from microgrid
     prs = price;
     takeVol = vol.findMin(posBackup);
     posBackup -= takeVol;

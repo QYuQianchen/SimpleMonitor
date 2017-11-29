@@ -84,7 +84,7 @@ contract SingleHouse is GeneralDevice, IHouse {
 
   // --- 4. PV/Battery ask House to confirm energy transaction ---
 
-  function goNoGo(uint giveoutvol) returns (uint) {
+  function goNoGo(uint giveoutvol) timed(4) returns (uint) {
     address adrDevice = msg.sender;
     uint takeoutvol;
     require(connectedDevice[2].assertInside(adrDevice) || connectedDevice[1].assertInside(adrDevice));
@@ -98,7 +98,7 @@ contract SingleHouse is GeneralDevice, IHouse {
 
   // --- 5. If house still has energy demand, ask grid for energy ---
 
-  function buyExtra() {
+  function buyExtra() timed(5) {
     // when houses still have extra needs...
     uint whatDeviceAccept;
     uint receivedMoney;

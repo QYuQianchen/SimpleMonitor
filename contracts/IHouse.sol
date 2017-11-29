@@ -14,7 +14,7 @@ contract IHouse is GeneralDevice {
 
   function getSortedPrice() external returns(uint consum, uint rank, uint tot, bool updated);
 
-  function goNoGo(uint giveoutvol) returns (uint);
+  function goNoGo(uint giveoutvol) timed(4) returns (uint);
 
   function getWallet() constant returns(int) {
     return wallet;

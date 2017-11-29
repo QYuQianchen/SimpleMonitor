@@ -41,7 +41,7 @@
       "absolutePath": "/C/Users/qianc/Documents/Thesis/Code/SimpleMonitor/contracts/ITimer.sol",
       "exportedSymbols": {
         "ITimer": [
-          1377
+          721
         ]
       }
     },
@@ -55,9 +55,9 @@
             ".4"
           ]
         },
-        "id": 1366,
+        "id": 710,
         "name": "PragmaDirective",
-        "src": "0:23:10"
+        "src": "0:23:7"
       },
       {
         "attributes": {
@@ -71,10 +71,10 @@
           "documentation": null,
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            1377
+            721
           ],
           "name": "ITimer",
-          "scope": 1378
+          "scope": 722
         },
         "children": [
           {
@@ -88,7 +88,7 @@
               ],
               "name": "checkStatus",
               "payable": false,
-              "scope": 1377,
+              "scope": 721,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -101,9 +101,9 @@
                   ]
                 },
                 "children": [],
-                "id": 1367,
+                "id": 711,
                 "name": "ParameterList",
-                "src": "115:2:10"
+                "src": "115:2:7"
               },
               {
                 "children": [
@@ -111,7 +111,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 1371,
+                      "scope": 715,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -124,24 +124,24 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 1368,
+                        "id": 712,
                         "name": "ElementaryTypeName",
-                        "src": "134:4:10"
+                        "src": "134:4:7"
                       }
                     ],
-                    "id": 1369,
+                    "id": 713,
                     "name": "VariableDeclaration",
-                    "src": "134:4:10"
+                    "src": "134:4:7"
                   }
                 ],
-                "id": 1370,
+                "id": 714,
                 "name": "ParameterList",
-                "src": "133:6:10"
+                "src": "133:6:7"
               }
             ],
-            "id": 1371,
+            "id": 715,
             "name": "FunctionDefinition",
-            "src": "95:45:10"
+            "src": "95:45:7"
           },
           {
             "attributes": {
@@ -154,7 +154,7 @@
               ],
               "name": "checkIndex",
               "payable": false,
-              "scope": 1377,
+              "scope": 721,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -167,9 +167,9 @@
                   ]
                 },
                 "children": [],
-                "id": 1372,
+                "id": 716,
                 "name": "ParameterList",
-                "src": "162:2:10"
+                "src": "162:2:7"
               },
               {
                 "children": [
@@ -177,7 +177,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 1376,
+                      "scope": 720,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -190,34 +190,34 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 1373,
+                        "id": 717,
                         "name": "ElementaryTypeName",
-                        "src": "181:4:10"
+                        "src": "181:4:7"
                       }
                     ],
-                    "id": 1374,
+                    "id": 718,
                     "name": "VariableDeclaration",
-                    "src": "181:4:10"
+                    "src": "181:4:7"
                   }
                 ],
-                "id": 1375,
+                "id": 719,
                 "name": "ParameterList",
-                "src": "180:6:10"
+                "src": "180:6:7"
               }
             ],
-            "id": 1376,
+            "id": 720,
             "name": "FunctionDefinition",
-            "src": "143:44:10"
+            "src": "143:44:7"
           }
         ],
-        "id": 1377,
+        "id": 721,
         "name": "ContractDefinition",
-        "src": "25:164:10"
+        "src": "25:164:7"
       }
     ],
-    "id": 1378,
+    "id": 722,
     "name": "SourceUnit",
-    "src": "0:190:10"
+    "src": "0:190:7"
   },
   "compiler": {
     "name": "solc",
@@ -225,5 +225,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-29T03:00:25.309Z"
+  "updatedAt": "2017-11-29T03:11:33.873Z"
 }
