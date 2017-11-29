@@ -6,4 +6,5 @@ contract ITimer {
   }*/
 
   function checkStatus() public returns (uint);
+  function checkIndex() public returns (uint);
 }

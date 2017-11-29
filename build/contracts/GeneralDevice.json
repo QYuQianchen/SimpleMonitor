@@ -101,8 +101,8 @@
       "type": "constructor"
     }
   ],
-  "bytecode": "0x606060405260038054600160a060020a0319908116909155600480549091169055341561002b57600080fd5b6040516020806103cb8339810160405280805160018054600160a060020a03928316600160a060020a031991821617909155600080543390931692909116919091179055505061034b806100806000396000f3006060604052600436106100775763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630830cfae811461007c578063235a4a4f1461009d57806370ed8f24146100c25780638d646b11146100f1578063bfd1190314610110578063ff1b636d14610132575b600080fd5b341561008757600080fd5b61009b600160a060020a0360043516610145565b005b34156100a857600080fd5b6100b0610188565b60405190815260200160405180910390f35b34156100cd57600080fd5b6100d561020b565b604051600160a060020a03909116815260200160405180910390f35b34156100fc57600080fd5b61009b600160a060020a036004351661021a565b341561011b57600080fd5b61009b600435600160a060020a036024351661025e565b341561013d57600080fd5b6100d56102c9565b60005433600160a060020a0390811691161415610077576004805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790555b50565b600454600090600160a060020a0316633b7104f282604051602001526040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401602060405180830381600087803b15156101eb57600080fd5b6102c65a03f115156101fc57600080fd5b50505060405180519150505b90565b600454600160a060020a031690565b60005433600160a060020a0390811691161415610077576003805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a038316179055610185565b60005433600160a060020a039081169116141561007757600082815260066020526040902080546001810161029383826102d8565b506000918252602090912001805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790555050565b600054600160a060020a031681565b8154818355818115116102fc576000838152602090206102fc918101908301610301565b505050565b61020891905b8082111561031b5760008155600101610307565b50905600a165627a7a72305820575ce1d6a9f229c382e891fb58168691e012ce9da87325915b6fedbba772fbaf0029",
-  "deployedBytecode": "0x6060604052600436106100775763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630830cfae811461007c578063235a4a4f1461009d57806370ed8f24146100c25780638d646b11146100f1578063bfd1190314610110578063ff1b636d14610132575b600080fd5b341561008757600080fd5b61009b600160a060020a0360043516610145565b005b34156100a857600080fd5b6100b0610188565b60405190815260200160405180910390f35b34156100cd57600080fd5b6100d561020b565b604051600160a060020a03909116815260200160405180910390f35b34156100fc57600080fd5b61009b600160a060020a036004351661021a565b341561011b57600080fd5b61009b600435600160a060020a036024351661025e565b341561013d57600080fd5b6100d56102c9565b60005433600160a060020a0390811691161415610077576004805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790555b50565b600454600090600160a060020a0316633b7104f282604051602001526040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401602060405180830381600087803b15156101eb57600080fd5b6102c65a03f115156101fc57600080fd5b50505060405180519150505b90565b600454600160a060020a031690565b60005433600160a060020a0390811691161415610077576003805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a038316179055610185565b60005433600160a060020a039081169116141561007757600082815260066020526040902080546001810161029383826102d8565b506000918252602090912001805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790555050565b600054600160a060020a031681565b8154818355818115116102fc576000838152602090206102fc918101908301610301565b505050565b61020891905b8082111561031b5760008155600101610307565b50905600a165627a7a72305820575ce1d6a9f229c382e891fb58168691e012ce9da87325915b6fedbba772fbaf0029",
+  "bytecode": "0x606060405260038054600160a060020a0319908116909155600480549091169055341561002b57600080fd5b6040516020806103cb8339810160405280805160018054600160a060020a03928316600160a060020a031991821617909155600080543390931692909116919091179055505061034b806100806000396000f3006060604052600436106100775763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630830cfae811461007c578063235a4a4f1461009d57806370ed8f24146100c25780638d646b11146100f1578063bfd1190314610110578063ff1b636d14610132575b600080fd5b341561008757600080fd5b61009b600160a060020a0360043516610145565b005b34156100a857600080fd5b6100b0610188565b60405190815260200160405180910390f35b34156100cd57600080fd5b6100d561020b565b604051600160a060020a03909116815260200160405180910390f35b34156100fc57600080fd5b61009b600160a060020a036004351661021a565b341561011b57600080fd5b61009b600435600160a060020a036024351661025e565b341561013d57600080fd5b6100d56102c9565b60005433600160a060020a0390811691161415610077576004805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790555b50565b600454600090600160a060020a0316633b7104f282604051602001526040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401602060405180830381600087803b15156101eb57600080fd5b6102c65a03f115156101fc57600080fd5b50505060405180519150505b90565b600454600160a060020a031690565b60005433600160a060020a0390811691161415610077576003805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a038316179055610185565b60005433600160a060020a039081169116141561007757600082815260066020526040902080546001810161029383826102d8565b506000918252602090912001805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790555050565b600054600160a060020a031681565b8154818355818115116102fc576000838152602090206102fc918101908301610301565b505050565b61020891905b8082111561031b5760008155600101610307565b50905600a165627a7a72305820460487cd75791d5ba92bd7c7abb28682c74a1da0f78ffc58efc5e03866cdf7dc0029",
+  "deployedBytecode": "0x6060604052600436106100775763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630830cfae811461007c578063235a4a4f1461009d57806370ed8f24146100c25780638d646b11146100f1578063bfd1190314610110578063ff1b636d14610132575b600080fd5b341561008757600080fd5b61009b600160a060020a0360043516610145565b005b34156100a857600080fd5b6100b0610188565b60405190815260200160405180910390f35b34156100cd57600080fd5b6100d561020b565b604051600160a060020a03909116815260200160405180910390f35b34156100fc57600080fd5b61009b600160a060020a036004351661021a565b341561011b57600080fd5b61009b600435600160a060020a036024351661025e565b341561013d57600080fd5b6100d56102c9565b60005433600160a060020a0390811691161415610077576004805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790555b50565b600454600090600160a060020a0316633b7104f282604051602001526040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401602060405180830381600087803b15156101eb57600080fd5b6102c65a03f115156101fc57600080fd5b50505060405180519150505b90565b600454600160a060020a031690565b60005433600160a060020a0390811691161415610077576003805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a038316179055610185565b60005433600160a060020a039081169116141561007757600082815260066020526040902080546001810161029383826102d8565b506000918252602090912001805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790555050565b600054600160a060020a031681565b8154818355818115116102fc576000838152602090206102fc918101908301610301565b505050565b61020891905b8082111561031b5760008155600101610307565b50905600a165627a7a72305820460487cd75791d5ba92bd7c7abb28682c74a1da0f78ffc58efc5e03866cdf7dc0029",
   "sourceMap": "105:2193:3:-;;;609:18;;;-1:-1:-1;;;;;;609:18:3;;;;;;632:25;;;;;;;;1684:86;;;;;;;;;;;;;;;;;;;;;;1728:5;:11;;-1:-1:-1;;;;;1728:11:3;;;-1:-1:-1;;;;;;1728:11:3;;;;;;;:5;1746:18;;1754:10;1746:18;;;;;;;;;;;;;-1:-1:-1;;105:2193:3;;;;;;",
   "deployedSourceMap": "105:2193:3:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1848:74;;;;;;;;;;-1:-1:-1;;;;;1848:74:3;;;;;;;2105:94;;;;;;;;;;;;;;;;;;;;;;;;;;;2217:76;;;;;;;;;;;;;;;-1:-1:-1;;;;;2217:76:3;;;;;;;;;;;;;;1776:66;;;;;;;;;;-1:-1:-1;;;;;1776:66:3;;;;;1928:100;;;;;;;;;;;;-1:-1:-1;;;;;1928:100:3;;;;;212:20;;;;;;;;;;;;1848:74;906:5;;892:10;-1:-1:-1;;;;;892:19:3;;;906:5;;892:19;888:74;;;1899:11;:17;;-1:-1:-1;;1899:17:3;-1:-1:-1;;;;;1899:17:3;;;;;888:74;1848;:::o;2105:94::-;2167:11;;2140:4;;-1:-1:-1;;;;;2167:11:3;2160:31;2140:4;2160:33;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;2105:94:3;;:::o;2217:76::-;2276:11;;-1:-1:-1;;;;;2276:11:3;2217:76;:::o;1776:66::-;906:5;;892:10;-1:-1:-1;;;;;892:19:3;;;906:5;;892:19;888:74;;;1826:4;:10;;-1:-1:-1;;1826:10:3;-1:-1:-1;;;;;1826:10:3;;;;;888:74;;1928:100;906:5;;892:10;-1:-1:-1;;;;;892:19:3;;;906:5;;892:19;888:74;;;1994:18;;;;:15;:18;;;;;:28;;;;;;:18;:28;;:::i;:::-;-1:-1:-1;1994:28:3;;;;;;;;;;;-1:-1:-1;;1994:28:3;-1:-1:-1;;;;;1994:28:3;;;;;1928:100;;:::o;212:20::-;;;-1:-1:-1;;;;;212:20:3;;:::o;105:2193::-;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;",
   "source": "pragma solidity ^0.4.4;\r\n\r\nimport \"./AdrLib.sol\";\r\n//import \"./ClockLib.sol\";\r\nimport \"./ITimer.sol\";\r\n\r\ncontract GeneralDevice {\r\n  using AdrLib for address[];\r\n  //using ClockLib for ClockLib.GlobalClock;\r\n\r\n  address public Admin;               // the account address of the admin\r\n  address internal owner;             // the account address of the owner. Here we are still using adr in the constructor, \r\n                                      // but later we may change the adr input into byte32, by a harshed device identifier\r\n  bytes32 internal name;              // name of the device (Serie No.)\r\n  address grid = 0x0;\r\n  address globalTimer = 0x0;\r\n  int     wallet;                     // To record loss & gain (that of house is negative -> need to pay others)\r\n  mapping(uint=>address[]) connectedDevice;\r\n  //ClockLib.GlobalClock globalTimer;\r\n\r\n  modifier adminOnly {\r\n    if (msg.sender == Admin) {\r\n      _;\r\n    } else {\r\n      revert();\r\n    }\r\n  }\r\n\r\n  modifier ownerOnly {\r\n    if (msg.sender == owner) {\r\n      _;\r\n    } else {\r\n      revert();\r\n    }\r\n  }\r\n\r\n  modifier connectedHouseOnly (address adr) {\r\n    if (connectedDevice[1].assertInside(adr) == true) {\r\n      _;\r\n    } else {\r\n      revert();\r\n    } \r\n  }\r\n\r\n  modifier connectedPVOnly (address adr) {\r\n    if (connectedDevice[1].assertInside(adr)) {\r\n      _;\r\n    } else {\r\n      revert();\r\n    }\r\n  }\r\n\r\n  modifier connectedBatteryOnly (address adr) {\r\n    if (connectedDevice[2].assertInside(adr)) {\r\n      _;\r\n    } else {\r\n      revert();\r\n    }\r\n  }\r\n\r\n  modifier timed (uint shouldStatus) {\r\n    if(shouldStatus == getTimerStatus()) {\r\n      _;\r\n    } else {\r\n      revert();\r\n    }\r\n  }\r\n\r\n  function GeneralDevice (address adr) {\r\n    owner = adr;\r\n    Admin = msg.sender;\r\n  }\r\n\r\n  function setGridAdr(address adr) adminOnly {\r\n    grid = adr;\r\n  }\r\n\r\n  function setTimerAdr(address adr) adminOnly {\r\n    globalTimer = adr;\r\n  }\r\n\r\n  function addConnectedDevice(uint a, address adr) adminOnly {\r\n    connectedDevice[a].push(adr);\r\n  }\r\n  // a function that disconnects devices can be added here, if needed\r\n\r\n  function getTimerStatus() returns (uint) {\r\n    return ITimer(globalTimer).checkStatus();\r\n  }\r\n\r\n  //test\r\n\r\n  function getTimerAddress() returns (address) {\r\n    return globalTimer;\r\n  }\r\n\r\n}\r\n",
@@ -147,7 +147,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1310,
+          "SourceUnit": 1366,
           "absolutePath": "/C/Users/qianc/Documents/Thesis/Code/SimpleMonitor/contracts/ITimer.sol",
           "file": "./ITimer.sol",
           "scope": 741,
@@ -514,7 +514,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3913,
+                                  "referencedDeclaration": 3969,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -588,7 +588,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3917,
+                                      "referencedDeclaration": 3973,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -680,7 +680,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3913,
+                                  "referencedDeclaration": 3969,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -754,7 +754,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3917,
+                                      "referencedDeclaration": 3973,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1016,7 +1016,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3917,
+                                      "referencedDeclaration": 3973,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1241,7 +1241,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3917,
+                                      "referencedDeclaration": 3973,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1466,7 +1466,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3917,
+                                      "referencedDeclaration": 3973,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1662,7 +1662,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3917,
+                                      "referencedDeclaration": 3973,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1858,7 +1858,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3913,
+                                  "referencedDeclaration": 3969,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -2505,7 +2505,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "checkStatus",
-                              "referencedDeclaration": 1308,
+                              "referencedDeclaration": 1359,
                               "type": "function () external returns (uint256)"
                             },
                             "children": [
@@ -2535,7 +2535,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1309,
+                                      "referencedDeclaration": 1365,
                                       "type": "type(contract ITimer)",
                                       "value": "ITimer"
                                     },
@@ -2699,5 +2699,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-29T00:04:15.529Z"
+  "updatedAt": "2017-11-29T01:05:52.102Z"
 }

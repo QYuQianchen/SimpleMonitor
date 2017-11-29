@@ -151,7 +151,7 @@
       "absolutePath": "/C/Users/qianc/Documents/Thesis/Code/SimpleMonitor/contracts/SortPLib.sol",
       "exportedSymbols": {
         "SortPLib": [
-          3366
+          3422
         ]
       }
     },
@@ -165,7 +165,7 @@
             ".4"
           ]
         },
-        "id": 2998,
+        "id": 3054,
         "name": "PragmaDirective",
         "src": "0:23:15"
       },
@@ -181,17 +181,17 @@
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            3366
+            3422
           ],
           "name": "SortPLib",
-          "scope": 3367
+          "scope": 3423
         },
         "children": [
           {
             "attributes": {
               "canonicalName": "SortPLib.PriceTF",
               "name": "PriceTF",
-              "scope": 3366,
+              "scope": 3422,
               "visibility": "public"
             },
             "children": [
@@ -199,7 +199,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "prs",
-                  "scope": 3003,
+                  "scope": 3059,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "uint256",
@@ -212,12 +212,12 @@
                       "name": "uint",
                       "type": "uint256"
                     },
-                    "id": 2999,
+                    "id": 3055,
                     "name": "ElementaryTypeName",
                     "src": "73:4:15"
                   }
                 ],
-                "id": 3000,
+                "id": 3056,
                 "name": "VariableDeclaration",
                 "src": "73:9:15"
               },
@@ -225,7 +225,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "updated",
-                  "scope": 3003,
+                  "scope": 3059,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "bool",
@@ -238,17 +238,17 @@
                       "name": "bool",
                       "type": "bool"
                     },
-                    "id": 3001,
+                    "id": 3057,
                     "name": "ElementaryTypeName",
                     "src": "89:4:15"
                   }
                 ],
-                "id": 3002,
+                "id": 3058,
                 "name": "VariableDeclaration",
                 "src": "89:13:15"
               }
             ],
-            "id": 3003,
+            "id": 3059,
             "name": "StructDefinition",
             "src": "51:57:15"
           },
@@ -256,7 +256,7 @@
             "attributes": {
               "canonicalName": "SortPLib.PriceMap",
               "name": "PriceMap",
-              "scope": 3366,
+              "scope": 3422,
               "visibility": "public"
             },
             "children": [
@@ -264,7 +264,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "prsTable",
-                  "scope": 3016,
+                  "scope": 3072,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "mapping(address => struct SortPLib.PriceTF storage ref)",
@@ -282,7 +282,7 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 3004,
+                        "id": 3060,
                         "name": "ElementaryTypeName",
                         "src": "145:7:15"
                       },
@@ -290,20 +290,20 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "PriceTF",
-                          "referencedDeclaration": 3003,
+                          "referencedDeclaration": 3059,
                           "type": "struct SortPLib.PriceTF storage pointer"
                         },
-                        "id": 3005,
+                        "id": 3061,
                         "name": "UserDefinedTypeName",
                         "src": "154:7:15"
                       }
                     ],
-                    "id": 3006,
+                    "id": 3062,
                     "name": "Mapping",
                     "src": "137:25:15"
                   }
                 ],
-                "id": 3007,
+                "id": 3063,
                 "name": "VariableDeclaration",
                 "src": "137:34:15"
               },
@@ -311,7 +311,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "sortedPrs",
-                  "scope": 3016,
+                  "scope": 3072,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "mapping(uint256 => address)",
@@ -329,7 +329,7 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 3008,
+                        "id": 3064,
                         "name": "ElementaryTypeName",
                         "src": "186:4:15"
                       },
@@ -338,17 +338,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 3009,
+                        "id": 3065,
                         "name": "ElementaryTypeName",
                         "src": "192:7:15"
                       }
                     ],
-                    "id": 3010,
+                    "id": 3066,
                     "name": "Mapping",
                     "src": "178:22:15"
                   }
                 ],
-                "id": 3011,
+                "id": 3067,
                 "name": "VariableDeclaration",
                 "src": "178:32:15"
               },
@@ -356,7 +356,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "totalLength",
-                  "scope": 3016,
+                  "scope": 3072,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "uint256",
@@ -369,12 +369,12 @@
                       "name": "uint",
                       "type": "uint256"
                     },
-                    "id": 3012,
+                    "id": 3068,
                     "name": "ElementaryTypeName",
                     "src": "217:4:15"
                   }
                 ],
-                "id": 3013,
+                "id": 3069,
                 "name": "VariableDeclaration",
                 "src": "217:16:15"
               },
@@ -382,7 +382,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "fLength",
-                  "scope": 3016,
+                  "scope": 3072,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "uint256",
@@ -395,17 +395,17 @@
                       "name": "uint",
                       "type": "uint256"
                     },
-                    "id": 3014,
+                    "id": 3070,
                     "name": "ElementaryTypeName",
                     "src": "240:4:15"
                   }
                 ],
-                "id": 3015,
+                "id": 3071,
                 "name": "VariableDeclaration",
                 "src": "240:12:15"
               }
             ],
-            "id": 3016,
+            "id": 3072,
             "name": "StructDefinition",
             "src": "114:144:15"
           },
@@ -419,7 +419,7 @@
               ],
               "name": "initPrsTable",
               "payable": false,
-              "scope": 3366,
+              "scope": 3422,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -431,7 +431,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_prm",
-                      "scope": 3034,
+                      "scope": 3090,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct SortPLib.PriceMap storage pointer",
@@ -443,20 +443,20 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "PriceMap",
-                          "referencedDeclaration": 3016,
+                          "referencedDeclaration": 3072,
                           "type": "struct SortPLib.PriceMap storage pointer"
                         },
-                        "id": 3017,
+                        "id": 3073,
                         "name": "UserDefinedTypeName",
                         "src": "287:8:15"
                       }
                     ],
-                    "id": 3018,
+                    "id": 3074,
                     "name": "VariableDeclaration",
                     "src": "287:21:15"
                   }
                 ],
-                "id": 3019,
+                "id": 3075,
                 "name": "ParameterList",
                 "src": "286:23:15"
               },
@@ -467,7 +467,7 @@
                   ]
                 },
                 "children": [],
-                "id": 3020,
+                "id": 3076,
                 "name": "ParameterList",
                 "src": "310:0:15"
               },
@@ -494,7 +494,7 @@
                               "isPure": false,
                               "lValueRequested": true,
                               "member_name": "totalLength",
-                              "referencedDeclaration": 3013,
+                              "referencedDeclaration": 3069,
                               "type": "uint256"
                             },
                             "children": [
@@ -504,16 +504,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3018,
+                                  "referencedDeclaration": 3074,
                                   "type": "struct SortPLib.PriceMap storage pointer",
                                   "value": "_prm"
                                 },
-                                "id": 3021,
+                                "id": 3077,
                                 "name": "Identifier",
                                 "src": "317:4:15"
                               }
                             ],
-                            "id": 3023,
+                            "id": 3079,
                             "name": "MemberAccess",
                             "src": "317:16:15"
                           },
@@ -530,17 +530,17 @@
                               "type": "int_const 0",
                               "value": "0"
                             },
-                            "id": 3024,
+                            "id": 3080,
                             "name": "Literal",
                             "src": "336:1:15"
                           }
                         ],
-                        "id": 3025,
+                        "id": 3081,
                         "name": "Assignment",
                         "src": "317:20:15"
                       }
                     ],
-                    "id": 3026,
+                    "id": 3082,
                     "name": "ExpressionStatement",
                     "src": "317:20:15"
                   },
@@ -565,7 +565,7 @@
                               "isPure": false,
                               "lValueRequested": true,
                               "member_name": "fLength",
-                              "referencedDeclaration": 3015,
+                              "referencedDeclaration": 3071,
                               "type": "uint256"
                             },
                             "children": [
@@ -575,16 +575,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3018,
+                                  "referencedDeclaration": 3074,
                                   "type": "struct SortPLib.PriceMap storage pointer",
                                   "value": "_prm"
                                 },
-                                "id": 3027,
+                                "id": 3083,
                                 "name": "Identifier",
                                 "src": "344:4:15"
                               }
                             ],
-                            "id": 3029,
+                            "id": 3085,
                             "name": "MemberAccess",
                             "src": "344:12:15"
                           },
@@ -601,27 +601,27 @@
                               "type": "int_const 0",
                               "value": "0"
                             },
-                            "id": 3030,
+                            "id": 3086,
                             "name": "Literal",
                             "src": "359:1:15"
                           }
                         ],
-                        "id": 3031,
+                        "id": 3087,
                         "name": "Assignment",
                         "src": "344:16:15"
                       }
                     ],
-                    "id": 3032,
+                    "id": 3088,
                     "name": "ExpressionStatement",
                     "src": "344:16:15"
                   }
                 ],
-                "id": 3033,
+                "id": 3089,
                 "name": "Block",
                 "src": "310:56:15"
               }
             ],
-            "id": 3034,
+            "id": 3090,
             "name": "FunctionDefinition",
             "src": "265:101:15"
           },
@@ -635,7 +635,7 @@
               ],
               "name": "addToPrsTable",
               "payable": false,
-              "scope": 3366,
+              "scope": 3422,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -647,7 +647,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_prm",
-                      "scope": 3081,
+                      "scope": 3137,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct SortPLib.PriceMap storage pointer",
@@ -659,15 +659,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "PriceMap",
-                          "referencedDeclaration": 3016,
+                          "referencedDeclaration": 3072,
                           "type": "struct SortPLib.PriceMap storage pointer"
                         },
-                        "id": 3035,
+                        "id": 3091,
                         "name": "UserDefinedTypeName",
                         "src": "395:8:15"
                       }
                     ],
-                    "id": 3036,
+                    "id": 3092,
                     "name": "VariableDeclaration",
                     "src": "395:21:15"
                   },
@@ -675,7 +675,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_adr",
-                      "scope": 3081,
+                      "scope": 3137,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -688,12 +688,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 3037,
+                        "id": 3093,
                         "name": "ElementaryTypeName",
                         "src": "418:7:15"
                       }
                     ],
-                    "id": 3038,
+                    "id": 3094,
                     "name": "VariableDeclaration",
                     "src": "418:12:15"
                   },
@@ -701,7 +701,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_p",
-                      "scope": 3081,
+                      "scope": 3137,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -714,12 +714,12 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 3039,
+                        "id": 3095,
                         "name": "ElementaryTypeName",
                         "src": "432:4:15"
                       }
                     ],
-                    "id": 3040,
+                    "id": 3096,
                     "name": "VariableDeclaration",
                     "src": "432:7:15"
                   },
@@ -727,7 +727,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_tf",
-                      "scope": 3081,
+                      "scope": 3137,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -740,17 +740,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 3041,
+                        "id": 3097,
                         "name": "ElementaryTypeName",
                         "src": "441:4:15"
                       }
                     ],
-                    "id": 3042,
+                    "id": 3098,
                     "name": "VariableDeclaration",
                     "src": "441:8:15"
                   }
                 ],
-                "id": 3043,
+                "id": 3099,
                 "name": "ParameterList",
                 "src": "394:56:15"
               },
@@ -761,7 +761,7 @@
                   ]
                 },
                 "children": [],
-                "id": 3044,
+                "id": 3100,
                 "name": "ParameterList",
                 "src": "451:0:15"
               },
@@ -798,7 +798,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "prsTable",
-                                  "referencedDeclaration": 3007,
+                                  "referencedDeclaration": 3063,
                                   "type": "mapping(address => struct SortPLib.PriceTF storage ref)"
                                 },
                                 "children": [
@@ -808,16 +808,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3036,
+                                      "referencedDeclaration": 3092,
                                       "type": "struct SortPLib.PriceMap storage pointer",
                                       "value": "_prm"
                                     },
-                                    "id": 3045,
+                                    "id": 3101,
                                     "name": "Identifier",
                                     "src": "458:4:15"
                                   }
                                 ],
-                                "id": 3048,
+                                "id": 3104,
                                 "name": "MemberAccess",
                                 "src": "458:13:15"
                               },
@@ -827,16 +827,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3038,
+                                  "referencedDeclaration": 3094,
                                   "type": "address",
                                   "value": "_adr"
                                 },
-                                "id": 3047,
+                                "id": 3103,
                                 "name": "Identifier",
                                 "src": "472:4:15"
                               }
                             ],
-                            "id": 3049,
+                            "id": 3105,
                             "name": "IndexAccess",
                             "src": "458:19:15"
                           },
@@ -870,11 +870,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3003,
+                                  "referencedDeclaration": 3059,
                                   "type": "type(struct SortPLib.PriceTF storage pointer)",
                                   "value": "PriceTF"
                                 },
-                                "id": 3050,
+                                "id": 3106,
                                 "name": "Identifier",
                                 "src": "480:7:15"
                               },
@@ -884,11 +884,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3040,
+                                  "referencedDeclaration": 3096,
                                   "type": "uint256",
                                   "value": "_p"
                                 },
-                                "id": 3051,
+                                "id": 3107,
                                 "name": "Identifier",
                                 "src": "488:2:15"
                               },
@@ -898,26 +898,26 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3042,
+                                  "referencedDeclaration": 3098,
                                   "type": "bool",
                                   "value": "_tf"
                                 },
-                                "id": 3052,
+                                "id": 3108,
                                 "name": "Identifier",
                                 "src": "491:3:15"
                               }
                             ],
-                            "id": 3053,
+                            "id": 3109,
                             "name": "FunctionCall",
                             "src": "480:15:15"
                           }
                         ],
-                        "id": 3054,
+                        "id": 3110,
                         "name": "Assignment",
                         "src": "458:37:15"
                       }
                     ],
-                    "id": 3055,
+                    "id": 3111,
                     "name": "ExpressionStatement",
                     "src": "458:37:15"
                   },
@@ -947,11 +947,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 3042,
+                              "referencedDeclaration": 3098,
                               "type": "bool",
                               "value": "_tf"
                             },
-                            "id": 3056,
+                            "id": 3112,
                             "name": "Identifier",
                             "src": "506:3:15"
                           },
@@ -968,12 +968,12 @@
                               "type": "bool",
                               "value": "false"
                             },
-                            "id": 3057,
+                            "id": 3113,
                             "name": "Literal",
                             "src": "513:5:15"
                           }
                         ],
-                        "id": 3058,
+                        "id": 3114,
                         "name": "BinaryOperation",
                         "src": "506:12:15"
                       },
@@ -1001,7 +1001,7 @@
                                       "isPure": false,
                                       "lValueRequested": true,
                                       "member_name": "fLength",
-                                      "referencedDeclaration": 3015,
+                                      "referencedDeclaration": 3071,
                                       "type": "uint256"
                                     },
                                     "children": [
@@ -1011,36 +1011,36 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3036,
+                                          "referencedDeclaration": 3092,
                                           "type": "struct SortPLib.PriceMap storage pointer",
                                           "value": "_prm"
                                         },
-                                        "id": 3059,
+                                        "id": 3115,
                                         "name": "Identifier",
                                         "src": "529:4:15"
                                       }
                                     ],
-                                    "id": 3061,
+                                    "id": 3117,
                                     "name": "MemberAccess",
                                     "src": "529:12:15"
                                   }
                                 ],
-                                "id": 3062,
+                                "id": 3118,
                                 "name": "UnaryOperation",
                                 "src": "529:14:15"
                               }
                             ],
-                            "id": 3063,
+                            "id": 3119,
                             "name": "ExpressionStatement",
                             "src": "529:14:15"
                           }
                         ],
-                        "id": 3064,
+                        "id": 3120,
                         "name": "Block",
                         "src": "520:31:15"
                       }
                     ],
-                    "id": 3065,
+                    "id": 3121,
                     "name": "IfStatement",
                     "src": "502:49:15"
                   },
@@ -1075,7 +1075,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "sortedPrs",
-                                  "referencedDeclaration": 3011,
+                                  "referencedDeclaration": 3067,
                                   "type": "mapping(uint256 => address)"
                                 },
                                 "children": [
@@ -1085,16 +1085,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3036,
+                                      "referencedDeclaration": 3092,
                                       "type": "struct SortPLib.PriceMap storage pointer",
                                       "value": "_prm"
                                     },
-                                    "id": 3066,
+                                    "id": 3122,
                                     "name": "Identifier",
                                     "src": "557:4:15"
                                   }
                                 ],
-                                "id": 3070,
+                                "id": 3126,
                                 "name": "MemberAccess",
                                 "src": "557:14:15"
                               },
@@ -1106,7 +1106,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "totalLength",
-                                  "referencedDeclaration": 3013,
+                                  "referencedDeclaration": 3069,
                                   "type": "uint256"
                                 },
                                 "children": [
@@ -1116,21 +1116,21 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3036,
+                                      "referencedDeclaration": 3092,
                                       "type": "struct SortPLib.PriceMap storage pointer",
                                       "value": "_prm"
                                     },
-                                    "id": 3068,
+                                    "id": 3124,
                                     "name": "Identifier",
                                     "src": "572:4:15"
                                   }
                                 ],
-                                "id": 3069,
+                                "id": 3125,
                                 "name": "MemberAccess",
                                 "src": "572:16:15"
                               }
                             ],
-                            "id": 3071,
+                            "id": 3127,
                             "name": "IndexAccess",
                             "src": "557:32:15"
                           },
@@ -1140,21 +1140,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 3038,
+                              "referencedDeclaration": 3094,
                               "type": "address",
                               "value": "_adr"
                             },
-                            "id": 3072,
+                            "id": 3128,
                             "name": "Identifier",
                             "src": "592:4:15"
                           }
                         ],
-                        "id": 3073,
+                        "id": 3129,
                         "name": "Assignment",
                         "src": "557:39:15"
                       }
                     ],
-                    "id": 3074,
+                    "id": 3130,
                     "name": "ExpressionStatement",
                     "src": "557:39:15"
                   },
@@ -1180,7 +1180,7 @@
                               "isPure": false,
                               "lValueRequested": true,
                               "member_name": "totalLength",
-                              "referencedDeclaration": 3013,
+                              "referencedDeclaration": 3069,
                               "type": "uint256"
                             },
                             "children": [
@@ -1190,36 +1190,36 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3036,
+                                  "referencedDeclaration": 3092,
                                   "type": "struct SortPLib.PriceMap storage pointer",
                                   "value": "_prm"
                                 },
-                                "id": 3075,
+                                "id": 3131,
                                 "name": "Identifier",
                                 "src": "603:4:15"
                               }
                             ],
-                            "id": 3077,
+                            "id": 3133,
                             "name": "MemberAccess",
                             "src": "603:16:15"
                           }
                         ],
-                        "id": 3078,
+                        "id": 3134,
                         "name": "UnaryOperation",
                         "src": "603:18:15"
                       }
                     ],
-                    "id": 3079,
+                    "id": 3135,
                     "name": "ExpressionStatement",
                     "src": "603:18:15"
                   }
                 ],
-                "id": 3080,
+                "id": 3136,
                 "name": "Block",
                 "src": "451:176:15"
               }
             ],
-            "id": 3081,
+            "id": 3137,
             "name": "FunctionDefinition",
             "src": "372:255:15"
           },
@@ -1233,7 +1233,7 @@
               ],
               "name": "sortPrsTable",
               "payable": false,
-              "scope": 3366,
+              "scope": 3422,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -1245,7 +1245,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_prm",
-                      "scope": 3226,
+                      "scope": 3282,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct SortPLib.PriceMap storage pointer",
@@ -1257,20 +1257,20 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "PriceMap",
-                          "referencedDeclaration": 3016,
+                          "referencedDeclaration": 3072,
                           "type": "struct SortPLib.PriceMap storage pointer"
                         },
-                        "id": 3082,
+                        "id": 3138,
                         "name": "UserDefinedTypeName",
                         "src": "655:8:15"
                       }
                     ],
-                    "id": 3083,
+                    "id": 3139,
                     "name": "VariableDeclaration",
                     "src": "655:21:15"
                   }
                 ],
-                "id": 3084,
+                "id": 3140,
                 "name": "ParameterList",
                 "src": "654:23:15"
               },
@@ -1281,7 +1281,7 @@
                   ]
                 },
                 "children": [],
-                "id": 3085,
+                "id": 3141,
                 "name": "ParameterList",
                 "src": "678:0:15"
               },
@@ -1299,7 +1299,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "minTemp",
-                          "scope": 3226,
+                          "scope": 3282,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "uint256",
@@ -1312,17 +1312,17 @@
                               "name": "uint",
                               "type": "uint256"
                             },
-                            "id": 3086,
+                            "id": 3142,
                             "name": "ElementaryTypeName",
                             "src": "685:4:15"
                           }
                         ],
-                        "id": 3087,
+                        "id": 3143,
                         "name": "VariableDeclaration",
                         "src": "685:12:15"
                       }
                     ],
-                    "id": 3088,
+                    "id": 3144,
                     "name": "VariableDeclarationStatement",
                     "src": "685:12:15"
                   },
@@ -1338,7 +1338,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "_id",
-                          "scope": 3226,
+                          "scope": 3282,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "uint256",
@@ -1351,17 +1351,17 @@
                               "name": "uint",
                               "type": "uint256"
                             },
-                            "id": 3089,
+                            "id": 3145,
                             "name": "ElementaryTypeName",
                             "src": "704:4:15"
                           }
                         ],
-                        "id": 3090,
+                        "id": 3146,
                         "name": "VariableDeclaration",
                         "src": "704:8:15"
                       }
                     ],
-                    "id": 3091,
+                    "id": 3147,
                     "name": "VariableDeclarationStatement",
                     "src": "704:8:15"
                   },
@@ -1370,7 +1370,7 @@
                       {
                         "attributes": {
                           "assignments": [
-                            3093
+                            3149
                           ]
                         },
                         "children": [
@@ -1378,7 +1378,7 @@
                             "attributes": {
                               "constant": false,
                               "name": "i",
-                              "scope": 3226,
+                              "scope": 3282,
                               "stateVariable": false,
                               "storageLocation": "default",
                               "type": "uint256",
@@ -1391,12 +1391,12 @@
                                   "name": "uint",
                                   "type": "uint256"
                                 },
-                                "id": 3092,
+                                "id": 3148,
                                 "name": "ElementaryTypeName",
                                 "src": "724:4:15"
                               }
                             ],
-                            "id": 3093,
+                            "id": 3149,
                             "name": "VariableDeclaration",
                             "src": "724:6:15"
                           },
@@ -1413,12 +1413,12 @@
                               "type": "int_const 0",
                               "value": "0"
                             },
-                            "id": 3094,
+                            "id": 3150,
                             "name": "Literal",
                             "src": "733:1:15"
                           }
                         ],
-                        "id": 3095,
+                        "id": 3151,
                         "name": "VariableDeclarationStatement",
                         "src": "724:10:15"
                       },
@@ -1443,11 +1443,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 3093,
+                              "referencedDeclaration": 3149,
                               "type": "uint256",
                               "value": "i"
                             },
-                            "id": 3096,
+                            "id": 3152,
                             "name": "Identifier",
                             "src": "736:1:15"
                           },
@@ -1474,7 +1474,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "totalLength",
-                                  "referencedDeclaration": 3013,
+                                  "referencedDeclaration": 3069,
                                   "type": "uint256"
                                 },
                                 "children": [
@@ -1484,16 +1484,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3083,
+                                      "referencedDeclaration": 3139,
                                       "type": "struct SortPLib.PriceMap storage pointer",
                                       "value": "_prm"
                                     },
-                                    "id": 3097,
+                                    "id": 3153,
                                     "name": "Identifier",
                                     "src": "740:4:15"
                                   }
                                 ],
-                                "id": 3098,
+                                "id": 3154,
                                 "name": "MemberAccess",
                                 "src": "740:16:15"
                               },
@@ -1510,17 +1510,17 @@
                                   "type": "int_const 1",
                                   "value": "1"
                                 },
-                                "id": 3099,
+                                "id": 3155,
                                 "name": "Literal",
                                 "src": "757:1:15"
                               }
                             ],
-                            "id": 3100,
+                            "id": 3156,
                             "name": "BinaryOperation",
                             "src": "740:18:15"
                           }
                         ],
-                        "id": 3101,
+                        "id": 3157,
                         "name": "BinaryOperation",
                         "src": "736:22:15"
                       },
@@ -1544,21 +1544,21 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3093,
+                                  "referencedDeclaration": 3149,
                                   "type": "uint256",
                                   "value": "i"
                                 },
-                                "id": 3102,
+                                "id": 3158,
                                 "name": "Identifier",
                                 "src": "760:1:15"
                               }
                             ],
-                            "id": 3103,
+                            "id": 3159,
                             "name": "UnaryOperation",
                             "src": "760:3:15"
                           }
                         ],
-                        "id": 3104,
+                        "id": 3160,
                         "name": "ExpressionStatement",
                         "src": "760:3:15"
                       },
@@ -1583,11 +1583,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3087,
+                                      "referencedDeclaration": 3143,
                                       "type": "uint256",
                                       "value": "minTemp"
                                     },
-                                    "id": 3105,
+                                    "id": 3161,
                                     "name": "Identifier",
                                     "src": "774:7:15"
                                   },
@@ -1599,7 +1599,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "prs",
-                                      "referencedDeclaration": 3000,
+                                      "referencedDeclaration": 3056,
                                       "type": "uint256"
                                     },
                                     "children": [
@@ -1621,7 +1621,7 @@
                                               "isPure": false,
                                               "lValueRequested": false,
                                               "member_name": "prsTable",
-                                              "referencedDeclaration": 3007,
+                                              "referencedDeclaration": 3063,
                                               "type": "mapping(address => struct SortPLib.PriceTF storage ref)"
                                             },
                                             "children": [
@@ -1631,16 +1631,16 @@
                                                   "overloadedDeclarations": [
                                                     null
                                                   ],
-                                                  "referencedDeclaration": 3083,
+                                                  "referencedDeclaration": 3139,
                                                   "type": "struct SortPLib.PriceMap storage pointer",
                                                   "value": "_prm"
                                                 },
-                                                "id": 3106,
+                                                "id": 3162,
                                                 "name": "Identifier",
                                                 "src": "784:4:15"
                                               }
                                             ],
-                                            "id": 3107,
+                                            "id": 3163,
                                             "name": "MemberAccess",
                                             "src": "784:13:15"
                                           },
@@ -1662,7 +1662,7 @@
                                                   "isPure": false,
                                                   "lValueRequested": false,
                                                   "member_name": "sortedPrs",
-                                                  "referencedDeclaration": 3011,
+                                                  "referencedDeclaration": 3067,
                                                   "type": "mapping(uint256 => address)"
                                                 },
                                                 "children": [
@@ -1672,16 +1672,16 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3083,
+                                                      "referencedDeclaration": 3139,
                                                       "type": "struct SortPLib.PriceMap storage pointer",
                                                       "value": "_prm"
                                                     },
-                                                    "id": 3108,
+                                                    "id": 3164,
                                                     "name": "Identifier",
                                                     "src": "798:4:15"
                                                   }
                                                 ],
-                                                "id": 3109,
+                                                "id": 3165,
                                                 "name": "MemberAccess",
                                                 "src": "798:14:15"
                                               },
@@ -1691,36 +1691,36 @@
                                                   "overloadedDeclarations": [
                                                     null
                                                   ],
-                                                  "referencedDeclaration": 3093,
+                                                  "referencedDeclaration": 3149,
                                                   "type": "uint256",
                                                   "value": "i"
                                                 },
-                                                "id": 3110,
+                                                "id": 3166,
                                                 "name": "Identifier",
                                                 "src": "813:1:15"
                                               }
                                             ],
-                                            "id": 3111,
+                                            "id": 3167,
                                             "name": "IndexAccess",
                                             "src": "798:17:15"
                                           }
                                         ],
-                                        "id": 3112,
+                                        "id": 3168,
                                         "name": "IndexAccess",
                                         "src": "784:32:15"
                                       }
                                     ],
-                                    "id": 3113,
+                                    "id": 3169,
                                     "name": "MemberAccess",
                                     "src": "784:36:15"
                                   }
                                 ],
-                                "id": 3114,
+                                "id": 3170,
                                 "name": "Assignment",
                                 "src": "774:46:15"
                               }
                             ],
-                            "id": 3115,
+                            "id": 3171,
                             "name": "ExpressionStatement",
                             "src": "774:46:15"
                           },
@@ -1743,11 +1743,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3090,
+                                      "referencedDeclaration": 3146,
                                       "type": "uint256",
                                       "value": "_id"
                                     },
-                                    "id": 3116,
+                                    "id": 3172,
                                     "name": "Identifier",
                                     "src": "830:3:15"
                                   },
@@ -1757,21 +1757,21 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3093,
+                                      "referencedDeclaration": 3149,
                                       "type": "uint256",
                                       "value": "i"
                                     },
-                                    "id": 3117,
+                                    "id": 3173,
                                     "name": "Identifier",
                                     "src": "836:1:15"
                                   }
                                 ],
-                                "id": 3118,
+                                "id": 3174,
                                 "name": "Assignment",
                                 "src": "830:7:15"
                               }
                             ],
-                            "id": 3119,
+                            "id": 3175,
                             "name": "ExpressionStatement",
                             "src": "830:7:15"
                           },
@@ -1780,7 +1780,7 @@
                               {
                                 "attributes": {
                                   "assignments": [
-                                    3121
+                                    3177
                                   ]
                                 },
                                 "children": [
@@ -1788,7 +1788,7 @@
                                     "attributes": {
                                       "constant": false,
                                       "name": "j",
-                                      "scope": 3226,
+                                      "scope": 3282,
                                       "stateVariable": false,
                                       "storageLocation": "default",
                                       "type": "uint256",
@@ -1801,12 +1801,12 @@
                                           "name": "uint",
                                           "type": "uint256"
                                         },
-                                        "id": 3120,
+                                        "id": 3176,
                                         "name": "ElementaryTypeName",
                                         "src": "851:4:15"
                                       }
                                     ],
-                                    "id": 3121,
+                                    "id": 3177,
                                     "name": "VariableDeclaration",
                                     "src": "851:6:15"
                                   },
@@ -1831,11 +1831,11 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3093,
+                                          "referencedDeclaration": 3149,
                                           "type": "uint256",
                                           "value": "i"
                                         },
-                                        "id": 3122,
+                                        "id": 3178,
                                         "name": "Identifier",
                                         "src": "860:1:15"
                                       },
@@ -1852,17 +1852,17 @@
                                           "type": "int_const 1",
                                           "value": "1"
                                         },
-                                        "id": 3123,
+                                        "id": 3179,
                                         "name": "Literal",
                                         "src": "862:1:15"
                                       }
                                     ],
-                                    "id": 3124,
+                                    "id": 3180,
                                     "name": "BinaryOperation",
                                     "src": "860:3:15"
                                   }
                                 ],
-                                "id": 3125,
+                                "id": 3181,
                                 "name": "VariableDeclarationStatement",
                                 "src": "851:12:15"
                               },
@@ -1887,11 +1887,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3121,
+                                      "referencedDeclaration": 3177,
                                       "type": "uint256",
                                       "value": "j"
                                     },
-                                    "id": 3126,
+                                    "id": 3182,
                                     "name": "Identifier",
                                     "src": "865:1:15"
                                   },
@@ -1903,7 +1903,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "totalLength",
-                                      "referencedDeclaration": 3013,
+                                      "referencedDeclaration": 3069,
                                       "type": "uint256"
                                     },
                                     "children": [
@@ -1913,21 +1913,21 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3083,
+                                          "referencedDeclaration": 3139,
                                           "type": "struct SortPLib.PriceMap storage pointer",
                                           "value": "_prm"
                                         },
-                                        "id": 3127,
+                                        "id": 3183,
                                         "name": "Identifier",
                                         "src": "869:4:15"
                                       }
                                     ],
-                                    "id": 3128,
+                                    "id": 3184,
                                     "name": "MemberAccess",
                                     "src": "869:16:15"
                                   }
                                 ],
-                                "id": 3129,
+                                "id": 3185,
                                 "name": "BinaryOperation",
                                 "src": "865:20:15"
                               },
@@ -1951,21 +1951,21 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3121,
+                                          "referencedDeclaration": 3177,
                                           "type": "uint256",
                                           "value": "j"
                                         },
-                                        "id": 3130,
+                                        "id": 3186,
                                         "name": "Identifier",
                                         "src": "887:1:15"
                                       }
                                     ],
-                                    "id": 3131,
+                                    "id": 3187,
                                     "name": "UnaryOperation",
                                     "src": "887:3:15"
                                   }
                                 ],
-                                "id": 3132,
+                                "id": 3188,
                                 "name": "ExpressionStatement",
                                 "src": "887:3:15"
                               },
@@ -1974,7 +1974,7 @@
                                   {
                                     "attributes": {
                                       "assignments": [
-                                        3133
+                                        3189
                                       ]
                                     },
                                     "children": [
@@ -1982,7 +1982,7 @@
                                         "attributes": {
                                           "constant": false,
                                           "name": "p",
-                                          "scope": 3226,
+                                          "scope": 3282,
                                           "stateVariable": false,
                                           "storageLocation": "default",
                                           "type": "uint256",
@@ -1991,7 +1991,7 @@
                                           "visibility": "internal"
                                         },
                                         "children": [],
-                                        "id": 3133,
+                                        "id": 3189,
                                         "name": "VariableDeclaration",
                                         "src": "903:5:15"
                                       },
@@ -2003,7 +2003,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "prs",
-                                          "referencedDeclaration": 3000,
+                                          "referencedDeclaration": 3056,
                                           "type": "uint256"
                                         },
                                         "children": [
@@ -2025,7 +2025,7 @@
                                                   "isPure": false,
                                                   "lValueRequested": false,
                                                   "member_name": "prsTable",
-                                                  "referencedDeclaration": 3007,
+                                                  "referencedDeclaration": 3063,
                                                   "type": "mapping(address => struct SortPLib.PriceTF storage ref)"
                                                 },
                                                 "children": [
@@ -2035,16 +2035,16 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3083,
+                                                      "referencedDeclaration": 3139,
                                                       "type": "struct SortPLib.PriceMap storage pointer",
                                                       "value": "_prm"
                                                     },
-                                                    "id": 3134,
+                                                    "id": 3190,
                                                     "name": "Identifier",
                                                     "src": "911:4:15"
                                                   }
                                                 ],
-                                                "id": 3135,
+                                                "id": 3191,
                                                 "name": "MemberAccess",
                                                 "src": "911:13:15"
                                               },
@@ -2066,7 +2066,7 @@
                                                       "isPure": false,
                                                       "lValueRequested": false,
                                                       "member_name": "sortedPrs",
-                                                      "referencedDeclaration": 3011,
+                                                      "referencedDeclaration": 3067,
                                                       "type": "mapping(uint256 => address)"
                                                     },
                                                     "children": [
@@ -2076,16 +2076,16 @@
                                                           "overloadedDeclarations": [
                                                             null
                                                           ],
-                                                          "referencedDeclaration": 3083,
+                                                          "referencedDeclaration": 3139,
                                                           "type": "struct SortPLib.PriceMap storage pointer",
                                                           "value": "_prm"
                                                         },
-                                                        "id": 3136,
+                                                        "id": 3192,
                                                         "name": "Identifier",
                                                         "src": "925:4:15"
                                                       }
                                                     ],
-                                                    "id": 3137,
+                                                    "id": 3193,
                                                     "name": "MemberAccess",
                                                     "src": "925:14:15"
                                                   },
@@ -2095,31 +2095,31 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3121,
+                                                      "referencedDeclaration": 3177,
                                                       "type": "uint256",
                                                       "value": "j"
                                                     },
-                                                    "id": 3138,
+                                                    "id": 3194,
                                                     "name": "Identifier",
                                                     "src": "940:1:15"
                                                   }
                                                 ],
-                                                "id": 3139,
+                                                "id": 3195,
                                                 "name": "IndexAccess",
                                                 "src": "925:17:15"
                                               }
                                             ],
-                                            "id": 3140,
+                                            "id": 3196,
                                             "name": "IndexAccess",
                                             "src": "911:32:15"
                                           }
                                         ],
-                                        "id": 3141,
+                                        "id": 3197,
                                         "name": "MemberAccess",
                                         "src": "911:36:15"
                                       }
                                     ],
-                                    "id": 3142,
+                                    "id": 3198,
                                     "name": "VariableDeclarationStatement",
                                     "src": "903:44:15"
                                   },
@@ -2149,11 +2149,11 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 3133,
+                                              "referencedDeclaration": 3189,
                                               "type": "uint256",
                                               "value": "p"
                                             },
-                                            "id": 3143,
+                                            "id": 3199,
                                             "name": "Identifier",
                                             "src": "962:1:15"
                                           },
@@ -2163,16 +2163,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 3087,
+                                              "referencedDeclaration": 3143,
                                               "type": "uint256",
                                               "value": "minTemp"
                                             },
-                                            "id": 3144,
+                                            "id": 3200,
                                             "name": "Identifier",
                                             "src": "967:7:15"
                                           }
                                         ],
-                                        "id": 3145,
+                                        "id": 3201,
                                         "name": "BinaryOperation",
                                         "src": "962:12:15"
                                       },
@@ -2197,11 +2197,11 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3087,
+                                                      "referencedDeclaration": 3143,
                                                       "type": "uint256",
                                                       "value": "minTemp"
                                                     },
-                                                    "id": 3146,
+                                                    "id": 3202,
                                                     "name": "Identifier",
                                                     "src": "989:7:15"
                                                   },
@@ -2211,21 +2211,21 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3133,
+                                                      "referencedDeclaration": 3189,
                                                       "type": "uint256",
                                                       "value": "p"
                                                     },
-                                                    "id": 3147,
+                                                    "id": 3203,
                                                     "name": "Identifier",
                                                     "src": "999:1:15"
                                                   }
                                                 ],
-                                                "id": 3148,
+                                                "id": 3204,
                                                 "name": "Assignment",
                                                 "src": "989:11:15"
                                               }
                                             ],
-                                            "id": 3149,
+                                            "id": 3205,
                                             "name": "ExpressionStatement",
                                             "src": "989:11:15"
                                           },
@@ -2248,11 +2248,11 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3090,
+                                                      "referencedDeclaration": 3146,
                                                       "type": "uint256",
                                                       "value": "_id"
                                                     },
-                                                    "id": 3150,
+                                                    "id": 3206,
                                                     "name": "Identifier",
                                                     "src": "1013:3:15"
                                                   },
@@ -2262,41 +2262,41 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3121,
+                                                      "referencedDeclaration": 3177,
                                                       "type": "uint256",
                                                       "value": "j"
                                                     },
-                                                    "id": 3151,
+                                                    "id": 3207,
                                                     "name": "Identifier",
                                                     "src": "1019:1:15"
                                                   }
                                                 ],
-                                                "id": 3152,
+                                                "id": 3208,
                                                 "name": "Assignment",
                                                 "src": "1013:7:15"
                                               }
                                             ],
-                                            "id": 3153,
+                                            "id": 3209,
                                             "name": "ExpressionStatement",
                                             "src": "1013:7:15"
                                           }
                                         ],
-                                        "id": 3154,
+                                        "id": 3210,
                                         "name": "Block",
                                         "src": "976:56:15"
                                       }
                                     ],
-                                    "id": 3155,
+                                    "id": 3211,
                                     "name": "IfStatement",
                                     "src": "958:74:15"
                                   }
                                 ],
-                                "id": 3156,
+                                "id": 3212,
                                 "name": "Block",
                                 "src": "892:149:15"
                               }
                             ],
-                            "id": 3157,
+                            "id": 3213,
                             "name": "ForStatement",
                             "src": "846:195:15"
                           },
@@ -2321,7 +2321,7 @@
                                     "attributes": {
                                       "argumentTypes": [
                                         {
-                                          "typeIdentifier": "t_struct$_PriceMap_$3016_storage_ptr",
+                                          "typeIdentifier": "t_struct$_PriceMap_$3072_storage_ptr",
                                           "typeString": "struct SortPLib.PriceMap storage pointer"
                                         },
                                         {
@@ -2336,11 +2336,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3270,
+                                      "referencedDeclaration": 3326,
                                       "type": "function (struct SortPLib.PriceMap storage pointer,uint256,uint256)",
                                       "value": "swap"
                                     },
-                                    "id": 3158,
+                                    "id": 3214,
                                     "name": "Identifier",
                                     "src": "1049:4:15"
                                   },
@@ -2350,11 +2350,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3083,
+                                      "referencedDeclaration": 3139,
                                       "type": "struct SortPLib.PriceMap storage pointer",
                                       "value": "_prm"
                                     },
-                                    "id": 3159,
+                                    "id": 3215,
                                     "name": "Identifier",
                                     "src": "1054:4:15"
                                   },
@@ -2364,11 +2364,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3093,
+                                      "referencedDeclaration": 3149,
                                       "type": "uint256",
                                       "value": "i"
                                     },
-                                    "id": 3160,
+                                    "id": 3216,
                                     "name": "Identifier",
                                     "src": "1059:1:15"
                                   },
@@ -2378,31 +2378,31 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3090,
+                                      "referencedDeclaration": 3146,
                                       "type": "uint256",
                                       "value": "_id"
                                     },
-                                    "id": 3161,
+                                    "id": 3217,
                                     "name": "Identifier",
                                     "src": "1061:3:15"
                                   }
                                 ],
-                                "id": 3162,
+                                "id": 3218,
                                 "name": "FunctionCall",
                                 "src": "1049:16:15"
                               }
                             ],
-                            "id": 3163,
+                            "id": 3219,
                             "name": "ExpressionStatement",
                             "src": "1049:16:15"
                           }
                         ],
-                        "id": 3164,
+                        "id": 3220,
                         "name": "Block",
                         "src": "765:308:15"
                       }
                     ],
-                    "id": 3165,
+                    "id": 3221,
                     "name": "ForStatement",
                     "src": "719:354:15"
                   },
@@ -2434,7 +2434,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "fLength",
-                              "referencedDeclaration": 3015,
+                              "referencedDeclaration": 3071,
                               "type": "uint256"
                             },
                             "children": [
@@ -2444,16 +2444,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3083,
+                                  "referencedDeclaration": 3139,
                                   "type": "struct SortPLib.PriceMap storage pointer",
                                   "value": "_prm"
                                 },
-                                "id": 3166,
+                                "id": 3222,
                                 "name": "Identifier",
                                 "src": "1159:4:15"
                               }
                             ],
-                            "id": 3167,
+                            "id": 3223,
                             "name": "MemberAccess",
                             "src": "1159:12:15"
                           },
@@ -2470,12 +2470,12 @@
                               "type": "int_const 0",
                               "value": "0"
                             },
-                            "id": 3168,
+                            "id": 3224,
                             "name": "Literal",
                             "src": "1175:1:15"
                           }
                         ],
-                        "id": 3169,
+                        "id": 3225,
                         "name": "BinaryOperation",
                         "src": "1159:17:15"
                       },
@@ -2484,7 +2484,7 @@
                           {
                             "attributes": {
                               "assignments": [
-                                3171
+                                3227
                               ]
                             },
                             "children": [
@@ -2492,7 +2492,7 @@
                                 "attributes": {
                                   "constant": false,
                                   "name": "nF",
-                                  "scope": 3226,
+                                  "scope": 3282,
                                   "stateVariable": false,
                                   "storageLocation": "default",
                                   "type": "uint256",
@@ -2505,12 +2505,12 @@
                                       "name": "uint",
                                       "type": "uint256"
                                     },
-                                    "id": 3170,
+                                    "id": 3226,
                                     "name": "ElementaryTypeName",
                                     "src": "1187:4:15"
                                   }
                                 ],
-                                "id": 3171,
+                                "id": 3227,
                                 "name": "VariableDeclaration",
                                 "src": "1187:7:15"
                               },
@@ -2527,12 +2527,12 @@
                                   "type": "int_const 0",
                                   "value": "0"
                                 },
-                                "id": 3172,
+                                "id": 3228,
                                 "name": "Literal",
                                 "src": "1197:1:15"
                               }
                             ],
-                            "id": 3173,
+                            "id": 3229,
                             "name": "VariableDeclarationStatement",
                             "src": "1187:11:15"
                           },
@@ -2557,11 +2557,11 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3093,
+                                          "referencedDeclaration": 3149,
                                           "type": "uint256",
                                           "value": "i"
                                         },
-                                        "id": 3174,
+                                        "id": 3230,
                                         "name": "Identifier",
                                         "src": "1212:1:15"
                                       },
@@ -2578,17 +2578,17 @@
                                           "type": "int_const 0",
                                           "value": "0"
                                         },
-                                        "id": 3175,
+                                        "id": 3231,
                                         "name": "Literal",
                                         "src": "1216:1:15"
                                       }
                                     ],
-                                    "id": 3176,
+                                    "id": 3232,
                                     "name": "Assignment",
                                     "src": "1212:5:15"
                                   }
                                 ],
-                                "id": 3177,
+                                "id": 3233,
                                 "name": "ExpressionStatement",
                                 "src": "1212:5:15"
                               },
@@ -2613,11 +2613,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3093,
+                                      "referencedDeclaration": 3149,
                                       "type": "uint256",
                                       "value": "i"
                                     },
-                                    "id": 3178,
+                                    "id": 3234,
                                     "name": "Identifier",
                                     "src": "1219:1:15"
                                   },
@@ -2644,7 +2644,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "totalLength",
-                                          "referencedDeclaration": 3013,
+                                          "referencedDeclaration": 3069,
                                           "type": "uint256"
                                         },
                                         "children": [
@@ -2654,16 +2654,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 3083,
+                                              "referencedDeclaration": 3139,
                                               "type": "struct SortPLib.PriceMap storage pointer",
                                               "value": "_prm"
                                             },
-                                            "id": 3179,
+                                            "id": 3235,
                                             "name": "Identifier",
                                             "src": "1223:4:15"
                                           }
                                         ],
-                                        "id": 3180,
+                                        "id": 3236,
                                         "name": "MemberAccess",
                                         "src": "1223:16:15"
                                       },
@@ -2675,7 +2675,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "fLength",
-                                          "referencedDeclaration": 3015,
+                                          "referencedDeclaration": 3071,
                                           "type": "uint256"
                                         },
                                         "children": [
@@ -2685,26 +2685,26 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 3083,
+                                              "referencedDeclaration": 3139,
                                               "type": "struct SortPLib.PriceMap storage pointer",
                                               "value": "_prm"
                                             },
-                                            "id": 3181,
+                                            "id": 3237,
                                             "name": "Identifier",
                                             "src": "1242:4:15"
                                           }
                                         ],
-                                        "id": 3182,
+                                        "id": 3238,
                                         "name": "MemberAccess",
                                         "src": "1242:12:15"
                                       }
                                     ],
-                                    "id": 3183,
+                                    "id": 3239,
                                     "name": "BinaryOperation",
                                     "src": "1223:31:15"
                                   }
                                 ],
-                                "id": 3184,
+                                "id": 3240,
                                 "name": "BinaryOperation",
                                 "src": "1219:35:15"
                               },
@@ -2728,21 +2728,21 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3093,
+                                          "referencedDeclaration": 3149,
                                           "type": "uint256",
                                           "value": "i"
                                         },
-                                        "id": 3185,
+                                        "id": 3241,
                                         "name": "Identifier",
                                         "src": "1256:1:15"
                                       }
                                     ],
-                                    "id": 3186,
+                                    "id": 3242,
                                     "name": "UnaryOperation",
                                     "src": "1256:3:15"
                                   }
                                 ],
-                                "id": 3187,
+                                "id": 3243,
                                 "name": "ExpressionStatement",
                                 "src": "1256:3:15"
                               },
@@ -2773,7 +2773,7 @@
                                               "isPure": false,
                                               "lValueRequested": false,
                                               "member_name": "updated",
-                                              "referencedDeclaration": 3002,
+                                              "referencedDeclaration": 3058,
                                               "type": "bool"
                                             },
                                             "children": [
@@ -2795,7 +2795,7 @@
                                                       "isPure": false,
                                                       "lValueRequested": false,
                                                       "member_name": "prsTable",
-                                                      "referencedDeclaration": 3007,
+                                                      "referencedDeclaration": 3063,
                                                       "type": "mapping(address => struct SortPLib.PriceTF storage ref)"
                                                     },
                                                     "children": [
@@ -2805,16 +2805,16 @@
                                                           "overloadedDeclarations": [
                                                             null
                                                           ],
-                                                          "referencedDeclaration": 3083,
+                                                          "referencedDeclaration": 3139,
                                                           "type": "struct SortPLib.PriceMap storage pointer",
                                                           "value": "_prm"
                                                         },
-                                                        "id": 3188,
+                                                        "id": 3244,
                                                         "name": "Identifier",
                                                         "src": "1276:4:15"
                                                       }
                                                     ],
-                                                    "id": 3189,
+                                                    "id": 3245,
                                                     "name": "MemberAccess",
                                                     "src": "1276:13:15"
                                                   },
@@ -2836,7 +2836,7 @@
                                                           "isPure": false,
                                                           "lValueRequested": false,
                                                           "member_name": "sortedPrs",
-                                                          "referencedDeclaration": 3011,
+                                                          "referencedDeclaration": 3067,
                                                           "type": "mapping(uint256 => address)"
                                                         },
                                                         "children": [
@@ -2846,16 +2846,16 @@
                                                               "overloadedDeclarations": [
                                                                 null
                                                               ],
-                                                              "referencedDeclaration": 3083,
+                                                              "referencedDeclaration": 3139,
                                                               "type": "struct SortPLib.PriceMap storage pointer",
                                                               "value": "_prm"
                                                             },
-                                                            "id": 3190,
+                                                            "id": 3246,
                                                             "name": "Identifier",
                                                             "src": "1290:4:15"
                                                           }
                                                         ],
-                                                        "id": 3191,
+                                                        "id": 3247,
                                                         "name": "MemberAccess",
                                                         "src": "1290:14:15"
                                                       },
@@ -2865,26 +2865,26 @@
                                                           "overloadedDeclarations": [
                                                             null
                                                           ],
-                                                          "referencedDeclaration": 3093,
+                                                          "referencedDeclaration": 3149,
                                                           "type": "uint256",
                                                           "value": "i"
                                                         },
-                                                        "id": 3192,
+                                                        "id": 3248,
                                                         "name": "Identifier",
                                                         "src": "1305:1:15"
                                                       }
                                                     ],
-                                                    "id": 3193,
+                                                    "id": 3249,
                                                     "name": "IndexAccess",
                                                     "src": "1290:17:15"
                                                   }
                                                 ],
-                                                "id": 3194,
+                                                "id": 3250,
                                                 "name": "IndexAccess",
                                                 "src": "1276:32:15"
                                               }
                                             ],
-                                            "id": 3195,
+                                            "id": 3251,
                                             "name": "MemberAccess",
                                             "src": "1276:40:15"
                                           },
@@ -2901,12 +2901,12 @@
                                               "type": "bool",
                                               "value": "false"
                                             },
-                                            "id": 3196,
+                                            "id": 3252,
                                             "name": "Literal",
                                             "src": "1320:5:15"
                                           }
                                         ],
-                                        "id": 3197,
+                                        "id": 3253,
                                         "name": "BinaryOperation",
                                         "src": "1276:49:15"
                                       },
@@ -2932,21 +2932,21 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3171,
+                                                      "referencedDeclaration": 3227,
                                                       "type": "uint256",
                                                       "value": "nF"
                                                     },
-                                                    "id": 3198,
+                                                    "id": 3254,
                                                     "name": "Identifier",
                                                     "src": "1340:2:15"
                                                   }
                                                 ],
-                                                "id": 3199,
+                                                "id": 3255,
                                                 "name": "UnaryOperation",
                                                 "src": "1340:4:15"
                                               }
                                             ],
-                                            "id": 3200,
+                                            "id": 3256,
                                             "name": "ExpressionStatement",
                                             "src": "1340:4:15"
                                           },
@@ -2971,7 +2971,7 @@
                                                     "attributes": {
                                                       "argumentTypes": [
                                                         {
-                                                          "typeIdentifier": "t_struct$_PriceMap_$3016_storage_ptr",
+                                                          "typeIdentifier": "t_struct$_PriceMap_$3072_storage_ptr",
                                                           "typeString": "struct SortPLib.PriceMap storage pointer"
                                                         },
                                                         {
@@ -2986,11 +2986,11 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3270,
+                                                      "referencedDeclaration": 3326,
                                                       "type": "function (struct SortPLib.PriceMap storage pointer,uint256,uint256)",
                                                       "value": "swap"
                                                     },
-                                                    "id": 3201,
+                                                    "id": 3257,
                                                     "name": "Identifier",
                                                     "src": "1357:4:15"
                                                   },
@@ -3000,11 +3000,11 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3083,
+                                                      "referencedDeclaration": 3139,
                                                       "type": "struct SortPLib.PriceMap storage pointer",
                                                       "value": "_prm"
                                                     },
-                                                    "id": 3202,
+                                                    "id": 3258,
                                                     "name": "Identifier",
                                                     "src": "1362:4:15"
                                                   },
@@ -3014,11 +3014,11 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3093,
+                                                      "referencedDeclaration": 3149,
                                                       "type": "uint256",
                                                       "value": "i"
                                                     },
-                                                    "id": 3203,
+                                                    "id": 3259,
                                                     "name": "Identifier",
                                                     "src": "1367:1:15"
                                                   },
@@ -3043,11 +3043,11 @@
                                                           "overloadedDeclarations": [
                                                             null
                                                           ],
-                                                          "referencedDeclaration": 3171,
+                                                          "referencedDeclaration": 3227,
                                                           "type": "uint256",
                                                           "value": "nF"
                                                         },
-                                                        "id": 3204,
+                                                        "id": 3260,
                                                         "name": "Identifier",
                                                         "src": "1369:2:15"
                                                       },
@@ -3059,7 +3059,7 @@
                                                           "isPure": false,
                                                           "lValueRequested": false,
                                                           "member_name": "totalLength",
-                                                          "referencedDeclaration": 3013,
+                                                          "referencedDeclaration": 3069,
                                                           "type": "uint256"
                                                         },
                                                         "children": [
@@ -3069,36 +3069,36 @@
                                                               "overloadedDeclarations": [
                                                                 null
                                                               ],
-                                                              "referencedDeclaration": 3083,
+                                                              "referencedDeclaration": 3139,
                                                               "type": "struct SortPLib.PriceMap storage pointer",
                                                               "value": "_prm"
                                                             },
-                                                            "id": 3205,
+                                                            "id": 3261,
                                                             "name": "Identifier",
                                                             "src": "1372:4:15"
                                                           }
                                                         ],
-                                                        "id": 3206,
+                                                        "id": 3262,
                                                         "name": "MemberAccess",
                                                         "src": "1372:16:15"
                                                       }
                                                     ],
-                                                    "id": 3207,
+                                                    "id": 3263,
                                                     "name": "BinaryOperation",
                                                     "src": "1369:19:15"
                                                   }
                                                 ],
-                                                "id": 3208,
+                                                "id": 3264,
                                                 "name": "FunctionCall",
                                                 "src": "1357:32:15"
                                               }
                                             ],
-                                            "id": 3209,
+                                            "id": 3265,
                                             "name": "ExpressionStatement",
                                             "src": "1357:32:15"
                                           }
                                         ],
-                                        "id": 3210,
+                                        "id": 3266,
                                         "name": "Block",
                                         "src": "1327:74:15"
                                       },
@@ -3125,7 +3125,7 @@
                                                     "attributes": {
                                                       "argumentTypes": [
                                                         {
-                                                          "typeIdentifier": "t_struct$_PriceMap_$3016_storage_ptr",
+                                                          "typeIdentifier": "t_struct$_PriceMap_$3072_storage_ptr",
                                                           "typeString": "struct SortPLib.PriceMap storage pointer"
                                                         },
                                                         {
@@ -3140,11 +3140,11 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3270,
+                                                      "referencedDeclaration": 3326,
                                                       "type": "function (struct SortPLib.PriceMap storage pointer,uint256,uint256)",
                                                       "value": "swap"
                                                     },
-                                                    "id": 3211,
+                                                    "id": 3267,
                                                     "name": "Identifier",
                                                     "src": "1420:4:15"
                                                   },
@@ -3154,11 +3154,11 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3083,
+                                                      "referencedDeclaration": 3139,
                                                       "type": "struct SortPLib.PriceMap storage pointer",
                                                       "value": "_prm"
                                                     },
-                                                    "id": 3212,
+                                                    "id": 3268,
                                                     "name": "Identifier",
                                                     "src": "1425:4:15"
                                                   },
@@ -3168,11 +3168,11 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3093,
+                                                      "referencedDeclaration": 3149,
                                                       "type": "uint256",
                                                       "value": "i"
                                                     },
-                                                    "id": 3213,
+                                                    "id": 3269,
                                                     "name": "Identifier",
                                                     "src": "1430:1:15"
                                                   },
@@ -3197,11 +3197,11 @@
                                                           "overloadedDeclarations": [
                                                             null
                                                           ],
-                                                          "referencedDeclaration": 3093,
+                                                          "referencedDeclaration": 3149,
                                                           "type": "uint256",
                                                           "value": "i"
                                                         },
-                                                        "id": 3214,
+                                                        "id": 3270,
                                                         "name": "Identifier",
                                                         "src": "1432:1:15"
                                                       },
@@ -3211,66 +3211,66 @@
                                                           "overloadedDeclarations": [
                                                             null
                                                           ],
-                                                          "referencedDeclaration": 3171,
+                                                          "referencedDeclaration": 3227,
                                                           "type": "uint256",
                                                           "value": "nF"
                                                         },
-                                                        "id": 3215,
+                                                        "id": 3271,
                                                         "name": "Identifier",
                                                         "src": "1434:2:15"
                                                       }
                                                     ],
-                                                    "id": 3216,
+                                                    "id": 3272,
                                                     "name": "BinaryOperation",
                                                     "src": "1432:4:15"
                                                   }
                                                 ],
-                                                "id": 3217,
+                                                "id": 3273,
                                                 "name": "FunctionCall",
                                                 "src": "1420:17:15"
                                               }
                                             ],
-                                            "id": 3218,
+                                            "id": 3274,
                                             "name": "ExpressionStatement",
                                             "src": "1420:17:15"
                                           }
                                         ],
-                                        "id": 3219,
+                                        "id": 3275,
                                         "name": "Block",
                                         "src": "1407:42:15"
                                       }
                                     ],
-                                    "id": 3220,
+                                    "id": 3276,
                                     "name": "IfStatement",
                                     "src": "1272:177:15"
                                   }
                                 ],
-                                "id": 3221,
+                                "id": 3277,
                                 "name": "Block",
                                 "src": "1261:197:15"
                               }
                             ],
-                            "id": 3222,
+                            "id": 3278,
                             "name": "ForStatement",
                             "src": "1207:251:15"
                           }
                         ],
-                        "id": 3223,
+                        "id": 3279,
                         "name": "Block",
                         "src": "1178:287:15"
                       }
                     ],
-                    "id": 3224,
+                    "id": 3280,
                     "name": "IfStatement",
                     "src": "1155:310:15"
                   }
                 ],
-                "id": 3225,
+                "id": 3281,
                 "name": "Block",
                 "src": "678:792:15"
               }
             ],
-            "id": 3226,
+            "id": 3282,
             "name": "FunctionDefinition",
             "src": "633:837:15"
           },
@@ -3284,7 +3284,7 @@
               ],
               "name": "swap",
               "payable": false,
-              "scope": 3366,
+              "scope": 3422,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -3296,7 +3296,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_prm",
-                      "scope": 3270,
+                      "scope": 3326,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct SortPLib.PriceMap storage pointer",
@@ -3308,15 +3308,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "PriceMap",
-                          "referencedDeclaration": 3016,
+                          "referencedDeclaration": 3072,
                           "type": "struct SortPLib.PriceMap storage pointer"
                         },
-                        "id": 3227,
+                        "id": 3283,
                         "name": "UserDefinedTypeName",
                         "src": "1491:8:15"
                       }
                     ],
-                    "id": 3228,
+                    "id": 3284,
                     "name": "VariableDeclaration",
                     "src": "1491:21:15"
                   },
@@ -3324,7 +3324,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_id1",
-                      "scope": 3270,
+                      "scope": 3326,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -3337,12 +3337,12 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 3229,
+                        "id": 3285,
                         "name": "ElementaryTypeName",
                         "src": "1514:4:15"
                       }
                     ],
-                    "id": 3230,
+                    "id": 3286,
                     "name": "VariableDeclaration",
                     "src": "1514:9:15"
                   },
@@ -3350,7 +3350,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_id2",
-                      "scope": 3270,
+                      "scope": 3326,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -3363,17 +3363,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 3231,
+                        "id": 3287,
                         "name": "ElementaryTypeName",
                         "src": "1525:4:15"
                       }
                     ],
-                    "id": 3232,
+                    "id": 3288,
                     "name": "VariableDeclaration",
                     "src": "1525:9:15"
                   }
                 ],
-                "id": 3233,
+                "id": 3289,
                 "name": "ParameterList",
                 "src": "1490:45:15"
               },
@@ -3384,7 +3384,7 @@
                   ]
                 },
                 "children": [],
-                "id": 3234,
+                "id": 3290,
                 "name": "ParameterList",
                 "src": "1536:0:15"
               },
@@ -3416,11 +3416,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 3230,
+                              "referencedDeclaration": 3286,
                               "type": "uint256",
                               "value": "_id1"
                             },
-                            "id": 3235,
+                            "id": 3291,
                             "name": "Identifier",
                             "src": "1547:4:15"
                           },
@@ -3430,16 +3430,16 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 3232,
+                              "referencedDeclaration": 3288,
                               "type": "uint256",
                               "value": "_id2"
                             },
-                            "id": 3236,
+                            "id": 3292,
                             "name": "Identifier",
                             "src": "1555:4:15"
                           }
                         ],
-                        "id": 3237,
+                        "id": 3293,
                         "name": "BinaryOperation",
                         "src": "1547:12:15"
                       },
@@ -3457,7 +3457,7 @@
                                 "attributes": {
                                   "constant": false,
                                   "name": "temp",
-                                  "scope": 3270,
+                                  "scope": 3326,
                                   "stateVariable": false,
                                   "storageLocation": "default",
                                   "type": "address",
@@ -3470,17 +3470,17 @@
                                       "name": "address",
                                       "type": "address"
                                     },
-                                    "id": 3238,
+                                    "id": 3294,
                                     "name": "ElementaryTypeName",
                                     "src": "1570:7:15"
                                   }
                                 ],
-                                "id": 3239,
+                                "id": 3295,
                                 "name": "VariableDeclaration",
                                 "src": "1570:12:15"
                               }
                             ],
-                            "id": 3240,
+                            "id": 3296,
                             "name": "VariableDeclarationStatement",
                             "src": "1570:12:15"
                           },
@@ -3503,11 +3503,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3239,
+                                      "referencedDeclaration": 3295,
                                       "type": "address",
                                       "value": "temp"
                                     },
-                                    "id": 3241,
+                                    "id": 3297,
                                     "name": "Identifier",
                                     "src": "1591:4:15"
                                   },
@@ -3529,7 +3529,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "sortedPrs",
-                                          "referencedDeclaration": 3011,
+                                          "referencedDeclaration": 3067,
                                           "type": "mapping(uint256 => address)"
                                         },
                                         "children": [
@@ -3539,16 +3539,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 3228,
+                                              "referencedDeclaration": 3284,
                                               "type": "struct SortPLib.PriceMap storage pointer",
                                               "value": "_prm"
                                             },
-                                            "id": 3242,
+                                            "id": 3298,
                                             "name": "Identifier",
                                             "src": "1598:4:15"
                                           }
                                         ],
-                                        "id": 3243,
+                                        "id": 3299,
                                         "name": "MemberAccess",
                                         "src": "1598:14:15"
                                       },
@@ -3558,26 +3558,26 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3230,
+                                          "referencedDeclaration": 3286,
                                           "type": "uint256",
                                           "value": "_id1"
                                         },
-                                        "id": 3244,
+                                        "id": 3300,
                                         "name": "Identifier",
                                         "src": "1613:4:15"
                                       }
                                     ],
-                                    "id": 3245,
+                                    "id": 3301,
                                     "name": "IndexAccess",
                                     "src": "1598:20:15"
                                   }
                                 ],
-                                "id": 3246,
+                                "id": 3302,
                                 "name": "Assignment",
                                 "src": "1591:27:15"
                               }
                             ],
-                            "id": 3247,
+                            "id": 3303,
                             "name": "ExpressionStatement",
                             "src": "1591:27:15"
                           },
@@ -3612,7 +3612,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "sortedPrs",
-                                          "referencedDeclaration": 3011,
+                                          "referencedDeclaration": 3067,
                                           "type": "mapping(uint256 => address)"
                                         },
                                         "children": [
@@ -3622,16 +3622,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 3228,
+                                              "referencedDeclaration": 3284,
                                               "type": "struct SortPLib.PriceMap storage pointer",
                                               "value": "_prm"
                                             },
-                                            "id": 3248,
+                                            "id": 3304,
                                             "name": "Identifier",
                                             "src": "1627:4:15"
                                           }
                                         ],
-                                        "id": 3251,
+                                        "id": 3307,
                                         "name": "MemberAccess",
                                         "src": "1627:14:15"
                                       },
@@ -3641,16 +3641,16 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3230,
+                                          "referencedDeclaration": 3286,
                                           "type": "uint256",
                                           "value": "_id1"
                                         },
-                                        "id": 3250,
+                                        "id": 3306,
                                         "name": "Identifier",
                                         "src": "1642:4:15"
                                       }
                                     ],
-                                    "id": 3252,
+                                    "id": 3308,
                                     "name": "IndexAccess",
                                     "src": "1627:20:15"
                                   },
@@ -3672,7 +3672,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "sortedPrs",
-                                          "referencedDeclaration": 3011,
+                                          "referencedDeclaration": 3067,
                                           "type": "mapping(uint256 => address)"
                                         },
                                         "children": [
@@ -3682,16 +3682,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 3228,
+                                              "referencedDeclaration": 3284,
                                               "type": "struct SortPLib.PriceMap storage pointer",
                                               "value": "_prm"
                                             },
-                                            "id": 3253,
+                                            "id": 3309,
                                             "name": "Identifier",
                                             "src": "1650:4:15"
                                           }
                                         ],
-                                        "id": 3254,
+                                        "id": 3310,
                                         "name": "MemberAccess",
                                         "src": "1650:14:15"
                                       },
@@ -3701,26 +3701,26 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3232,
+                                          "referencedDeclaration": 3288,
                                           "type": "uint256",
                                           "value": "_id2"
                                         },
-                                        "id": 3255,
+                                        "id": 3311,
                                         "name": "Identifier",
                                         "src": "1665:4:15"
                                       }
                                     ],
-                                    "id": 3256,
+                                    "id": 3312,
                                     "name": "IndexAccess",
                                     "src": "1650:20:15"
                                   }
                                 ],
-                                "id": 3257,
+                                "id": 3313,
                                 "name": "Assignment",
                                 "src": "1627:43:15"
                               }
                             ],
-                            "id": 3258,
+                            "id": 3314,
                             "name": "ExpressionStatement",
                             "src": "1627:43:15"
                           },
@@ -3755,7 +3755,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "sortedPrs",
-                                          "referencedDeclaration": 3011,
+                                          "referencedDeclaration": 3067,
                                           "type": "mapping(uint256 => address)"
                                         },
                                         "children": [
@@ -3765,16 +3765,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 3228,
+                                              "referencedDeclaration": 3284,
                                               "type": "struct SortPLib.PriceMap storage pointer",
                                               "value": "_prm"
                                             },
-                                            "id": 3259,
+                                            "id": 3315,
                                             "name": "Identifier",
                                             "src": "1679:4:15"
                                           }
                                         ],
-                                        "id": 3262,
+                                        "id": 3318,
                                         "name": "MemberAccess",
                                         "src": "1679:14:15"
                                       },
@@ -3784,16 +3784,16 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3232,
+                                          "referencedDeclaration": 3288,
                                           "type": "uint256",
                                           "value": "_id2"
                                         },
-                                        "id": 3261,
+                                        "id": 3317,
                                         "name": "Identifier",
                                         "src": "1694:4:15"
                                       }
                                     ],
-                                    "id": 3263,
+                                    "id": 3319,
                                     "name": "IndexAccess",
                                     "src": "1679:20:15"
                                   },
@@ -3803,41 +3803,41 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3239,
+                                      "referencedDeclaration": 3295,
                                       "type": "address",
                                       "value": "temp"
                                     },
-                                    "id": 3264,
+                                    "id": 3320,
                                     "name": "Identifier",
                                     "src": "1702:4:15"
                                   }
                                 ],
-                                "id": 3265,
+                                "id": 3321,
                                 "name": "Assignment",
                                 "src": "1679:27:15"
                               }
                             ],
-                            "id": 3266,
+                            "id": 3322,
                             "name": "ExpressionStatement",
                             "src": "1679:27:15"
                           }
                         ],
-                        "id": 3267,
+                        "id": 3323,
                         "name": "Block",
                         "src": "1561:156:15"
                       }
                     ],
-                    "id": 3268,
+                    "id": 3324,
                     "name": "IfStatement",
                     "src": "1543:174:15"
                   }
                 ],
-                "id": 3269,
+                "id": 3325,
                 "name": "Block",
                 "src": "1536:186:15"
               }
             ],
-            "id": 3270,
+            "id": 3326,
             "name": "FunctionDefinition",
             "src": "1476:246:15"
           },
@@ -3851,7 +3851,7 @@
               ],
               "name": "getPrsTable",
               "payable": false,
-              "scope": 3366,
+              "scope": 3422,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -3863,7 +3863,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_prm",
-                      "scope": 3322,
+                      "scope": 3378,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct SortPLib.PriceMap storage pointer",
@@ -3875,15 +3875,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "PriceMap",
-                          "referencedDeclaration": 3016,
+                          "referencedDeclaration": 3072,
                           "type": "struct SortPLib.PriceMap storage pointer"
                         },
-                        "id": 3271,
+                        "id": 3327,
                         "name": "UserDefinedTypeName",
                         "src": "1760:8:15"
                       }
                     ],
-                    "id": 3272,
+                    "id": 3328,
                     "name": "VariableDeclaration",
                     "src": "1760:21:15"
                   },
@@ -3891,7 +3891,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_adr",
-                      "scope": 3322,
+                      "scope": 3378,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -3904,17 +3904,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 3273,
+                        "id": 3329,
                         "name": "ElementaryTypeName",
                         "src": "1783:7:15"
                       }
                     ],
-                    "id": 3274,
+                    "id": 3330,
                     "name": "VariableDeclaration",
                     "src": "1783:12:15"
                   }
                 ],
-                "id": 3275,
+                "id": 3331,
                 "name": "ParameterList",
                 "src": "1759:37:15"
               },
@@ -3924,7 +3924,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "rank",
-                      "scope": 3322,
+                      "scope": 3378,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -3937,12 +3937,12 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 3276,
+                        "id": 3332,
                         "name": "ElementaryTypeName",
                         "src": "1806:4:15"
                       }
                     ],
-                    "id": 3277,
+                    "id": 3333,
                     "name": "VariableDeclaration",
                     "src": "1806:9:15"
                   },
@@ -3950,7 +3950,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "tot",
-                      "scope": 3322,
+                      "scope": 3378,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -3963,12 +3963,12 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 3278,
+                        "id": 3334,
                         "name": "ElementaryTypeName",
                         "src": "1817:4:15"
                       }
                     ],
-                    "id": 3279,
+                    "id": 3335,
                     "name": "VariableDeclaration",
                     "src": "1817:8:15"
                   },
@@ -3976,7 +3976,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "updated",
-                      "scope": 3322,
+                      "scope": 3378,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -3989,17 +3989,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 3280,
+                        "id": 3336,
                         "name": "ElementaryTypeName",
                         "src": "1827:4:15"
                       }
                     ],
-                    "id": 3281,
+                    "id": 3337,
                     "name": "VariableDeclaration",
                     "src": "1827:12:15"
                   }
                 ],
-                "id": 3282,
+                "id": 3338,
                 "name": "ParameterList",
                 "src": "1805:35:15"
               },
@@ -4010,7 +4010,7 @@
                       {
                         "attributes": {
                           "assignments": [
-                            3283
+                            3339
                           ]
                         },
                         "children": [
@@ -4018,7 +4018,7 @@
                             "attributes": {
                               "constant": false,
                               "name": "i",
-                              "scope": 3322,
+                              "scope": 3378,
                               "stateVariable": false,
                               "storageLocation": "default",
                               "type": "uint8",
@@ -4027,7 +4027,7 @@
                               "visibility": "internal"
                             },
                             "children": [],
-                            "id": 3283,
+                            "id": 3339,
                             "name": "VariableDeclaration",
                             "src": "1853:5:15"
                           },
@@ -4044,12 +4044,12 @@
                               "type": "int_const 0",
                               "value": "0"
                             },
-                            "id": 3284,
+                            "id": 3340,
                             "name": "Literal",
                             "src": "1861:1:15"
                           }
                         ],
-                        "id": 3285,
+                        "id": 3341,
                         "name": "VariableDeclarationStatement",
                         "src": "1853:9:15"
                       },
@@ -4074,11 +4074,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 3283,
+                              "referencedDeclaration": 3339,
                               "type": "uint8",
                               "value": "i"
                             },
-                            "id": 3286,
+                            "id": 3342,
                             "name": "Identifier",
                             "src": "1864:1:15"
                           },
@@ -4090,7 +4090,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "totalLength",
-                              "referencedDeclaration": 3013,
+                              "referencedDeclaration": 3069,
                               "type": "uint256"
                             },
                             "children": [
@@ -4100,21 +4100,21 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3272,
+                                  "referencedDeclaration": 3328,
                                   "type": "struct SortPLib.PriceMap storage pointer",
                                   "value": "_prm"
                                 },
-                                "id": 3287,
+                                "id": 3343,
                                 "name": "Identifier",
                                 "src": "1868:4:15"
                               }
                             ],
-                            "id": 3288,
+                            "id": 3344,
                             "name": "MemberAccess",
                             "src": "1868:16:15"
                           }
                         ],
-                        "id": 3289,
+                        "id": 3345,
                         "name": "BinaryOperation",
                         "src": "1864:20:15"
                       },
@@ -4138,21 +4138,21 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3283,
+                                  "referencedDeclaration": 3339,
                                   "type": "uint8",
                                   "value": "i"
                                 },
-                                "id": 3290,
+                                "id": 3346,
                                 "name": "Identifier",
                                 "src": "1886:1:15"
                               }
                             ],
-                            "id": 3291,
+                            "id": 3347,
                             "name": "UnaryOperation",
                             "src": "1886:3:15"
                           }
                         ],
-                        "id": 3292,
+                        "id": 3348,
                         "name": "ExpressionStatement",
                         "src": "1886:3:15"
                       },
@@ -4184,11 +4184,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3274,
+                                      "referencedDeclaration": 3330,
                                       "type": "address",
                                       "value": "_adr"
                                     },
-                                    "id": 3293,
+                                    "id": 3349,
                                     "name": "Identifier",
                                     "src": "1904:4:15"
                                   },
@@ -4210,7 +4210,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "sortedPrs",
-                                          "referencedDeclaration": 3011,
+                                          "referencedDeclaration": 3067,
                                           "type": "mapping(uint256 => address)"
                                         },
                                         "children": [
@@ -4220,16 +4220,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 3272,
+                                              "referencedDeclaration": 3328,
                                               "type": "struct SortPLib.PriceMap storage pointer",
                                               "value": "_prm"
                                             },
-                                            "id": 3294,
+                                            "id": 3350,
                                             "name": "Identifier",
                                             "src": "1912:4:15"
                                           }
                                         ],
-                                        "id": 3295,
+                                        "id": 3351,
                                         "name": "MemberAccess",
                                         "src": "1912:14:15"
                                       },
@@ -4239,21 +4239,21 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3283,
+                                          "referencedDeclaration": 3339,
                                           "type": "uint8",
                                           "value": "i"
                                         },
-                                        "id": 3296,
+                                        "id": 3352,
                                         "name": "Identifier",
                                         "src": "1927:1:15"
                                       }
                                     ],
-                                    "id": 3297,
+                                    "id": 3353,
                                     "name": "IndexAccess",
                                     "src": "1912:17:15"
                                   }
                                 ],
-                                "id": 3298,
+                                "id": 3354,
                                 "name": "BinaryOperation",
                                 "src": "1904:25:15"
                               },
@@ -4261,7 +4261,7 @@
                                 "children": [
                                   {
                                     "attributes": {
-                                      "functionReturnParameters": 3282
+                                      "functionReturnParameters": 3338
                                     },
                                     "children": [
                                       {
@@ -4296,11 +4296,11 @@
                                                   "overloadedDeclarations": [
                                                     null
                                                   ],
-                                                  "referencedDeclaration": 3283,
+                                                  "referencedDeclaration": 3339,
                                                   "type": "uint8",
                                                   "value": "i"
                                                 },
-                                                "id": 3299,
+                                                "id": 3355,
                                                 "name": "Identifier",
                                                 "src": "1950:1:15"
                                               },
@@ -4317,12 +4317,12 @@
                                                   "type": "int_const 1",
                                                   "value": "1"
                                                 },
-                                                "id": 3300,
+                                                "id": 3356,
                                                 "name": "Literal",
                                                 "src": "1952:1:15"
                                               }
                                             ],
-                                            "id": 3301,
+                                            "id": 3357,
                                             "name": "BinaryOperation",
                                             "src": "1950:3:15"
                                           },
@@ -4334,7 +4334,7 @@
                                               "isPure": false,
                                               "lValueRequested": false,
                                               "member_name": "totalLength",
-                                              "referencedDeclaration": 3013,
+                                              "referencedDeclaration": 3069,
                                               "type": "uint256"
                                             },
                                             "children": [
@@ -4344,16 +4344,16 @@
                                                   "overloadedDeclarations": [
                                                     null
                                                   ],
-                                                  "referencedDeclaration": 3272,
+                                                  "referencedDeclaration": 3328,
                                                   "type": "struct SortPLib.PriceMap storage pointer",
                                                   "value": "_prm"
                                                 },
-                                                "id": 3302,
+                                                "id": 3358,
                                                 "name": "Identifier",
                                                 "src": "1954:4:15"
                                               }
                                             ],
-                                            "id": 3303,
+                                            "id": 3359,
                                             "name": "MemberAccess",
                                             "src": "1954:16:15"
                                           },
@@ -4365,7 +4365,7 @@
                                               "isPure": false,
                                               "lValueRequested": false,
                                               "member_name": "updated",
-                                              "referencedDeclaration": 3002,
+                                              "referencedDeclaration": 3058,
                                               "type": "bool"
                                             },
                                             "children": [
@@ -4387,7 +4387,7 @@
                                                       "isPure": false,
                                                       "lValueRequested": false,
                                                       "member_name": "prsTable",
-                                                      "referencedDeclaration": 3007,
+                                                      "referencedDeclaration": 3063,
                                                       "type": "mapping(address => struct SortPLib.PriceTF storage ref)"
                                                     },
                                                     "children": [
@@ -4397,16 +4397,16 @@
                                                           "overloadedDeclarations": [
                                                             null
                                                           ],
-                                                          "referencedDeclaration": 3272,
+                                                          "referencedDeclaration": 3328,
                                                           "type": "struct SortPLib.PriceMap storage pointer",
                                                           "value": "_prm"
                                                         },
-                                                        "id": 3304,
+                                                        "id": 3360,
                                                         "name": "Identifier",
                                                         "src": "1971:4:15"
                                                       }
                                                     ],
-                                                    "id": 3305,
+                                                    "id": 3361,
                                                     "name": "MemberAccess",
                                                     "src": "1971:13:15"
                                                   },
@@ -4416,57 +4416,57 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 3274,
+                                                      "referencedDeclaration": 3330,
                                                       "type": "address",
                                                       "value": "_adr"
                                                     },
-                                                    "id": 3306,
+                                                    "id": 3362,
                                                     "name": "Identifier",
                                                     "src": "1985:4:15"
                                                   }
                                                 ],
-                                                "id": 3307,
+                                                "id": 3363,
                                                 "name": "IndexAccess",
                                                 "src": "1971:19:15"
                                               }
                                             ],
-                                            "id": 3308,
+                                            "id": 3364,
                                             "name": "MemberAccess",
                                             "src": "1971:27:15"
                                           }
                                         ],
-                                        "id": 3309,
+                                        "id": 3365,
                                         "name": "TupleExpression",
                                         "src": "1949:50:15"
                                       }
                                     ],
-                                    "id": 3310,
+                                    "id": 3366,
                                     "name": "Return",
                                     "src": "1942:57:15"
                                   }
                                 ],
-                                "id": 3311,
+                                "id": 3367,
                                 "name": "Block",
                                 "src": "1931:78:15"
                               }
                             ],
-                            "id": 3312,
+                            "id": 3368,
                             "name": "IfStatement",
                             "src": "1900:109:15"
                           }
                         ],
-                        "id": 3313,
+                        "id": 3369,
                         "name": "Block",
                         "src": "1891:125:15"
                       }
                     ],
-                    "id": 3314,
+                    "id": 3370,
                     "name": "ForStatement",
                     "src": "1848:168:15"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 3282
+                      "functionReturnParameters": 3338
                     },
                     "children": [
                       {
@@ -4493,7 +4493,7 @@
                               "type": "int_const 0",
                               "value": "0"
                             },
-                            "id": 3315,
+                            "id": 3371,
                             "name": "Literal",
                             "src": "2031:1:15"
                           },
@@ -4505,7 +4505,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "totalLength",
-                              "referencedDeclaration": 3013,
+                              "referencedDeclaration": 3069,
                               "type": "uint256"
                             },
                             "children": [
@@ -4515,16 +4515,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3272,
+                                  "referencedDeclaration": 3328,
                                   "type": "struct SortPLib.PriceMap storage pointer",
                                   "value": "_prm"
                                 },
-                                "id": 3316,
+                                "id": 3372,
                                 "name": "Identifier",
                                 "src": "2033:4:15"
                               }
                             ],
-                            "id": 3317,
+                            "id": 3373,
                             "name": "MemberAccess",
                             "src": "2033:16:15"
                           },
@@ -4541,27 +4541,27 @@
                               "type": "bool",
                               "value": "false"
                             },
-                            "id": 3318,
+                            "id": 3374,
                             "name": "Literal",
                             "src": "2050:5:15"
                           }
                         ],
-                        "id": 3319,
+                        "id": 3375,
                         "name": "TupleExpression",
                         "src": "2030:26:15"
                       }
                     ],
-                    "id": 3320,
+                    "id": 3376,
                     "name": "Return",
                     "src": "2023:33:15"
                   }
                 ],
-                "id": 3321,
+                "id": 3377,
                 "name": "Block",
                 "src": "1841:221:15"
               }
             ],
-            "id": 3322,
+            "id": 3378,
             "name": "FunctionDefinition",
             "src": "1739:323:15"
           },
@@ -4575,7 +4575,7 @@
               ],
               "name": "getSortedList",
               "payable": false,
-              "scope": 3366,
+              "scope": 3422,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -4587,7 +4587,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_prm",
-                      "scope": 3365,
+                      "scope": 3421,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct SortPLib.PriceMap storage pointer",
@@ -4599,15 +4599,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "PriceMap",
-                          "referencedDeclaration": 3016,
+                          "referencedDeclaration": 3072,
                           "type": "struct SortPLib.PriceMap storage pointer"
                         },
-                        "id": 3323,
+                        "id": 3379,
                         "name": "UserDefinedTypeName",
                         "src": "2091:8:15"
                       }
                     ],
-                    "id": 3324,
+                    "id": 3380,
                     "name": "VariableDeclaration",
                     "src": "2091:21:15"
                   },
@@ -4615,7 +4615,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "a",
-                      "scope": 3365,
+                      "scope": 3421,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -4628,17 +4628,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 3325,
+                        "id": 3381,
                         "name": "ElementaryTypeName",
                         "src": "2114:4:15"
                       }
                     ],
-                    "id": 3326,
+                    "id": 3382,
                     "name": "VariableDeclaration",
                     "src": "2114:6:15"
                   }
                 ],
-                "id": 3327,
+                "id": 3383,
                 "name": "ParameterList",
                 "src": "2090:31:15"
               },
@@ -4648,7 +4648,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "adr",
-                      "scope": 3365,
+                      "scope": 3421,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -4661,12 +4661,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 3328,
+                        "id": 3384,
                         "name": "ElementaryTypeName",
                         "src": "2130:7:15"
                       }
                     ],
-                    "id": 3329,
+                    "id": 3385,
                     "name": "VariableDeclaration",
                     "src": "2130:11:15"
                   },
@@ -4674,7 +4674,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "p",
-                      "scope": 3365,
+                      "scope": 3421,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -4687,12 +4687,12 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 3330,
+                        "id": 3386,
                         "name": "ElementaryTypeName",
                         "src": "2143:4:15"
                       }
                     ],
-                    "id": 3331,
+                    "id": 3387,
                     "name": "VariableDeclaration",
                     "src": "2143:6:15"
                   },
@@ -4700,7 +4700,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "tF",
-                      "scope": 3365,
+                      "scope": 3421,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -4713,17 +4713,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 3332,
+                        "id": 3388,
                         "name": "ElementaryTypeName",
                         "src": "2151:4:15"
                       }
                     ],
-                    "id": 3333,
+                    "id": 3389,
                     "name": "VariableDeclaration",
                     "src": "2151:7:15"
                   }
                 ],
-                "id": 3334,
+                "id": 3390,
                 "name": "ParameterList",
                 "src": "2129:30:15"
               },
@@ -4748,11 +4748,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 3329,
+                              "referencedDeclaration": 3385,
                               "type": "address",
                               "value": "adr"
                             },
-                            "id": 3335,
+                            "id": 3391,
                             "name": "Identifier",
                             "src": "2167:3:15"
                           },
@@ -4774,7 +4774,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "sortedPrs",
-                                  "referencedDeclaration": 3011,
+                                  "referencedDeclaration": 3067,
                                   "type": "mapping(uint256 => address)"
                                 },
                                 "children": [
@@ -4784,16 +4784,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 3324,
+                                      "referencedDeclaration": 3380,
                                       "type": "struct SortPLib.PriceMap storage pointer",
                                       "value": "_prm"
                                     },
-                                    "id": 3336,
+                                    "id": 3392,
                                     "name": "Identifier",
                                     "src": "2173:4:15"
                                   }
                                 ],
-                                "id": 3337,
+                                "id": 3393,
                                 "name": "MemberAccess",
                                 "src": "2173:14:15"
                               },
@@ -4803,26 +4803,26 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3326,
+                                  "referencedDeclaration": 3382,
                                   "type": "uint256",
                                   "value": "a"
                                 },
-                                "id": 3338,
+                                "id": 3394,
                                 "name": "Identifier",
                                 "src": "2188:1:15"
                               }
                             ],
-                            "id": 3339,
+                            "id": 3395,
                             "name": "IndexAccess",
                             "src": "2173:17:15"
                           }
                         ],
-                        "id": 3340,
+                        "id": 3396,
                         "name": "Assignment",
                         "src": "2167:23:15"
                       }
                     ],
-                    "id": 3341,
+                    "id": 3397,
                     "name": "ExpressionStatement",
                     "src": "2167:23:15"
                   },
@@ -4845,11 +4845,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 3331,
+                              "referencedDeclaration": 3387,
                               "type": "uint256",
                               "value": "p"
                             },
-                            "id": 3342,
+                            "id": 3398,
                             "name": "Identifier",
                             "src": "2197:1:15"
                           },
@@ -4861,7 +4861,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "prs",
-                              "referencedDeclaration": 3000,
+                              "referencedDeclaration": 3056,
                               "type": "uint256"
                             },
                             "children": [
@@ -4883,7 +4883,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "prsTable",
-                                      "referencedDeclaration": 3007,
+                                      "referencedDeclaration": 3063,
                                       "type": "mapping(address => struct SortPLib.PriceTF storage ref)"
                                     },
                                     "children": [
@@ -4893,16 +4893,16 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3324,
+                                          "referencedDeclaration": 3380,
                                           "type": "struct SortPLib.PriceMap storage pointer",
                                           "value": "_prm"
                                         },
-                                        "id": 3343,
+                                        "id": 3399,
                                         "name": "Identifier",
                                         "src": "2201:4:15"
                                       }
                                     ],
-                                    "id": 3344,
+                                    "id": 3400,
                                     "name": "MemberAccess",
                                     "src": "2201:13:15"
                                   },
@@ -4924,7 +4924,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "sortedPrs",
-                                          "referencedDeclaration": 3011,
+                                          "referencedDeclaration": 3067,
                                           "type": "mapping(uint256 => address)"
                                         },
                                         "children": [
@@ -4934,16 +4934,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 3324,
+                                              "referencedDeclaration": 3380,
                                               "type": "struct SortPLib.PriceMap storage pointer",
                                               "value": "_prm"
                                             },
-                                            "id": 3345,
+                                            "id": 3401,
                                             "name": "Identifier",
                                             "src": "2215:4:15"
                                           }
                                         ],
-                                        "id": 3346,
+                                        "id": 3402,
                                         "name": "MemberAccess",
                                         "src": "2215:14:15"
                                       },
@@ -4953,36 +4953,36 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3326,
+                                          "referencedDeclaration": 3382,
                                           "type": "uint256",
                                           "value": "a"
                                         },
-                                        "id": 3347,
+                                        "id": 3403,
                                         "name": "Identifier",
                                         "src": "2230:1:15"
                                       }
                                     ],
-                                    "id": 3348,
+                                    "id": 3404,
                                     "name": "IndexAccess",
                                     "src": "2215:17:15"
                                   }
                                 ],
-                                "id": 3349,
+                                "id": 3405,
                                 "name": "IndexAccess",
                                 "src": "2201:32:15"
                               }
                             ],
-                            "id": 3350,
+                            "id": 3406,
                             "name": "MemberAccess",
                             "src": "2201:36:15"
                           }
                         ],
-                        "id": 3351,
+                        "id": 3407,
                         "name": "Assignment",
                         "src": "2197:40:15"
                       }
                     ],
-                    "id": 3352,
+                    "id": 3408,
                     "name": "ExpressionStatement",
                     "src": "2197:40:15"
                   },
@@ -5005,11 +5005,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 3333,
+                              "referencedDeclaration": 3389,
                               "type": "bool",
                               "value": "tF"
                             },
-                            "id": 3353,
+                            "id": 3409,
                             "name": "Identifier",
                             "src": "2244:2:15"
                           },
@@ -5021,7 +5021,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "updated",
-                              "referencedDeclaration": 3002,
+                              "referencedDeclaration": 3058,
                               "type": "bool"
                             },
                             "children": [
@@ -5043,7 +5043,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "prsTable",
-                                      "referencedDeclaration": 3007,
+                                      "referencedDeclaration": 3063,
                                       "type": "mapping(address => struct SortPLib.PriceTF storage ref)"
                                     },
                                     "children": [
@@ -5053,16 +5053,16 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3324,
+                                          "referencedDeclaration": 3380,
                                           "type": "struct SortPLib.PriceMap storage pointer",
                                           "value": "_prm"
                                         },
-                                        "id": 3354,
+                                        "id": 3410,
                                         "name": "Identifier",
                                         "src": "2249:4:15"
                                       }
                                     ],
-                                    "id": 3355,
+                                    "id": 3411,
                                     "name": "MemberAccess",
                                     "src": "2249:13:15"
                                   },
@@ -5084,7 +5084,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "sortedPrs",
-                                          "referencedDeclaration": 3011,
+                                          "referencedDeclaration": 3067,
                                           "type": "mapping(uint256 => address)"
                                         },
                                         "children": [
@@ -5094,16 +5094,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 3324,
+                                              "referencedDeclaration": 3380,
                                               "type": "struct SortPLib.PriceMap storage pointer",
                                               "value": "_prm"
                                             },
-                                            "id": 3356,
+                                            "id": 3412,
                                             "name": "Identifier",
                                             "src": "2263:4:15"
                                           }
                                         ],
-                                        "id": 3357,
+                                        "id": 3413,
                                         "name": "MemberAccess",
                                         "src": "2263:14:15"
                                       },
@@ -5113,56 +5113,56 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 3326,
+                                          "referencedDeclaration": 3382,
                                           "type": "uint256",
                                           "value": "a"
                                         },
-                                        "id": 3358,
+                                        "id": 3414,
                                         "name": "Identifier",
                                         "src": "2278:1:15"
                                       }
                                     ],
-                                    "id": 3359,
+                                    "id": 3415,
                                     "name": "IndexAccess",
                                     "src": "2263:17:15"
                                   }
                                 ],
-                                "id": 3360,
+                                "id": 3416,
                                 "name": "IndexAccess",
                                 "src": "2249:32:15"
                               }
                             ],
-                            "id": 3361,
+                            "id": 3417,
                             "name": "MemberAccess",
                             "src": "2249:40:15"
                           }
                         ],
-                        "id": 3362,
+                        "id": 3418,
                         "name": "Assignment",
                         "src": "2244:45:15"
                       }
                     ],
-                    "id": 3363,
+                    "id": 3419,
                     "name": "ExpressionStatement",
                     "src": "2244:45:15"
                   }
                 ],
-                "id": 3364,
+                "id": 3420,
                 "name": "Block",
                 "src": "2160:135:15"
               }
             ],
-            "id": 3365,
+            "id": 3421,
             "name": "FunctionDefinition",
             "src": "2068:227:15"
           }
         ],
-        "id": 3366,
+        "id": 3422,
         "name": "ContractDefinition",
         "src": "27:2273:15"
       }
     ],
-    "id": 3367,
+    "id": 3423,
     "name": "SourceUnit",
     "src": "0:2302:15"
   },
@@ -5178,5 +5178,5 @@
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-29T00:04:15.559Z"
+  "updatedAt": "2017-11-29T01:05:52.124Z"
 }

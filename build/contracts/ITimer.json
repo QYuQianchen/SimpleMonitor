@@ -14,20 +14,34 @@
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "checkIndex",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "pragma solidity ^0.4.4;\n\ncontract ITimer {\n  /*function ITimer() {\n    // constructor\n  }*/\n\n  function checkStatus() public returns (uint);\n}\n",
+  "source": "pragma solidity ^0.4.4;\n\ncontract ITimer {\n  /*function ITimer() {\n    // constructor\n  }*/\n\n  function checkStatus() public returns (uint);\n  function checkIndex() public returns (uint);\n}\n",
   "sourcePath": "C:\\Users\\qianc\\Documents\\Thesis\\Code\\SimpleMonitor\\contracts\\ITimer.sol",
   "ast": {
     "attributes": {
       "absolutePath": "/C/Users/qianc/Documents/Thesis/Code/SimpleMonitor/contracts/ITimer.sol",
       "exportedSymbols": {
         "ITimer": [
-          1309
+          1365
         ]
       }
     },
@@ -41,7 +55,7 @@
             ".4"
           ]
         },
-        "id": 1303,
+        "id": 1354,
         "name": "PragmaDirective",
         "src": "0:23:10"
       },
@@ -57,10 +71,10 @@
           "documentation": null,
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            1309
+            1365
           ],
           "name": "ITimer",
-          "scope": 1310
+          "scope": 1366
         },
         "children": [
           {
@@ -74,7 +88,7 @@
               ],
               "name": "checkStatus",
               "payable": false,
-              "scope": 1309,
+              "scope": 1365,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -87,7 +101,7 @@
                   ]
                 },
                 "children": [],
-                "id": 1304,
+                "id": 1355,
                 "name": "ParameterList",
                 "src": "115:2:10"
               },
@@ -97,7 +111,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 1308,
+                      "scope": 1359,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -110,34 +124,100 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 1305,
+                        "id": 1356,
                         "name": "ElementaryTypeName",
                         "src": "134:4:10"
                       }
                     ],
-                    "id": 1306,
+                    "id": 1357,
                     "name": "VariableDeclaration",
                     "src": "134:4:10"
                   }
                 ],
-                "id": 1307,
+                "id": 1358,
                 "name": "ParameterList",
                 "src": "133:6:10"
               }
             ],
-            "id": 1308,
+            "id": 1359,
             "name": "FunctionDefinition",
             "src": "95:45:10"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "constant": false,
+              "implemented": false,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "checkIndex",
+              "payable": false,
+              "scope": 1365,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 1360,
+                "name": "ParameterList",
+                "src": "162:2:10"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1364,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 1361,
+                        "name": "ElementaryTypeName",
+                        "src": "181:4:10"
+                      }
+                    ],
+                    "id": 1362,
+                    "name": "VariableDeclaration",
+                    "src": "181:4:10"
+                  }
+                ],
+                "id": 1363,
+                "name": "ParameterList",
+                "src": "180:6:10"
+              }
+            ],
+            "id": 1364,
+            "name": "FunctionDefinition",
+            "src": "143:44:10"
           }
         ],
-        "id": 1309,
+        "id": 1365,
         "name": "ContractDefinition",
-        "src": "25:117:10"
+        "src": "25:164:10"
       }
     ],
-    "id": 1310,
+    "id": 1366,
     "name": "SourceUnit",
-    "src": "0:143:10"
+    "src": "0:190:10"
   },
   "compiler": {
     "name": "solc",
@@ -145,5 +225,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-29T00:04:15.572Z"
+  "updatedAt": "2017-11-29T01:05:52.126Z"
 }

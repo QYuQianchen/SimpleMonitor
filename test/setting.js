@@ -221,10 +221,21 @@ contract('Configuration', function(accounts) {
     nowTime = await singleHouse2.getNow.call();
     console.log("Now is", nowTime.toNumber());
     let statTime = await singleHouse0.getTime.call();
-    console.log("The status of the global timer is ",statTime.toNumber());
-    /*nowTime = await singleHouse2.getNow.call();
-    console.log("Now is", nowTime.toNumber());
+    console.log("The status of the global timer is ",statTime);
+/*
+    let currentPV = singlePV1;
+    let result1 = await singleHouse1.getSortedPrice.call({from: singlePV1_adr});
+    console.log("returned sorted information from sH1 is",result1[0].toNumber(),result1[1].toNumber(),result1[2].toNumber(),result1[3]);
+    await currentPV.askForRank();
+    await currentPV.sortRank();
+    let result2 = await currentPV.getSortedRank.call(0);
+    console.log("The sorted result at 0 is", result2[0],result2[1].toNumber(),result2[2].toNumber(),result2[3].toNumber());
+    let result3 = await currentPV.getSortedRank.call(1);
+    console.log("The sorted result at 1 is", result3[0],result3[1].toNumber(),result3[2].toNumber(),result3[3].toNumber());
+    let result4 = await currentPV.getSortedRank.call(2);
+    console.log("The sorted result at 2 is", result4[0],result4[1].toNumber(),result4[2].toNumber(),result4[3].toNumber());*/
 
+/*
     var currentPV;
     currentPV = singlePV1;
     return singleHouse1.getSortedPrice.call({from: singlePV1_adr}).then(function(result){
