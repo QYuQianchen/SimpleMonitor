@@ -221,7 +221,7 @@ contract('Configuration', function(accounts) {
     nowTime = await singleHouse2.getNow.call();
     console.log("Now is", nowTime.toNumber());
     let statTime = await singleHouse0.getTime.call();
-    console.log("The status of the global timer is ",statTime);
+    console.log("The status of the global timer is ",statTime.toNumber());
 
     let result1 = await singleHouse1.getSortedPrice.call({from: singlePV1_adr});
     console.log("returned sorted information from sH1 is",result1[0].toNumber(),result1[1].toNumber(),result1[2].toNumber(),result1[3]);
@@ -285,15 +285,15 @@ contract('Configuration', function(accounts) {
   });
 
   it("III. Price communication House<->PV (3. PV and Battery intiate Transaction)", async function() {
-
+    // Jumping into status 4. Ready for transaction
     let nowTime = await singleHouse2.getNow.call();
     console.log("Now is", nowTime.toNumber());
     await increaseTimeTo(latestTime() + duration.seconds(79));
     nowTime = await singleHouse2.getNow.call();
     console.log("Now is", nowTime.toNumber());
     let statTime = await singleHouse0.getTime.call();
-    console.log("The status of the global timer is ",statTime);
-
+    console.log("The status of the global timer is ",statTime.toNumber());
+    // Time for index 1 transaction? Check the current index and status of houses...
     let i1 = await singlePV1.getTimerIndex.call();
     console.log("Now index is",i1.toNumber());
     let result1 = await singleHouse0.getConsumption.call();
@@ -302,9 +302,10 @@ contract('Configuration', function(accounts) {
     console.log("Now SH1 consumes",result2[0].toNumber(),result2[1].toNumber());
     let result3 = await singleHouse2.getConsumption.call();
     console.log("Now SH2 consumes",result3[0].toNumber(),result3[1].toNumber());
+      // PV1 wants to sell its energy.
     let currentPV = singlePV1;
     await currentPV.sellEnergy();
-    i1 = await singlePV1.getTimerIndex.call();
+    i1 = await currentPV.getTimerIndex.call();
     console.log("Now index is",i1.toNumber());
     result1 = await singleHouse0.getConsumption.call();
     console.log("Now SH0 consumes",result1[0].toNumber(),result1[1].toNumber());
@@ -312,46 +313,29 @@ contract('Configuration', function(accounts) {
     console.log("Now SH1 consumes",result2[0].toNumber(),result2[1].toNumber());
     result3 = await singleHouse2.getConsumption.call();
     console.log("Now SH2 consumes",result3[0].toNumber(),result3[1].toNumber());
-    /*
-    // Let the rest of the houses calculate their preference list (given the price of PV/Battery/Grid)
-    return singleHouse0.getConsumption.call().then(function(result){
-      console.log("Now SH0 consumes",result[0].toNumber(),result[1].toNumber());
-      return singleHouse1.getConsumption.call();
-    }).then(function(result){
-      console.log("Now SH1 consumes",result[0].toNumber(),result[1].toNumber());
-      return singleHouse2.getConsumption.call();
-    }).then(function(result){
-      console.log("Now SH2 consumes",result[0].toNumber(),result[1].toNumber());
-      singlePV1.initiateTransaction(0);
-      singlePV1.initiateTransaction(1);
-      singlePV0.initiateTransaction(0);
-      singlePV0.initiateTransaction(1);
-      singleBattery0.initiateTransaction(0);
-      singleBattery0.initiateTransaction(1);
-      singlePV2.initiateTransaction(0);
-      singlePV2.initiateTransaction(1);
-      return singleHouse0.getConsumption.call();
-    }).then(function(result){
-      console.log("Now SH0 consumes",result[0].toNumber(),result[1].toNumber());
-      return singleHouse1.getConsumption.call();
-    }).then(function(result){
-      console.log("Now SH1 consumes",result[0].toNumber(),result[1].toNumber());
-      return singleHouse2.getConsumption.call();
-    }).then(function(result){
-      console.log("Now SH2 consumes",result[0].toNumber(),result[1].toNumber());
-      return singleBattery0.getVolumeCapacity.call();
-    }).then(function(result){
-      console.log("Its volume and capacity are",result[0].toNumber(),result[1].toNumber(),result[2].toNumber());
-      return singlePV0.getProduction.call();
-    }).then(function(result){
-      console.log("PV0 still has",result[0].toNumber(),result[1].toNumber());
-      return singlePV1.getProduction.call();
-    }).then(function(result){
-      console.log("PV1 still has",result[0].toNumber(),result[1].toNumber());
-      return singlePV2.getProduction.call();
-    }).then(function(result){
-      console.log("PV2 still has",result[0].toNumber(),result[1].toNumber());
-    });*/
+    /*  // PV2 also wants to sell its energy test whether now PV2 can do energy transaction... but failed (with r)
+    currentPV = singlePV2;
+    currentPV.sellEnergy();
+    i1 = await currentPV.getTimerIndex.call();
+    console.log("Now index is",i1.toNumber());
+    result1 = await singleHouse0.getConsumption.call();
+    console.log("Now SH0 consumes",result1[0].toNumber(),result1[1].toNumber());
+    result2 = await singleHouse1.getConsumption.call();
+    console.log("Now SH1 consumes",result2[0].toNumber(),result2[1].toNumber());
+    result3 = await singleHouse2.getConsumption.call();
+    console.log("Now SH2 consumes",result3[0].toNumber(),result3[1].toNumber());
+      // what about increasing time to 10 seconds later?*/
+    await increaseTimeTo(latestTime() + duration.seconds(10));
+    nowTime = await singleHouse2.getNow.call();
+    console.log("Now is", nowTime.toNumber(), latestTime());
+    i1 = await currentPV.getTimerIndex.call();
+    console.log("Now index is",i1.toNumber());
+    result1 = await singleHouse0.getConsumption.call();
+    console.log("Now SH0 consumes",result1[0].toNumber(),result1[1].toNumber());
+    result2 = await singleHouse1.getConsumption.call();
+    console.log("Now SH1 consumes",result2[0].toNumber(),result2[1].toNumber());
+    result3 = await singleHouse2.getConsumption.call();
+    console.log("Now SH2 consumes",result3[0].toNumber(),result3[1].toNumber());
   });
 
     

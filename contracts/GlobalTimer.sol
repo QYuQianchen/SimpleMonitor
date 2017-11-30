@@ -24,6 +24,10 @@ contract GlobalTimer is ITimer {
 
   /*function setStatus(uint s) {
     statusNo = s;
+  }
+
+  function setcurrentLoop(uint s) {
+    currentLoop = s;
   }*/
 
   function checkStatus() public returns (uint) {
@@ -53,12 +57,11 @@ contract GlobalTimer is ITimer {
     if (checkStatus() != 4) {
       //no transaction can be made at this time
       timeLapse = 0;
-      currentLoop = 0;      
+      currentLoop = 0;
     } else {
-      timeLapse = now - startingTime - cumulatedTime[4] * 1 minutes;
+      timeLapse = now - startingTime - cumulatedTime[3] * 1 minutes;
       currentLoop = uint(timeLapse/transactInterval) + 1;
     }
-    //return currentLoop;
-    return 1;
+    return currentLoop;
   }
 }
