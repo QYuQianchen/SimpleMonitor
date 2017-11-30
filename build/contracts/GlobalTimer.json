@@ -36,11 +36,11 @@
       "type": "constructor"
     }
   ],
-  "bytecode": "0x6060604052341561000f57600080fd5b60006001819055600a600355600481905560025560c060405190810160409081526009825260016020830152600390820152600560608201819052600a6080830152600c60a0830152610063916006610069565b506100c9565b826006810192821561009c579160200282015b8281111561009c578251829060ff1690559160200191906001019061007c565b506100a89291506100ac565b5090565b6100c691905b808211156100a857600081556001016100b2565b90565b61017a806100d86000396000f30060606040526004361061004b5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416633b7104f28114610050578063bdef9d9214610075575b600080fd5b341561005b57600080fd5b610063610088565b60405190815260200160405180910390f35b341561008057600080fd5b6100636100fb565b600080600154600014156100a35760018055426000556100f3565b506001545b60068110156100e157600581600681106100be57fe5b0154603c0260005401421115156100d95760018190556100e1565b6001016100a8565b60078114156100f35760018055426000555b505060015490565b6000610105610088565b60041461011b5760006004819055600255610147565b600560030154603c0260005442030360048190555060035460045481151561013f57fe5b046001016002555b50600254905600a165627a7a72305820e8da894051639c9bb23c9afa119cfed3e43031d4d46a41a1c3337e3852a8240f0029",
-  "deployedBytecode": "0x60606040526004361061004b5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416633b7104f28114610050578063bdef9d9214610075575b600080fd5b341561005b57600080fd5b610063610088565b60405190815260200160405180910390f35b341561008057600080fd5b6100636100fb565b600080600154600014156100a35760018055426000556100f3565b506001545b60068110156100e157600581600681106100be57fe5b0154603c0260005401421115156100d95760018190556100e1565b6001016100a8565b60078114156100f35760018055426000555b505060015490565b6000610105610088565b60041461011b5760006004819055600255610147565b600560030154603c0260005442030360048190555060035460045481151561013f57fe5b046001016002555b50600254905600a165627a7a72305820e8da894051639c9bb23c9afa119cfed3e43031d4d46a41a1c3337e3852a8240f0029",
-  "sourceMap": "49:1708:4:-;;;231:297;;;;;;;;290:1;279:8;:12;;;316:2;297:16;:21;335:9;:13;;;441:11;:15;462:36;;;;;;;;;;479:1;462:36;;482:1;462:36;;;;485:1;462:36;;;;488:1;462:36;;;;;;491:2;462:36;;;;495:2;462:36;;;;;;;;:::i;:::-;;49:1708;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;49:1708:4;;;-1:-1:-1;49:1708:4;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;",
-  "deployedSourceMap": "49:1708:4:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;652:645;;;;;;;;;;;;;;;;;;;;;;;;;;;1301:454;;;;;;;;;;;;652:645;691:4;897:6;781:8;;793:1;781:13;777:468;;;844:1;833:12;;868:3;853:12;:18;777:468;;;-1:-1:-1;906:8:4;;892:217;920:20;916:1;:24;892:217;;;983:13;997:1;983:16;;;;;;;;;1002:9;983:28;968:12;;:43;961:3;:50;;957:144;;;1061:8;:12;;;1085:5;;957:144;942:3;;892:217;;;1125:22;1120:27;;1116:123;;;1200:1;1189:12;;1226:3;1211:12;:18;1116:123;-1:-1:-1;;1284:8:4;;;652:645::o;1301:454::-;1339:4;1355:13;:11;:13::i;:::-;1372:1;1355:18;1351:360;;1443:1;1431:9;:13;;;1452:11;:15;1351:360;;;1548:13;1562:1;1548:16;;1567:9;1548:28;1533:12;;1527:3;:18;:49;1515:9;:61;;;;1613:16;;1603:9;;:26;;;;;;;;1633:1;1598:36;1584:11;:50;1351:360;-1:-1:-1;1723:11:4;;1301:454;:::o",
-  "source": "pragma solidity ^0.4.4;\n\nimport \"./ITimer.sol\";\n\ncontract GlobalTimer is ITimer {\n\n  uint startingTime;\n  uint statusNo;\n  //uint maxLoop;\n  uint currentLoop;\n  uint transactInterval;\n  uint timeLapse;\n  uint[6] cumulatedTime; \n\n  function GlobalTimer() {\n    // constructor\n    statusNo = 0;\n    transactInterval = 10; // seconds\n    timeLapse = 0;\n    //maxLoop = 30;  // each rank take 1s to finish transaction (5 min/10s = 30 times)\n    currentLoop = 0;\n    cumulatedTime = [9, 1, 3, 5, 10, 12];  //[inf, 1, 2, 2, 5, 2];\n  }\n\n  /*function setStatus(uint s) {\n    statusNo = s;\n  }\n\n  function setcurrentLoop(uint s) {\n    currentLoop = s;\n  }*/\n\n  function checkStatus() public returns (uint) {\n    // everytime one asks for Status, the GlobalTimer updates the status.\n    if (statusNo == 0) {\n      // start counting time\n      statusNo = 1;\n      startingTime = now;\n    } else {\n      for (uint i = statusNo; i < cumulatedTime.length; i++) {\n        if (now <= startingTime + cumulatedTime[i] * 1 minutes) {\n          // remain the same status\n          statusNo = i;\n          break;\n        }\n      }\n      if (i == cumulatedTime.length+1) {\n        // one loop finished.\n        statusNo = 1;\n        startingTime = now; \n      }\n    }\n    //setStatus(statusNo);\n    return statusNo;\n  }\n\n  function checkIndex() public returns (uint) {\n    if (checkStatus() != 4) {\n      //no transaction can be made at this time\n      timeLapse = 0;\n      currentLoop = 0;\n      //etcurrentLoop(0); \n    } else {\n      timeLapse = now - startingTime - cumulatedTime[3] * 1 minutes;\n      currentLoop = uint(timeLapse/transactInterval) + 1;\n      //currentLoop = timeLapse;\n      //setcurrentLoop(currentLoop);\n    }\n    return currentLoop;\n    //return 1;\n  }\n}\n",
+  "bytecode": "0x6060604052341561000f57600080fd5b60006001819055600a600355600481905560025560c060405190810160409081526009825260016020830152600390820152600560608201819052600a6080830152600c60a0830152610063916006610069565b506100c9565b826006810192821561009c579160200282015b8281111561009c578251829060ff1690559160200191906001019061007c565b506100a89291506100ac565b5090565b6100c691905b808211156100a857600081556001016100b2565b90565b61017a806100d86000396000f30060606040526004361061004b5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416633b7104f28114610050578063bdef9d9214610075575b600080fd5b341561005b57600080fd5b610063610088565b60405190815260200160405180910390f35b341561008057600080fd5b6100636100fb565b600080600154600014156100a35760018055426000556100f3565b506001545b60068110156100e157600581600681106100be57fe5b0154603c0260005401421115156100d95760018190556100e1565b6001016100a8565b60078114156100f35760018055426000555b505060015490565b6000610105610088565b60041461011b5760006004819055600255610147565b600560030154603c0260005442030360048190555060035460045481151561013f57fe5b046001016002555b50600254905600a165627a7a723058201ec002a630707169041c885c5ffe40b43671b1c737d745ae814eb2638b3698830029",
+  "deployedBytecode": "0x60606040526004361061004b5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416633b7104f28114610050578063bdef9d9214610075575b600080fd5b341561005b57600080fd5b610063610088565b60405190815260200160405180910390f35b341561008057600080fd5b6100636100fb565b600080600154600014156100a35760018055426000556100f3565b506001545b60068110156100e157600581600681106100be57fe5b0154603c0260005401421115156100d95760018190556100e1565b6001016100a8565b60078114156100f35760018055426000555b505060015490565b6000610105610088565b60041461011b5760006004819055600255610147565b600560030154603c0260005442030360048190555060035460045481151561013f57fe5b046001016002555b50600254905600a165627a7a723058201ec002a630707169041c885c5ffe40b43671b1c737d745ae814eb2638b3698830029",
+  "sourceMap": "49:1568:4:-;;;231:297;;;;;;;;290:1;279:8;:12;;;316:2;297:16;:21;335:9;:13;;;441:11;:15;462:36;;;;;;;;;;479:1;462:36;;482:1;462:36;;;;485:1;462:36;;;;488:1;462:36;;;;;;491:2;462:36;;;;495:2;462:36;;;;;;;;:::i;:::-;;49:1568;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;49:1568:4;;;-1:-1:-1;49:1568:4;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;",
+  "deployedSourceMap": "49:1568:4:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;652:618;;;;;;;;;;;;;;;;;;;;;;;;;;;1274:341;;;;;;;;;;;;652:618;691:4;897:6;781:8;;793:1;781:13;777:468;;;844:1;833:12;;868:3;853:12;:18;777:468;;;-1:-1:-1;906:8:4;;892:217;920:20;916:1;:24;892:217;;;983:13;997:1;983:16;;;;;;;;;1002:9;983:28;968:12;;:43;961:3;:50;;957:144;;;1061:8;:12;;;1085:5;;957:144;942:3;;892:217;;;1125:22;1120:27;;1116:123;;;1200:1;1189:12;;1226:3;1211:12;:18;1116:123;-1:-1:-1;;1257:8:4;;;652:618::o;1274:341::-;1312:4;1328:13;:11;:13::i;:::-;1345:1;1328:18;1324:263;;1416:1;1404:9;:13;;;1425:11;:15;1324:263;;;1494:13;1508:1;1494:16;;1513:9;1494:28;1479:12;;1473:3;:18;:49;1461:9;:61;;;;1559:16;;1549:9;;:26;;;;;;;;1579:1;1544:36;1530:11;:50;1324:263;-1:-1:-1;1599:11:4;;1274:341;:::o",
+  "source": "pragma solidity ^0.4.4;\n\nimport \"./ITimer.sol\";\n\ncontract GlobalTimer is ITimer {\n\n  uint startingTime;\n  uint statusNo;\n  //uint maxLoop;\n  uint currentLoop;\n  uint transactInterval;\n  uint timeLapse;\n  uint[6] cumulatedTime; \n\n  function GlobalTimer() {\n    // constructor\n    statusNo = 0;\n    transactInterval = 10; // seconds\n    timeLapse = 0;\n    //maxLoop = 30;  // each rank take 1s to finish transaction (5 min/10s = 30 times)\n    currentLoop = 0;\n    cumulatedTime = [9, 1, 3, 5, 10, 12];  //[inf, 1, 2, 2, 5, 2];\n  }\n\n  /*function setStatus(uint s) {\n    statusNo = s;\n  }\n\n  function setcurrentLoop(uint s) {\n    currentLoop = s;\n  }*/\n\n  function checkStatus() public returns (uint) {\n    // everytime one asks for Status, the GlobalTimer updates the status.\n    if (statusNo == 0) {\n      // start counting time\n      statusNo = 1;\n      startingTime = now;\n    } else {\n      for (uint i = statusNo; i < cumulatedTime.length; i++) {\n        if (now <= startingTime + cumulatedTime[i] * 1 minutes) {\n          // remain the same status\n          statusNo = i;\n          break;\n        }\n      }\n      if (i == cumulatedTime.length+1) {\n        // one loop finished.\n        statusNo = 1;\n        startingTime = now; \n      }\n    }\n    return statusNo;\n  }\n\n  function checkIndex() public returns (uint) {\n    if (checkStatus() != 4) {\n      //no transaction can be made at this time\n      timeLapse = 0;\n      currentLoop = 0;\n    } else {\n      timeLapse = now - startingTime - cumulatedTime[3] * 1 minutes;\n      currentLoop = uint(timeLapse/transactInterval) + 1;\n    }\n    return currentLoop;\n  }\n}\n",
   "sourcePath": "C:\\Users\\qianc\\Documents\\Thesis\\Code\\SimpleMonitor\\contracts\\GlobalTimer.sol",
   "ast": {
     "attributes": {
@@ -927,7 +927,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4195,
+                                      "referencedDeclaration": 4219,
                                       "type": "uint256",
                                       "value": "now"
                                     },
@@ -1137,7 +1137,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 4195,
+                                              "referencedDeclaration": 4219,
                                               "type": "uint256",
                                               "value": "now"
                                             },
@@ -1538,7 +1538,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 4195,
+                                              "referencedDeclaration": 4219,
                                               "type": "uint256",
                                               "value": "now"
                                             },
@@ -1593,22 +1593,22 @@
                         },
                         "id": 865,
                         "name": "Identifier",
-                        "src": "1284:8:4"
+                        "src": "1257:8:4"
                       }
                     ],
                     "id": 866,
                     "name": "Return",
-                    "src": "1277:15:4"
+                    "src": "1250:15:4"
                   }
                 ],
                 "id": 867,
                 "name": "Block",
-                "src": "697:600:4"
+                "src": "697:573:4"
               }
             ],
             "id": 868,
             "name": "FunctionDefinition",
-            "src": "652:645:4"
+            "src": "652:618:4"
           },
           {
             "attributes": {
@@ -1635,7 +1635,7 @@
                 "children": [],
                 "id": 869,
                 "name": "ParameterList",
-                "src": "1320:2:4"
+                "src": "1293:2:4"
               },
               {
                 "children": [
@@ -1658,17 +1658,17 @@
                         },
                         "id": 870,
                         "name": "ElementaryTypeName",
-                        "src": "1339:4:4"
+                        "src": "1312:4:4"
                       }
                     ],
                     "id": 871,
                     "name": "VariableDeclaration",
-                    "src": "1339:4:4"
+                    "src": "1312:4:4"
                   }
                 ],
                 "id": 872,
                 "name": "ParameterList",
-                "src": "1338:6:4"
+                "src": "1311:6:4"
               },
               {
                 "children": [
@@ -1721,12 +1721,12 @@
                                 },
                                 "id": 873,
                                 "name": "Identifier",
-                                "src": "1355:11:4"
+                                "src": "1328:11:4"
                               }
                             ],
                             "id": 874,
                             "name": "FunctionCall",
-                            "src": "1355:13:4"
+                            "src": "1328:13:4"
                           },
                           {
                             "attributes": {
@@ -1743,12 +1743,12 @@
                             },
                             "id": 875,
                             "name": "Literal",
-                            "src": "1372:1:4"
+                            "src": "1345:1:4"
                           }
                         ],
                         "id": 876,
                         "name": "BinaryOperation",
-                        "src": "1355:18:4"
+                        "src": "1328:18:4"
                       },
                       {
                         "children": [
@@ -1777,7 +1777,7 @@
                                     },
                                     "id": 877,
                                     "name": "Identifier",
-                                    "src": "1431:9:4"
+                                    "src": "1404:9:4"
                                   },
                                   {
                                     "attributes": {
@@ -1794,17 +1794,17 @@
                                     },
                                     "id": 878,
                                     "name": "Literal",
-                                    "src": "1443:1:4"
+                                    "src": "1416:1:4"
                                   }
                                 ],
                                 "id": 879,
                                 "name": "Assignment",
-                                "src": "1431:13:4"
+                                "src": "1404:13:4"
                               }
                             ],
                             "id": 880,
                             "name": "ExpressionStatement",
-                            "src": "1431:13:4"
+                            "src": "1404:13:4"
                           },
                           {
                             "children": [
@@ -1831,7 +1831,7 @@
                                     },
                                     "id": 881,
                                     "name": "Identifier",
-                                    "src": "1452:11:4"
+                                    "src": "1425:11:4"
                                   },
                                   {
                                     "attributes": {
@@ -1848,22 +1848,22 @@
                                     },
                                     "id": 882,
                                     "name": "Literal",
-                                    "src": "1466:1:4"
+                                    "src": "1439:1:4"
                                   }
                                 ],
                                 "id": 883,
                                 "name": "Assignment",
-                                "src": "1452:15:4"
+                                "src": "1425:15:4"
                               }
                             ],
                             "id": 884,
                             "name": "ExpressionStatement",
-                            "src": "1452:15:4"
+                            "src": "1425:15:4"
                           }
                         ],
                         "id": 885,
                         "name": "Block",
-                        "src": "1375:126:4"
+                        "src": "1348:99:4"
                       },
                       {
                         "children": [
@@ -1892,7 +1892,7 @@
                                     },
                                     "id": 886,
                                     "name": "Identifier",
-                                    "src": "1515:9:4"
+                                    "src": "1461:9:4"
                                   },
                                   {
                                     "attributes": {
@@ -1930,13 +1930,13 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 4195,
+                                              "referencedDeclaration": 4219,
                                               "type": "uint256",
                                               "value": "now"
                                             },
                                             "id": 887,
                                             "name": "Identifier",
-                                            "src": "1527:3:4"
+                                            "src": "1473:3:4"
                                           },
                                           {
                                             "attributes": {
@@ -1950,12 +1950,12 @@
                                             },
                                             "id": 888,
                                             "name": "Identifier",
-                                            "src": "1533:12:4"
+                                            "src": "1479:12:4"
                                           }
                                         ],
                                         "id": 889,
                                         "name": "BinaryOperation",
-                                        "src": "1527:18:4"
+                                        "src": "1473:18:4"
                                       },
                                       {
                                         "attributes": {
@@ -1994,7 +1994,7 @@
                                                 },
                                                 "id": 890,
                                                 "name": "Identifier",
-                                                "src": "1548:13:4"
+                                                "src": "1494:13:4"
                                               },
                                               {
                                                 "attributes": {
@@ -2011,12 +2011,12 @@
                                                 },
                                                 "id": 891,
                                                 "name": "Literal",
-                                                "src": "1562:1:4"
+                                                "src": "1508:1:4"
                                               }
                                             ],
                                             "id": 892,
                                             "name": "IndexAccess",
-                                            "src": "1548:16:4"
+                                            "src": "1494:16:4"
                                           },
                                           {
                                             "attributes": {
@@ -2033,27 +2033,27 @@
                                             },
                                             "id": 893,
                                             "name": "Literal",
-                                            "src": "1567:9:4"
+                                            "src": "1513:9:4"
                                           }
                                         ],
                                         "id": 894,
                                         "name": "BinaryOperation",
-                                        "src": "1548:28:4"
+                                        "src": "1494:28:4"
                                       }
                                     ],
                                     "id": 895,
                                     "name": "BinaryOperation",
-                                    "src": "1527:49:4"
+                                    "src": "1473:49:4"
                                   }
                                 ],
                                 "id": 896,
                                 "name": "Assignment",
-                                "src": "1515:61:4"
+                                "src": "1461:61:4"
                               }
                             ],
                             "id": 897,
                             "name": "ExpressionStatement",
-                            "src": "1515:61:4"
+                            "src": "1461:61:4"
                           },
                           {
                             "children": [
@@ -2080,7 +2080,7 @@
                                     },
                                     "id": 898,
                                     "name": "Identifier",
-                                    "src": "1584:11:4"
+                                    "src": "1530:11:4"
                                   },
                                   {
                                     "attributes": {
@@ -2129,7 +2129,7 @@
                                             },
                                             "id": 899,
                                             "name": "ElementaryTypeNameExpression",
-                                            "src": "1598:4:4"
+                                            "src": "1544:4:4"
                                           },
                                           {
                                             "attributes": {
@@ -2158,7 +2158,7 @@
                                                 },
                                                 "id": 900,
                                                 "name": "Identifier",
-                                                "src": "1603:9:4"
+                                                "src": "1549:9:4"
                                               },
                                               {
                                                 "attributes": {
@@ -2172,17 +2172,17 @@
                                                 },
                                                 "id": 901,
                                                 "name": "Identifier",
-                                                "src": "1613:16:4"
+                                                "src": "1559:16:4"
                                               }
                                             ],
                                             "id": 902,
                                             "name": "BinaryOperation",
-                                            "src": "1603:26:4"
+                                            "src": "1549:26:4"
                                           }
                                         ],
                                         "id": 903,
                                         "name": "FunctionCall",
-                                        "src": "1598:32:4"
+                                        "src": "1544:32:4"
                                       },
                                       {
                                         "attributes": {
@@ -2199,32 +2199,32 @@
                                         },
                                         "id": 904,
                                         "name": "Literal",
-                                        "src": "1633:1:4"
+                                        "src": "1579:1:4"
                                       }
                                     ],
                                     "id": 905,
                                     "name": "BinaryOperation",
-                                    "src": "1598:36:4"
+                                    "src": "1544:36:4"
                                   }
                                 ],
                                 "id": 906,
                                 "name": "Assignment",
-                                "src": "1584:50:4"
+                                "src": "1530:50:4"
                               }
                             ],
                             "id": 907,
                             "name": "ExpressionStatement",
-                            "src": "1584:50:4"
+                            "src": "1530:50:4"
                           }
                         ],
                         "id": 908,
                         "name": "Block",
-                        "src": "1507:204:4"
+                        "src": "1453:134:4"
                       }
                     ],
                     "id": 909,
                     "name": "IfStatement",
-                    "src": "1351:360:4"
+                    "src": "1324:263:4"
                   },
                   {
                     "attributes": {
@@ -2243,32 +2243,32 @@
                         },
                         "id": 910,
                         "name": "Identifier",
-                        "src": "1723:11:4"
+                        "src": "1599:11:4"
                       }
                     ],
                     "id": 911,
                     "name": "Return",
-                    "src": "1716:18:4"
+                    "src": "1592:18:4"
                   }
                 ],
                 "id": 912,
                 "name": "Block",
-                "src": "1345:410:4"
+                "src": "1318:297:4"
               }
             ],
             "id": 913,
             "name": "FunctionDefinition",
-            "src": "1301:454:4"
+            "src": "1274:341:4"
           }
         ],
         "id": 914,
         "name": "ContractDefinition",
-        "src": "49:1708:4"
+        "src": "49:1568:4"
       }
     ],
     "id": 915,
     "name": "SourceUnit",
-    "src": "0:1758:4"
+    "src": "0:1618:4"
   },
   "compiler": {
     "name": "solc",
@@ -2278,9 +2278,9 @@
     "4447": {
       "events": {},
       "links": {},
-      "address": "0x294392155c0d1b5ed5f2d677f9d855a4106f7e48"
+      "address": "0xf204a4ef082f5c04bb89f7d5e6568b796096735a"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-30T19:16:39.366Z"
+  "updatedAt": "2017-11-30T20:07:43.957Z"
 }

@@ -313,7 +313,7 @@ contract('Configuration', function(accounts) {
     console.log("Now SH1 consumes",result2[0].toNumber(),result2[1].toNumber());
     result3 = await singleHouse2.getConsumption.call();
     console.log("Now SH2 consumes",result3[0].toNumber(),result3[1].toNumber());
-    /*  // PV2 also wants to sell its energy test whether now PV2 can do energy transaction... but failed (with r)
+     // PV2 also wants to sell its energy test whether now PV2 can do energy transaction... but failed (with r)
     currentPV = singlePV2;
     currentPV.sellEnergy();
     i1 = await currentPV.getTimerIndex.call();

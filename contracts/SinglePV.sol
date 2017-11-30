@@ -130,7 +130,13 @@ contract SinglePV is GeneralDevice, IPV {
     uint rank;
     uint tot;
 
+    uint lastIndex;
+    uint lastITime = now - 15 seconds;
+
     while (waiting) {
+      if (lastITime + 15 seconds <= now) {
+
+      
       i = getTimerIndex();
       for (uint j = counter; j < tL; j++) {
         (adr,consum,rank,tot) = getSortedRank(counter);
@@ -143,11 +149,15 @@ contract SinglePV is GeneralDevice, IPV {
           counter++;
         } else {
           // when rank > i, need to wait
+          lastIndex = i;  // note down the index that has been requested last time. 
+          lastITime = now;  // The next query should be ideally in 15s...
           break;
         }
       }
       if (counter >= tL) {
         waiting = false;
+      }
+      
       }
     }
   }
