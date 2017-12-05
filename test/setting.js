@@ -384,6 +384,21 @@ contract('Configuration', function(accounts) {
     console.log("Now B0 consumes",result4[0].toNumber(),result4[1].toNumber(),result4[2].toNumber());
   });
 
+  it("III. Price communication House<->PV (4. PV sell excess energy to battery; House buy energy from battery)", async function() {
+    // PV2 still has excess energy
+    let prod = await singlePV2.getProduction.call();
+    console.log("PV2 still has", prod[0].toNumber(), prod[1].toNumber());
+    let nowTime = await singleHouse2.getNow.call();
+    console.log("Now is", nowTime.toNumber());
+    await increaseTimeTo(latestTime() + duration.seconds(300));
+    nowTime = await singleHouse2.getNow.call();
+    console.log("After time increase, now is", nowTime.toNumber());
+    let statTime = await singleHouse0.getTime.call();
+    console.log("The status of the global timer is ",statTime.toNumber());
+    await singlePV2.sellExcess();
+    prod = await singlePV2.getProduction.call();
+    console.log("PV2 still has", prod[0].toNumber(), prod[1].toNumber());
+  });
     
 
 });
