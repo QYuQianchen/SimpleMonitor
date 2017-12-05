@@ -161,7 +161,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1383,
+          "SourceUnit": 1292,
           "absolutePath": "/C/Users/qianc/Documents/Thesis/Code/SimpleMonitor/contracts/ITimer.sol",
           "file": "./ITimer.sol",
           "scope": 753,
@@ -528,7 +528,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 4243,
+                                  "referencedDeclaration": 4146,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -602,7 +602,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4247,
+                                      "referencedDeclaration": 4150,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -694,7 +694,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 4243,
+                                  "referencedDeclaration": 4146,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -768,7 +768,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4247,
+                                      "referencedDeclaration": 4150,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1030,7 +1030,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4247,
+                                      "referencedDeclaration": 4150,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1255,7 +1255,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4247,
+                                      "referencedDeclaration": 4150,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1480,7 +1480,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4247,
+                                      "referencedDeclaration": 4150,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1676,7 +1676,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4247,
+                                      "referencedDeclaration": 4150,
                                       "type": "function () pure",
                                       "value": "revert"
                                     },
@@ -1872,7 +1872,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 4243,
+                                  "referencedDeclaration": 4146,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -2519,7 +2519,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "checkStatus",
-                              "referencedDeclaration": 1376,
+                              "referencedDeclaration": 1285,
                               "type": "function () external returns (uint256)"
                             },
                             "children": [
@@ -2549,7 +2549,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1382,
+                                      "referencedDeclaration": 1291,
                                       "type": "type(contract ITimer)",
                                       "value": "ITimer"
                                     },
@@ -2696,7 +2696,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "checkIndex",
-                              "referencedDeclaration": 1381,
+                              "referencedDeclaration": 1290,
                               "type": "function () external returns (uint256)"
                             },
                             "children": [
@@ -2726,7 +2726,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1382,
+                                      "referencedDeclaration": 1291,
                                       "type": "type(contract ITimer)",
                                       "value": "ITimer"
                                     },
@@ -2890,5 +2890,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-12-05T20:52:20.434Z"
+  "updatedAt": "2017-12-05T23:13:02.592Z"
 }

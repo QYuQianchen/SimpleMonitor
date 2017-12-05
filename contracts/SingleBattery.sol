@@ -81,7 +81,7 @@ contract SingleBattery is GeneralDevice, IBattery {
 
   function getBuyVol() returns (uint) {return buyVolume;}
 
-  function getVolumeCapacity () external view returns (uint vol, uint volAt, uint cap) { // timed(initTime,volTimeOut) 
+  function getVolumeCapacity () external view returns (uint vol, uint volAt, uint cap) {
     vol = currentVolume;
     volAt = volStatusAt;
     cap = capacity;
@@ -144,17 +144,6 @@ contract SingleBattery is GeneralDevice, IBattery {
   function getSortedRank(uint _id) returns(address adr, uint consum, uint rank, uint tot) {
     return draftRankMap.getSortedList(_id);
   }
-
-  /*//  for test 
-
-  function getDraftPrsMap(address adr) public view returns (uint, bool) {
-    return (draftPriceMap.prsTable[adr].prs, draftPriceMap.prsTable[adr].updated);
-  }
-
-  function getSrtList(uint a) public returns(address, uint, bool) { //address, uint, bool
-    return draftPriceMap.getSortedList(a);
-  }*/
-
 
   // --- 4. PV/Battery/Grid asks Battery to confirm energy transaction ---
 

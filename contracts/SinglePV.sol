@@ -28,7 +28,7 @@ contract SinglePV is GeneralDevice, IPV {
 // ======= Event Logs =======
 
   event ProductionLog(address adr, uint produc, uint prodAt);
-  event ConfigurationLog(string confMod, uint statusAt);
+  //event ConfigurationLog(string confMod, uint statusAt);
   event PriceUpdate(uint updateAt);
   
 // ======= Basic Functionalities =======

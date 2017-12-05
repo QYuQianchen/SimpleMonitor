@@ -33,7 +33,7 @@ contract Grid is GeneralDevice, IGrid {
     //adr = owner;
   }
   // Does not need to be implemented if the clockLib works
-  function needTBCharged() {
+  /*function needTBCharged() {
     //Grid ask if battery is actively buying energy from grid?
     uint consum;
     uint rank;
@@ -53,7 +53,7 @@ contract Grid is GeneralDevice, IGrid {
         wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       }
     }
-  }
+  }*/
 
   function goExcess(uint vol) timed(5) returns (uint takeVol, uint prs) {
     prs = priceFeedIn;

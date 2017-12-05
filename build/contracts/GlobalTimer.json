@@ -67,7 +67,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1383,
+          "SourceUnit": 1292,
           "absolutePath": "/C/Users/qianc/Documents/Thesis/Code/SimpleMonitor/contracts/ITimer.sol",
           "file": "./ITimer.sol",
           "scope": 915,
@@ -83,14 +83,14 @@
       {
         "attributes": {
           "contractDependencies": [
-            1382
+            1291
           ],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
             914,
-            1382
+            1291
           ],
           "name": "GlobalTimer",
           "scope": 915
@@ -107,7 +107,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "ITimer",
-                  "referencedDeclaration": 1382,
+                  "referencedDeclaration": 1291,
                   "type": "contract ITimer"
                 },
                 "id": 756,
@@ -735,7 +735,7 @@
               "payable": false,
               "scope": 914,
               "stateMutability": "nonpayable",
-              "superFunction": 1376,
+              "superFunction": 1285,
               "visibility": "public"
             },
             "children": [
@@ -927,7 +927,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4245,
+                                      "referencedDeclaration": 4148,
                                       "type": "uint256",
                                       "value": "now"
                                     },
@@ -1137,7 +1137,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 4245,
+                                              "referencedDeclaration": 4148,
                                               "type": "uint256",
                                               "value": "now"
                                             },
@@ -1538,7 +1538,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 4245,
+                                              "referencedDeclaration": 4148,
                                               "type": "uint256",
                                               "value": "now"
                                             },
@@ -1622,7 +1622,7 @@
               "payable": false,
               "scope": 914,
               "stateMutability": "nonpayable",
-              "superFunction": 1381,
+              "superFunction": 1290,
               "visibility": "public"
             },
             "children": [
@@ -1930,7 +1930,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 4245,
+                                              "referencedDeclaration": 4148,
                                               "type": "uint256",
                                               "value": "now"
                                             },
@@ -2282,5 +2282,5 @@
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-12-05T20:52:20.449Z"
+  "updatedAt": "2017-12-05T23:13:02.632Z"
 }

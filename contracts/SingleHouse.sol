@@ -41,7 +41,7 @@ contract SingleHouse is GeneralDevice, IHouse {
     ConsumptionLog(owner, consumption, consumStatusAt);
   }
 
-  function getConsumption() external view  returns (uint consum, uint consumAt) { //timed(consumTimeOut)
+  function getConsumption() external view  returns (uint consum, uint consumAt) {
     consum = consumption;
     consumAt = consumStatusAt;
   }
@@ -114,39 +114,6 @@ contract SingleHouse is GeneralDevice, IHouse {
 
 
   // ------------Functions used in testing------------------
-/*
-  function getSortedPriceList (uint _id) returns (address) {
-    return sortedPriceQueryInfo[_id];
-  }
-
-  function getAskedPrice(address adr) returns (uint,bool) {
-    return (priceQueryInfo[adr].prs,priceQueryInfo[adr].updated) ;
-  }
-
-  function askForPricePV(uint i) returns (uint,bool) {
-    return IPV(connectedDevice[1][i]).getPrice();
-  }
-
-  function askForPriceB(uint i) returns (uint,bool) {
-    return IBattery(connectedDevice[2][i]).getSalePrice();
-  }
-  */
-
-  /*function getConnectPVAddress(uint a) returns (address) {
-      return connectedDevice[1][a];
-  }
-
-  function getDraftPrsMap(address adr) public view returns (uint, bool) {
-    return (draftPriceMap.prsTable[adr].prs, draftPriceMap.prsTable[adr].updated);
-  }
-  function getSrtPosition(address adr) public returns (uint, uint, bool) {
-    return draftPriceMap.getPrsTable(adr);
-  }
-
-  function getSrtList(uint a) public returns(address, uint, bool) { //address, uint, bool
-    return draftPriceMap.getSortedList(a);
-  }*/
-
   function getTime() returns (uint) {
     return getTimerStatus();
   }

@@ -14,8 +14,5 @@ contract IGrid is GeneralDevice {
   function getPrice() public view returns (uint prs, bool updatedOrNot);
   function goExcess(uint vol) timed(5) returns ( uint takeVol, uint prs);    // when grid absorbing energy
   function goExtra(uint vol) timed(5) returns (uint takeVol, uint prs);      // when grid supplying energy
-
-  /*function addPV(address adr) {connectedPV.push(adr);}
-  function addH(address adr) {connectedHouse.push(adr);}
-  function addB(address adr) {connectedBattery.push(adr);}*/
+  function getWallet() returns (int) {return wallet;}
 }

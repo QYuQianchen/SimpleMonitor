@@ -6,7 +6,7 @@ contract IHouse is GeneralDevice {
   
   uint    consumption;              // Production of electricity (consumption: positive)
 
-  uint    consumTimeOut = 5 minutes;
+  //uint    consumTimeOut = 5 minutes;
 
   uint    consumStatusAt;           // timestamp of the update (consumption)
   uint    lastPriceQueryAt;

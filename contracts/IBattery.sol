@@ -6,7 +6,7 @@ contract IBattery is GeneralDevice {
 
   int     wallet;                   // To record loss & gain
   
-  uint    volTimeOut = 5 minutes;
+  //uint    volTimeOut = 5 minutes;
   uint    priceTimeOut = 5 minutes;
   
   uint    priceStatusAt;            // timestamp of the update (price)
@@ -18,5 +18,7 @@ contract IBattery is GeneralDevice {
   function getSortedPrice() external view returns(uint consum, uint rank, uint tot, bool updated);
   function goNoGo(uint giveoutvol) timed(4) returns (uint);
   function goExcess(uint vol) timed(5) returns ( uint takeVol, uint prs);
-
+  function getWallet() constant returns(int) {
+    return wallet;
+  }
 }
