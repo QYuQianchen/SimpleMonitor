@@ -288,7 +288,7 @@ contract('Configuration', function(accounts) {
     // Jumping into status 4. Ready for transaction
     let nowTime = await singleHouse2.getNow.call();
     console.log("Now is", nowTime.toNumber());
-    await increaseTimeTo(latestTime() + duration.seconds(79));
+    await increaseTimeTo(latestTime() + duration.seconds(76));
     nowTime = await singleHouse2.getNow.call();
     console.log("Now is", nowTime.toNumber());
     let statTime = await singleHouse0.getTime.call();
@@ -302,6 +302,8 @@ contract('Configuration', function(accounts) {
     console.log("Now SH1 consumes",result2[0].toNumber(),result2[1].toNumber());
     let result3 = await singleHouse2.getConsumption.call();
     console.log("Now SH2 consumes",result3[0].toNumber(),result3[1].toNumber());
+    let result4 = await singleBattery0.getVolumeCapacity.call();
+    console.log("Now SH2 consumes",result4[0].toNumber(),result4[1].toNumber(),result4[2].toNumber());
       // PV1 wants to sell its energy.
     let currentPV = singlePV1;
     await currentPV.sellEnergy();
@@ -313,9 +315,11 @@ contract('Configuration', function(accounts) {
     console.log("Now SH1 consumes",result2[0].toNumber(),result2[1].toNumber());
     result3 = await singleHouse2.getConsumption.call();
     console.log("Now SH2 consumes",result3[0].toNumber(),result3[1].toNumber());
-     // PV2 also wants to sell its energy test whether now PV2 can do energy transaction... but failed (with r)
-    currentPV = singlePV2;
-    currentPV.sellEnergy();
+    result4 = await singleBattery0.getVolumeCapacity.call();
+    console.log("Now SH2 consumes",result4[0].toNumber(),result4[1].toNumber(),result4[2].toNumber());
+    // PV0 wants to sell its energy.
+    currentPV = singlePV0;
+    await currentPV.sellEnergy();
     i1 = await currentPV.getTimerIndex.call();
     console.log("Now index is",i1.toNumber());
     result1 = await singleHouse0.getConsumption.call();
@@ -324,9 +328,28 @@ contract('Configuration', function(accounts) {
     console.log("Now SH1 consumes",result2[0].toNumber(),result2[1].toNumber());
     result3 = await singleHouse2.getConsumption.call();
     console.log("Now SH2 consumes",result3[0].toNumber(),result3[1].toNumber());
-      // what about increasing time to 10 seconds later?*/
-    await increaseTimeTo(latestTime() + duration.seconds(10));
+    result4 = await singleBattery0.getVolumeCapacity.call();
+    console.log("Now SH2 consumes",result4[0].toNumber(),result4[1].toNumber(),result4[2].toNumber());
+     // PV2 also wants to sell its energy test whether now PV2 can do energy transaction... but failed (with r)
+/*    currentPV = singlePV2;
+    currentPV.sellEnergy();
+    i1 = await currentPV.getTimerIndex.call();
+    console.log("Now index is",i1.toNumber());
     nowTime = await singleHouse2.getNow.call();
+    console.log("Now is", nowTime.toNumber(), latestTime());
+    result1 = await singleHouse0.getConsumption.call();
+    console.log("Now SH0 consumes",result1[0].toNumber(),result1[1].toNumber());
+    result2 = await singleHouse1.getConsumption.call();
+    console.log("Now SH1 consumes",result2[0].toNumber(),result2[1].toNumber());
+    result3 = await singleHouse2.getConsumption.call();
+    console.log("Now SH2 consumes",result3[0].toNumber(),result3[1].toNumber());
+    result4 = await singleBattery0.getVolumeCapacity.call();
+    console.log("Now SH2 consumes",result4[0].toNumber(),result4[1].toNumber(),result4[2].toNumber());*/
+      // what about increasing time to 4 seconds later?*/
+    await increaseTimeTo(latestTime() + duration.seconds(2));
+    nowTime = await singleHouse2.getNow.call();
+    currentPV = singlePV2;
+    currentPV.sellEnergy();
     console.log("Now is", nowTime.toNumber(), latestTime());
     i1 = await currentPV.getTimerIndex.call();
     console.log("Now index is",i1.toNumber());
@@ -336,6 +359,8 @@ contract('Configuration', function(accounts) {
     console.log("Now SH1 consumes",result2[0].toNumber(),result2[1].toNumber());
     result3 = await singleHouse2.getConsumption.call();
     console.log("Now SH2 consumes",result3[0].toNumber(),result3[1].toNumber());
+    result4 = await singleBattery0.getVolumeCapacity.call();
+    console.log("Now SH2 consumes",result4[0].toNumber(),result4[1].toNumber(),result4[2].toNumber());
   });
 
     

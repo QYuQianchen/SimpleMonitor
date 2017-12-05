@@ -134,9 +134,7 @@ contract SinglePV is GeneralDevice, IPV {
     uint lastITime = now - 15 seconds;
 
     while (waiting) {
-      if (lastITime + 15 seconds <= now) {
-
-      
+      if (lastITime + 1 seconds <= now) {
       i = getTimerIndex();
       for (uint j = counter; j < tL; j++) {
         (adr,consum,rank,tot) = getSortedRank(counter);
@@ -156,6 +154,7 @@ contract SinglePV is GeneralDevice, IPV {
       }
       if (counter >= tL) {
         waiting = false;
+        break;
       }
       
       }

@@ -341,7 +341,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 3671,
+          "SourceUnit": 3672,
           "absolutePath": "/C/Users/qianc/Documents/Thesis/Code/SimpleMonitor/contracts/SortPLib.sol",
           "file": "./SortPLib.sol",
           "scope": 2624,
@@ -371,7 +371,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 4206,
+          "SourceUnit": 4207,
           "absolutePath": "/C/Users/qianc/Documents/Thesis/Code/SimpleMonitor/contracts/TransactLib.sol",
           "file": "./TransactLib.sol",
           "scope": 2624,
@@ -567,7 +567,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "TransactLib",
-                  "referencedDeclaration": 4205,
+                  "referencedDeclaration": 4206,
                   "type": "library TransactLib"
                 },
                 "id": 2224,
@@ -597,7 +597,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "SortPLib",
-                  "referencedDeclaration": 3670,
+                  "referencedDeclaration": 3671,
                   "type": "library SortPLib"
                 },
                 "id": 2227,
@@ -625,7 +625,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "SortPLib.PriceMap",
-                  "referencedDeclaration": 3320,
+                  "referencedDeclaration": 3321,
                   "type": "struct SortPLib.PriceMap storage pointer"
                 },
                 "id": 2229,
@@ -1177,7 +1177,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 4219,
+                              "referencedDeclaration": 4220,
                               "type": "uint256",
                               "value": "now"
                             },
@@ -1716,7 +1716,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "initPrsTable",
-                              "referencedDeclaration": 3338,
+                              "referencedDeclaration": 3339,
                               "type": "function (struct SortPLib.PriceMap storage pointer)"
                             },
                             "children": [
@@ -2203,7 +2203,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "addToPrsTable",
-                                      "referencedDeclaration": 3385,
+                                      "referencedDeclaration": 3386,
                                       "type": "function (struct SortPLib.PriceMap storage pointer,address,uint256,bool)"
                                     },
                                     "children": [
@@ -2804,7 +2804,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "addToPrsTable",
-                                      "referencedDeclaration": 3385,
+                                      "referencedDeclaration": 3386,
                                       "type": "function (struct SortPLib.PriceMap storage pointer,address,uint256,bool)"
                                     },
                                     "children": [
@@ -2983,7 +2983,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 4219,
+                              "referencedDeclaration": 4220,
                               "type": "uint256",
                               "value": "now"
                             },
@@ -3116,7 +3116,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "sortPrsTable",
-                              "referencedDeclaration": 3530,
+                              "referencedDeclaration": 3531,
                               "type": "function (struct SortPLib.PriceMap storage pointer)"
                             },
                             "children": [
@@ -3517,7 +3517,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "addToPrsTable",
-                                      "referencedDeclaration": 3385,
+                                      "referencedDeclaration": 3386,
                                       "type": "function (struct SortPLib.PriceMap storage pointer,address,uint256,bool)"
                                     },
                                     "children": [
@@ -3803,7 +3803,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 4217,
+                              "referencedDeclaration": 4218,
                               "type": "msg",
                               "value": "msg"
                             },
@@ -3971,7 +3971,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "getPrsTable",
-                                  "referencedDeclaration": 3626,
+                                  "referencedDeclaration": 3627,
                                   "type": "function (struct SortPLib.PriceMap storage pointer,address) returns (uint256,uint256,bool)"
                                 },
                                 "children": [
@@ -4203,7 +4203,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 4217,
+                              "referencedDeclaration": 4218,
                               "type": "msg",
                               "value": "msg"
                             },
@@ -4288,7 +4288,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 4220,
+                              "referencedDeclaration": 4221,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -4585,7 +4585,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "findMin",
-                                  "referencedDeclaration": 4089,
+                                  "referencedDeclaration": 4090,
                                   "type": "function (uint256,uint256) returns (uint256)"
                                 },
                                 "children": [
@@ -4696,7 +4696,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "clearEnergyTransfer",
-                                  "referencedDeclaration": 4117,
+                                  "referencedDeclaration": 4118,
                                   "type": "function (uint256,uint256,address) returns (uint256)"
                                 },
                                 "children": [
@@ -4773,7 +4773,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4248,
+                                      "referencedDeclaration": 4249,
                                       "type": "contract SingleHouse",
                                       "value": "this"
                                     },
@@ -4899,7 +4899,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "prs",
-                                      "referencedDeclaration": 3304,
+                                      "referencedDeclaration": 3305,
                                       "type": "uint256"
                                     },
                                     "children": [
@@ -4921,7 +4921,7 @@
                                               "isPure": false,
                                               "lValueRequested": false,
                                               "member_name": "prsTable",
-                                              "referencedDeclaration": 3311,
+                                              "referencedDeclaration": 3312,
                                               "type": "mapping(address => struct SortPLib.PriceTF storage ref)"
                                             },
                                             "children": [
@@ -5258,7 +5258,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 4220,
+                              "referencedDeclaration": 4221,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -5620,7 +5620,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "clearEnergyTransfer",
-                                          "referencedDeclaration": 4117,
+                                          "referencedDeclaration": 4118,
                                           "type": "function (uint256,uint256,address) returns (uint256)"
                                         },
                                         "children": [
@@ -5697,7 +5697,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 4248,
+                                              "referencedDeclaration": 4249,
                                               "type": "contract SingleHouse",
                                               "value": "this"
                                             },
@@ -6114,7 +6114,7 @@
                           "overloadedDeclarations": [
                             null
                           ],
-                          "referencedDeclaration": 4219,
+                          "referencedDeclaration": 4220,
                           "type": "uint256",
                           "value": "now"
                         },
@@ -6218,5 +6218,5 @@
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-30T20:07:43.937Z"
+  "updatedAt": "2017-12-05T20:09:09.057Z"
 }
