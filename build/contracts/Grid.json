@@ -267,7 +267,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 4207,
+          "SourceUnit": 4232,
           "absolutePath": "/C/Users/qianc/Documents/Thesis/Code/SimpleMonitor/contracts/TransactLib.sol",
           "file": "./TransactLib.sol",
           "scope": 1179,
@@ -368,7 +368,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "TransactLib",
-                  "referencedDeclaration": 4206,
+                  "referencedDeclaration": 4231,
                   "type": "library TransactLib"
                 },
                 "id": 925,
@@ -824,7 +824,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 4220,
+                              "referencedDeclaration": 4245,
                               "type": "uint256",
                               "value": "now"
                             },
@@ -1062,7 +1062,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 4220,
+                              "referencedDeclaration": 4245,
                               "type": "uint256",
                               "value": "now"
                             },
@@ -2519,7 +2519,7 @@
                                                   "isPure": false,
                                                   "lValueRequested": false,
                                                   "member_name": "clearMoneyTransfer",
-                                                  "referencedDeclaration": 4149,
+                                                  "referencedDeclaration": 4174,
                                                   "type": "function (int256,uint256,address,address) returns (int256)"
                                                 },
                                                 "children": [
@@ -2610,7 +2610,7 @@
                                                       "overloadedDeclarations": [
                                                         null
                                                       ],
-                                                      "referencedDeclaration": 4257,
+                                                      "referencedDeclaration": 4282,
                                                       "type": "contract Grid",
                                                       "value": "this"
                                                     },
@@ -2919,7 +2919,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "findMin",
-                                  "referencedDeclaration": 4090,
+                                  "referencedDeclaration": 4115,
                                   "type": "function (uint256,uint256) returns (uint256)"
                                 },
                                 "children": [
@@ -3030,7 +3030,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "clearEnergyTransfer",
-                                  "referencedDeclaration": 4118,
+                                  "referencedDeclaration": 4143,
                                   "type": "function (uint256,uint256,address) returns (uint256)"
                                 },
                                 "children": [
@@ -3107,7 +3107,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4257,
+                                      "referencedDeclaration": 4282,
                                       "type": "contract Grid",
                                       "value": "this"
                                     },
@@ -3520,7 +3520,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "findMin",
-                                  "referencedDeclaration": 4090,
+                                  "referencedDeclaration": 4115,
                                   "type": "function (uint256,uint256) returns (uint256)"
                                 },
                                 "children": [
@@ -3686,7 +3686,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "clearMoneyTransfer",
-                                  "referencedDeclaration": 4149,
+                                  "referencedDeclaration": 4174,
                                   "type": "function (int256,uint256,address,address) returns (int256)"
                                 },
                                 "children": [
@@ -3775,7 +3775,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4218,
+                                      "referencedDeclaration": 4243,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -3828,7 +3828,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4257,
+                                      "referencedDeclaration": 4282,
                                       "type": "contract Grid",
                                       "value": "this"
                                     },
@@ -3945,5 +3945,5 @@
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-12-05T20:09:09.040Z"
+  "updatedAt": "2017-12-05T20:52:20.439Z"
 }
