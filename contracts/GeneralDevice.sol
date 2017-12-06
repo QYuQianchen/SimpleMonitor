@@ -92,6 +92,10 @@ contract GeneralDevice {
     return ITimer(globalTimer).checkIndex();
   }
 
+  function getWallet() returns (int) {
+    return wallet;
+  }
+
   //test
 
   function getTimerAddress() returns (address) {

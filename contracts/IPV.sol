@@ -11,11 +11,10 @@ contract IPV is GeneralDevice {
   uint    prodStatusAt;             // timestamp of the update (prod)
   uint    lastRankingAt;
 
-  int     wallet;                   // To record loss & gain
+//  int     wallet;                   // To record loss & gain
 
   function getPrice() public view returns (uint prs, bool updatedOrNot);
   //function setRankingInfo(uint c, uint r, uint tot);
 
-  function getWallet() returns (int) {return wallet;}
   
 }

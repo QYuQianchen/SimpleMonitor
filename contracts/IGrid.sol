@@ -9,10 +9,10 @@ contract IGrid is GeneralDevice {
   
   uint    posBackup = 100;         // Assume that the grid is ready to supply the microgrid for 100kwh
   uint    negBackup = 100;         // Assume that the grid is ready to absort 100kwh of excess energy from microgrid
-  int     wallet;                   // To record loss & gain
+//  int     wallet;                   // To record loss & gain
 
   function getPrice() public view returns (uint prs, bool updatedOrNot);
   function goExcess(uint vol) timed(5) returns ( uint takeVol, uint prs);    // when grid absorbing energy
   function goExtra(uint vol) timed(5) returns (uint takeVol, uint prs);      // when grid supplying energy
-  function getWallet() returns (int) {return wallet;}
+  //function getWallet() returns (int) {return wallet;}
 }
