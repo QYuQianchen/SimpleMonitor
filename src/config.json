@@ -24,6 +24,13 @@
 			"address": 0,
 			"contract_address": 0,
       "type" : "house"
+		},
+    {
+			"id": 1,
+      "picture": "images/house.png",
+			"address": 0,
+			"contract_address": 0,
+      "type" : "house"
 		}
 	],
 	"pv": [

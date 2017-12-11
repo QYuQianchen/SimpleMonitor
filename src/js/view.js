@@ -24,7 +24,8 @@ View = {
   },
 
   executeStep: function(element) {
-  // STEP 1
+
+    // STEP 1
     if (element.next_status == "1") {
       // console.log(element.device_name + " trying step 1!");
       View.log(element, "Trying step 1...");
@@ -34,14 +35,16 @@ View = {
         if (element.device_type == "house" && success) {
           element.next_status = "2a";
         } else if (element.device_type == "pv" && success) {
+
+          var price = $('#input_price_' + element.device_name)[0].value;
+          Controller.set_price(element, price);
           element.next_status = "3a";
         } else {
           Controller.log("Unknown device_type");
         }
       });
 
-  // STEP 2
-  //  2a
+    // STEP 2a
     } else if (element.next_status == "2a") {
       // console.log(element.device_name + " trying step 2a!");
       View.log(element, "Trying step 2a...");
@@ -63,7 +66,8 @@ View = {
           // Controller.log("Error in askForPrice() <- " + element.device_name);
         });
       }
-  //  2b
+
+    // STEP 2b
     } else if (element.next_status == "2b") {
       View.log(element, "Trying step 2b...");
 
@@ -82,8 +86,8 @@ View = {
         });
       }
 
-  // STEP 3a
-      } else if (element.next_status == "3a") {
+    // STEP 3a
+    } else if (element.next_status == "3a") {
       View.log(element, "Trying step 3a...");
       // console.log(element.device_name + " trying step 3a!");
 
@@ -102,7 +106,8 @@ View = {
           // Controller.log("Error in askForRank() <- " + element.device_name);
         });
       }
-  // STEP 3b
+
+    // STEP 3b
     } else if (element.next_status == "3b") {
       View.log(element, "Trying step 3b...");
       // console.log(element.device_name + " trying step 3b!");
@@ -122,7 +127,7 @@ View = {
         });
       }
 
-  // STEP 4
+    // STEP 4
     } else if (element.next_status == "4") {
       // console.log(element.device_name + " trying step 4!");
       View.log(element, "Trying step 4...");
@@ -134,7 +139,7 @@ View = {
         }
       });
 
-  // STEP 5
+    // STEP 5
     } else if (element.next_status == "5") {
       View.log(element, "Trying step 5...");
       // console.log(element.device_name + " trying step 5!");
@@ -151,6 +156,7 @@ View = {
         }
       });
 
+    // DEFAULT
     } else {
       View.log(element, "No element status defined.");
       // console.log("No element status defined.");
