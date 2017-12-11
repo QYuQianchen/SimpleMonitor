@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ethertrade Monitor Dapp</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-push-2">
+          <h1 class="text-center">Ethertrade Monitor</h1>
+          <hr/>
+          <center>
+            <h4>
+              Timestamp: <span id="span_timestamp"></span>
+            </h4>
+          </center>
+          <hr/>
+          <br/>
+        </div>
+      </div>
+
+      <div id="participant_row" class="row">
+      </div>
+    </div>
+
+    <div id="template" style="display: none;">
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="panel panel-default panel-pet">
+          <div class="panel-heading">
+            <h3 class="panel-title"></h3>
+          </div>
+          <div class="panel-body">
+            <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 20%;" src="" data-holder-rendered="true"><br>
+            <strong>Balance</strong> : <span class="span-balance"></span><br>
+            <strong>Wallet</strong> : <span class="span-wallet"></span>
+            <br/><br/>
+            <div class="div-select-address" style="display: none">
+              <select class="select_address" style="width: 100%"></select><br/>
+            </div>
+            <strong>Address</strong>: <span class="span_address"></span><br/>
+            <strong>Contract Address</strong>: <span class="span_contract_address"></span><br/>
+            <strong>Current Value</strong>: <span class="span_current_value"></span><br/><br/>
+            <button class="btn btn-default btn-register" type="button">Register</button>
+            <br>
+            <input type="number" value="1" style="max-width: 25%" class="input_value"></input>
+            <button class="btn btn-default btn-set-value" type="button">Set Value</button>
+            <br>
+
+            <div class="div-price-input" style="display: none">
+              <strong>Current Price</strong>: <span class="span_current_price"></span><br/><br/>
+              <input type="number" value="10" style="max-width: 25%;" class="input_price"></input>
+              <button class="btn btn-default btn-set-price" type="button">Set Price</button>
+              <br>
+            </div>
+
+            <div class="div-feedin-price-input" style="display: none">
+              <strong>Current FeedIn Price</strong>: <span class="span_current_feedin_price"></span><br/><br/>
+              <input type="number" value="10" style="max-width: 25%;" class="input_feedin_price"></input>
+              <br>
+            </div>
+
+            <div class="div-value-table" style="display: none">
+              <button class="btn btn-default btn-show-last" type="button">Show last 5 minutes (300 seconds)</button>
+              <br>
+              <table class="table table-sm table-last-values">
+                  <tr>
+                  </tr>
+              </table>
+            </div>
+            <br>
+            <div class="div-debug-console" style="display: none">
+              <textarea class="text-debug-console" rows="6" style="font-family: Lucida Console,Lucida Sans Typewriter,monaco,Bitstream Vera Sans Mono,monospace; background-color: black; color:#00F900; width: 100%"></textarea>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-default btn-link-participants" type="button">Link!</button>
+    <button class="btn btn-default btn-settle" type="button">Settle!</button>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./js/0.20/web3.min.js"></script>
+    <script type="text/javascript" src="./js/0.20/truffle-contract.js"></script>
+    <script src="./js/model.js"></script>
+    <script src="./js/view.js"></script>
+    <script src="./js/controller.js"></script>
+    <!-- <script src="./js/whisper.js"></script> -->
+  </body>
+</html>

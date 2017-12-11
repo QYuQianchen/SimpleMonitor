@@ -32,7 +32,7 @@ contract SingleHouse is GeneralDevice, IHouse {
   // --- 0. Upon contract creation and configuration ---
 
   function SingleHouse (address adr) GeneralDevice(adr) { }
-  
+
   // --- 1. set and get house consumption every 15 min (or less) ---
 
   function setConsumption(uint consum) public timed(1) ownerOnly { //
@@ -53,7 +53,7 @@ contract SingleHouse is GeneralDevice, IHouse {
     bool tF = false;
     draftPriceMap.initPrsTable();
     for (i = 0; i < connectedDevice[2].length; i++) {
-      (tP,tF) = IBattery(connectedDevice[2][i]).getSalePrice(); 
+      (tP,tF) = IBattery(connectedDevice[2][i]).getSalePrice();
       draftPriceMap.addToPrsTable(connectedDevice[2][i],tP,tF);
     }
     for (uint i = 0; i < connectedDevice[1].length; i++) {
@@ -67,7 +67,7 @@ contract SingleHouse is GeneralDevice, IHouse {
 
   function sortPrice() timed(2) {
     draftPriceMap.sortPrsTable();
-    // if the grid is connected -> add the price from the grid to the end of the sorted list 
+    // if the grid is connected -> add the price from the grid to the end of the sorted list
     if (grid != 0x0) {
       uint tP = 0;
       bool tF = false;
@@ -93,7 +93,7 @@ contract SingleHouse is GeneralDevice, IHouse {
     //EnergyTransferLog(adrDevice,address(this), takeoutvol, consumption);
     //wallet = wallet.clearMoneyTransfer(-int(takeoutvol*priceQueryInfo[adrDevice].prs), adrDevice);
     wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
-    return (takeoutvol); 
+    return (takeoutvol);
   }
 
   // --- 5. If house still has energy demand, ask grid for energy ---
@@ -116,6 +116,10 @@ contract SingleHouse is GeneralDevice, IHouse {
   // ------------Functions used in testing------------------
   function getTime() returns (uint) {
     return getTimerStatus();
+  }
+
+  function getTimeToNext() returns (uint) {
+    return getTimeToNextStatus();
   }
 
   function getNow() returns (uint) {

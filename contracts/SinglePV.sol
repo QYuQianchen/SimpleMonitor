@@ -10,7 +10,7 @@ import "./TransactLib.sol";
 import "./GeneralDevice.sol";
 
 contract SinglePV is GeneralDevice, IPV {
-  
+
   using AdrLib for address[];
   using TransactLib for *;
   using SortRLib for *;
@@ -30,7 +30,7 @@ contract SinglePV is GeneralDevice, IPV {
   event ProductionLog(address adr, uint produc, uint prodAt);
   //event ConfigurationLog(string confMod, uint statusAt);
   event PriceUpdate(uint updateAt);
-  
+
 // ======= Basic Functionalities =======
 
   // --- 0. Upon contract creation and configuration ---
@@ -67,8 +67,8 @@ contract SinglePV is GeneralDevice, IPV {
     //adr = owner;
   }
 
-  // --- 3. PV can provide energy to houses. --- 
-  // ---    Sort the list of ranks. --- 
+  // --- 3. PV can provide energy to houses. ---
+  // ---    Sort the list of ranks. ---
 
   function askForRank() timed(3) {
     uint consum;
@@ -100,10 +100,10 @@ contract SinglePV is GeneralDevice, IPV {
         uint prs = 0;
         uint cap = 0;
         (prs, cap) = IBattery(grid).getExcess();
-      
+
       }
     }
-    // if the grid is connected -> add the price from the grid to the end of the sorted list 
+    // if the grid is connected -> add the price from the grid to the end of the sorted list
     if (grid != 0x0) {
       uint tP = 0;
       bool tF = false;
@@ -116,8 +116,8 @@ contract SinglePV is GeneralDevice, IPV {
   function getSortedRank(uint _id) returns(address adr, uint consum, uint rank, uint tot) {
     return draftRankMap.getSortedList(_id);
   }
- 
-  // --- 4. Initiate e transaction --- 
+
+  // --- 4. Initiate e transaction ---
 
   function sellEnergy() timed(4) {
     uint counter = 0;
@@ -147,7 +147,7 @@ contract SinglePV is GeneralDevice, IPV {
           counter++;
         } else {
           // when rank > i, need to wait
-          lastIndex = i;  // note down the index that has been requested last time. 
+          lastIndex = i;  // note down the index that has been requested last time.
           lastITime = now;  // The next query should be ideally in 15s...
           break;
         }
@@ -156,11 +156,11 @@ contract SinglePV is GeneralDevice, IPV {
         waiting = false;
         break;
       }
-      
+
       }
     }
   }
-  
+
   function initiateTransaction(uint _id) timed(4) returns (uint, uint) {
     uint giveoutVol;
     address adr;
@@ -183,12 +183,12 @@ contract SinglePV is GeneralDevice, IPV {
         receivedMoney = whatDeviceAccept*price;
         wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else {
-        whatDeviceAccept = 0; 
+        whatDeviceAccept = 0;
       }
       return(giveoutVol, whatDeviceAccept);
   }
 
-  // --- 5. Deal with excess energy --- 
+  // --- 5. Deal with excess energy ---
 
   function sellExcess() timed(5) {
     // after all, if there's still excess and the connected Battery still have the capacity.
@@ -216,5 +216,8 @@ contract SinglePV is GeneralDevice, IPV {
     }
   }
 
+  function getTimeToNext() returns (uint) {
+    return getTimeToNextStatus();
+  }
 
 }

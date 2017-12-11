@@ -9,7 +9,7 @@ contract GeneralDevice {
   //using ClockLib for ClockLib.GlobalClock;
 
   address public Admin;               // the account address of the admin
-  address internal owner;             // the account address of the owner. Here we are still using adr in the constructor, 
+  address internal owner;             // the account address of the owner. Here we are still using adr in the constructor,
                                       // but later we may change the adr input into byte32, by a harshed device identifier
   bytes32 internal name;              // name of the device (Serie No.)
   address grid = 0x0;
@@ -39,7 +39,7 @@ contract GeneralDevice {
       _;
     } else {
       revert();
-    } 
+    }
   }
 
   modifier connectedPVOnly (address adr) {
@@ -90,6 +90,10 @@ contract GeneralDevice {
 
   function getTimerIndex() returns (uint) {
     return ITimer(globalTimer).checkIndex();
+  }
+
+  function getTimeToNextStatus() returns (uint) {
+    return ITimer(globalTimer).getTimeToNextStatus();
   }
 
   function getWallet() returns (int) {

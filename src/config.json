@@ -1,0 +1,40 @@
+{
+  "admin" : [
+    {
+			"id": 0,
+			"address": 0,
+			"contract_address": 0,
+      "type" : "admin"
+		}
+  ],
+
+  "grid" : [
+    {
+			"id": 0,
+			"address": 0,
+      "picture": "images/grid.png",
+			"contract_address": 0,
+      "type" : "grid"
+		}
+  ],
+	"house": [
+    {
+			"id": 0,
+      "picture": "images/house.png",
+			"address": 0,
+			"contract_address": 0,
+      "type" : "house"
+		}
+	],
+	"pv": [
+    {
+			"id": 0,
+      "picture": "images/pv.png",
+			"address": 0,
+			"contract_address": 0,
+      "type" : "pv"
+		}
+	],
+	"battery": [
+  ]
+}

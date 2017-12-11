@@ -1,31 +1,20 @@
 {
-  "name": "zeppelin-solidity",
-  "version": "1.4.0",
-  "description": "Secure Smart Contract library for Solidity",
+  "name": "ethertrade",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-    "test": "scripts/test.sh",
-    "console": "truffle console",
-    "coverage": "scripts/coverage.sh"
+    "dev": "lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/OpenZeppelin/zeppelin-solidity.git"
-  },
-  "keywords": [
-    "solidity",
-    "ethereum",
-    "smart",
-    "contracts",
-    "security",
-    "zeppelin"
-  ],
-  "author": "Manuel Araoz <manuelaraoz@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/OpenZeppelin/zeppelin-solidity/issues"
-  },
-  "homepage": "https://github.com/OpenZeppelin/zeppelin-solidity",
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
+    "lite-server": "^2.3.0",
+    "zeppelin-solidity": "^1.4.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-stage-2": "^6.18.0",
@@ -35,11 +24,21 @@
     "chai-as-promised": "^7.0.0",
     "chai-bignumber": "^2.0.0",
     "coveralls": "^2.13.1",
-    "ethereumjs-util": "^5.1.2",
+    "eslint": "^4.11.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
     "ethereumjs-testrpc": "^6.0.1",
+    "ethereumjs-util": "^5.1.2",
     "mocha-lcov-reporter": "^1.3.0",
     "solidity-coverage": "^0.2.2",
     "truffle": "^4.0.0",
     "truffle-hdwallet-provider": "0.0.3"
+  },
+  "dependencies": {
+    "truffle-contract": "^3.0.1",
+    "web3": "^0.20.1"
   }
 }

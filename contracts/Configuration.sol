@@ -13,7 +13,7 @@ contract Configuration {
   address public gridAdr;          // store the address of grid...(address of the transformer that links to the grid... not the contract address)
   uint public statusAt; // timestamp of the creation of Configuration instance
 
-  // The variables below should be deleted... 
+  // The variables below should be deleted...
   uint8 private numHouseCurrent = 0;    // current houses in the system
   uint8 private numPVCurrent = 0;       // current PVs in the system
   uint8 private numBatteryCurrent = 0;    // current batteries in the system
@@ -40,14 +40,13 @@ contract Configuration {
       revert();
     }
   }
-  
+
   event LogDevice(address deviceAdr);
   event LogConnection(address device1, address device2);
 
   function Configuration() adminOnly {
       statusAt = now;
       globalTimerAdr = new GlobalTimer();
-
   }
 
   function addGrid(address adr) adminOnly {
@@ -83,11 +82,11 @@ contract Configuration {
 
     function getContractAddress(address adr) view adminOnly returns(address) {
       return address(contractList[adr]);
-    }  
+    }
 
     function getDeviceType(address adr) returns (uint8) {
         // deviceType {House,PV,Battery}
-        
+
         if (userList[adr].cAddress != 0x0) {
             return uint8(userList[adr].dType);
         } else {
@@ -106,7 +105,7 @@ contract Configuration {
 
         GeneralDevice(address(contractList[adr1])).addConnectedDevice(dt[1],address(contractList[adr2]));
         GeneralDevice(address(contractList[adr2])).addConnectedDevice(dt[0],address(contractList[adr1]));
-        
+
         LogConnection(adr1,adr2);
     }
 
@@ -114,10 +113,10 @@ contract Configuration {
 
     function getAdmin() constant returns (address) {
         return admin;
-    } 
+    }
 
     function getGridAdr() constant returns(address) {
         return gridAdr;
-    } 
+    }
 
 }
