@@ -7,39 +7,120 @@ var SinglePV = artifacts.require("./SinglePV.sol");
 var SingleBattery = artifacts.require("./SingleBattery.sol");
 var Grid = artifacts.require("./Grid.sol");
 
-contract('Configuration', function(accounts) {
-  var address_admin = accounts [0];
-  var address_PV0 = accounts[1];
-  var address_PV1 = accounts[2];
-  var address_PV2 = accounts[3];
-  var address_H0= accounts[4];
-  var address_H1= accounts[5];
-  var address_H2= accounts[6];
-  var address_B0= accounts[7];
-  var address_G = accounts[8];
+var contracts = {
+  "house" : artifacts.require("./SingleHouse.sol"),
+  "pv" : artifacts.require("./SinglePV.sol"),
+  "battery" : artifacts.require("./SingleBattery.sol"),
+  "grid" : artifacts.require("./Grid.sol"),
+};
 
-  var configuration;
-  var singleHouse0;
-  var singleHouse1;
-  var singleHouse2;
-  var singlePV0;
-  var singlePV1;
-  var singlePV2;
-  var singleBattery0;
-  var grid_c;
-  var singlePV0_adr;
-  var singlePV1_adr;
-  var singlePV2_adr;
-  var singleHouse0_adr;
-  var singleHouse1_adr;
-  var singleHouse2_adr
-  var singleBattery0_adr;
-  var grid_adr;
+var configuration = null;
+
+var config = {
+  "admin" : [
+    {
+			"id": 0,
+			"address": 0,
+			"contract_address": 0,
+      "type" : "admin"
+		}
+  ],
+
+  "grid" : [
+    {
+			"id": 0,
+			"address": 0,
+      "picture": "images/grid.png",
+			"contract_address": 0,
+      "type" : "grid"
+		}
+  ],
+	"house": [
+    {
+			"id": 0,
+      "picture": "images/house.png",
+			"address": 0,
+			"contract_address": 0,
+      "type" : "house"
+		},
+    {
+			"id": 1,
+      "picture": "images/house.png",
+			"address": 0,
+			"contract_address": 0,
+      "type" : "house"
+		}
+	],
+	"pv": [
+    {
+			"id": 0,
+      "picture": "images/pv.png",
+			"address": 0,
+			"contract_address": 0,
+      "type" : "pv"
+		},
+    {
+			"id": 1,
+      "picture": "images/pv.png",
+			"address": 0,
+			"contract_address": 0,
+      "type" : "pv"
+		}
+	],
+	"battery": [
+  ]
+};
+
+var category_nums = {
+  "house" : 0,
+  "pv" : 1,
+  "battery" : 2,
+  "grid" : 3
+};
+
+function register(element) {
+  console.log("Registering " + element.type + " " + element.id);
+
+  console.log("adding device type " + element.type + " --> " + category_nums[element.type] );
+
+  if (element.type == "grid") {
+    var addPromise = configuration.addGrid(element.address, {from: config.admin[0].address, gas: 2000000});
+  } else {
+    var addPromise = configuration.addDevice(category_nums[element.type], element.address, 0, true, {from: config.admin[0].address, gas: 2000000});
+  }
+
+  return addPromise;
+}
+
+function getContractAddress(element) {
+  if (element.device_type == "grid")
+  {
+    return configuration.getGridAdr.call();
+  } else {
+    return configuration.getContractAddress.call(element.address);
+  }
+}
+
+contract('Configuration', function(accounts) {
+
+  var i=0;
+  for (var device_type in config) {
+    for (var device_id in config[device_type]) {
+      (function(element) {
+        element.device_name = device_type + element.id;
+        element.device_type = device_type;
+        element.address = accounts[i];
+        console.log(element.device_name);
+        i++;
+      })(config[device_type][device_id]);
+    }
+  }
 
   var virtualTime;
 
+
   it("I. Create 3 SingleHouse contracts and link to 3 SinglePVs", function() {
-    // Here to allocate account information + display them on the screen 
+    // Here to allocate account information + display them on the screen
 
     /*beforeEach(async function() {
       this.startTime = latestTime();
@@ -47,69 +128,86 @@ contract('Configuration', function(accounts) {
 
     return Configuration.deployed().then(function(instance){
       configuration = instance;
-      configuration.addGrid(address_G);
-      configuration.addDevice(0, address_H0, 0, true);
-      configuration.addDevice(0, address_H1, 0, true);
-      configuration.addDevice(0, address_H2, 0, true);
-      configuration.addDevice(1, address_PV0, 0, true);
-      configuration.addDevice(1, address_PV1, 0, true);
-      configuration.addDevice(1, address_PV2, 0, true);
-      configuration.addDevice(2, address_B0, 20, true);
-      return configuration.getAdmin.call();
+
+      var registerPromises = [];
+
+      for (device_type in config) {
+        for (device_id in config[device_type]) {
+
+          (function(element) {
+            if (element.device_type == "house"|| element.device_type == "pv" || element.device_type == "grid") {
+              registerPromises.push(register(element));
+            }
+
+          })(config[device_type][device_id]);
+        }
+      }
+
+      return Promise.all(registerPromises)
     }).then(function(result){
+
+      console.log("All participants registered");
+      var getContractAddressPromises = [];
+
+      for (device_type in config) {
+        for (device_id in config[device_type]) {
+
+// CLOSURE CONTEXT
+          (function(element) {
+            if (element.device_type == "house"|| element.device_type == "pv" || element.device_type == "grid") {
+              getContractAddressPromises.push(getContractAddress(element).then(function(result) {
+                element.contract_address = result;
+              }));
+            }
+
+          })(config[device_type][device_id]);
+        }
+      }
+
+// CHECK COLLECTED PROMISES
+      return Promise.all(getContractAddressPromises)
+    }).then(function(result) {
+
+      console.log("Got all contract addresses!");
+      console.log(config);
+
+      for (device_type in config) {
+        for (device_id in config[device_type]) {
+
+          (function(element) {
+            if (element.device_type == "house"|| element.device_type == "pv" || element.device_type == "grid") {
+              element.contract = contracts[element.device_type].at(element.contract_address);
+            }
+
+          })(config[device_type][device_id]);
+        }
+      }
+
+
+
+      return configuration.getAdmin.call()
+    }).then(function(result) {
+
+      console.log("Contracts initiated!");
+
       console.log("Contract Creator=", result);
-      configuration.linkDevices(address_H0,address_PV0);
-      configuration.linkDevices(address_H1,address_PV1);
-      configuration.linkDevices(address_H2,address_PV1);
-      configuration.linkDevices(address_H1,address_PV2);
-      configuration.linkDevices(address_H2,address_PV2);
-      configuration.linkDevices(address_PV0,address_B0);
-      configuration.linkDevices(address_H0,address_B0);
-      configuration.linkDevices(address_H2,address_B0);
-      //configuration.linkDevices(address_H2,address_PV0);
-      return configuration.getGridAdr.call();
-    }).then(function(result){
-      console.log("The address (method contractList) of Grid is ",result);
-      grid_adr = result;
-      grid_c = Grid.at(result);
-    }).then(function(){
-      console.log("Now we have the address of the Grid contract");
-      return configuration.getContractAddress.call(address_H0);
-    }).then(function(result){
-      console.log("The address (method contractList) of House0 is ",result);
-      singleHouse0_adr = result;
-      singleHouse0 = SingleHouse.at(result);
-      return configuration.getContractAddress.call(address_H1);
-    }).then(function(result){
-      console.log("The address (method contractList) of House1 is ",result);
-      singleHouse1_adr = result;
-      singleHouse1 = SingleHouse.at(result);
-      return configuration.getContractAddress.call(address_H2);
-    }).then(function(result){
-      console.log("The address (method contractList) of House2 is ",result);
-      singleHouse2_adr = result;
-      singleHouse2 = SingleHouse.at(result);
-      return configuration.getContractAddress.call(address_PV0);
-    }).then(function(result){
-      console.log("The address (method contractList) of PV0 is ",result);
-      singlePV0_adr = result;
-      singlePV0 = SinglePV.at(result);
-      return configuration.getContractAddress.call(address_PV1);
-    }).then(function(result){
-      console.log("The address (method contractList) of PV1 is ",result);
-      singlePV1_adr = result;
-      singlePV1 = SinglePV.at(result);
-      return configuration.getContractAddress.call(address_PV2);
-    }).then(function(result){
-      console.log("The address (method contractList) of PV2 is ",result);
-      singlePV2_adr = result;
-      singlePV2 = SinglePV.at(result);
-      return configuration.getContractAddress.call(address_B0);
-    }).then(function(result){
-      console.log("The address (method contractList) of Battery0 is ",result);
-      singleBattery0_adr = result;
-      singleBattery0 = SingleBattery.at(result);
-    });    
+
+      console.log("Linking devices:");
+      var linkDevicesPromises = [];
+      for (var house_id in config.house) {
+        for (var pv_id in config.pv) {
+          console.log("Linking house[" + house_id + "] with pv[" + pv_id + "]");
+          linkDevicesPromises.push(configuration.linkDevices(config.house[house_id].address, config.pv[pv_id].address, {from: config.admin[0].address, gas: 2000000}));
+        }
+      }
+
+      return Promise.all(linkDevicesPromises);
+
+    }).then(function() {
+      console.log("Linking of devices done.");
+
+
+    })
   });
 
   it("II. Set Production and price", function() {
@@ -183,7 +281,8 @@ contract('Configuration', function(accounts) {
 
   it("III. Price communication House<->PV (1. House ask for price info and sort)", async function() {
     // this.startTime = latestTime();
-    await increaseTimeTo(latestTime() + duration.seconds(70));
+    await
+    (latestTime() + duration.seconds(70));
     return singleHouse2.getNow.call().then(function(result){
       console.log("Now is", result.toNumber());
       return singleHouse2.getNow.call();
@@ -214,7 +313,7 @@ contract('Configuration', function(accounts) {
   });
 
   it("III. Price communication House <-> PV (2. PV collect info - Try another time delay)", async function() {
-    
+
     let nowTime = await singleHouse2.getNow.call();
     console.log("Now is", nowTime.toNumber());
     await increaseTimeTo(latestTime() + duration.seconds(150));
@@ -259,7 +358,7 @@ contract('Configuration', function(accounts) {
       return currentPV.getSortedRank.call(1);
     }).then(function(result){
       console.log("PV collected the information. num is", result[0],result[1].toNumber(),result[2].toNumber(),result[3].toNumber());*/
-      currentPV.sortRank();  
+      currentPV.sortRank();
     }).then(function(result){
       console.log("PV sorted the information");
       return currentPV.getSortedRank.call(0);
@@ -399,6 +498,6 @@ contract('Configuration', function(accounts) {
     prod = await singlePV2.getProduction.call();
     console.log("PV2 still has", prod[0].toNumber(), prod[1].toNumber());
   });
-    
+
 
 });
