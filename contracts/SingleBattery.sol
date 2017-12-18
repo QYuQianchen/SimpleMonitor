@@ -23,7 +23,7 @@ contract SingleBattery is GeneralDevice, IBattery {
 
   uint    capacity;                 // Cap of the device
   uint    currentVolume;            // Production of electricity
-  uint    buyVolume;                // Amount of electricity that this battery would like to buy. Will first participate in the supply competition 
+  uint    consumption;                // Amount of electricity that this battery would like to buy. Will first participate in the supply competition 
                                     //and will be finally (anyway) fulfilled b either the network or from the grid...
   uint    priceForSale;
   uint    priceForBuy;              // lower than market price (ForExcessEnergy)
@@ -74,12 +74,12 @@ contract SingleBattery is GeneralDevice, IBattery {
     //adr = owner;
   }
 
-  function setBuyVolume(uint v) public timed(1) ownerOnly {
+  function setConsumption(uint v) public timed(1) ownerOnly {
     require(currentVolume + v <= capacity);
-    buyVolume = v;
+    consumption = v;
   }
 
-  function getBuyVol() returns (uint) {return buyVolume;}
+  function getConsumption() returns (uint) {return consumption;}
 
   function getVolumeCapacity () external view returns (uint vol, uint volAt, uint cap) {
     vol = currentVolume;
@@ -115,7 +115,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   }
 
   function getSortedPrice() external view returns(uint consum, uint rank, uint tot, bool updated) {
-    consum = buyVolume;
+    consum = consumption;
     (rank,tot,updated) = draftPriceMap.getPrsTable(msg.sender);
   }
 
@@ -151,11 +151,11 @@ contract SingleBattery is GeneralDevice, IBattery {
     address adrDevice = msg.sender;
     uint takeoutvol;
     require(connectedDevice[1].assertInside(adrDevice) || adrDevice == grid);
-    takeoutvol = buyVolume.findMin(giveoutvol);
+    takeoutvol = consumption.findMin(giveoutvol);
     currentVolume += takeoutvol;
     volStatusAt = now;
     VolLog(owner,currentVolume,volStatusAt);
-    buyVolume = buyVolume.clearEnergyTransfer(takeoutvol, address(this));
+    consumption = consumption.clearEnergyTransfer(takeoutvol, address(this));
     wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
     return (takeoutvol); 
   }
