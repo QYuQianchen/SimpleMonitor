@@ -1,6 +1,7 @@
 Model = {
   config: {},
   contracts: {},
+  instances: {},
   web3Provider: null,
   accounts: [],
 
@@ -23,9 +24,10 @@ Model = {
     $.getJSON('../config.json', function(config) {
       for (var device_type in config) {
           for (var device_id in config[device_type]) {
-            config[device_type][device_id].device_name = device_type + config[device_type][device_id].id;
-            config[device_type][device_id].device_type = device_type;
-
+            (function(element) {
+              element.device_name = device_type + config[device_type][device_id].id;
+              element.type = device_type;
+            })(config[device_type][device_id]);
           }
       }
       Model.config = config;

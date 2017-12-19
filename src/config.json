@@ -3,8 +3,7 @@
     {
 			"id": 0,
 			"address": 0,
-			"contract_address": 0,
-      "type" : "admin"
+			"contract_address": 0
 		}
   ],
 
@@ -13,8 +12,7 @@
 			"id": 0,
 			"address": 0,
       "picture": "images/grid.png",
-			"contract_address": 0,
-      "type" : "grid"
+			"contract_address": 0
 		}
   ],
 	"house": [
@@ -22,15 +20,7 @@
 			"id": 0,
       "picture": "images/house.png",
 			"address": 0,
-			"contract_address": 0,
-      "type" : "house"
-		},
-    {
-			"id": 1,
-      "picture": "images/house.png",
-			"address": 0,
-			"contract_address": 0,
-      "type" : "house"
+			"contract_address": 0
 		}
 	],
 	"pv": [
@@ -38,8 +28,7 @@
 			"id": 0,
       "picture": "images/pv.png",
 			"address": 0,
-			"contract_address": 0,
-      "type" : "pv"
+			"contract_address": 0
 		}
 	],
 	"battery": [

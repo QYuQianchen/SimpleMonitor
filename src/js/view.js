@@ -17,6 +17,12 @@ View = {
             View.update_view(element);
           }, remainTime+1000);
         }
+        else {
+          setTimeout(function () {
+            View.checkTimer(element);
+            View.update_view(element);
+          }, 1000);
+        }
       });
 
     }
@@ -30,18 +36,28 @@ View = {
       // console.log(element.device_name + " trying step 1!");
       View.log(element, "Trying step 1...");
 
-      var value = $('#input_value_' + element.device_name)[0].value;
-      Controller.set_value(element, value, function(success) {
-        if (element.device_type == "house" && success) {
-          element.next_status = "2a";
-        } else if (element.device_type == "pv" && success) {
-
-          var price = $('#input_price_' + element.device_name)[0].value;
-          Controller.set_price(element, price);
-          element.next_status = "3a";
-        } else {
-          Controller.log("Unknown device_type");
+      Controller.get_energy(Date.now(), 120, 'house', function(returnJSON) {
+        if ('energy' in returnJSON && 'timestamp' in returnJSON) {
+          // console.log("Adding value to pv0 measurements.");
+          // Model.config.house[0].measurements[returnJSON.timestamp] = returnJSON;
+          $("#input_value_house0")[0].value = Math.round(returnJSON.energy);
         }
+
+        var value = $('#input_value_' + element.device_name)[0].value;
+
+        Controller.set_value(element, value, function(success) {
+
+          if (element.type == "house" && success) {
+            element.next_status = "2a";
+          } else if (element.type == "pv" && success) {
+
+            var price = $('#input_price_' + element.device_name)[0].value;
+            Controller.set_price(element, price);
+            element.next_status = "3a";
+          } else {
+            Controller.log("Unknown device_type");
+          }
+        });
       });
 
     // STEP 2a
@@ -170,7 +186,7 @@ View = {
     for (var device_type in Model.config) {
       for (var device_id in Model.config[device_type]) {
         (function(element) {
-          console.log(element.contract_address);
+          // console.log(element.contract_address);
 
           // console.log(_key + "[" + _unit + "]");
           element = View.build_element(element);
@@ -178,9 +194,9 @@ View = {
 
           if (element.contract_address != 0) {
             element.next_status = "1";
-            console.log("\n\n" + element.device_type + "\n\n");
+            // console.log("\n\n" + element.type + "\n\n");
 
-            if (element.device_type == "house" || element.device_type == "pv") {
+            if (element.type == "house" || element.type == "pv") {
               setTimeout(function () {
                 View.checkTimer(element);
 
@@ -198,56 +214,49 @@ View = {
 
   build_element: function(element) {
     var template = $('#template');
-    var device_name = element.type + element.id;
 
     // Fill panel title text
-    template.find('.panel-title').text(device_name);
+    template.find('.panel-title').text(element.device_name);
     // Set panel picture
     template.find('img').attr('src', element.picture);
     // Set unique ID for balance span (i.e. span_balance_pv0)
-    template.find('.span-balance').attr("id", "span_balance_" + device_name)
-    template.find('.span-wallet').attr("id", "span_wallet_" + device_name)
-    template.find('.select_address').attr("id", "select_address_" + device_name);
-    template.find('.span_address').attr('id', "span_address_" + device_name);
-    template.find('.span_contract_address').attr('id', "span_contract_address_" + device_name);
-    template.find('.span_current_value').attr('id', "span_current_value_" + device_name);
+    template.find('.span-consumed').attr("id", "span_consumed_" + element.device_name);
+    template.find('.span-balance').attr("id", "span_balance_" + element.device_name);
+    template.find('.span-wallet').attr("id", "span_wallet_" + element.device_name);
+    template.find('.select_address').attr("id", "select_address_" + element.device_name);
+    template.find('.span_address').attr('id', "span_address_" + element.device_name);
+    template.find('.span_contract_address').attr('id', "span_contract_address_" + element.device_name);
+    template.find('.span_current_value').attr('id', "span_current_value_" + element.device_name);
 
     template.find('.btn-register').attr('data-id', element.id);
     template.find('.btn-register').attr('data-type', element.type);
-    template.find('.btn-register').attr('id', "btn_register_" + device_name);
+    template.find('.btn-register').attr('id', "btn_register_" + element.device_name);
 
     template.find('.btn-set-value').attr('data-id', element.id);
     template.find('.btn-set-value').attr('data-type', element.type);
-    template.find('.input_value').attr('id', "input_value_" + device_name);
+    template.find('.input_value').attr('id', "input_value_" + element.device_name);
     template.find('.btn-show-last').attr('data-id', element.id);
     template.find('.btn-show-last').attr('data-type', element.type);
-    template.find('.table-last-values').attr('id', "table_last_values_" + device_name);
+    template.find('.table-last-values').attr('id', "table_last_values_" + element.device_name);
 
-    if (element.type == "pv") {
+
+    template.find('.div-price-input').attr('style', "display: none");
+    if (element.type == "pv" || element.type == "grid") {
       template.find('.div-price-input').attr('style', "display: inline");
       template.find('.btn-set-price').attr('data-id', element.id);
       template.find('.btn-set-price').attr('data-type', element.type);
-      template.find('.input_price').attr('id', "input_price_" + device_name);
-      template.find('.span_current_price').attr('id', "span_current_price_" + device_name);
+      template.find('.input_price').attr('id', "input_price_" + element.device_name);
+      template.find('.span_current_price').attr('id', "span_current_price_" + element.device_name);
     }
 
     if (Controller.debug) {
       template.find('.div-debug-console').attr('style', "display: inline");
-      template.find('.text-debug-console').attr('id', "debug_console_" + device_name);
+      template.find('.text-debug-console').attr('id', "debug_console_" + element.device_name);
     }
 
     element.template = template;
 
     return element;
-  },
-
-  init_timestamp: function() {
-    // Set interval to update the timestamp clock under the title
-    setInterval(function(){
-      // Get timestamp span and set to current second of timestamp.
-      $("#span_timestamp")[0].innerHTML = parseInt(Date.now() / 1000);
-    }, 1000);
-
   },
 
   // Bind UI events to functions in app
@@ -263,10 +272,12 @@ View = {
     $("#span_address_" + element.device_name)[0].innerHTML = element.address;
     $("#span_contract_address_" + element.device_name)[0].innerHTML = element.contract_address;
     $("#span_balance_" + element.device_name)[0].innerHTML = element.balance / 1000000000000000000;
+    $("#span_consumed_" + element.device_name)[0].innerHTML = (100 - (element.balance / 1000000000000000000)) * 800;
     $("#span_wallet_" + element.device_name)[0].innerHTML = element.wallet;
 
     if (element.type == 'pv' || element.type == 'house'|| element.type == 'battery') {
-      $("#span_current_value_" + element.device_name)[0].innerHTML = element.value.value + " at " + element.value.timestamp;
+      if (element.value != undefined)
+        $("#span_current_value_" + element.device_name)[0].innerHTML = element.value.value + " at " + element.value.timestamp;
     }
 
     if (element.type == 'pv' || element.type == 'battery') {

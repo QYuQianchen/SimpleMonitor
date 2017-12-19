@@ -8,10 +8,12 @@ Controller = {
   },
 
   init: function() {
+    Controller.log("Initializing:");
+    Controller.log("Model...");
     Model.init(function() {
+      console.log("Model.init() done.");
+      Controller.initWeb3();
     });
-    // Call initialization of web3
-    return Controller.initWeb3();
   },
 
   initWeb3: function() {
@@ -44,26 +46,26 @@ Controller = {
           i++;
         }
       }
+      Controller.initContracts();
     });
-
-    return Controller.initContracts();
   },
 
   initContracts: function() {
 
     Controller.initContract("Configuration", function() {
-      Model.contracts.Configuration.deployed().then(function(instance) {
-        configurationInstance = instance;
+      Model.contracts.Configuration.deployed().then(function(_configurationInstance) {
+        configurationInstance = _configurationInstance;
+        Model.instances.Configuration = _configurationInstance;
 
         var promises = [];
         for (device_type in Model.config) {
           for (device_id in Model.config[device_type]) {
             (function(_type, _id) {
-              promises.push(configurationInstance.getContractAddress.call(Model.config[_type][_id].address).then(function(result) {
+              promises.push(Model.instances.Configuration.getContractAddress.call(Model.config[_type][_id].address).then(function(result) {
                 // console.log("contract address of " + _type + _id + ": " + result);
                 Model.config[_type][_id].contract_address = result;
                 if (Model.contract_names[_type] != undefined ) {
-                  Controller.log(Model.contract_names[_type]);
+                  // Controller.log(Model.contract_names[_type]);
                   Controller.initContract(Model.contract_names[_type], function() {
                     Model.config[_type][_id].contract = Model.contracts[Model.contract_names[_type]].at(Model.config[_type][_id].contract_address);
 
@@ -109,8 +111,9 @@ Controller = {
   update_entries: function() {
     for (device_type in Model.config) {
       for (device_id in Model.config[device_type]) {
-        // Controller.update_entry(Model.config[device_type][device_id]);
-        Controller.update_model(Model.config[device_type][device_id], View.update_view);
+        (function(element) {
+          Controller.update_model(element, View.update_view);
+        })(Model.config[device_type][device_id]);
       }
     }
   },
@@ -126,7 +129,7 @@ Controller = {
           // Controller.log(element.device_name + " value: " + result[0].toNumber() + " at " + result[1].toNumber());
           element.value = {'value': result[0].toNumber(), 'timestamp': result[1].toNumber()};
         }).catch(function() {
-          Controller.log("Error in fetching value <-", element.device_name);
+          Controller.log("Error in getValue() <-", element.device_name);
         }));
       }
 
@@ -135,7 +138,7 @@ Controller = {
           // Controller.log(element.device_name + " value: " + result[0].toNumber() + " at " + result[1].toNumber());
           element.value = {'value': result[0].toNumber(), 'timestamp': result[1].toNumber()};
         }).catch(function() {
-          Controller.log("Error in fetching value <-", element.device_name);
+          Controller.log("Error in getConsumption() <-", element.device_name);
         }));
       }
 
@@ -144,7 +147,7 @@ Controller = {
           // Controller.log(element.device_name + " value: " + result[0].toNumber() + " at " + result[1].toNumber());
           element.value = {'value': result[0].toNumber(), 'timestamp': result[1].toNumber()};
         }).catch(function() {
-          Controller.log("Error in fetching value <-", element.device_name);
+          Controller.log("Error in getProduction() <-", element.device_name);
         }));
       }
 
@@ -153,7 +156,7 @@ Controller = {
           // Controller.log(element.device_name + " wallet: " + result.toNumber());
           element.wallet = result.toNumber();
         }).catch(function() {
-          Controller.log("Error in fetching wallet <-", element.device_name);
+          Controller.log("Error in getWallet() <-", element.device_name);
         }));
       }
 
@@ -162,7 +165,7 @@ Controller = {
           // Controller.log(element.device_name + " price: " + result[0]);
           element.price = result[0].toNumber();
         }).catch(function() {
-          Controller.log("Error in fetching price <-", element.device_name);
+          Controller.log("Error in getPrice() <-", element.device_name);
         }));
       }
     }
@@ -201,7 +204,7 @@ Controller = {
     } else if (element.contract.setProduction != undefined) {
       element.contract.setProduction(value, {from: element.address, gas: 210000}).then(function(result) {
         element.contract.getProduction.call().then(function(result) {
-          if (callback != undefined) callback((result[0] = value));
+          if (callback != undefined) callback((result[0] == value));
           Controller.log("Production of " + element.device_name + " is: " + result[0] + " at " + result[1]);
           Controller.update_model(element, View.update_view);
         });
@@ -211,7 +214,7 @@ Controller = {
     } else if (element.contract.setConsumption != undefined) {
       element.contract.setConsumption(value, {from: element.address, gas: 210000}).then(function(result) {
         element.contract.getConsumption.call().then(function(result) {
-          if (callback != undefined) callback((result[0] = value));
+          if (callback != undefined) callback((result[0] == value));
           Controller.log("Consumption of " + element.device_name + " is: " + result[0] + " at " + result[1]);
           Controller.update_model(element, View.update_view);
         });
@@ -229,7 +232,14 @@ Controller = {
     Controller.log("Price: " + price);
 
     if (element.contract.setPrice != undefined) {
-      element.contract.setPrice(price, {from: element.address, gas: 210000}).then(function(result) {
+      if (element.type == "pv"){
+        var setPricePromise = element.contract.setPrice(price, {from: element.address, gas: 210000});
+      }
+      else if (element.type == "grid") {
+        var setPricePromise = element.contract.setPrice(price, price, {from: element.address, gas: 210000});
+      }
+
+      setPricePromise.then(function(result) {
         element.contract.getPrice.call().then(function(result) {
           Controller.log("Price of " + element.device_name + " is: " + result[0]);
           Controller.update_model(element, View.update_view);
@@ -287,6 +297,14 @@ Controller = {
         // Controller.log("Error in " + fname + "() <- " + element.device_name);
       });
     }
+  },
+
+  get_energy: function(timestamp, duration, req_type, callback) {
+    var host = "localhost:8080";
+    var query_string = "/?stop=" + timestamp + "&duration=" + duration + "&type=" + req_type;
+    $.get("http://" + host + query_string, function(data) {
+      if (callback != undefined) callback(JSON.parse(data));
+    });
   },
 
   link_participants: function(callback) {
