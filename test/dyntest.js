@@ -235,21 +235,57 @@ var action_at_moment_2 = [
   }
 ];
 
+
+var sellEnerygOrder = [
+  {
+    "device_type": "pv",
+    "device_id": 1,
+    "action": "sellenergy",
+    "timelapse": 1      //15
+  },
+  {
+    "device_type": "pv",
+    "device_id": 0,
+    "action": "sellenergy",
+    "timelapse": 1
+  },
+  {
+    "device_type": "battery",
+    "device_id": 0,
+    "action": "sellenergy",
+    "timelapse": 3
+  },
+  {
+    "device_type": "pv",
+    "device_id": 2,
+    "action": "sellenergy",
+    "timelapse": 2
+  }
+];
+
 function takeAction(element) {
   var addTakeActionPromise;
   var takeActionPromise = [];
   if (element.action == "askandsortprice") {
     if (element.device_type == "house" || element.device_type == "battery") {
-      addTakeActionPromise = config[element.device_type][element.device_id].contract.askForPrice();
-      takeActionPromise.push(addTakeActionPromise);
-      addTakeActionPromise = config[element.device_type][element.device_id].contract.sortPrice();
-      takeActionPromise.push(addTakeActionPromise);
+      addTakeActionPromise = config[element.device_type][element.device_id].contract.askForPrice({from: config[element.device_type][element.device_id].address});
+      takeActionPromise.push(addTakeActionPromise.then(function(result){
+        addTakeActionPromise = config[element.device_type][element.device_id].contract.sortPrice({from: config[element.device_type][element.device_id].address});
+        takeActionPromise.push(addTakeActionPromise);
+      }));
+      
     }
   } else if (element.action == "askandsortrank") {
     if (element.device_type == "pv" || element.device_type == "battery") {
-      addTakeActionPromise = config[element.device_type][element.device_id].contract.askForRank();
-      takeActionPromise.push(addTakeActionPromise);
-      addTakeActionPromise = config[element.device_type][element.device_id].contract.sortRank();
+      addTakeActionPromise = config[element.device_type][element.device_id].contract.askForRank({from: config[element.device_type][element.device_id].address});
+      takeActionPromise.push(addTakeActionPromise.then(function(result){
+        addTakeActionPromise = config[element.device_type][element.device_id].contract.sortRank({from: config[element.device_type][element.device_id].address});
+        takeActionPromise.push(addTakeActionPromise);
+      })); 
+    }
+  } else if (element.action == "sellenergy") {
+    if (element.device_type == "pv" || element.device_type == "battery") {
+      addTakeActionPromise = config[element.device_type][element.device_id].contract.sellEnergy({from: config[element.device_type][element.device_id].address});
       takeActionPromise.push(addTakeActionPromise);
     }
   }
@@ -296,11 +332,11 @@ function getPrice(element) {
 
 function checkStep() {
   // we use house0 (could be any element in theory) to check the time step of the system....
-  return config.house[0].contract.getTimerStatus.call();
+  return config.house[0].contract.getTimerStatus.call({from: config.house[0].address});
 }
 
 function getNow() {
-  return config.house[1].contract.getNow.call();
+  return config.house[0].contract.getNow.call({from: config.house[0].address});
 }
 
 function jumpTime(a) {
@@ -504,16 +540,7 @@ contract('Configuration', function (accounts) {
 
       for (var actionNo in action_at_moment_1) {
         (function (element) {
-          //increaseTimePromise = increaseTimeTo(latestTime() + duration.seconds(element.timelapse));
-          takeActionPromises1.push(jumpTime(element.timelapse));//);
-          //takeActionPromises1.push(takeAction(element));
-          /*.then(function(result){
-            console.log("increase time promise done");
-            takeAction(element);
-          }).then(function(result){
-            console.log("take action promise");
-          });*/
-          //}));
+  //        takeActionPromises1.push(jumpTime(element.timelapse));//);
           takeActionPromises1.push(takeAction(element));
         })(action_at_moment_1[actionNo]);
       }
@@ -526,7 +553,7 @@ contract('Configuration', function (accounts) {
   it("III. Price communication House<->PV (2. PV collect Info)", function () {
 
     //var increaseTimePromise = increaseTimeTo(latestTime() + duration.seconds(20));
-    return jumpTime(10).then(function (result) {
+    return jumpTime(15).then(function (result) {
       console.log("Here time is been increased (2)");
     /*  return getNow();
     }).then(function (result) {
@@ -556,113 +583,58 @@ contract('Configuration', function (accounts) {
       /*return getNow();
     }).then(function (result) {
       console.log("Now is", result.toNumber());*/
-      return checkStep();
+//      return checkStep();
     }).then(function (result) {
-      console.log("We are at step ", result.toNumber());
+//      console.log("We are at step ", result.toNumber());
+      var sellEnergyPromises = [];
+
+      for (var actionNo in sellEnerygOrder) {
+        (function (element) {   // async... not able to jumpTime in a loop...
+          //await jumpTime(element.timelapse);
+          //takeActionPromises2.push(jumpTime(element.timelapse));//);
+          sellEnergyPromises.push(takeAction(element));
+        })(sellEnerygOrder[actionNo]);
+      }
+      return Promise.all(sellEnergyPromises);
+    }).then(function (result) {
+      console.log("energy sold out \n === Here are the status of each device: ===");
+
+      var getValuePromises = [];
+
+      for (device_type in config) {
+        for (device_id in config[device_type]) {
+          (function (element) {
+            if (element.type == "pv") {
+              getValuePromises.push(getValue(element).then(function (result) {
+                console.log("The consumption of", element.device_name, "is ", result[0].toNumber());
+                return getPrice(element);
+              }).then(function (result) {
+                console.log("The price of", element.device_name, "is ", result[0].toNumber());
+              }));
+            } else if (element.type == "house") {
+              getValuePromises.push(getValue(element).then(function (result) {
+                console.log("The production of", element.device_name, "is ", result[0].toNumber());
+              }));
+            } else if (element.type == "battery") {
+              getValuePromises.push(getValue(element).then(function (result) {
+                console.log("The production of", element.device_name, "is ", result.toNumber());
+                return getPrice(element);
+              }).then(function (result) {
+                console.log("The selling price of", element.device_name, "is ", result[0].toNumber());
+              }));
+            } else if (element.type == "grid") {
+              getValuePromises.push(getPrice(element).then(function (result) {
+                console.log("The price of", element.device_name, "is ", result[0].toNumber());
+              }));
+            }
+          })(config[device_type][device_id]);
+        }
+      }
+      return Promise.all(getValuePromises)
+
+    }).then(function (result) {
+      console.log("=== end of status ===");
     });
-
-
-
-
-
-    
-    /*// Jumping into status 4. Ready for transaction
-    let nowTime = await singleHouse2.getNow.call();
-    console.log("Now is", nowTime.toNumber());
-    await increaseTimeTo(latestTime() + duration.seconds(77));
-    nowTime = await singleHouse2.getNow.call();
-    console.log("After time increase, now is", nowTime.toNumber());
-    let statTime = await singleHouse0.getTime.call();
-    console.log("The status of the global timer is ", statTime.toNumber());*/
-    // Time for index 1 transaction? Check the current index and status of houses...
-    /*let i1 = await singlePV1.getTimerIndex.call();
-    console.log("Before energy transaction:");
-    console.log("0. Now index is", i1.toNumber());
-    let result1 = await singleHouse0.getConsumption.call();
-    console.log("Now SH0 consumes", result1[0].toNumber(), result1[1].toNumber());
-    let result2 = await singleHouse1.getConsumption.call();
-    console.log("Now SH1 consumes", result2[0].toNumber(), result2[1].toNumber());
-    let result3 = await singleHouse2.getConsumption.call();
-    console.log("Now SH2 consumes", result3[0].toNumber(), result3[1].toNumber());
-    let result4 = await singleBattery0.getVolumeCapacity.call();
-    console.log("Now B0 consumes", result4[0].toNumber(), result4[1].toNumber(), result4[2].toNumber());
-    // PV1 wants to sell its energy.
-    let currentPV = singlePV1;
-    await currentPV.sellEnergy();
-    i1 = await currentPV.getTimerIndex.call();
-    console.log("PV1 reacts");
-    console.log("1. Now index is", i1.toNumber());
-    result1 = await singleHouse0.getConsumption.call();
-    console.log("Now SH0 consumes", result1[0].toNumber(), result1[1].toNumber());
-    result2 = await singleHouse1.getConsumption.call();
-    console.log("Now SH1 consumes", result2[0].toNumber(), result2[1].toNumber());
-    result3 = await singleHouse2.getConsumption.call();
-    console.log("Now SH2 consumes", result3[0].toNumber(), result3[1].toNumber());
-    result4 = await singleBattery0.getVolumeCapacity.call();
-    console.log("Now B0 consumes", result4[0].toNumber(), result4[1].toNumber(), result4[2].toNumber());
-    // PV0 wants to sell its energy.
-    currentPV = singlePV0;
-    await currentPV.sellEnergy();
-    console.log("P0 reacts");
-    i1 = await currentPV.getTimerIndex.call();
-    console.log("2. Now index is", i1.toNumber());
-    result1 = await singleHouse0.getConsumption.call();
-    console.log("Now SH0 consumes", result1[0].toNumber(), result1[1].toNumber());
-    result2 = await singleHouse1.getConsumption.call();
-    console.log("Now SH1 consumes", result2[0].toNumber(), result2[1].toNumber());
-    result3 = await singleHouse2.getConsumption.call();
-    console.log("Now SH2 consumes", result3[0].toNumber(), result3[1].toNumber());
-    result4 = await singleBattery0.getVolumeCapacity.call();
-    console.log("Now B0 consumes", result4[0].toNumber(), result4[1].toNumber(), result4[2].toNumber());*/
-    // PV2 also wants to sell its energy test whether now PV2 can do energy transaction... but failed (with r)
-    /*    currentPV = singlePV2;
-        currentPV.sellEnergy();
-        i1 = await currentPV.getTimerIndex.call();
-        console.log("Now index is",i1.toNumber());
-        nowTime = await singleHouse2.getNow.call();
-        console.log("Now is", nowTime.toNumber(), latestTime());
-        result1 = await singleHouse0.getConsumption.call();
-        console.log("Now SH0 consumes",result1[0].toNumber(),result1[1].toNumber());
-        result2 = await singleHouse1.getConsumption.call();
-        console.log("Now SH1 consumes",result2[0].toNumber(),result2[1].toNumber());
-        result3 = await singleHouse2.getConsumption.call();
-        console.log("Now SH2 consumes",result3[0].toNumber(),result3[1].toNumber());
-        result4 = await singleBattery0.getVolumeCapacity.call();
-        console.log("Now SH2 consumes",result4[0].toNumber(),result4[1].toNumber(),result4[2].toNumber());*/
-    // what about increasing time to 4 seconds later?
-    // B0 starts
-   /* await increaseTimeTo(latestTime() + duration.seconds(1));
-    nowTime = await singleHouse2.getNow.call();
-    console.log("B0 reacts");
-    console.log("Now is", nowTime.toNumber(), latestTime());
-    singleBattery0.sellEnergy();
-    i1 = await currentPV.getTimerIndex.call();
-    console.log("3. Now index is", i1.toNumber());
-    result1 = await singleHouse0.getConsumption.call();
-    console.log("Now SH0 consumes", result1[0].toNumber(), result1[1].toNumber());
-    result2 = await singleHouse1.getConsumption.call();
-    console.log("Now SH1 consumes", result2[0].toNumber(), result2[1].toNumber());
-    result3 = await singleHouse2.getConsumption.call();
-    console.log("Now SH2 consumes", result3[0].toNumber(), result3[1].toNumber());
-    result4 = await singleBattery0.getVolumeCapacity.call();
-    console.log("Now B0 consumes", result4[0].toNumber(), result4[1].toNumber(), result4[2].toNumber());
-    // PV2 starts
-    await increaseTimeTo(latestTime() + duration.seconds(1));
-    nowTime = await singleHouse2.getNow.call();
-    console.log("PV2 reacts");
-    console.log("Now is", nowTime.toNumber(), latestTime());
-    currentPV = singlePV2;
-    currentPV.sellEnergy();
-    i1 = await currentPV.getTimerIndex.call();
-    console.log("4. Now index is", i1.toNumber());
-    result1 = await singleHouse0.getConsumption.call();
-    console.log("Now SH0 consumes", result1[0].toNumber(), result1[1].toNumber());
-    result2 = await singleHouse1.getConsumption.call();
-    console.log("Now SH1 consumes", result2[0].toNumber(), result2[1].toNumber());
-    result3 = await singleHouse2.getConsumption.call();
-    console.log("Now SH2 consumes", result3[0].toNumber(), result3[1].toNumber());
-    result4 = await singleBattery0.getVolumeCapacity.call();
-    console.log("Now B0 consumes", result4[0].toNumber(), result4[1].toNumber(), result4[2].toNumber());*/
   });
 
 
