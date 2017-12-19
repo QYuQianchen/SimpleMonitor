@@ -236,7 +236,7 @@ var action_at_moment_2 = [
 ];
 
 
-var sellEnerygOrder = [
+var sellEnergyOrder = [
   {
     "device_type": "pv",
     "device_id": 1,
@@ -263,6 +263,15 @@ var sellEnerygOrder = [
   }
 ];
 
+var sellExcessOrder = [
+  {
+    "device_type": "pv",
+    "device_id": 2,
+    "action": "sellexcessenergy",
+    "timelapse": 1      //15
+  }
+];
+
 function takeAction(element) {
   var addTakeActionPromise;
   var takeActionPromise = [];
@@ -277,33 +286,39 @@ function takeAction(element) {
     }
   } else if (element.action == "askandsortrank") {
     if (element.device_type == "pv" || element.device_type == "battery") {
-      addTakeActionPromise = config[element.device_type][element.device_id].contract.askForRank({from: config[element.device_type][element.device_id].address});
+      addTakeActionPromise = config[element.device_type][element.device_id].contract.askForRank({from: config[element.device_type][element.device_id].address, gas: 2000000});
       takeActionPromise.push(addTakeActionPromise.then(function(result){
-        addTakeActionPromise = config[element.device_type][element.device_id].contract.sortRank({from: config[element.device_type][element.device_id].address});
+        addTakeActionPromise = config[element.device_type][element.device_id].contract.sortRank({from: config[element.device_type][element.device_id].address, gas: 2000000});
         takeActionPromise.push(addTakeActionPromise);
       })); 
     }
   } else if (element.action == "sellenergy") {
     if (element.device_type == "pv" || element.device_type == "battery") {
-      addTakeActionPromise = config[element.device_type][element.device_id].contract.sellEnergy({from: config[element.device_type][element.device_id].address});
+      addTakeActionPromise = config[element.device_type][element.device_id].contract.sellEnergy({from: config[element.device_type][element.device_id].address, gas: 2000000});
+      takeActionPromise.push(addTakeActionPromise);
+    }
+  } else if (element.action == "sellexcessenergy") {
+    if (element.device_type == "pv") {
+      addTakeActionPromise = config[element.device_type][element.device_id].contract.sellExcess({from: config[element.device_type][element.device_id].address, gas: 2000000});
       takeActionPromise.push(addTakeActionPromise);
     }
   }
   return takeActionPromise;
+  //return Promise.all(takeActionPromise)
 }
 
 function setValue(element) {
   if (element.action == "setconsumption") {
-    var addSetValuePromise = config[element.device_type][element.device_id].contract.setConsumption(element.value, { from: config[element.device_type][element.device_id].address });
+    var addSetValuePromise = config[element.device_type][element.device_id].contract.setConsumption(element.value, { from: config[element.device_type][element.device_id].address, gas: 2000000});
   } else if (element.action == "setproduction") {
-    var addSetValuePromise = config[element.device_type][element.device_id].contract.setProduction(element.value, { from: config[element.device_type][element.device_id].address });
+    var addSetValuePromise = config[element.device_type][element.device_id].contract.setProduction(element.value, { from: config[element.device_type][element.device_id].address, gas: 2000000});
   } else if (element.action == "setvolume") {
-    var addSetValuePromise = config[element.device_type][element.device_id].contract.setVolume(element.value, { from: config[element.device_type][element.device_id].address });
+    var addSetValuePromise = config[element.device_type][element.device_id].contract.setVolume(element.value, { from: config[element.device_type][element.device_id].address, gas: 2000000});
   } else if (element.action == "setprice") {
     if (element.device_type == "battery" || element.device_type == "grid") {
-      var addSetValuePromise = config[element.device_type][element.device_id].contract.setPrice(element.value[0], element.value[1], { from: config[element.device_type][element.device_id].address });
+      var addSetValuePromise = config[element.device_type][element.device_id].contract.setPrice(element.value[0], element.value[1], { from: config[element.device_type][element.device_id].address, gas: 2000000});
     } else {
-      var addSetValuePromise = config[element.device_type][element.device_id].contract.setPrice(element.value, { from: config[element.device_type][element.device_id].address });
+      var addSetValuePromise = config[element.device_type][element.device_id].contract.setPrice(element.value, { from: config[element.device_type][element.device_id].address, gas: 2000000});
     }
   }
 
@@ -332,11 +347,11 @@ function getPrice(element) {
 
 function checkStep() {
   // we use house0 (could be any element in theory) to check the time step of the system....
-  return config.house[0].contract.getTimerStatus.call({from: config.house[0].address});
+  return config.house[0].contract.getTimerStatus.call({from: config.house[0].address, gas: 2000000});
 }
 
 function getNow() {
-  return config.house[0].contract.getNow.call({from: config.house[0].address});
+  return config.house[0].contract.getNow.call({from: config.house[0].address, gas: 2000000});
 }
 
 function jumpTime(a) {
@@ -578,22 +593,22 @@ contract('Configuration', function (accounts) {
   });
 
   it("III. Price communication House<->PV (3. PV and Battery intiate Transaction)", function () {
-    return jumpTime(15).then(function (result) {
+    return jumpTime(13).then(function (result) {
       console.log("Here time is been increased (3)");
       /*return getNow();
     }).then(function (result) {
       console.log("Now is", result.toNumber());*/
-//      return checkStep();
+      return checkStep();
     }).then(function (result) {
-//      console.log("We are at step ", result.toNumber());
+      console.log("We are at step ", result.toNumber());
       var sellEnergyPromises = [];
 
-      for (var actionNo in sellEnerygOrder) {
+      for (var actionNo in sellEnergyOrder) {
         (function (element) {   // async... not able to jumpTime in a loop...
           //await jumpTime(element.timelapse);
           //takeActionPromises2.push(jumpTime(element.timelapse));//);
           sellEnergyPromises.push(takeAction(element));
-        })(sellEnerygOrder[actionNo]);
+        })(sellEnergyOrder[actionNo]);
       }
       return Promise.all(sellEnergyPromises);
     }).then(function (result) {
@@ -637,24 +652,25 @@ contract('Configuration', function (accounts) {
     });
   });
 
-
-  // not yet finished!!
-/*
   it("III. Price communication House<->PV (4. PV sell excess energy to battery; House buy energy from battery)", async function () {
-    // PV2 still has excess energy
-    let prod = await singlePV2.getProduction.call();
-    console.log("PV2 still has", prod[0].toNumber(), prod[1].toNumber());
-    let nowTime = await singleHouse2.getNow.call();
-    console.log("Now is", nowTime.toNumber());
-    await increaseTimeTo(latestTime() + duration.seconds(300));
-    nowTime = await singleHouse2.getNow.call();
-    console.log("After time increase, now is", nowTime.toNumber());
-    let statTime = await singleHouse0.getTime.call();
-    console.log("The status of the global timer is ", statTime.toNumber());
-    await singlePV2.sellExcess();
-    prod = await singlePV2.getProduction.call();
-    console.log("PV2 still has", prod[0].toNumber(), prod[1].toNumber());
+    return jumpTime(15).then(function (result) {
+      console.log("Here time is been increased (4)");
+      return checkStep();
+    }).then(function (result) {
+      console.log("We are at step ", result.toNumber());
+
+      var takeActionPromises3 = [];
+
+      for (var actionNo in sellExcessOrder) {
+        (function (element) {
+  //        takeActionPromises1.push(jumpTime(element.timelapse));//);
+          takeActionPromises3.push(takeAction(element));
+        })(sellExcessOrder[actionNo]);
+      }
+      return Promise.all(takeActionPromises3);
+    }).then(function (result) {
+      console.log("Excess energy sold");
+    });
   });
-*/
 
 });
