@@ -1,5 +1,5 @@
 import latestTime from './helpers/latestTime'
-import { increaseTimeTo, duration } from './helpers/increaseTime'
+import increaseTime, { increaseTimeTo, duration } from './helpers/increaseTime'
 
 var Configuration = artifacts.require("./Configuration.sol");
 var SingleHouse = artifacts.require("./SingleHouse.sol");
@@ -303,8 +303,8 @@ function getNow() {
   return config.house[0].contract.getNow.call();
 }
 
-async function jumpTime(a) {
-  await increaseTimeTo(latestTime() + duration.seconds(a));
+function jumpTime(a) {
+  return increaseTimeTo(latestTime() + duration.seconds(a));
 }
 
 
@@ -486,15 +486,15 @@ contract('Configuration', function (accounts) {
     });
   });
 
-  it("III. Price communication House<->PV (1. House ask for price info and sort)", async function () {
+  it("III. Price communication House<->PV (1. House ask for price info and sort)", function () {
 
-    await increaseTimeTo(latestTime() + duration.seconds(15));
-    /*var sortPromises = [];
-    sortPromises.push(jumpTime(15));
+    //var increaseTimePromise = increaseTimeTo(latestTime() + duration.seconds(15));
+    //return increaseTimePromise.then(function (result) {
     return jumpTime(15).then(function (result) {
-      console.log("Time jump 15s forward");
-    }).then(function (result) {*/
-    return getNow().then(function (result) {
+      console.log("Here time is been increased");
+      return getNow();
+    }).then(function (result) {
+   // return getNow().then(function (result) {
       console.log("Now is", result.toNumber());
       return checkStep();
     }).then(function (result) {
@@ -503,73 +503,34 @@ contract('Configuration', function (accounts) {
       var takeActionPromises1 = [];
 
       for (var actionNo in action_at_moment_1) {
-        (function (element) {   // async... not able to jumpTime in a loop...
-          //await jumpTime(element.timelapse);
-          takeActionPromises1.push(takeAction(element));
+        (function (element) {
+          //increaseTimePromise = increaseTimeTo(latestTime() + duration.seconds(element.timelapse));
+          takeActionPromises1.push(jumpTime(element.timelapse))//);
+          //takeActionPromises1.push(takeAction(element));
+          .then(function(result){
+            console.log("increase time promise done");
+            takeAction(element);
+          }).then(function(result){
+            console.log("take action promise");
+          });
+          //}));
+          //takeActionPromises1.push(takeAction(element));
         })(action_at_moment_1[actionNo]);
       }
       return Promise.all(takeActionPromises1);
     }).then(function (result) {
-      
       console.log("All price sorted");
     });
-    await increaseTimeTo(latestTime() + duration.seconds(20));
   });
 
-  /*it("III. Price communication House <-> PV (2. PV collect info - Try another time delay)", async function () {
-
-    //await jumpTime(15);
-    await increaseTimeTo(latestTime() + duration.seconds(12));
-    return config.house[1].contract.getNow.call().then(function (result) {
-      console.log("Now is", result.toNumber());
-      return checkStep();
-    }).then(function (result) {
-      console.log("The status of the global timer is ", result.toNumber());
-
-      var takeActionPromises2 = [];
-
-      for (var actionNo in action_at_moment_2) {
-        (function (element) {   // async... not able to jumpTime in a loop...
-          //await jumpTime(element.timelapse);
-          takeActionPromises2.push(takeAction(element));
-        })(action_at_moment_2[actionNo]);
-      }
-      return Promise.all(takeActionPromises2);
-    }).then(function (result) {
-      console.log("All rank sorted");
-    });*/
-
-    /*let nowTime = await singleHouse2.getNow.call();
-    console.log("Now is", nowTime.toNumber());
-    await increaseTimeTo(latestTime() + duration.seconds(150));
-    nowTime = await singleHouse2.getNow.call();
-    console.log("Now is", nowTime.toNumber());
-    let statTime = await singleHouse0.getTime.call();
-    console.log("The status of the global timer is ", statTime.toNumber());
-
-    let result1 = await singleHouse1.getSortedPrice.call({ from: singlePV1_adr });
-    console.log("returned sorted information from sH1 is", result1[0].toNumber(), result1[1].toNumber(), result1[2].toNumber(), result1[3]);
-    let currentPV = singlePV1;
-    await currentPV.askForRank();
-    await currentPV.sortRank();
-    let result2 = await currentPV.getSortedRank.call(0);
-    console.log("The sorted result at 0 is", result2[0], result2[1].toNumber(), result2[2].toNumber(), result2[3].toNumber());
-    let result3 = await currentPV.getSortedRank.call(1);
-    console.log("The sorted result at 1 is", result3[0], result3[1].toNumber(), result3[2].toNumber(), result3[3].toNumber());
-    let result4 = await currentPV.getSortedRank.call(2);
-    console.log("The sorted result at 2 is", result4[0], result4[1].toNumber(), result4[2].toNumber(), result4[3].toNumber());
-    await singlePV0.askForRank();
-    await singlePV0.sortRank();
-    await singlePV2.askForRank();
-    await singlePV2.sortRank();
-    await singleBattery0.askForRank();
-    await singleBattery0.sortRank();
-    console.log("Other devices sorted");*/
-  //});
-
   it("III. Price communication House<->PV (2. PV collect Info)", function () {
+
+    var increaseTimePromise = increaseTimeTo(latestTime() + duration.seconds(20));
+    increaseTimePromise.then(function (result) {
+      return getNow();
+    }).then(function (result) {
     
-    return config.house[1].contract.getNow.call().then(function (result) {
+   // return config.house[1].contract.getNow.call().then(function (result) {
       console.log("Now is", result.toNumber());
       return checkStep();
     }).then(function (result) {
