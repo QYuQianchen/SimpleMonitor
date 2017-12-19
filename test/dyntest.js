@@ -505,16 +505,16 @@ contract('Configuration', function (accounts) {
       for (var actionNo in action_at_moment_1) {
         (function (element) {
           //increaseTimePromise = increaseTimeTo(latestTime() + duration.seconds(element.timelapse));
-          takeActionPromises1.push(jumpTime(element.timelapse))//);
+          takeActionPromises1.push(jumpTime(element.timelapse));//);
           //takeActionPromises1.push(takeAction(element));
-          .then(function(result){
+          /*.then(function(result){
             console.log("increase time promise done");
             takeAction(element);
           }).then(function(result){
             console.log("take action promise");
-          });
+          });*/
           //}));
-          //takeActionPromises1.push(takeAction(element));
+          takeActionPromises1.push(takeAction(element));
         })(action_at_moment_1[actionNo]);
       }
       return Promise.all(takeActionPromises1);
