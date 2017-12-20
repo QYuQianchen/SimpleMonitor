@@ -21,18 +21,6 @@ exports.config = {
       "picture": "images/house.png",
       "address": 0,
       "contract_address": 0
-    },
-    {
-      "id": 1,
-      "picture": "images/house.png",
-      "address": 0,
-      "contract_address": 0
-    },
-    {
-      "id": 2,
-      "picture": "images/house.png",
-      "address": 0,
-      "contract_address": 0
     }
   ],
   "pv": [
@@ -41,28 +29,9 @@ exports.config = {
       "picture": "images/pv.png",
       "address": 0,
       "contract_address": 0
-    },
-    {
-      "id": 1,
-      "picture": "images/pv.png",
-      "address": 0,
-      "contract_address": 0
-    },
-    {
-      "id": 2,
-      "picture": "images/pv.png",
-      "address": 0,
-      "contract_address": 0
     }
   ],
   "battery": [
-    {
-      "id": 0,
-      "picture": "images/battery.png",
-      "address": 0,
-      "contract_address": 0,
-      "capacity": 20
-    }
   ]
 };
 
@@ -85,7 +54,7 @@ exports.actions = {
   "battery" : {
     1 : ["setVolume", "setConsumption", "setPrice"],
     2 : ["askPrice", "sortPrice"],
-    3 : ["askRank", "sortRank"],
+    3 : ["askForRank", "sortRank"],
     4 : ["sellEnergy"]
   }
 };
