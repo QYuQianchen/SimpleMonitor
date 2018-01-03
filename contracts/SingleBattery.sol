@@ -3,7 +3,7 @@ pragma solidity ^0.4.4;
 import "./IBattery.sol";
 import "./IPV.sol";
 import "./IGrid.sol";
-import "./IHouse.sol";
+import "./IHouseE.sol";
 import "./GeneralDevice.sol";
 
 import "./SortRLib.sol";
@@ -129,7 +129,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     bool updated;
     draftRankMap.initRnkTable();
     for (uint i = 0; i < connectedDevice[0].length; i++) {
-      (consum, rank, tot, updated) = IHouse(connectedDevice[0][i]).getSortedPrice();
+      (consum, rank, tot, updated) = IHouseE(connectedDevice[0][i]).getSortedPrice();
       if (updated) {
         draftRankMap.addToRnkTable(connectedDevice[0][i],consum, rank, tot);
       }
@@ -213,7 +213,7 @@ contract SingleBattery is GeneralDevice, IBattery {
       (adr,consum,rank,tot) = getSortedRank(_id);
       giveoutVol = currentVolume.findMin(consum);
       if (connectedDevice[0].assertInside(adr)) {
-        whatDeviceAccept = IHouse(adr).goNoGo(giveoutVol);
+        whatDeviceAccept = IHouseE(adr).goNoGo(giveoutVol);
         //setVolume(currentVolume-whatDeviceAccept);
         currentVolume -= whatDeviceAccept;
         volStatusAt = now;

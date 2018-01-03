@@ -1,4 +1,4 @@
-pragma solidity ^0.4.4;
+pragma solidity ^0.4.16;
 
 import "./SortPLib.sol";
 import "./AdrLib.sol";
@@ -6,10 +6,11 @@ import "./TransactLib.sol";
 import "./IPV.sol";
 import "./IGrid.sol";
 import "./IBattery.sol";
-import "./IHouse.sol";
+import "./IHouseE.sol";
+import "./IHouseH.sol";
 import "./GeneralDevice.sol";
 
-contract SingleHouse is GeneralDevice, IHouse {
+contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
   // one contract is associated to one particular House in the network.
 
   using AdrLib for address[];
@@ -41,10 +42,19 @@ contract SingleHouse is GeneralDevice, IHouse {
     ConsumptionLog(owner, consumption, consumStatusAt);
   }
 
-  function getConsumption() external view  returns (uint consum, uint consumAt) {
-    consum = consumption;
-    consumAt = consumStatusAt;
+  // overload function of setConsumption
+  // consum1: electricity consumption; consum2: Medium-Temperature water consumption (liter); consum3: High-Temperature water consumption (liter)
+  function setConsumption(uint consum1, uint consum2, uint consum3) public timed(1) ownerOnly {
+    consumption = consum1;
+    consumptionMTWater = consum2;
+    consumptionHTWater = consum3;
+    consumStatusAt = now;
+    consumWaterStatusAt = now;
+    ConsumptionLog(owner, consumption, consumStatusAt);
   }
+
+  // how to get consumption of hot water??
+
 
   // --- 2. ask for connected PV / batteries / grid for price of electricity supply ---
 
@@ -82,7 +92,8 @@ contract SingleHouse is GeneralDevice, IHouse {
     (rank,tot,updated) = draftPriceMap.getPrsTable(adr);
   }
 
-  // --- 4. PV/Battery ask House to confirm energy transaction ---
+  // --- 4. PV/Battery ask House to confirm ...
+    // --- 4.1 energy transaction ---
 
   function goNoGo(uint giveoutvol) timed(4) returns (uint) {
     address adrDevice = msg.sender;
@@ -95,6 +106,22 @@ contract SingleHouse is GeneralDevice, IHouse {
     wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
     return (takeoutvol);
   }
+    // --- 4.1 heating transaction ---
+  function goNoGoHeating(uint giveoutvol, uint prs, uint wType) timed(4) returns (uint) {
+    address adrDevice = msg.sender;
+    uint takeoutvol;
+    require(connectedDevice[4].assertInside(adrDevice));
+    if (wType == 0) {
+      takeoutvol = consumptionMTWater.findMin(giveoutvol);
+      consumptionMTWater -= takeoutvol;
+    } else {  // high temperature water
+      takeoutvol = consumptionHTWater.findMin(giveoutvol);
+      consumptionHTWater -= takeoutvol;
+    } 
+    wallet -= int(takeoutvol*prs);
+    return (takeoutvol);
+  }
+  
 
   // --- 5. If house still has energy demand, ask grid for energy ---
 

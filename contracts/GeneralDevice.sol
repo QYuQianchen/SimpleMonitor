@@ -16,6 +16,14 @@ contract GeneralDevice {
   address globalTimer = 0x0;
   int     wallet;                     // To record loss & gain (that of house is negative -> need to pay others)
   mapping(uint=>address[]) connectedDevice;
+  // (In electricity network:)
+  //  connectedDevice[0] -> houses;
+  //  connectedDevice[1] -> PV;
+  //  connectedDevice[2] -> battery;
+  // (In heating network:)
+  //  connectedDevice[3] -> HP;
+  //  connectedDevice[4] -> WaterTanks;
+
   //ClockLib.GlobalClock globalTimer;
 
   modifier adminOnly {

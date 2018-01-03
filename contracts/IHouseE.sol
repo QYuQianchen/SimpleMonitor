@@ -1,10 +1,10 @@
-pragma solidity ^0.4.4;
+pragma solidity ^0.4.16;
 
 import "./GeneralDevice.sol";
 
-contract IHouse is GeneralDevice {
+contract IHouseE is GeneralDevice {
   
-  uint    consumption;              // Production of electricity (consumption: positive)
+  uint    consumption;              // Consumption of electricity (consumption: positive)
 
   //uint    consumTimeOut = 5 minutes;
 
@@ -13,7 +13,12 @@ contract IHouse is GeneralDevice {
   //int     wallet;                   // To record loss & gain (that of house is negative -> need to pay others)      
 
   function getSortedPrice() external returns(uint consum, uint rank, uint tot, bool updated);
-
+  
   function goNoGo(uint giveoutvol) timed(4) returns (uint);
+
+  function getConsumptionE() external view returns (uint consum, uint consumAt) {
+    consum = consumption;
+    consumAt = consumStatusAt;
+  }
   
 }

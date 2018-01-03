@@ -1,7 +1,7 @@
 pragma solidity ^0.4.4;
 
 import "./IPV.sol";
-import "./IHouse.sol";
+import "./IHouseE.sol";
 import "./IBattery.sol";
 import "./IGrid.sol";
 import "./SortRLib.sol";
@@ -77,7 +77,7 @@ contract SinglePV is GeneralDevice, IPV {
     bool updated;
     draftRankMap.initRnkTable();
     for (uint i = 0; i < connectedDevice[0].length; i++) {
-      (consum, rank, tot, updated) = IHouse(connectedDevice[0][i]).getSortedPrice();
+      (consum, rank, tot, updated) = IHouseE(connectedDevice[0][i]).getSortedPrice();
       if (updated) {
         draftRankMap.addToRnkTable(connectedDevice[0][i],consum, rank, tot);
       }
@@ -178,7 +178,7 @@ contract SinglePV is GeneralDevice, IPV {
         receivedMoney = whatDeviceAccept*price;
         wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else if (connectedDevice[0].assertInside(adr)) {
-        whatDeviceAccept = IHouse(adr).goNoGo(giveoutVol);
+        whatDeviceAccept = IHouseE(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;
         wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));

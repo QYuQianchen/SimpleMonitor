@@ -3,6 +3,8 @@ pragma solidity ^0.4.4;
 import "./SingleHouse.sol";
 import "./SinglePV.sol";
 import "./SingleBattery.sol";
+import "./SingleHeatPump.sol";
+import "./SingleWaterTank.sol";
 import "./Grid.sol";
 import "./GlobalTimer.sol";
 
@@ -19,7 +21,8 @@ contract Configuration {
   uint8 private numBatteryCurrent = 0;    // current batteries in the system
 
   // Several types of devices in the system
-  enum deviceType {House, PV, Battery}
+  //enum deviceType {House, PV, Battery}
+   enum deviceType {House, PV, Battery, HeatPump, WaterTank}
 
   struct EndUser {
     deviceType  dType;
@@ -34,7 +37,7 @@ contract Configuration {
 
   // Restricts execution by admin only
   modifier adminOnly {
-    if(msg.sender == admin){
+    if(msg.sender == admin) {
       _;
     } else {
       revert();
@@ -56,16 +59,20 @@ contract Configuration {
   }
 
   function addDevice(uint8 _deviceType, address adr, uint capacity, bool g) adminOnly public {
-      require (_deviceType < 3); //addBattery
+      require (_deviceType < 5); //addBattery
       if (_deviceType == 0) {   // addHouse
         contractList[adr] = new SingleHouse(adr);
         numHouseCurrent++;
       } else if (_deviceType == 1) {    //addPV
         contractList[adr] = new SinglePV(adr);
         numPVCurrent++;
-      } else {
+      } else if (_deviceType == 2) {
         contractList[adr] = new SingleBattery(adr, capacity);
         numBatteryCurrent++;
+      } else if (_deviceType == 3) {
+        contractList[adr] = new SingleHeatPump(adr, capacity);
+      } else {
+        contractList[adr] = new SingleWaterTank(adr, capacity, 0);    // need to change other functions (especially in test file)
       }
       if (g) {
           GeneralDevice(contractList[adr]).setGridAdr(gridAdr);
@@ -98,8 +105,8 @@ contract Configuration {
         uint8[2] memory dt;
         dt[0] = getDeviceType(adr1);
         dt[1] = getDeviceType(adr2);
-        require(dt[0]<3 && userList[adr1].connectedUser[adr2].cAddress == 0x0);
-        require(dt[1]<3 && userList[adr2].connectedUser[adr1].cAddress == 0x0);
+        require(dt[0]<5 && userList[adr1].connectedUser[adr2].cAddress == 0x0);
+        require(dt[1]<5 && userList[adr2].connectedUser[adr1].cAddress == 0x0);
         userList[adr1].connectedUser[adr2] = userList[adr2];
         userList[adr2].connectedUser[adr1] = userList[adr1];
 
