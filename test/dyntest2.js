@@ -1,5 +1,6 @@
 import latestTime from './helpers/latestTime'
 import { increaseTimeTo, duration } from './helpers/increaseTime'
+var fs = require('fs');
 
 var Configuration = artifacts.require("./Configuration.sol");
 var SingleHouse = artifacts.require("./SingleHouse.sol");
@@ -7,20 +8,20 @@ var SinglePV = artifacts.require("./SinglePV.sol");
 var SingleBattery = artifacts.require("./SingleBattery.sol");
 var Grid = artifacts.require("./Grid.sol");
 
+var configuration = null;
+
+var settings = require("./settings");
+var config = settings.config;
+var actions = settings.actions;
+
+var inputs = require("./inputs").inputs;
+
 var contracts = {
   "house": artifacts.require("./SingleHouse.sol"),
   "pv": artifacts.require("./SinglePV.sol"),
   "battery": artifacts.require("./SingleBattery.sol"),
   "grid": artifacts.require("./Grid.sol"),
 };
-
-var configuration = null;
-var settings = require("./settings");
-
-var config = settings.config;
-var actions = settings.actions;
-
-var inputs = require("./inputs").inputs;
 
 var category_nums = {
   "house": 0,
@@ -36,7 +37,7 @@ var actionInputs = {
   "setVolume" : "volume"
 };
 
-function step0(callback) {
+function setup(callback) {
   return Configuration.deployed().then(function (instance) {
     configuration = instance;
     console.log("Starting to register devices...");
@@ -69,253 +70,70 @@ function step0(callback) {
   });
 }
 
+function step(_jumpTime, period, callback) {
+  var currentStep = 0;
+  jumpTime(_jumpTime).then(function(result) {
+    console.log("Increasing blocktime by " + _jumpTime + " seconds...");
+    return checkStep();
+  }).then(function (result) {
+    currentStep = result.toNumber();
+    console.log("\n===================\nSystem is at step " + currentStep + "\n===================");
 
-function step1(callback) {
-  return checkStep().then(function (result) {
-    var currentStep = result.toNumber();
-    console.log("We are at step: ", result.toNumber());
+    var stepPromises = [];
 
-    var setValuePromises = [];
+    for (var deviceType in actions) {
+      if (actions[deviceType][currentStep] != undefined) {
 
-    for (var device_type in actions) {
+        for (var deviceId in config[deviceType]) {
 
-      if (actions[device_type][currentStep] != undefined) {
-        for (var currentAction in actions[device_type][currentStep]) {
-          for (var device_id in config[device_type]) {
-            var period = 0;
-            var element = config[device_type][device_id];
-            var action = actions[device_type][currentStep][currentAction];
-            var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
+          var deviceActionPromises = [];
 
-            (function(_element, _action, _input) {
-              console.log("Executing " + _action + "(" + _input + ") <-- " + _element.device_name);
-              setValuePromises.push(execute(_element, _action, _input));
-            })(element, action, input);
+          for (var currentAction in actions[deviceType][currentStep]) {
+
+            var element = config[deviceType][deviceId];
+            var action = actions[deviceType][currentStep][currentAction];
+
+            // Check whether input is available for the current action
+            var input = undefined;
+            if (inputs[deviceType] != undefined) {
+              if (inputs[deviceType][deviceId] != undefined) {
+                if (inputs[deviceType][deviceId][actionInputs[action]] != undefined) {
+                  if (inputs[deviceType][deviceId][actionInputs[action]][period] != undefined) {
+                    input = inputs[deviceType][deviceId][actionInputs[action]][period];
+                  }
+                }
+              }
+            }
+
+            console.log(element.device_name + " executing " + action + "()");
+            if (input != undefined) {
+              deviceActionPromises.push(execute(element, action, input));
+            } else {
+              if (element.contract[action] != undefined) {
+                if (deviceActionPromises.length == 0) {
+                  deviceActionPromises.push(element.contract[action]({ from: element.address, gas: 210000000 }));
+                } else {
+                  deviceActionPromises.push(deviceActionPromises[currentAction-1].then(element.contract[action]({ from: element.address, gas: 210000000 })));
+                }
+              }
+            }
+
           }
+
+          // console.log("\n\n" + deviceType + deviceId);
+          for (var i in deviceActionPromises) {
+            // console.log(deviceActionPromises[i]);
+            stepPromises.push(deviceActionPromises[i]);
+          }
+
         }
       } else {
-        console.log("Nothing to do at this step <-- " + device_type);
+        console.log(deviceType + " --> nothing to do at this step");
       }
     }
-
-    return Promise.all(setValuePromises)
-
-  }).then(function (result) {
-    console.log("Setting values done...");
-    console.log("Set all consumptions/productions/prices. \n === Here are the status of each device: ===");
-
-    return getAllValues(config);
-
+    return Promise.all(stepPromises);
   }).then(function(result) {
-    console.log("getvalues done...");
-    if (callback != undefined) callback();
-  });
-}
-
-function step2(callback) {
-  jumpTime(16).then(function (result) {
-    console.log("Here time is been increased (1)");
-    return checkStep();
-  }).then(function (result) {
-    console.log("We are at step ", result.toNumber());
-
-   var currentStep = result.toNumber();
-
-    var step2Promises = [];
-
-    for (var device_type in actions) {
-      if (actions[device_type][currentStep] != undefined) {
-
-        for (var device_id in config[device_type]) {
-          var device_promises = [];
-
-          for (var currentAction in actions[device_type][currentStep]) {
-
-            var element = config[device_type][device_id];
-            var action = actions[device_type][currentStep][currentAction];
-
-            console.log("Executing " + action + "() <-- " + element.device_name);
-            if (element.contract[action] != undefined) {
-              if (device_promises.length == 0) {
-                device_promises.push(element.contract[action]({ from: element.address }));
-              } else {
-                device_promises.push(device_promises[currentAction-1].then(element.contract[action]({ from: element.address })));
-              }
-            }
-          }
-
-          console.log("\n\n" + device_type + device_id);
-          for (var i in device_promises) {
-            console.log(device_promises[i]);
-            step2Promises.push(device_promises[i]);
-          }
-
-        }
-
-
-      } else {
-        console.log("Nothing to do at this step <-- " + device_type);
-      }
-    }
-
-    return Promise.all(step2Promises);
-  }).then(function (result) {
-    console.log("All price sorted");
-    if (callback != undefined) callback();
-  });
-}
-
-
-function step3(callback) {
-  jumpTime(16).then(function (result) {
-    console.log("Here time is been increased (2)");
-    return checkStep();
-  }).then(function (result) {
-    console.log("We are at step ", result.toNumber());
-
-    var currentStep = result.toNumber();
-    var step3Promises = [];
-    for (var device_type in actions) {
-      if (actions[device_type][currentStep] != undefined) {
-        for (var device_id in config[device_type]) {
-
-          var device_promises = [];
-
-          for (var currentAction in actions[device_type][currentStep]) {
-
-            var element = config[device_type][device_id];
-            var action = actions[device_type][currentStep][currentAction];
-
-            console.log("Executing " + action + "() <-- " + element.device_name);
-            if (element.contract[action] != undefined) {
-              if (device_promises.length == 0) {
-                device_promises.push(element.contract[action]({ from: element.address }));
-              } else {
-                device_promises.push(device_promises[currentAction-1].then(element.contract[action]({ from: element.address })));
-              }
-            }
-          }
-
-          console.log("\n\n" + device_type + device_id);
-          for (var i in device_promises) {
-            console.log(device_promises[i]);
-            step3Promises.push(device_promises[i]);
-          }
-        }
-      } else {
-        console.log("Nothing to do at this step <-- " + device_type);
-      }
-    }
-
-    return Promise.all(step3Promises);
-  }).then(function (result) {
-    console.log("All ranks sorted");
-    if (callback != undefined) callback();
-  });
-}
-
-function step4(callback) {
-  jumpTime(16).then(function() {
-    console.log("Here time is been increased (3)");
-    return checkStep();
-  }).then(function (result) {
-    console.log("We are at step ", result.toNumber());
-    var currentStep = result.toNumber();
-
-    var step4Promises = [];
-    for (var device_type in actions) {
-      if (actions[device_type][currentStep] != undefined) {
-        for (var device_id in config[device_type]) {
-
-          var device_promises = [];
-
-          for (var currentAction in actions[device_type][currentStep]) {
-
-            var element = config[device_type][device_id];
-            var action = actions[device_type][currentStep][currentAction];
-
-            console.log("Executing " + action + "() <-- " + element.device_name);
-            if (element.contract[action] != undefined) {
-              if (device_promises.length == 0) {
-                device_promises.push(element.contract[action]({ from: element.address }));
-              } else {
-                device_promises.push(device_promises[currentAction-1].then(element.contract[action]({ from: element.address })));
-              }
-            }
-          }
-
-          console.log("\n\n" + device_type + device_id);
-          for (var i in device_promises) {
-            console.log(device_promises[i]);
-            step4Promises.push(device_promises[i]);
-          }
-        }
-      } else {
-        console.log("Nothing to do at this step <-- " + device_type);
-      }
-    }
-
-    return Promise.all(step4Promises);
-  }).then(function (result) {
-    console.log("energy sold out");
-    console.log("=== Here are the status of each device: ===");
-
-    return getAllValues(config);
-  }).then(function(result) {
-    console.log("getvalues done...");
-    if (callback != undefined) callback();
-  });
-}
-
-function step5(callback) {
-  jumpTime(16).then(function (result) {
-    console.log("Here time is been increased (4)");
-    return checkStep();
-  }).then(function (result) {
-    console.log("We are at step ", result.toNumber());
-    var currentStep = result.toNumber();
-    var step5Promises = [];
-
-    for (var device_type in actions) {
-      if (actions[device_type][currentStep] != undefined) {
-        for (var device_id in config[device_type]) {
-
-          var device_promises = [];
-
-          for (var currentAction in actions[device_type][currentStep]) {
-
-            var element = config[device_type][device_id];
-            var action = actions[device_type][currentStep][currentAction];
-
-            console.log("Executing " + action + "() <-- " + element.device_name);
-            if (element.contract[action] != undefined) {
-              if (device_promises.length == 0) {
-                device_promises.push(element.contract[action]({ from: element.address }));
-              } else {
-                device_promises.push(device_promises[currentAction-1].then(element.contract[action]({ from: element.address })));
-              }
-            }
-          }
-
-          console.log("\n\n" + device_type + device_id);
-          for (var i in device_promises) {
-            console.log(device_promises[i]);
-            step5Promises.push(device_promises[i]);
-          }
-        }
-      } else {
-        console.log("Nothing to do at this step <-- " + device_type);
-      }
-    }
-
-    return Promise.all(step5Promises);
-  }).then(function (result) {
-    console.log("Excess energy sold");
-
-    console.log("=== Here are the status of each device: ===");
-    return getAllValues(config);
-  }).then(function(result) {
-    console.log("getvalues done...");
+    console.log("All actions for step " + currentStep + " done...");
     if (callback != undefined) callback();
   });
 }
@@ -430,19 +248,29 @@ function getAllValues(_config) {
 
         if (element.contract != undefined && element.contract.getConsumption != undefined) {
           getValuePromises.push(element.contract.getConsumption.call().then(function(result) {
-            console.log("getConsumption() --> " + element.device_name + " --> " + result);
+            console.log(element.device_name + " getConsumption() --> " + result);
+            element.values.consumption.push(result);
           }));
         }
 
         if (element.contract != undefined && element.contract.getProduction != undefined) {
           getValuePromises.push(element.contract.getProduction.call().then(function(result) {
-            console.log("getProduction() --> " + element.device_name + " --> " + result);
+            console.log(element.device_name + " getProduction() --> " + result);
+            element.values.production.push(result);
           }));
         }
 
         if (element.contract != undefined && element.contract.getPrice != undefined) {
           getValuePromises.push(element.contract.getPrice.call().then(function(result) {
-            console.log("getPrice() --> " + element.device_name + " --> " + result);
+            console.log(element.device_name + " getPrice() --> " + result);
+            element.values.price.push(result);
+          }));
+        }
+
+        if (element.contract != undefined && element.contract.getWallet != undefined) {
+          getValuePromises.push(element.contract.getWallet.call().then(function(result) {
+            console.log(element.device_name + " getWallet() --> " + result);
+            element.values.wallet.push(result);
           }));
         }
 
@@ -452,61 +280,117 @@ function getAllValues(_config) {
   return Promise.all(getValuePromises)
 }
 
-contract('Configuration', function (accounts) {
-
+function prepareConfig(_config, _accounts) {
   var i = 0;
-  for (var device_type in config) {
-    for (var device_id in config[device_type]) {
+  for (var deviceType in _config) {
+    for (var deviceId in config[deviceType]) {
       (function (element) {
-        element.device_name = device_type + element.id;
-        element.device_type = device_type;
-        element.address = accounts[i];
-        console.log("Device name: " + element.device_name);
+        element.device_name = deviceType + element.id;
+        element.device_type = deviceType;
+        element.address = _accounts[i];
+
+        element.values = {};
+        element.values.consumption = [];
+        element.values.production = [];
+        element.values.price = [];
+        element.values.wallet = [];
+
+        console.log("Prepared " + element.device_name);
         i++;
-      })(config[device_type][device_id]);
+      })(config[deviceType][deviceId]);
     }
   }
+}
 
+function saveData(data) {
+  var jsonData = JSON.stringify(data);
+  fs.writeFile("./test.json", jsonData, function(err) {
+      if(err) {
+          return console.log(err);
+      }
+  });
+}
+
+contract('Configuration', function(accounts) {
   var virtualTime;
+  prepareConfig(config, accounts);
 
 
-  it("I. Create 3 SingleHouse contracts and link to 3 SinglePVs", function() {
+  console.log("\n\nStarting step 0...");
+  setup(function() {
+    console.log("\n===========\nSTEP0 DONE!\n===========\n");
 
-    console.log("\n\nStarting step 0...");
-    step0(function() {
-      console.log("\n===========\nSTEP0 DONE!\n===========\n");
+    var counter = 0;
+    var steps = 5;
+    var period = 0;
+    var maxPeriods = 3;
 
-      console.log("\n\nStarting step 1...");
-      step1(function() {
-        console.log("\n===========\nSTEP1 DONE!\n===========\n");
+    console.log("\n\nStarting step 1...");
+    // step1(function() {
+    step(0, 0, function() {
+      console.log("\n===========\nSTEP1 DONE!\n===========\n");
+      counter++;
+      stepper();
+      function stepper() {
+        period = (counter-counter%steps)/steps;
+        console.log("Now in period " + period);
+        step(15.5, period, function() {
+          getAllValues(config).then(function() {
 
+            counter++;
+            console.log("Stepper done. Counter:" + counter);
+            if (counter < (maxPeriods * steps)) {
+              stepper();
+            } else {
+              console.log("DONE.");
+              saveData(config);
+            }
 
-        console.log("\n\nStarting step 2...");
-        step2(function() {
-          console.log("\n===========\nSTEP2 DONE!\n===========\n");
-
-
-          console.log("\nStarting step 3...");
-          step3(function() {
-            console.log("\n===========\nSTEP3 DONE!\n===========\n");
-
-
-            console.log("\nStarting step 4...");
-            step4(function() {
-              console.log("\n===========\nSTEP4 DONE!\n===========\n");
-
-
-              console.log("\nStarting step 5...");
-              step5(function() {
-                console.log("\n===========\nSTEP5 DONE!\n===========\n");
-
-
-              });
-            });
           });
-        });
-      });
+        })
+      }
+
+
     });
   });
+
+
+    // console.log("\n\nStarting step 1...");
+    // // step1(function() {
+    // step(0, 0, function() {
+    //   console.log("\n===========\nSTEP1 DONE!\n===========\n");
+    //
+    //
+    //   console.log("\n\nStarting step 2...");
+    //   // step(16, function() {
+    //   step(16, 0, function() {
+    //     console.log("\n===========\nSTEP2 DONE!\n===========\n");
+    //
+    //
+    //     console.log("\nStarting step 3...");
+    //     // step(16, function() {
+    //     step(15, 0, function() {
+    //       console.log("\n===========\nSTEP3 DONE!\n===========\n");
+    //
+    //
+    //       console.log("\nStarting step 4...");
+    //       // step(16, function() {
+    //       step(15, 0, function() {
+    //         getAllValues(config);
+    //         console.log("\n===========\nSTEP4 DONE!\n===========\n");
+    //
+    //
+    //         console.log("\nStarting step 5...");
+    //         step(15, 0, function() {
+    //           getAllValues(config);
+    //           console.log("\n===========\nSTEP5 DONE!\n===========\n");
+    //
+    //
+    //         });
+    //       });
+    //     });
+    //   });
+    // });
+
 
 });

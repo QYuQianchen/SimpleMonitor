@@ -21,6 +21,18 @@ exports.config = {
       "picture": "images/house.png",
       "address": 0,
       "contract_address": 0
+    },
+    {
+      "id": 1,
+      "picture": "images/house.png",
+      "address": 0,
+      "contract_address": 0
+    },
+    {
+      "id": 2,
+      "picture": "images/house.png",
+      "address": 0,
+      "contract_address": 0
     }
   ],
   "pv": [

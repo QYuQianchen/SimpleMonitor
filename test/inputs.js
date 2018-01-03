@@ -2,17 +2,19 @@ exports.inputs = {
   "house" : [
     {
       "consumption" : [
-        3
+        3, 4, 5
       ]
     },
+
     {
       "consumption" : [
-        3
+        3, 4, 5
       ]
     },
+
     {
       "consumption" : [
-        8
+        8, 9, 10
       ]
     }
   ],
@@ -20,28 +22,28 @@ exports.inputs = {
   "pv" : [
     {
       "production" : [
-        5
+        5, 6, 7
       ],
       "price" : [
-        20
-      ]
-    },
-    
-    {
-      "production" : [
-        10
-      ],
-      "price" : [
-        15
+        20, 20, 20
       ]
     },
 
     {
       "production" : [
-        10
+        10, 11, 12
       ],
       "price" : [
-        30
+        15, 15, 15
+      ]
+    },
+
+    {
+      "production" : [
+        10, 11, 12
+      ],
+      "price" : [
+        30, 30, 30
       ]
     }
   ],
@@ -62,7 +64,7 @@ exports.inputs = {
   "grid" : [
     {
       "price" : [
-        [20, 3]
+        [20, 3], [20, 3], [20, 3]
       ]
     }
   ],
