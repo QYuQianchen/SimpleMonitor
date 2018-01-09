@@ -10,7 +10,7 @@ library ClockLib {
   }
 
 
-  function initClock(GlobalClock storage _gc) {
+  function initClock(GlobalClock storage _gc) public {
     _gc.statusNo = 0;
     _gc.maxLoop = 0;
     _gc.currentLoop = 0;

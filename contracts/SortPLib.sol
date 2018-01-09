@@ -14,12 +14,12 @@ library SortPLib {
     uint fLength;
   } 
 
-  function initPrsTable(PriceMap storage _prm) {
+  function initPrsTable(PriceMap storage _prm) public {
     _prm.totalLength = 0;
     _prm.fLength = 0;
   }
 
-  function addToPrsTable(PriceMap storage _prm, address _adr, uint _p, bool _tf) {
+  function addToPrsTable(PriceMap storage _prm, address _adr, uint _p, bool _tf) public {
     _prm.prsTable[_adr] = PriceTF(_p,_tf);
     if (_tf == false) {
       _prm.fLength++;
@@ -28,7 +28,7 @@ library SortPLib {
     _prm.totalLength++;
   }
 
-  function sortPrsTable(PriceMap storage _prm) {
+  function sortPrsTable(PriceMap storage _prm) public {
     uint minTemp;
     uint _id;
     for (uint i = 0; i < _prm.totalLength-1; i++) {
@@ -57,18 +57,18 @@ library SortPLib {
     }
   }
 
-  function swap (PriceMap storage _prm, uint _id1, uint _id2) {
+  function swap (PriceMap storage _prm, uint _id1, uint _id2) private {
     if (_id1 != _id2) {
       address temp;
       temp = _prm.sortedPrs[_id1];
       _prm.sortedPrs[_id1] = _prm.sortedPrs[_id2];
-      _prm.sortedPrs[_id2] = temp;   
+      _prm.sortedPrs[_id2] = temp;
     }
   }
 
 // getter
-  function getPrsTable(PriceMap storage _prm, address _adr) returns (uint rank, uint tot, bool updated) {
-    for (var i = 0; i < _prm.totalLength; i++) {
+  function getPrsTable(PriceMap storage _prm, address _adr) public view returns (uint rank, uint tot, bool updated) {
+    for (uint i = 0; i < _prm.totalLength; i++) {
       if (_adr == _prm.sortedPrs[i]) {
         return (i+1,_prm.totalLength,_prm.prsTable[_adr].updated);
       }
@@ -76,7 +76,7 @@ library SortPLib {
     return (0,_prm.totalLength,false);
   }
 
-  function getSortedList(PriceMap storage _prm, uint a) returns(address adr, uint p, bool tF) {
+  function getSortedList(PriceMap storage _prm, uint a) public view returns(address adr, uint p, bool tF) {
     adr = _prm.sortedPrs[a];
     p = _prm.prsTable[_prm.sortedPrs[a]].prs;
     tF = _prm.prsTable[_prm.sortedPrs[a]].updated;

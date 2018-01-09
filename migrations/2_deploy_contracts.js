@@ -5,8 +5,9 @@ var TransacLib = artifacts.require("./TransactLib.sol");
 var PriceLib = artifacts.require("./PriceLib.sol");
 var ConvertLib = artifacts.require("./ConvertLib.sol");
 var GeneralDevice = artifacts.require("./GeneralDevice.sol");
-var IPV = artifacts.require("./IPV.sol");
-var IHouseE = artifacts.require("./IHouseE.sol");
+//var IPV = artifacts.require("./IPV.sol");
+//var IHouseE = artifacts.require("./IHouseE.sol");
+//var IHouseH = artifacts.require("./IHouseH.sol");
 var IBattery = artifacts.require("./IBattery.sol");
 var SinglePV = artifacts.require("./SinglePV.sol");
 var SingleHouse = artifacts.require("./SingleHouse.sol");
@@ -14,7 +15,7 @@ var SingleBattery = artifacts.require("./SingleBattery.sol");
 var SingleHeatPump = artifacts.require("./SingleHeatPump.sol");
 var SingleWaterTank = artifacts.require("./SingleWaterTank.sol");
 var Grid = artifacts.require("./Grid.sol");
-var ITimer = artifacts.require("./ITimer.sol");
+//var ITimer = artifacts.require("./ITimer.sol");
 var GlobalTimer = artifacts.require("./GlobalTimer.sol");
 var Configuration = artifacts.require("./Configuration.sol");
 
@@ -46,6 +47,6 @@ module.exports = function(deployer) {
   deployer.deploy(Grid);
 
   deployer.deploy(GlobalTimer);
-  deployer.deploy(Configuration);
+  deployer.deploy(Configuration, {gas: 6000000});
 
 };

@@ -14,18 +14,18 @@ library SortRLib {
     uint totalLength;
   }
 
-  function initRnkTable(RankMap storage _rnk) {
+  function initRnkTable(RankMap storage _rnk) public {
     _rnk.totalLength = 0;
   }
 
-  function addToRnkTable(RankMap storage _rnk, address _adr, uint _consum, uint _rk, uint _tot) {
+  function addToRnkTable(RankMap storage _rnk, address _adr, uint _consum, uint _rk, uint _tot) public {
     _rnk.rnkTable[_adr] = Rank(_consum,_rk,_tot);
     //_rnk.prepPrs.push(PriceTF(_p,_tf));
     _rnk.sortedRnk[_rnk.totalLength] = _adr;
     _rnk.totalLength++;
   }
 
-  function sortRnkTable(RankMap storage _rnk) {
+  function sortRnkTable(RankMap storage _rnk) public {
     uint _id;
     uint con;
     uint rk;
@@ -60,7 +60,7 @@ library SortRLib {
     }
   }
 
-  function swap (RankMap storage _rnk, uint _id1, uint _id2) {
+  function swap (RankMap storage _rnk, uint _id1, uint _id2) private {
     if (_id1 != _id2) {
       address temp;
       temp = _rnk.sortedRnk[_id1];
@@ -69,7 +69,7 @@ library SortRLib {
     }
   }
 
-  function getSortedList(RankMap storage _rnk, uint a) returns(address adr, uint consum, uint rank, uint tot) {
+  function getSortedList(RankMap storage _rnk, uint a) public view returns(address adr, uint consum, uint rank, uint tot) {
     adr = _rnk.sortedRnk[a];
     consum = _rnk.rnkTable[_rnk.sortedRnk[a]].consump;
     rank = _rnk.rnkTable[_rnk.sortedRnk[a]].rank;

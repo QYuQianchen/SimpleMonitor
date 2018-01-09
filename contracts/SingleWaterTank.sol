@@ -7,31 +7,8 @@ import "./GeneralDevice.sol";
 
 import "./PriceLib.sol";
 
-// import "./SortRLib.sol";
-// import "./SortPLib.sol"; 
-// import "./AdrLib.sol"; 
-// import "./TransactLib.sol";
-
-
-//For simplicity, we do not use the sorting functions here, as in our configuration, there is only one battery and there's only one PV connected.  
-
 contract SingleWaterTank is GeneralDevice, IWaterTank {
   
-  // using AdrLib for address[];
-  // using TransactLib for *;
-  // using SortPLib for *;
-  // using SortRLib for *;
-
-  // uint    capacity;                 // Cap of the device
-  // uint    currentVolume;            // Production of electricity
-  // uint    consumption;                // Amount of electricity that this battery would like to buy. Will first participate in the supply competition 
-  //                                   //and will be finally (anyway) fulfilled b either the network or from the grid...
-  // uint    priceForSale;
-  // uint    priceForBuy;              // lower than market price (ForExcessEnergy)
-
-  // SortPLib.PriceMap draftPriceMap;
-  // SortRLib.RankMap draftRankMap;
-
   using PriceLib for *;
 
   uint    capacity;                 // maximum volume of water
@@ -56,7 +33,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
 
   // --- 0. Upon contract creation and configuration ---
 
-  function SingleWaterTank (address adr,  uint cap, uint wType) GeneralDevice(adr) {
+  function SingleWaterTank (address adr,  uint cap, uint wType) GeneralDevice(adr) public adminOnly {
     capacity = cap;
     waterType = wType;
   }
@@ -86,23 +63,10 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
     }
   }
 
-  // function setConsumption(uint v) public timed(1) ownerOnly {
-  //   require(currentVolume + v <= capacity);
-  //   consumption = v;
-  // }
-
-  // function getConsumption() returns (uint) {return consumption;}
-
-  // function getVolumeCapacity () external view returns (uint vol, uint volAt, uint cap) {
-  //   vol = currentVolume;
-  //   volAt = volStatusAt;
-  //   cap = capacity;
-  // }
-
   // --- 2. ask HP for the last price that it set ---
   // ---    also calculate the new price ---
 
-  function askForPrice() timed(2) {
+  function askForPrice() public timed(2) {
     uint tP = 0;
     bool tF = false;
     //prsMap.initPrsTable();
@@ -124,7 +88,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
 
   // --- 3. Water tank ask Houses for their water consumption --- 
 
-  function askForNeed() timed(3) {
+  function askForNeed() public timed(3) {
     uint consumMT;
     uint consumHT;
     uint consumAt;
@@ -144,7 +108,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
 
   // --- 4. HP sell water to water tank ---
 
-  function goNoGo(uint giveoutvol, uint prs) timed(4) returns (uint) {
+  function goNoGo(uint giveoutvol, uint prs) public timed(4) returns (uint) {
     address adrDevice = msg.sender;
     uint takeoutvol;
     require(connectedDevice[3].assertInside(adrDevice));
@@ -159,7 +123,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
 
   // --- 4. Water tank send water to houses ---
 
-  function sellEnergy() timed(4) {
+  function sellEnergy() public timed(4) {
     uint giveoutVol;
     uint whatDeviceAccept;
 

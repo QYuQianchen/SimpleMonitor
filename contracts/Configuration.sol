@@ -1,4 +1,4 @@
-pragma solidity ^0.4.4;
+pragma solidity ^0.4.16;
 
 import "./SingleHouse.sol";
 import "./SinglePV.sol";
@@ -47,18 +47,18 @@ contract Configuration {
   event LogDevice(address deviceAdr);
   event LogConnection(address device1, address device2);
 
-  function Configuration() adminOnly {
+  function Configuration() adminOnly public {
       statusAt = now;
       globalTimerAdr = new GlobalTimer();
   }
 
-  function addGrid(address adr) adminOnly {
+  function addGrid(address adr) adminOnly public {
       contractList[adr] = new Grid(adr);
       GeneralDevice(contractList[adr]).setTimerAdr(globalTimerAdr);
       gridAdr = address(contractList[adr]);
   }
 
-  function addDevice(uint8 _deviceType, address adr, uint capacity, bool g) adminOnly public {
+  /*function addDevice(uint8 _deviceType, address adr, uint capacity, bool g) adminOnly public {
       require (_deviceType < 5); //addBattery
       if (_deviceType == 0) {   // addHouse
         contractList[adr] = new SingleHouse(adr);
@@ -87,11 +87,11 @@ contract Configuration {
       LogDevice(adr);
   }
 
-    function getContractAddress(address adr) view adminOnly returns(address) {
+    function getContractAddress(address adr) public view adminOnly returns(address) {
       return address(contractList[adr]);
     }
 
-    function getDeviceType(address adr) returns (uint8) {
+    function getDeviceType(address adr) public view returns (uint8) {
         // deviceType {House,PV,Battery}
 
         if (userList[adr].cAddress != 0x0) {
@@ -101,7 +101,7 @@ contract Configuration {
         }
     }
 
-    function linkDevices(address adr1, address adr2) adminOnly {
+    function linkDevices(address adr1, address adr2) public adminOnly {
         uint8[2] memory dt;
         dt[0] = getDeviceType(adr1);
         dt[1] = getDeviceType(adr2);
@@ -114,16 +114,16 @@ contract Configuration {
         GeneralDevice(address(contractList[adr2])).addConnectedDevice(dt[0],address(contractList[adr1]));
 
         LogConnection(adr1,adr2);
-    }
+    }*/
 
     // test functions
 
-    function getAdmin() constant returns (address) {
+   /* function getAdmin() constant returns (address) {
         return admin;
     }
 
     function getGridAdr() constant returns(address) {
         return gridAdr;
-    }
+    }*/
 
 }

@@ -14,9 +14,9 @@ contract Grid is GeneralDevice, IGrid {
 
   
 
-  function Grid(address adr) GeneralDevice(adr) { }
+  function Grid(address adr) adminOnly public GeneralDevice(adr) { }   // there was no "adminOnly public"
 
-  function setPrice(uint prs, uint prsF) timed(1) ownerOnly {
+  function setPrice(uint prs, uint prsF) public ownerOnly timed(1) {
     price = prs;
     priceFeedIn = prsF;
     priceStatusAt = now;
@@ -55,14 +55,14 @@ contract Grid is GeneralDevice, IGrid {
     }
   }*/
 
-  function goExcess(uint vol) timed(5) returns (uint takeVol, uint prs) {
+  function goExcess(uint vol) timed(5) public returns (uint takeVol, uint prs) {
     prs = priceFeedIn;
     takeVol = vol.findMin(negBackup);
     negBackup = negBackup.clearEnergyTransfer(takeVol, address(this));
     wallet -= int(takeVol*prs);
   }
 
-  function goExtra(uint vol) timed(5) returns (uint takeVol, uint prs) { // when houses have not sufficient energy supply from microgrid
+  function goExtra(uint vol) timed(5) public returns (uint takeVol, uint prs) { // when houses have not sufficient energy supply from microgrid
     prs = price;
     takeVol = vol.findMin(posBackup);
     posBackup -= takeVol;

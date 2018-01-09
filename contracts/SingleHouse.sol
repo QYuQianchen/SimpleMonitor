@@ -32,7 +32,7 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
 
   // --- 0. Upon contract creation and configuration ---
 
-  function SingleHouse (address adr) GeneralDevice(adr) { }
+  function SingleHouse (address adr) public adminOnly GeneralDevice(adr) { }
 
   // --- 1. set and get house consumption every 15 min (or less) ---
 
@@ -53,12 +53,9 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
     ConsumptionLog(owner, consumption, consumStatusAt);
   }
 
-  // how to get consumption of hot water??
-
-
   // --- 2. ask for connected PV / batteries / grid for price of electricity supply ---
 
-  function askForPrice() timed(2) {
+  function askForPrice() public timed(2) {
     uint tP = 0;
     bool tF = false;
     draftPriceMap.initPrsTable();
@@ -75,7 +72,7 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
 
   // --- 3. House sorts all the information internally ---
 
-  function sortPrice() timed(2) {
+  function sortPrice() public timed(2) {
     draftPriceMap.sortPrsTable();
     // if the grid is connected -> add the price from the grid to the end of the sorted list
     if (grid != 0x0) {
@@ -95,7 +92,7 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
   // --- 4. PV/Battery ask House to confirm ...
     // --- 4.1 energy transaction ---
 
-  function goNoGo(uint giveoutvol) timed(4) returns (uint) {
+  function goNoGo(uint giveoutvol) public timed(4) returns (uint) {
     address adrDevice = msg.sender;
     uint takeoutvol;
     require(connectedDevice[2].assertInside(adrDevice) || connectedDevice[1].assertInside(adrDevice));
@@ -107,7 +104,8 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
     return (takeoutvol);
   }
     // --- 4.1 heating transaction ---
-  function goNoGoHeating(uint giveoutvol, uint prs, uint wType) timed(4) returns (uint) {
+  function goNoGoHeating(uint giveoutvol, uint prs, uint wType) public timed(4) returns (uint) {
+    // possible to overload the function with goNoGo -> simplify the code of calling
     address adrDevice = msg.sender;
     uint takeoutvol;
     require(connectedDevice[4].assertInside(adrDevice));
@@ -125,7 +123,7 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
 
   // --- 5. If house still has energy demand, ask grid for energy ---
 
-  function buyExtra() timed(5) {
+  function buyExtra() public timed(5) {
     // when houses still have extra needs...
     uint whatDeviceAccept;
     uint receivedMoney;
@@ -141,15 +139,15 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
 
 
   // ------------Functions used in testing------------------
-  function getTime() returns (uint) {
+  function getTime() public returns (uint) {
     return getTimerStatus();
   }
 
-  function getTimeToNext() returns (uint) {
+  function getTimeToNext() public returns (uint) {
     return getTimeToNextStatus();
   }
 
-  function getNow() returns (uint) {
+  function getNow() public view returns (uint) {
     return now;
   }
 }

@@ -12,7 +12,7 @@ contract GlobalTimer is ITimer {
   uint timeLapse;
   uint[6] cumulatedTime;
 
-  function GlobalTimer() {
+  function GlobalTimer() public {
     // constructor
     statusNo = 0;
     transactInterval = 5; // seconds

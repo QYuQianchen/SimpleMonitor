@@ -74,43 +74,43 @@ contract GeneralDevice {
     }
   }
 
-  function GeneralDevice (address adr) {
+  function GeneralDevice (address adr) internal {
     owner = adr;
     Admin = msg.sender;
   }
 
-  function setGridAdr(address adr) adminOnly {
+  function setGridAdr(address adr) adminOnly public {
     grid = adr;
   }
 
-  function setTimerAdr(address adr) adminOnly {
+  function setTimerAdr(address adr) adminOnly public {
     globalTimer = adr;
   }
 
-  function addConnectedDevice(uint a, address adr) adminOnly {
+  function addConnectedDevice(uint a, address adr) adminOnly public {
     connectedDevice[a].push(adr);
   }
   // a function that disconnects devices can be added here, if needed
 
-  function getTimerStatus() returns (uint) {
+  function getTimerStatus() internal returns (uint) {
     return ITimer(globalTimer).checkStatus();
   }
 
-  function getTimerIndex() returns (uint) {
+  function getTimerIndex() internal returns (uint) {
     return ITimer(globalTimer).checkIndex();
   }
 
-  function getTimeToNextStatus() returns (uint) {
+  function getTimeToNextStatus() internal returns (uint) {
     return ITimer(globalTimer).getTimeToNextStatus();
   }
 
-  function getWallet() returns (int) {
+  function getWallet() private view returns (int) {
     return wallet;
   }
 
   //test
 
-  function getTimerAddress() returns (address) {
+  function getTimerAddress() private view returns (address) {
     return globalTimer;
   }
 

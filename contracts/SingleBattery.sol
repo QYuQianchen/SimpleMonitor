@@ -43,7 +43,7 @@ contract SingleBattery is GeneralDevice, IBattery {
 
   // --- 0. Upon contract creation and configuration ---
 
-  function SingleBattery (address adr,  uint cap) GeneralDevice(adr) {
+  function SingleBattery (address adr,  uint cap) GeneralDevice(adr) adminOnly public {
     capacity = cap;
   }
 
@@ -79,7 +79,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     consumption = v;
   }
 
-  function getConsumption() returns (uint) {return consumption;}
+  function getConsumption() view public returns (uint) {return consumption;}
 
   function getVolumeCapacity () external view returns (uint vol, uint volAt, uint cap) {
     vol = currentVolume;
@@ -91,7 +91,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   // ---    Ask for connected PV / batteries / grid for price of electricity supply. --- 
   // ---    Sort the list of offers. --- 
 
-  function askForPrice() timed(2) {
+  function askForPrice() public timed(2) {
     // Battery query price info to all the connected PV/Battery. 
     uint tP = 0;
     bool tF = false;
@@ -103,7 +103,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     lastPriceQueryAt = now;
   }
 
-  function sortPrice() timed(2) {
+  function sortPrice() public timed(2) {
     draftPriceMap.sortPrsTable();
     // if the grid is connected -> add the price from the grid to the end of the sorted list 
     if (grid != 0x0) {
@@ -122,7 +122,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   // --- 3. Battery can also provide energy to houses. --- 
   // ---    Sort the list of ranks. --- 
 
-  function askForRank() timed(3) {
+  function askForRank() public timed(3) {
     uint consum;
     uint rank;
     uint tot;
@@ -137,17 +137,17 @@ contract SingleBattery is GeneralDevice, IBattery {
     lastRankingAt = now;
   }
 
-  function sortRank() timed(3) {
+  function sortRank() public timed(3) {
     draftRankMap.sortRnkTable();
   }
 
-  function getSortedRank(uint _id) returns(address adr, uint consum, uint rank, uint tot) {
+  function getSortedRank(uint _id) view public returns(address adr, uint consum, uint rank, uint tot) {
     return draftRankMap.getSortedList(_id);
   }
 
   // --- 4. PV/Battery/Grid asks Battery to confirm energy transaction ---
 
-  function goNoGo(uint giveoutvol) timed(4) returns (uint) {
+  function goNoGo(uint giveoutvol) public timed(4) returns (uint) {
     address adrDevice = msg.sender;
     uint takeoutvol;
     require(connectedDevice[1].assertInside(adrDevice) || adrDevice == grid);
@@ -160,7 +160,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     return (takeoutvol); 
   }
 
-  function sellEnergy() timed(4) {
+  function sellEnergy() public timed(4) {
     uint counter = 0;
     uint tL = draftRankMap.totalLength;
     bool waiting = true;
@@ -201,7 +201,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     }
   }
 
-  function initiateTransaction(uint _id) timed(4) returns (uint, uint) {
+  function initiateTransaction(uint _id) public timed(4) returns (uint, uint) {
     uint giveoutVol;
     address adr;
     uint consum;
@@ -229,7 +229,7 @@ contract SingleBattery is GeneralDevice, IBattery {
 
   // --- 5. Deal with excess energy --- 
 
-  function goExcess(uint vol) timed(5) returns (uint takeVol, uint prs) {
+  function goExcess(uint vol) public timed(5) returns (uint takeVol, uint prs) {
     prs = priceForBuy;
     takeVol = vol.findMin(capacity-currentVolume);
     currentVolume = currentVolume.clearExcessTransfer(takeVol, address(this));

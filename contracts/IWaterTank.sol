@@ -25,5 +25,5 @@ contract IWaterTank is GeneralDevice {
 
   function getConsumption() public view returns (uint consum, bool updatedOrNot);
   function getPrice() external view returns(uint prs);
-  function goNoGo(uint giveoutvol, uint prs) timed(4) returns (uint);
+  function goNoGo(uint giveoutvol, uint prs) public timed(4) returns (uint);
 }

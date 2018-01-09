@@ -22,7 +22,7 @@ library TransactLib {
   }*/
 
   // calculateMin...
-  function findMin(uint a, uint b) returns (uint c) {
+  function findMin(uint a, uint b) pure public returns (uint c) {
     if (a >= b) {
       c = b;      
     } else {
@@ -30,25 +30,25 @@ library TransactLib {
     }
   }
 
-  function clearEnergyTransfer (uint consump, uint delta, address adr) returns (uint) {   // the receiver of energy triggers
+  function clearEnergyTransfer (uint consump, uint delta, address adr) internal returns (uint) {   // the receiver of energy triggers
     consump = consump - delta;
     EnergyTransferLog(msg.sender, adr, delta, now);
     return consump;
   }
 
-  function clearMoneyTransfer (int wallet, uint delta, address adr1, address adr2) returns (int) {     // the recevier of money triggers
+  function clearMoneyTransfer (int wallet, uint delta, address adr1, address adr2) internal returns (int) {     // the recevier of money triggers
     wallet = wallet + int(delta);
     MoneyTransferLog(adr1, adr2, delta, now);
     return wallet;
   }
 
-  function clearExcessTransfer (uint currentvol, uint delta, address adr) returns (uint) {   // the receiver of energy triggers
+  function clearExcessTransfer (uint currentvol, uint delta, address adr) internal returns (uint) {   // the receiver of energy triggers
     currentvol = currentvol + delta;
     EnergyTransferLog(msg.sender, adr, delta, now);
     return currentvol;
   }
 
-  function clearExtraTransfer (uint currentvol, uint delta, address adr) returns (uint) {   // the receiver of energy triggers
+  function clearExtraTransfer (uint currentvol, uint delta, address adr) internal returns (uint) {   // the receiver of energy triggers
     currentvol = currentvol - delta;
     EnergyTransferLog(adr,msg.sender, delta, now);
     return currentvol;

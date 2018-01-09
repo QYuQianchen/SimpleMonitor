@@ -16,6 +16,6 @@ contract IBattery is GeneralDevice {
 
   function getSalePrice() public view returns (uint prs, bool updatedOrNot);
   function getSortedPrice() external view returns(uint consum, uint rank, uint tot, bool updated);
-  function goNoGo(uint giveoutvol) timed(4) returns (uint);
-  function goExcess(uint vol) timed(5) returns ( uint takeVol, uint prs);
+  function goNoGo(uint giveoutvol) public timed(4) returns (uint);
+  function goExcess(uint vol) public timed(5) returns ( uint takeVol, uint prs);
 }

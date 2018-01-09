@@ -1,4 +1,4 @@
-pragma solidity ^0.4.4;
+pragma solidity ^0.4.16;
 import "./IHeatPump.sol";
 import "./IPV.sol";
 import "./IBattery.sol";
@@ -7,8 +7,6 @@ import "./IWaterTank.sol";
 import "./GeneralDevice.sol";
 
 import "./ConvertLib.sol";
-
-// import "./SortRLib.sol";
 import "./SortPLib.sol"; 
 import "./AdrLib.sol"; 
 import "./TransactLib.sol";
@@ -38,14 +36,14 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
 
   // --- 0. Upon contract creation and configuration ---
 
-  function SingleHeatPump (address adr, uint wT) GeneralDevice(adr) {
+  function SingleHeatPump (address adr, uint wT) GeneralDevice(adr) public adminOnly {
     waterType = wT;
     consumptionWater = 0;
   }
 
   // --- 1. ask for connected water tank for water consumption ---
 
-  function askForConsump() timed(1) {
+  function askForConsump() public timed(1) {
     uint tC = 0;
     bool tF = false;
     for (uint i = 0; i < connectedDevice[4].length; i++) {
@@ -57,22 +55,22 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
     lastConsumpQueryAt = now;
   }
 
-  function convertConsumption() timed(1) {    // can also move into phase 2
+  function convertConsumption() private timed(1) {    // can also move into phase 2
     consumptionElec = consumptionWater.convertToElec(waterType);
   }
 
   // --- 2. ask for connected PV / batteries / grid for price of electricity supply ---
 
-  function askForPrice() timed(2) {
+  function askForPrice() public timed(2) {
     uint tP = 0;
     bool tF = false;
     maxSupplyPrice = 0;
     draftPriceMap.initPrsTable();
-    for (i = 0; i < connectedDevice[2].length; i++) {
+    for (uint i = 0; i < connectedDevice[2].length; i++) {
       (tP,tF) = IBattery(connectedDevice[2][i]).getSalePrice();
       draftPriceMap.addToPrsTable(connectedDevice[2][i],tP,tF);
     }
-    for (uint i = 0; i < connectedDevice[1].length; i++) {
+    for (i = 0; i < connectedDevice[1].length; i++) {
       (tP,tF) = IPV(connectedDevice[1][i]).getPrice();
       draftPriceMap.addToPrsTable(connectedDevice[1][i],tP,tF);
     }
@@ -81,7 +79,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
 
     // --- 3. HP sorts all the information internally ---
 
-  function sortPrice() timed(2) {
+  function sortPrice() public timed(2) {
     draftPriceMap.sortPrsTable();
     // if the grid is connected -> add the price from the grid to the end of the sorted list
     if (grid != 0x0) {
@@ -92,7 +90,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
     }
   }
 
-  function getSortedPrice() external returns(uint consum, uint rank, uint tot, bool updated) {
+  function getSortedPrice() view external returns(uint consum, uint rank, uint tot, bool updated) {
     address adr = msg.sender;
     consum = consumptionElec;
     (rank,tot,updated) = draftPriceMap.getPrsTable(adr);
@@ -101,7 +99,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
   // --- 4. PV/Battery ask HP to confirm ...
     // --- 4.1 energy transaction ---
 
-  function goNoGo(uint giveoutvol) timed(4) returns (uint) {
+  function goNoGo(uint giveoutvol) public timed(4) returns (uint) {
     address adrDevice = msg.sender;
     uint takeoutvol;
     
@@ -122,17 +120,15 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
 
   // --- 5. If HP still has energy demand, ask grid for energy ---
 
-  function buyExtra() timed(5) {
+  function buyExtra() public timed(5) {
     // when houses still have extra needs...
     uint whatDeviceAccept;
-    uint receivedMoney;
     uint unitPrs;
     require(grid != 0x0);
     if (consumptionElec > 0) {
       (whatDeviceAccept, unitPrs) = IGrid(grid).goExtra(consumptionElec);
       consumptionElec = consumptionElec.clearEnergyTransfer(whatDeviceAccept, address(this));
-      receivedMoney = whatDeviceAccept*unitPrs;
-      wallet -= int(receivedMoney);
+      wallet -= int(whatDeviceAccept * unitPrs);
       // Set the price for heat pump
       if (unitPrs > maxSupplyPrice) {
         maxSupplyPrice = unitPrs;
@@ -145,7 +141,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
   }
 
   // transact to water tank (also give out prs information.)
-  function initiateTransaction(uint takeoutvolE) {
+  function initiateTransaction(uint takeoutvolE) private {
     uint whatDeviceAccept;
     uint waterFlow;
 
@@ -162,7 +158,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
   
   // not yet set the phase
   
-  function setPrice() ownerOnly {
+  function setPrice() ownerOnly public {
     price = maxSupplyPrice;
     priceStatusAt = now;
     PriceUpdate(now);

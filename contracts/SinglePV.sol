@@ -35,7 +35,7 @@ contract SinglePV is GeneralDevice, IPV {
 
   // --- 0. Upon contract creation and configuration ---
 
-  function SinglePV(address adr) GeneralDevice(adr) { }
+  function SinglePV(address adr) GeneralDevice(adr) public adminOnly { }
 
   // --- 1. set and get PV price & production every 15 min (or less) ---
 
@@ -70,7 +70,7 @@ contract SinglePV is GeneralDevice, IPV {
   // --- 3. PV can provide energy to houses. ---
   // ---    Sort the list of ranks. ---
 
-  function askForRank() timed(3) {
+  function askForRank() public timed(3) {
     uint consum;
     uint rank;
     uint tot;
@@ -91,7 +91,7 @@ contract SinglePV is GeneralDevice, IPV {
     lastRankingAt = now;
   }
 
-  function sortRank() timed(3) {
+  function sortRank() public timed(3) {
     draftRankMap.sortRnkTable();
     /*
     // In case there is still excess, need to ask connectedBattery to buy for the extra...as much as possible
@@ -113,13 +113,13 @@ contract SinglePV is GeneralDevice, IPV {
     }*/
   }
 
-  function getSortedRank(uint _id) returns(address adr, uint consum, uint rank, uint tot) {
+  function getSortedRank(uint _id) view public returns(address adr, uint consum, uint rank, uint tot) {
     return draftRankMap.getSortedList(_id);
   }
 
   // --- 4. Initiate e transaction ---
 
-  function sellEnergy() timed(4) {
+  function sellEnergy() public timed(4) {
     uint counter = 0;
     uint tL = draftRankMap.totalLength;
     bool waiting = true;
@@ -161,7 +161,7 @@ contract SinglePV is GeneralDevice, IPV {
     }
   }
 
-  function initiateTransaction(uint _id) timed(4) returns (uint, uint) {
+  function initiateTransaction(uint _id) public timed(4) returns (uint, uint) {
     uint giveoutVol;
     address adr;
     uint consum;
@@ -190,7 +190,7 @@ contract SinglePV is GeneralDevice, IPV {
 
   // --- 5. Deal with excess energy ---
 
-  function sellExcess() timed(5) {
+  function sellExcess() public timed(5) {
     // after all, if there's still excess and the connected Battery still have the capacity.
     uint whatDeviceAccept;
     uint receivedMoney;
@@ -216,7 +216,7 @@ contract SinglePV is GeneralDevice, IPV {
     }
   }
 
-  function getTimeToNext() returns (uint) {
+  function getTimeToNext() public returns (uint) {
     return getTimeToNextStatus();
   }
 

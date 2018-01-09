@@ -13,7 +13,7 @@ library PriceLib {
     uint totalLength;
   }
 
-  function setPrice(PriceMap storage _prm, address _adr, uint i, uint _p, bool _tf) {
+  function setPrice(PriceMap storage _prm, address _adr, uint i, uint _p, bool _tf) public {
     if (_tf == false) {
       _prm.prsTable[_adr].prs = 0;
     } else {
@@ -22,7 +22,7 @@ library PriceLib {
      _prm.order[i] = _adr;
   }
 
-  function calPrice(PriceMap storage _prm, uint _pOld, uint _vOld, uint _vCurrent) returns (uint _pNew) {
+  function calPrice(PriceMap storage _prm, uint _pOld, uint _vOld, uint _vCurrent) public view returns (uint _pNew) {
 
     uint pavg;
     uint temp1;
@@ -48,7 +48,7 @@ library PriceLib {
   }
 
   // calculateMin...
-  function findMin(uint a, uint b) returns (uint c) {
+  function findMin(uint a, uint b) pure public returns (uint c) {
     if (a >= b) {
       c = b;      
     } else {
