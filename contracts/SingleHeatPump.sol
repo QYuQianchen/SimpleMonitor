@@ -2,7 +2,7 @@ pragma solidity ^0.4.16;
 import "./IHeatPump.sol";
 import "./IPV.sol";
 import "./IBattery.sol";
-import "./Grid.sol";
+import "./IGrid.sol";
 import "./IWaterTank.sol";
 import "./GeneralDevice.sol";
 
@@ -36,12 +36,13 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
 
   // --- 0. Upon contract creation and configuration ---
 
-  function SingleHeatPump (address adr, uint wT) GeneralDevice(adr) public adminOnly {
+  function SingleHeatPump (address adr, uint wT) public adminOnly GeneralDevice(adr) {
     waterType = wT;
     consumptionWater = 0;
   }
 
   // --- 1. ask for connected water tank for water consumption ---
+  //        and convert the water consumption into electricity consumption
 
   function askForConsump() public timed(1) {
     uint tC = 0;
@@ -52,12 +53,13 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
         consumptionWater += tC;
       }
     }
+    consumptionElec = consumptionWater.convertToElec(waterType);
     lastConsumpQueryAt = now;
   }
 
-  function convertConsumption() private timed(1) {    // can also move into phase 2
+  /*function convertConsumption() private timed(1) {    // can also move into phase 2
     consumptionElec = consumptionWater.convertToElec(waterType);
-  }
+  }*/
 
   // --- 2. ask for connected PV / batteries / grid for price of electricity supply ---
 
@@ -106,7 +108,8 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
     require(connectedDevice[2].assertInside(adrDevice) || connectedDevice[1].assertInside(adrDevice));
     takeoutvol = consumptionElec.findMin(giveoutvol);
     consumptionElec = consumptionElec.clearEnergyTransfer(takeoutvol, address(this));
-    wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
+    //wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
+    wallet -= takeoutvol.payment(draftPriceMap.prsTable[adrDevice].prs);
     // Set the price for heat pump
     if (draftPriceMap.prsTable[adrDevice].prs > maxSupplyPrice) {
       maxSupplyPrice = draftPriceMap.prsTable[adrDevice].prs;
@@ -128,7 +131,8 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
     if (consumptionElec > 0) {
       (whatDeviceAccept, unitPrs) = IGrid(grid).goExtra(consumptionElec);
       consumptionElec = consumptionElec.clearEnergyTransfer(whatDeviceAccept, address(this));
-      wallet -= int(whatDeviceAccept * unitPrs);
+      //wallet -= int(whatDeviceAccept * unitPrs);
+      wallet -= whatDeviceAccept.payment(unitPrs);
       // Set the price for heat pump
       if (unitPrs > maxSupplyPrice) {
         maxSupplyPrice = unitPrs;
@@ -158,7 +162,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
   
   // not yet set the phase
   
-  function setPrice() ownerOnly public {
+  function setPrice() ownerOnly private {
     price = maxSupplyPrice;
     priceStatusAt = now;
     PriceUpdate(now);

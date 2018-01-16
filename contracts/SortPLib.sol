@@ -28,6 +28,21 @@ library SortPLib {
     _prm.totalLength++;
   }
 
+  /*function askForPrice(PriceMap storage _prm, address[] storage _adrl, uint _interface) public {
+    uint tP = 0;
+    bool tF = false;
+    _prm.initPrsTable();
+    if (_interface == ) {
+      
+    } else {
+      
+    }
+    for (uint i = 0; i < _adrl.length; i++) {
+      (tP,tF) = IBattery(_adrl[i]).getSalePrice();
+      _prm.addToPrsTable(_adrl[i],tP,tF);
+    }
+  }*/
+
   function sortPrsTable(PriceMap storage _prm) public {
     uint minTemp;
     uint _id;

@@ -27,13 +27,13 @@ module.exports = function(deployer) {
   deployer.link(SortRLib,[SinglePV,SingleBattery,Configuration]);
 
   deployer.deploy(SortPLib);
-  deployer.link(SortPLib,[SingleHouse,SingleBattery,Configuration]);
+  deployer.link(SortPLib,[SingleHouse,SingleBattery,SingleHeatPump,Configuration]);
 
   deployer.deploy(AdrLib);
-  deployer.link(AdrLib,[SingleHouse,SinglePV,SingleBattery,Configuration]);
+  deployer.link(AdrLib,[SingleHouse,SinglePV,SingleBattery,SingleHeatPump,SingleWaterTank,Configuration]);
 
   deployer.deploy(TransacLib);
-  deployer.link(TransacLib,[SingleHouse,SinglePV,SingleBattery,Grid,Configuration]);
+  deployer.link(TransacLib,[SingleHouse,SinglePV,SingleBattery,SingleHeatPump,Grid,Configuration]);
 
   deployer.deploy(PriceLib);
   deployer.link(PriceLib, [SingleWaterTank, Configuration]);
@@ -41,10 +41,19 @@ module.exports = function(deployer) {
   deployer.deploy(ConvertLib);
   deployer.link(ConvertLib, [SingleHeatPump, Configuration]);
 
-  deployer.deploy(SinglePV);
-  deployer.deploy(SingleHouse);
-  deployer.deploy(SingleBattery);
-  deployer.deploy(Grid);
+  // deployer.deploy(SinglePV);
+  // deployer.deploy(SingleHouse);
+  // deployer.deploy(SingleBattery);
+  // deployer.deploy(Grid);
+  // deployer.deploy(SingleHeatPump);
+  // deployer.deploy(SingleWaterTank);
+
+  // deployer.link(SinglePV, Configuration);
+  // deployer.link(SingleHouse, Configuration);
+  // deployer.link(SingleBattery, Configuration);
+  // deployer.link(Grid, Configuration);
+  // deployer.link(SingleHeatPump, Configuration);
+  // deployer.link(SingleWaterTank, Configuration);
 
   deployer.deploy(GlobalTimer);
   deployer.deploy(Configuration, {gas: 6000000});

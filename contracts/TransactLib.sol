@@ -30,6 +30,10 @@ library TransactLib {
     }
   }
 
+  function payment(uint a, uint b) pure public returns (int c) {
+    c = int(a*b);
+  }
+
   function clearEnergyTransfer (uint consump, uint delta, address adr) internal returns (uint) {   // the receiver of energy triggers
     consump = consump - delta;
     EnergyTransferLog(msg.sender, adr, delta, now);

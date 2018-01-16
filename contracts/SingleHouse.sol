@@ -98,9 +98,8 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
     require(connectedDevice[2].assertInside(adrDevice) || connectedDevice[1].assertInside(adrDevice));
     takeoutvol = consumption.findMin(giveoutvol);
     consumption = consumption.clearEnergyTransfer(takeoutvol, address(this));
-    //EnergyTransferLog(adrDevice,address(this), takeoutvol, consumption);
-    //wallet = wallet.clearMoneyTransfer(-int(takeoutvol*priceQueryInfo[adrDevice].prs), adrDevice);
-    wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
+    //wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
+    wallet -= takeoutvol.payment(draftPriceMap.prsTable[adrDevice].prs);
     return (takeoutvol);
   }
     // --- 4.1 heating transaction ---
@@ -116,7 +115,8 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
       takeoutvol = consumptionHTWater.findMin(giveoutvol);
       consumptionHTWater -= takeoutvol;
     } 
-    wallet -= int(takeoutvol*prs);
+    //wallet -= int(takeoutvol*prs);
+    wallet -= takeoutvol.payment(prs);
     return (takeoutvol);
   }
   

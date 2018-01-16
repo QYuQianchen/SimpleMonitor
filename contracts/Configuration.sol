@@ -15,14 +15,8 @@ contract Configuration {
   address public gridAdr;          // store the address of grid...(address of the transformer that links to the grid... not the contract address)
   uint public statusAt; // timestamp of the creation of Configuration instance
 
-  // The variables below should be deleted...
-  uint8 private numHouseCurrent = 0;    // current houses in the system
-  uint8 private numPVCurrent = 0;       // current PVs in the system
-  uint8 private numBatteryCurrent = 0;    // current batteries in the system
-
   // Several types of devices in the system
-  //enum deviceType {House, PV, Battery}
-   enum deviceType {House, PV, Battery, HeatPump, WaterTank}
+  enum deviceType {House, PV, Battery, HeatPump, WaterTank}
 
   struct EndUser {
     deviceType  dType;
@@ -30,7 +24,6 @@ contract Configuration {
     uint        statusAt;           // timestamp of the creation
     mapping(address=>EndUser) connectedUser;     // List of another node connected.
   }
-
 
   mapping(address=>EndUser) userList;   // the account of the owner => struct
   mapping(address=>address) contractList;   // now putting all the linkage to real contract address into this mapping
@@ -58,23 +51,20 @@ contract Configuration {
       gridAdr = address(contractList[adr]);
   }
 
-  /*function addDevice(uint8 _deviceType, address adr, uint capacity, bool g) adminOnly public {
+  function addDevice(uint8 _deviceType, address adr, uint capacity, bool g) adminOnly public {
       require (_deviceType < 5); //addBattery
       if (_deviceType == 0) {   // addHouse
         contractList[adr] = new SingleHouse(adr);
-        numHouseCurrent++;
       } else if (_deviceType == 1) {    //addPV
         contractList[adr] = new SinglePV(adr);
-        numPVCurrent++;
       } else if (_deviceType == 2) {
         contractList[adr] = new SingleBattery(adr, capacity);
-        numBatteryCurrent++;
       } else if (_deviceType == 3) {
-        contractList[adr] = new SingleHeatPump(adr, capacity);
+        contractList[adr] = new SingleHeatPump(adr, capacity);    // here the capacity actually refers to waterType
       } else {
         contractList[adr] = new SingleWaterTank(adr, capacity, 0);    // need to change other functions (especially in test file)
       }
-      if (g) {
+     if (g) {
           GeneralDevice(contractList[adr]).setGridAdr(gridAdr);
           GeneralDevice(gridAdr).addConnectedDevice(_deviceType, contractList[adr]);
         }
@@ -114,7 +104,7 @@ contract Configuration {
         GeneralDevice(address(contractList[adr2])).addConnectedDevice(dt[0],address(contractList[adr1]));
 
         LogConnection(adr1,adr2);
-    }*/
+    }
 
     // test functions
 
