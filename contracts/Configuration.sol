@@ -7,8 +7,8 @@ import './DeviceFactoryInterface.sol';
 //import "./SingleHouse.sol";
 //import "./SinglePV.sol";
 //import "./SingleBattery.sol";
-import "./SingleHeatPump.sol";
-import "./SingleWaterTank.sol";
+//import "./SingleHeatPump.sol";
+//import "./SingleWaterTank.sol";
 import "./Grid.sol";
 import "./GlobalTimer.sol";
 

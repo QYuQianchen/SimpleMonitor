@@ -17,9 +17,8 @@ contract SingleBatteryFactory {
   function SingleBatteryFactory() public {}
 
   function createSingleBattery(address _accountAddress, uint _capacity) public returns (address batteryAddress) {
-    SingleBattery _singleBattery = new SingleBattery(_accountAddress, _capacity);
-    batteries[_accountAddress] = _singleBattery;
-    return _singleBattery;
+    batteries[_accountAddress] = new SingleBattery(_accountAddress, _capacity);
+    return batteries[_accountAddress];
   }
 
   function getSingleBatteryAddress(address _accountAddress) public constant returns (address batteryAddress) {

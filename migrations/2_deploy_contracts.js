@@ -1,61 +1,78 @@
 var SortPLib = artifacts.require("./SortPLib.sol");
 var SortRLib = artifacts.require("./SortRLib.sol");
 var AdrLib = artifacts.require("./AdrLib.sol");
-var TransacLib = artifacts.require("./TransactLib.sol");
+var TransactLib = artifacts.require("./TransactLib.sol");
 var PriceLib = artifacts.require("./PriceLib.sol");
 var ConvertLib = artifacts.require("./ConvertLib.sol");
-var GeneralDevice = artifacts.require("./GeneralDevice.sol");
-//var IPV = artifacts.require("./IPV.sol");
-//var IHouseE = artifacts.require("./IHouseE.sol");
-//var IHouseH = artifacts.require("./IHouseH.sol");
-var IBattery = artifacts.require("./IBattery.sol");
-var SinglePV = artifacts.require("./SinglePV.sol");
-var SingleHouse = artifacts.require("./SingleHouse.sol");
-var SingleBattery = artifacts.require("./SingleBattery.sol");
-var SingleHeatPump = artifacts.require("./SingleHeatPump.sol");
-var SingleWaterTank = artifacts.require("./SingleWaterTank.sol");
 var Grid = artifacts.require("./Grid.sol");
-//var ITimer = artifacts.require("./ITimer.sol");
 var GlobalTimer = artifacts.require("./GlobalTimer.sol");
 var Configuration = artifacts.require("./Configuration.sol");
+
+var SingleHouseFactory = artifacts.require("SingleHouseFactory");
+var SinglePVFactory = artifacts.require("SinglePVFactory");
+var SingleBatteryFactory = artifacts.require("SingleBatteryFactory");
+var SingleHeatPumpFactory = artifacts.require("SingleHeatPumpFactory");
+var SingleWaterTankFactory = artifacts.require("SingleWaterTankFactory");
+// var GridFactory = artifacts.require("GridFactory");
 
 
 
 module.exports = function(deployer) {
 
-  deployer.deploy(SortRLib);
-  deployer.link(SortRLib,[SinglePV,SingleBattery,Configuration]);
+  console.log("migrations deploying...");
 
-  deployer.deploy(SortPLib);
-  deployer.link(SortPLib,[SingleHouse,SingleBattery,SingleHeatPump,Configuration]);
+  deployer.deploy(SortRLib).then(function() {
 
-  deployer.deploy(AdrLib);
-  deployer.link(AdrLib,[SingleHouse,SinglePV,SingleBattery,SingleHeatPump,SingleWaterTank,Configuration]);
+    return deployer.link(SortRLib,[SinglePVFactory,SingleBatteryFactory,Configuration]);
+  }).then(function() {
+    return deployer.deploy(SortPLib);
+  }).then(function() {
+    return deployer.link(SortPLib,[SingleHouseFactory,SingleBatteryFactory,SingleHeatPumpFactory,Configuration]);
+  }).then(function() {
+    return deployer.deploy(AdrLib);
+  }).then(function() {
+    return deployer.link(AdrLib,[SingleHouseFactory,SinglePVFactory,SingleBatteryFactory,SingleHeatPumpFactory,SingleWaterTankFactory,Configuration]);
+  }).then(function() {
+    return deployer.deploy(TransactLib);
+  }).then(function() {
+    return deployer.link(TransactLib,[SingleHouseFactory,SinglePVFactory,SingleBatteryFactory,SingleHeatPumpFactory,Configuration]);
+  }).then(function() {
+    return deployer.deploy(PriceLib);
+  }).then(function() {
+    return deployer.link(PriceLib, [SingleWaterTankFactory, Configuration]);
+  }).then(function() {
+    return deployer.deploy(ConvertLib);
+  }).then(function() {
+    return deployer.link(ConvertLib, [SingleHeatPumpFactory, Configuration]);
+  }).then(function() {
 
-  deployer.deploy(TransacLib);
-  deployer.link(TransacLib,[SingleHouse,SinglePV,SingleBattery,SingleHeatPump,Grid,Configuration]);
 
-  deployer.deploy(PriceLib);
-  deployer.link(PriceLib, [SingleWaterTank, Configuration]);
+    return deployer.deploy(SingleHouseFactory);
+  }).then(function() {
+    console.log("SingleHouseFactory ADDRESS: " + SingleHouseFactory.address);
 
-  deployer.deploy(ConvertLib);
-  deployer.link(ConvertLib, [SingleHeatPump, Configuration]);
+    return deployer.deploy(SinglePVFactory);
+  }).then(function() {
+    console.log("SinglePVFactory ADDRESS: " + SinglePVFactory.address);
 
-  // deployer.deploy(SinglePV);
-  // deployer.deploy(SingleHouse);
-  // deployer.deploy(SingleBattery);
-  // deployer.deploy(Grid);
-  // deployer.deploy(SingleHeatPump);
-  // deployer.deploy(SingleWaterTank);
+    return deployer.deploy(SingleBatteryFactory);
+  }).then(function() {
+    console.log("SingleBatteryFactory ADDRESS: " + SingleBatteryFactory.address);
 
-  // deployer.link(SinglePV, Configuration);
-  // deployer.link(SingleHouse, Configuration);
-  // deployer.link(SingleBattery, Configuration);
-  // deployer.link(Grid, Configuration);
-  // deployer.link(SingleHeatPump, Configuration);
-  // deployer.link(SingleWaterTank, Configuration);
+    return deployer.deploy(SingleHeatPumpFactory);
+  }).then(function() {
+    console.log("SingleHeatPumpFactory ADDRESS: " + SingleHeatPumpFactory.address);
 
-  deployer.deploy(GlobalTimer);
-  deployer.deploy(Configuration, {gas: 6000000});
+    return deployer.deploy(SingleWaterTankFactory);
+  }).then(function() {
+    console.log("SingleWaterTankFactory ADDRESS: " + SingleWaterTankFactory.address);
 
-};
+    // return deployer.deploy(GridFactory);
+  // }).then(function() {
+    // console.log("GridFactory ADDRESS: " + GridFactory.address);
+    return deployer.deploy(Configuration, SingleHouseFactory.address);
+    // return deployer.deploy(Configuration, SingleHouseFactory.address, SinglePVFactory.address, SingleBatteryFactory.address, SingleHeatPumpFactory.address,  SingleWaterTankFactory.address, GridFactory.address);
+  }).then(function() {
+    console.log("Configuration ADDRESS: " + Configuration.address);
+  });
+}
