@@ -110,7 +110,7 @@ contract GeneralDevice {
 
   //test
 
-  function getTimerAddress() private view returns (address) {
+  function getTimerAddress() public view returns (address) {
     return globalTimer;
   }
 

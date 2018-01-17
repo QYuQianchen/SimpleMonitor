@@ -10,7 +10,7 @@ import './DeviceFactoryInterface.sol';
 //import "./SingleHeatPump.sol";
 //import "./SingleWaterTank.sol";
 
-//import "./GeneralDevice.sol";
+import "./GeneralDevice.sol";
 import "./Grid.sol";
 import "./GlobalTimer.sol";
 
@@ -80,7 +80,6 @@ contract Configuration {
         address _singleHouseAddress = singleHouseFactory.createSingleHouse(adr);
         contractList[adr] = _singleHouseAddress;//SingleHouseInterface(_singleHouseAddress);
         //houses[adr] = SingleHouseInterface(adr);
-        //return _singleHouseAddress;
       } else if (_deviceType == 1) {    //addPV
         //contractList[adr] = new SinglePV(adr);
         address _singlePVAddress = singlePVFactory.createSinglePV(adr);
@@ -98,21 +97,33 @@ contract Configuration {
         address _singleWaterTankAddress = singleWaterTankFactory.createSingleWaterTank(adr,capacity,0);
         contractList[adr] = _singleWaterTankAddress;
       }
-     if (g) {
-          GeneralDevice(contractList[adr]).setGridAdr(gridAdr);
-          GeneralDevice(gridAdr).addConnectedDevice(_deviceType, contractList[adr]);
-        }
-      EndUser memory tempEU;
-      tempEU.dType = deviceType(_deviceType);
-      tempEU.cAddress = address(contractList[adr]);
-      tempEU.statusAt = now;
-      userList[adr] = tempEU;
-      GeneralDevice(contractList[adr]).setTimerAdr(globalTimerAdr);
-      LogDevice(adr);
+    //  if (g) {
+    //       GeneralDevice(contractList[adr]).setGridAdr(gridAdr);
+    //       GeneralDevice(gridAdr).addConnectedDevice(_deviceType, contractList[adr]);
+    //     }
+    //   EndUser memory tempEU;
+    //   tempEU.dType = deviceType(_deviceType);
+    //   tempEU.cAddress = address(contractList[adr]);
+    //   tempEU.statusAt = now;
+    //   userList[adr] = tempEU;
+    //   GeneralDevice(contractList[adr]).setTimerAdr(globalTimerAdr);
+    //   LogDevice(adr);
   }
 
     function getContractAddress(address adr) public view adminOnly returns(address) {
       return address(contractList[adr]);
+    }
+
+    function getCAddress(address adr) public returns(address) {
+      return singleHouseFactory.getSingleHouseAddress(adr);
+    }
+
+    function playwithGeneralDevice_setAdr(address adr) {
+      singleHouseFactory.setTimerAddress(contractList[adr],globalTimerAdr);
+    }
+
+    function playwithGeneralDevice_getAdr(address adr) returns (address) {
+      return singleHouseFactory.getTimerAddress(contractList[adr]);
     }
 
     function getDeviceType(address adr) public view returns (uint8) {
@@ -142,12 +153,12 @@ contract Configuration {
 
     // test functions
 
-   /* function getAdmin() constant returns (address) {
-        return admin;
+    function getTimer() public constant returns (address) {
+        return globalTimerAdr;
     }
 
-    function getGridAdr() constant returns(address) {
+    function getGridAdr() public constant returns(address) {
         return gridAdr;
-    }*/
+    }
 
 }

@@ -1,104 +1,74 @@
+var SingleHouseFactory = artifacts.require("SingleHouseFactory");
+var Configuration = artifacts.require("Configuration");
+var SingleHouse = artifacts.require("SingleHouse");
 
 var config = {
-  "admin" : [
+  'admin': [
     {
-			"id": 0,
-			"address": 0,
-			"contract_address": 0,
-      "type" : "admin"
-		}
-  ],
-
-  "grid" : [
-    {
-			"id": 0,
-			"address": 0,
-      "picture": "images/grid.png",
-			"contract_address": 0,
-      "type" : "grid"
-		}
-  ],
-	"house": [
-    {
-			"id": 0,
-      "picture": "images/house.png",
-			"address": 0,
-			"contract_address": 0,
-      "type" : "house"
-		},
-    {
-			"id": 1,
-      "picture": "images/house.png",
-			"address": 0,
-			"contract_address": 0,
-      "type" : "house"
-		}
-	],
-	"pv": [
-    {
-			"id": 0,
-      "picture": "images/pv.png",
-			"address": 0,
-			"contract_address": 0,
-      "type" : "pv"
-		},
-    {
-			"id": 1,
-      "picture": "images/pv.png",
-			"address": 0,
-			"contract_address": 0,
-      "type" : "pv"
-		}
-	],
-	"battery": [
-  ]
-};
-
-var configuration = null;
-
-contract('factoryinterface', function(accounts) {
-
-  var i = 0;
-  for (var device_type in config) {
-    for (var device_id in config[device_type]) {
-      (function (element) {
-        element.device_name = device_type + element.id;
-        element.device_type = device_type;
-        element.address = accounts[i];
-        console.log("Device name: " + element.device_name);
-        i++;
-      })(config[device_type][device_id]);
+      'accountAddress': 0
     }
-  }
+  ],
 
-  it("is creating grid contract", function() {
+  'house': [
+    {
+      'accountAddress': 0
+    },
+    {
+      'accountAddress': 0
+    }
+  ]
+}
+var configuration = undefined;
 
-    return Configuration.deployed().then(function(instance){
-      configuration = instance;
+contract('Configuration', function(accounts) {
 
-  
-    }).then(function(result){
-    })
+  config.admin[0].accountAddress = accounts[0];
+  config.house[0].accountAddress = accounts[1];
+  config.house[1].accountAddress = accounts[2];
+
+  Configuration.deployed().then(function(instance) {
+    configuration = instance;
+
+    return configuration.addGrid(config.house[0].accountAddress);
+  }).then(function(result) {
+
+    console.log("TxHash: ");
+    console.log(result)
+
+    return configuration.getGridAdr.call();
+  }).then(function(result) {
+    console.log("Grid Address: " + result);
+
+    return configuration.addDevice(0, config.house[1].accountAddress, 0, true, {from: config.admin[0].accountAddress, gas: 2000000});
+  }).then(function(result) {
+
+    console.log("TxHash: ");
+    console.log(result)
+
+    return configuration.getContractAddress.call(config.house[1].accountAddress);
+  }).then(function(result) {
+    console.log("House Address: " + result);
+
+    return configuration.getCAddress.call(config.house[1].accountAddress);
+  }).then(function(result) {
+    console.log("House Address (from function): " + result);
+
+    configuration.playwithGeneralDevice_setAdr(config.house[1].accountAddress);
+  // }).then(function(result) {
+  //   console.log("Set up Global Timer?");
+  //   console.log(result);
+
+    return configuration.playwithGeneralDevice_getAdr.call(config.house[1].accountAddress);
+  }).then(function(result) {
+    console.log("Global Timer address (function):");
+    console.log(result);
+
+    return configuration.getTimer.call();
+  }).then(function(result) {
+    console.log("Global Timer address (parameter):" + result);
+
+    console.log("\n-----\ndone…\n-----\n");
+
   });
 
-  it("is adding houses in the layout", function() {
-    var registerPromises = [];
-
-      for (device_type in config) {
-        for (device_id in config[device_type]) {
-          (function(element) {
-            if (element.device_type == "house"|| element.device_type == "pv" || element.device_type == "grid") {
-              registerPromises.push(register(element));
-            }
-          })(config[device_type][device_id]);
-        }
-      }
-
-      return Promise.all(registerPromises)
-
-  });
-
-  it("is adding pvs in the layout", function() {
-
-  });
 });
