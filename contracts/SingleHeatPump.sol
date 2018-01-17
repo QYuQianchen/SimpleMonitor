@@ -11,6 +11,21 @@ import "./SortPLib.sol";
 import "./AdrLib.sol"; 
 import "./TransactLib.sol";
 
+contract SingleHeatPumpFactory {
+  mapping(address => SingleHeatPump) heatpumps;
+
+  function SingleHeatPumpFactory() public {}
+
+  function createSingleHeatPump(address _accountAddress, uint _capacity) public returns (address heatpumpAddress) {
+    SingleHeatPump _singleHeatPump = new SingleHeatPump(_accountAddress, _capacity);
+    heatpumps[_accountAddress] = _singleHeatPump;
+    return _singleHeatPump;
+  }
+
+  function getSingleHeatPumpAddress(address _accountAddress) public constant returns (address heatpumpAddress) {
+    return heatpumps[_accountAddress];
+  }
+}
 
 //For simplicity, we do not use the sorting functions here, as in our configuration, there is only one battery and there's only one PV connected.  
 

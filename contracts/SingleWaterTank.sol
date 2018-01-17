@@ -7,6 +7,22 @@ import "./GeneralDevice.sol";
 
 import "./PriceLib.sol";
 
+contract SingleWaterTankFactory {
+  mapping(address => SingleWaterTank) watertanks;
+
+  function SingleWaterTankFactory() public {}
+
+  function createSingleWaterTank(address _accountAddress, uint _capacity, uint _waterType) public returns (address watertankAddress) {
+    SingleWaterTank _singleWaterTank = new SingleWaterTank(_accountAddress, _capacity, _waterType);
+    watertanks[_accountAddress] = _singleWaterTank;
+    return _singleWaterTank;
+  }
+
+  function getSingleWaterTankAddress(address _accountAddress) public constant returns (address watertankAddress) {
+    return watertanks[_accountAddress];
+  }
+}
+
 contract SingleWaterTank is GeneralDevice, IWaterTank {
   
   using PriceLib for *;

@@ -1,4 +1,4 @@
-pragma solidity ^0.4.4;
+pragma solidity ^0.4.16;
 
 import "./IPV.sol";
 import "./IHouseE.sol";
@@ -8,6 +8,22 @@ import "./SortRLib.sol";
 import "./AdrLib.sol";
 import "./TransactLib.sol";
 import "./GeneralDevice.sol";
+
+contract SinglePVFactory {
+  mapping(address => SinglePV) pvs;
+
+  function SinglePVFactory() public {}
+
+  function createSinglePV(address _accountAddress) public returns (address pvAddress) {
+    SinglePV _singlePV = new SinglePV(_accountAddress);
+    pvs[_accountAddress] = _singlePV;
+    return _singlePV;
+  }
+
+  function getSinglePVAddress(address _accountAddress) public constant returns (address pvAddress) {
+    return pvs[_accountAddress];
+  }
+}
 
 contract SinglePV is GeneralDevice, IPV {
 

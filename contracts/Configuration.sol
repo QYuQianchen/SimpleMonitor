@@ -1,8 +1,12 @@
 pragma solidity ^0.4.16;
 
-import "./SingleHouse.sol";
-import "./SinglePV.sol";
-import "./SingleBattery.sol";
+//import './FactoryInterfaces.sol';
+import './DeviceFactoryInterface.sol';
+//import './SingleHouseInterface.sol';
+ 
+//import "./SingleHouse.sol";
+//import "./SinglePV.sol";
+//import "./SingleBattery.sol";
 import "./SingleHeatPump.sol";
 import "./SingleWaterTank.sol";
 import "./Grid.sol";
@@ -28,6 +32,13 @@ contract Configuration {
   mapping(address=>EndUser) userList;   // the account of the owner => struct
   mapping(address=>address) contractList;   // now putting all the linkage to real contract address into this mapping
 
+  //mapping (address => SingleHouseInterface) houses;
+  SingleHouseFactoryInterface singleHouseFactory;
+  SinglePVFactoryInterface singlePVFactory;
+  SingleBatteryFactoryInterface singleBatteryFactory;
+  SingleHeatPumpFactoryInterface singleHeatPumpFactory;
+  SingleWaterTankFactoryInterface singleWaterTankFactory;
+  
   // Restricts execution by admin only
   modifier adminOnly {
     if(msg.sender == admin) {
@@ -40,9 +51,10 @@ contract Configuration {
   event LogDevice(address deviceAdr);
   event LogConnection(address device1, address device2);
 
-  function Configuration() adminOnly public {
+  function Configuration(address _singleHouseFactoryAddress) adminOnly public {
       statusAt = now;
       globalTimerAdr = new GlobalTimer();
+      singleHouseFactory = SingleHouseFactoryInterface(_singleHouseFactoryAddress);
   }
 
   function addGrid(address adr) adminOnly public {
@@ -54,15 +66,27 @@ contract Configuration {
   function addDevice(uint8 _deviceType, address adr, uint capacity, bool g) adminOnly public {
       require (_deviceType < 5); //addBattery
       if (_deviceType == 0) {   // addHouse
-        contractList[adr] = new SingleHouse(adr);
+        //contractList[adr] = new SingleHouse(adr);
+        address _singleHouseAddress = singleHouseFactory.createSingleHouse(adr);
+        contractList[adr] = _singleHouseAddress;//SingleHouseInterface(_singleHouseAddress);
+        //houses[adr] = SingleHouseInterface(adr);
+        //return _singleHouseAddress;
       } else if (_deviceType == 1) {    //addPV
-        contractList[adr] = new SinglePV(adr);
+        //contractList[adr] = new SinglePV(adr);
+        address _singlePVAddress = singlePVFactory.createSinglePV(adr);
+        contractList[adr] = _singlePVAddress;
       } else if (_deviceType == 2) {
-        contractList[adr] = new SingleBattery(adr, capacity);
+        //contractList[adr] = new SingleBattery(adr, capacity);
+        address _singleBatteryAddress = singleBatteryFactory.createSingleBattery(adr,capacity);
+        contractList[adr] = _singleBatteryAddress;
       } else if (_deviceType == 3) {
-        contractList[adr] = new SingleHeatPump(adr, capacity);    // here the capacity actually refers to waterType
+        //contractList[adr] = new SingleHeatPump(adr, capacity);    // here the capacity actually refers to waterType
+        address _singleHeatPumpAddress = singleHeatPumpFactory.createSingleHeatPump(adr,capacity);
+        contractList[adr] = _singleHeatPumpAddress;
       } else {
-        contractList[adr] = new SingleWaterTank(adr, capacity, 0);    // need to change other functions (especially in test file)
+        //contractList[adr] = new SingleWaterTank(adr, capacity, 0);    // need to change other functions (especially in test file)
+        address _singleWaterTankAddress = singleWaterTankFactory.createSingleWaterTank(adr,capacity,0);
+        contractList[adr] = _singleWaterTankAddress;
       }
      if (g) {
           GeneralDevice(contractList[adr]).setGridAdr(gridAdr);

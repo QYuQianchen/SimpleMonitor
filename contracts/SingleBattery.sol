@@ -1,4 +1,4 @@
-pragma solidity ^0.4.4;
+pragma solidity ^0.4.16;
 
 import "./IBattery.sol";
 import "./IPV.sol";
@@ -11,6 +11,21 @@ import "./SortPLib.sol";
 import "./AdrLib.sol"; 
 import "./TransactLib.sol";
 
+contract SingleBatteryFactory {
+  mapping(address => SingleBattery) batteries;
+
+  function SingleBatteryFactory() public {}
+
+  function createSingleBattery(address _accountAddress, uint _capacity) public returns (address batteryAddress) {
+    SingleBattery _singleBattery = new SingleBattery(_accountAddress, _capacity);
+    batteries[_accountAddress] = _singleBattery;
+    return _singleBattery;
+  }
+
+  function getSingleBatteryAddress(address _accountAddress) public constant returns (address batteryAddress) {
+    return batteries[_accountAddress];
+  }
+}
 
 //For simplicity, we do not use the sorting functions here, as in our configuration, there is only one battery and there's only one PV connected.  
 

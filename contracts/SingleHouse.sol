@@ -10,6 +10,22 @@ import "./IHouseE.sol";
 import "./IHouseH.sol";
 import "./GeneralDevice.sol";
 
+contract SingleHouseFactory {
+  mapping(address => SingleHouse) houses;
+
+  function SingleHouseFactory() public {}
+
+  function createSingleHouse(address _accountAddress) public returns (address houseAddress) {
+    SingleHouse _singleHouse = new SingleHouse(_accountAddress);
+    houses[_accountAddress] = _singleHouse;
+    return _singleHouse;
+  }
+
+  function getSingleHouseAddress(address _accountAddress) public constant returns (address houseAddress) {
+    return houses[_accountAddress];
+  }
+}
+
 contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
   // one contract is associated to one particular House in the network.
 
