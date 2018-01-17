@@ -9,7 +9,8 @@ import './DeviceFactoryInterface.sol';
 //import "./SingleBattery.sol";
 //import "./SingleHeatPump.sol";
 //import "./SingleWaterTank.sol";
-import "./GeneralDevice.sol";
+
+//import "./GeneralDevice.sol";
 import "./Grid.sol";
 import "./GlobalTimer.sol";
 
