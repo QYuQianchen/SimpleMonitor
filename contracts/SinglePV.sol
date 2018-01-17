@@ -8,8 +8,9 @@ import "./SortRLib.sol";
 import "./AdrLib.sol";
 import "./TransactLib.sol";
 import "./GeneralDevice.sol";
+import "./DeviceFactoryInterface.sol";
 
-contract SinglePVFactory {
+contract SinglePVFactory is SinglePVFactoryInterface {
   mapping(address => SinglePV) pvs;
 
   function SinglePVFactory() public {}

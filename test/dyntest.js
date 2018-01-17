@@ -428,7 +428,7 @@ contract('Configuration', function (accounts) {
 
 
   it("I. Create 3 SingleHouse contracts and link to 3 SinglePVs", function () {
-
+  
     return Configuration.deployed().then(function (instance) {
       configuration = instance;
       console.log("Starting to register devices...");

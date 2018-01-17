@@ -9,8 +9,9 @@ import "./IBattery.sol";
 import "./IHouseE.sol";
 import "./IHouseH.sol";
 import "./GeneralDevice.sol";
+import "./DeviceFactoryInterface.sol";
 
-contract SingleHouseFactory {
+contract SingleHouseFactory is SingleHouseFactoryInterface {
   mapping(address => SingleHouse) houses;
 
   function SingleHouseFactory() public {}

@@ -70,8 +70,10 @@ module.exports = function(deployer) {
     // return deployer.deploy(GridFactory);
   // }).then(function() {
     // console.log("GridFactory ADDRESS: " + GridFactory.address);
-    return deployer.deploy(Configuration, SingleHouseFactory.address);
+    // return deployer.deploy(Configuration, SingleHouseFactory.address);
+    return deployer.deploy(Configuration, SingleHouseFactory.address, SinglePVFactory.address, SingleBatteryFactory.address, SingleHeatPumpFactory.address,  SingleWaterTankFactory.address);
     // return deployer.deploy(Configuration, SingleHouseFactory.address, SinglePVFactory.address, SingleBatteryFactory.address, SingleHeatPumpFactory.address,  SingleWaterTankFactory.address, GridFactory.address);
+  }).then(function() {
   }).then(function() {
     console.log("Configuration ADDRESS: " + Configuration.address);
   });

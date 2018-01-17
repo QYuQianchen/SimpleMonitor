@@ -10,8 +10,9 @@ import "./ConvertLib.sol";
 import "./SortPLib.sol"; 
 import "./AdrLib.sol"; 
 import "./TransactLib.sol";
+import "./DeviceFactoryInterface.sol";
 
-contract SingleHeatPumpFactory {
+contract SingleHeatPumpFactory is SingleHeatPumpFactoryInterface {
   mapping(address => SingleHeatPump) heatpumps;
 
   function SingleHeatPumpFactory() public {}

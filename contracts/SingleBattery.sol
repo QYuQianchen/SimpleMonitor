@@ -10,8 +10,9 @@ import "./SortRLib.sol";
 import "./SortPLib.sol"; 
 import "./AdrLib.sol"; 
 import "./TransactLib.sol";
+import "./DeviceFactoryInterface.sol";
 
-contract SingleBatteryFactory {
+contract SingleBatteryFactory is SingleBatteryFactoryInterface {
   mapping(address => SingleBattery) batteries;
 
   function SingleBatteryFactory() public {}

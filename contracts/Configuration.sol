@@ -9,6 +9,7 @@ import './DeviceFactoryInterface.sol';
 //import "./SingleBattery.sol";
 //import "./SingleHeatPump.sol";
 //import "./SingleWaterTank.sol";
+import "./GeneralDevice.sol";
 import "./Grid.sol";
 import "./GlobalTimer.sol";
 
@@ -51,10 +52,18 @@ contract Configuration {
   event LogDevice(address deviceAdr);
   event LogConnection(address device1, address device2);
 
-  function Configuration(address _singleHouseFactoryAddress) adminOnly public {
+  function Configuration(address _singleHouseFactoryAddress,
+                        address _singlePVFactoryAddress,
+                        address _singleBatteryFactoryAddress,
+                        address _singleHeatPumpFactoryAddress,
+                        address _singleWaterTankFactoryAddress) adminOnly public {
       statusAt = now;
       globalTimerAdr = new GlobalTimer();
       singleHouseFactory = SingleHouseFactoryInterface(_singleHouseFactoryAddress);
+      singlePVFactory = SinglePVFactoryInterface(_singlePVFactoryAddress);
+      singleBatteryFactory = SingleBatteryFactoryInterface(_singleBatteryFactoryAddress);
+      singleHeatPumpFactory = SingleHeatPumpFactoryInterface(_singleHeatPumpFactoryAddress);
+      singleWaterTankFactory = SingleWaterTankFactoryInterface(_singleWaterTankFactoryAddress);
   }
 
   function addGrid(address adr) adminOnly public {

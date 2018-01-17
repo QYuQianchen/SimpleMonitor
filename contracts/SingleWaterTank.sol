@@ -6,8 +6,9 @@ import "./IHeatPump.sol";
 import "./GeneralDevice.sol";
 
 import "./PriceLib.sol";
+import "./DeviceFactoryInterface.sol";
 
-contract SingleWaterTankFactory {
+contract SingleWaterTankFactory is SingleWaterTankFactoryInterface {
   mapping(address => SingleWaterTank) watertanks;
 
   function SingleWaterTankFactory() public {}
