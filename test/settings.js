@@ -41,9 +41,20 @@ exports.config = {
       "picture": "images/pv.png",
       "address": 0,
       "contract_address": 0
+    },
+    {
+      "id": 1,
+      "picture": "images/pv.png",
+      "address": 0,
+      "contract_address": 0
     }
   ],
   "battery": [
+    {
+      "id": 0,
+      "address": 0,
+      "contract_address": 0
+    }
   ]
 };
 

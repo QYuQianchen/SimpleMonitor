@@ -63,16 +63,21 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
     ConsumptionLog(owner, consumption, consumStatusAt);
   }
 
+  // function getConsumption() public {
+  //   return consumption;
+  // }
+
   // overload function of setConsumption
   // consum1: electricity consumption; consum2: Medium-Temperature water consumption (liter); consum3: High-Temperature water consumption (liter)
-  function setConsumption(uint consum1, uint consum2, uint consum3) public timed(1) ownerOnly {
-    consumption = consum1;
-    consumptionMTWater = consum2;
-    consumptionHTWater = consum3;
-    consumStatusAt = now;
-    consumWaterStatusAt = now;
-    ConsumptionLog(owner, consumption, consumStatusAt);
-  }
+  
+  // function setConsumption(uint consum1, uint consum2, uint consum3) public timed(1) ownerOnly {
+  //   consumption = consum1;
+  //   consumptionMTWater = consum2;
+  //   consumptionHTWater = consum3;
+  //   consumStatusAt = now;
+  //   consumWaterStatusAt = now;
+  //   ConsumptionLog(owner, consumption, consumStatusAt);
+  // }
 
   // --- 2. ask for connected PV / batteries / grid for price of electricity supply ---
 

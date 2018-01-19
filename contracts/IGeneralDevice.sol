@@ -6,4 +6,5 @@ contract IGeneralDevice {
   function getTimerAddress() public view returns (address);
   function getGridAdr() public returns (address);
   function addConnectedDevice(uint a, address adr) public;
+  function getTimerStatus() internal returns (uint);
 }

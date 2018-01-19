@@ -305,7 +305,9 @@ function execute(element, action, input) {
 function getValue(element) {
   // return singleHouse0.getConsumption.call();
   //return config.house[0].contract.getConsumption.call();
-  if (element.device_type == "house" || element.device_type == "battery") {
+  if (element.device_type == "house" ) {
+    return element.contract.getConsumptionE.call();
+  } else if (element.device_type == "battery") {
     return element.contract.getConsumption.call();
   } else if (element.device_type == "pv") {
     return element.contract.getProduction.call();
@@ -324,7 +326,7 @@ function getPrice(element) {
 
 function checkStep() {
   // we use house0 (could be any element in theory) to check the time step of the system....
-  return config.house[0].contract.getTimerStatus.call({from: config.house[0].address, gas: 2000000});
+  return config.house[0].contract.getTime.call({from: config.house[0].address, gas: 2000000});
 }
 
 function getNow() {
@@ -459,7 +461,7 @@ contract('Configuration', function (accounts) {
         }
       }
 
-      return configuration.getAdmin.call()
+      return configuration.getGridAdr.call()
 
     }).then(function (result) {
 
