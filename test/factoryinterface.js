@@ -19,6 +19,12 @@ var config = {
     {
       'accountAddress': 0
     }
+  ],
+
+  'pv': [
+    {
+      'accountAddress': 0
+    }
   ]
 }
 var configuration = undefined;
@@ -28,6 +34,7 @@ contract('Configuration', function(accounts) {
   config.admin[0].accountAddress = accounts[0];
   config.grid[0].accountAddress = accounts[1];
   config.house[0].accountAddress = accounts[2];
+  config.pv[0].accountAddress = accounts[3];
 
   Configuration.deployed().then(function(instance) {
     configuration = instance;
@@ -71,6 +78,24 @@ contract('Configuration', function(accounts) {
   }).then(function(result) {
     console.log("Grid Address (from Configuration contract): " + result);
 
+
+    // add another PV
+    return configuration.addDevice(0, config.pv[0].accountAddress, 0, true, {from: config.admin[0].accountAddress, gas: 2000000});
+  }).then(function(result) {
+
+    console.log("TxHash: ");
+    console.log(result)
+
+    return configuration.getContractAddress.call(config.pv[0].accountAddress);
+  }).then(function(result) {
+    console.log("PV Contract Address: " + result);
+
+    // link the house and pv together
+    return configuration.linkDevices(config.house[0].accountAddress, config.pv[0].accountAddress, {from: config.admin[0].accountAddress, gas: 2000000});
+  }).then(function(result) {
+
+    console.log("TxHash: ");
+    console.log(result)
 
     console.log("\n-----\ndone…\n-----\n");
 

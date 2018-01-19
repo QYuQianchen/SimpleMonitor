@@ -87,13 +87,13 @@ contract Configuration {
            IGeneralDevice(gridAdr).addConnectedDevice(_deviceType, contractList[adr]);
          }
 
-    //   EndUser memory tempEU;
-    //   tempEU.dType = deviceType(_deviceType);
-    //   tempEU.cAddress = address(contractList[adr]);
-    //   tempEU.statusAt = now;
-    //   userList[adr] = tempEU;
-       IGeneralDevice(contractList[adr]).setTimerAdr(globalTimerAdr);
-    //   LogDevice(adr);
+      EndUser memory tempEU;
+      tempEU.dType = deviceType(_deviceType);
+      tempEU.cAddress = address(contractList[adr]);
+      tempEU.statusAt = now;
+      userList[adr] = tempEU;
+      IGeneralDevice(contractList[adr]).setTimerAdr(globalTimerAdr);
+      LogDevice(adr);
   }
 
     function getContractAddress(address adr) public view adminOnly returns(address) {
