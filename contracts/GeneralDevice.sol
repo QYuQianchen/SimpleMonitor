@@ -27,7 +27,7 @@ contract GeneralDevice {
   //ClockLib.GlobalClock globalTimer;
 
   modifier adminOnly {
-    if (msg.sender == Admin) {
+    if (tx.origin == Admin) {
       _;
     } else {
       revert();
@@ -76,11 +76,15 @@ contract GeneralDevice {
 
   function GeneralDevice (address adr) internal {
     owner = adr;
-    Admin = msg.sender;
+    Admin = tx.origin;
   }
 
   function setGridAdr(address adr) adminOnly public {
     grid = adr;
+  }
+
+  function getGridAdr() public view returns (address) {
+    return grid;
   }
 
   function setTimerAdr(address adr) public {    //adminOnly

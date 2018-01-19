@@ -3,8 +3,6 @@ pragma solidity ^0.4.16;
 contract SingleHouseFactoryInterface {
   function createSingleHouse(address _accountAddress) public returns (address houseAddress);
   function getSingleHouseAddress(address _accountAddress) public constant returns (address houseAddress);
-  function setTimerAddress(address _contractAddress, address _timerAddress) public returns (bool);
-  function getTimerAddress(address _contractAddress) public returns (address);
 }
 
 contract SinglePVFactoryInterface {
@@ -25,4 +23,9 @@ contract SingleHeatPumpFactoryInterface {
 contract SingleWaterTankFactoryInterface {
   function createSingleWaterTank(address _accountAddress, uint _capacity, uint _waterType) public returns (address watertankAddress);
   function getSingleWaterTankAddress(address _accountAddress) public constant returns (address watertankAddress);
+}
+
+contract GridFactoryInterface {
+  function createGrid(address _accountAddress) public returns (address gridAddress);
+  function getGridAddress(address _accountAddress) public constant returns (address gridAddress);
 }

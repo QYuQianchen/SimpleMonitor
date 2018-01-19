@@ -12,6 +12,23 @@ import "./GeneralDevice.sol";
 //import "./IGeneralDevice.sol";
 import "./DeviceFactoryInterface.sol";
 
+
+contract SingleHouseFactory { //is SingleHouseFactoryInterface, IGeneralDevice
+  mapping(address => SingleHouse) houses;
+
+  function SingleHouseFactory() public {}
+
+  function createSingleHouse(address _accountAddress) public returns (address houseAddress) {
+    houses[_accountAddress] = new SingleHouse(_accountAddress);
+    return address(houses[_accountAddress]);
+  }
+
+  function getSingleHouseAddress(address _accountAddress) public constant returns (address houseAddress) {
+    return houses[_accountAddress];
+  }
+}
+
+
 contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
   // one contract is associated to one particular House in the network.
 
@@ -116,12 +133,12 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
     } else {  // high temperature water
       takeoutvol = consumptionHTWater.findMin(giveoutvol);
       consumptionHTWater -= takeoutvol;
-    } 
+    }
     //wallet -= int(takeoutvol*prs);
     wallet -= takeoutvol.payment(prs);
     return (takeoutvol);
   }
-  
+
 
   // --- 5. If house still has energy demand, ask grid for energy ---
 
@@ -151,29 +168,5 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
 
   function getNow() public view returns (uint) {
     return now;
-  }
-}
-
-contract SingleHouseFactory { //is SingleHouseFactoryInterface, IGeneralDevice 
-  mapping(address => SingleHouse) houses;
-
-  function SingleHouseFactory() public {}
-
-  function createSingleHouse(address _accountAddress) public returns (address houseAddress) {
-    houses[_accountAddress] = new SingleHouse(_accountAddress);
-    return address(houses[_accountAddress]);
-  }
-
-  function getSingleHouseAddress(address _accountAddress) public constant returns (address houseAddress) {
-    return houses[_accountAddress];
-  }
-
-  function setTimerAddress(address _contractAddress, address _timerAddress) public returns (bool) {
-    GeneralDevice(_contractAddress).setTimerAdr(_timerAddress);
-    return true;
-  }
-
-  function getTimerAddress(address _contractAddress) public returns (address) {
-    return GeneralDevice(_contractAddress).getTimerAddress();
   }
 }

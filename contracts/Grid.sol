@@ -5,6 +5,21 @@ import "./IBattery.sol";
 import "./TransactLib.sol";
 import "./GeneralDevice.sol";
 
+contract GridFactory {
+  mapping(address => Grid) grids;
+
+  function GridFactory() public {}
+
+  function createGrid(address _accountAddress) public returns (address gridAddress) {
+    grids[_accountAddress] = new Grid(_accountAddress);
+    return address(grids[_accountAddress]);
+  }
+
+  function getGridAddress(address _accountAddress) public constant returns (address gridAddress) {
+    return grids[_accountAddress];
+  }
+}
+
 contract Grid is GeneralDevice, IGrid {
 
   using TransactLib for *;
@@ -12,7 +27,7 @@ contract Grid is GeneralDevice, IGrid {
   uint    price;
   uint    priceFeedIn;
 
-  
+
 
   function Grid(address adr) adminOnly public GeneralDevice(adr) { }   // there was no "adminOnly public"
 

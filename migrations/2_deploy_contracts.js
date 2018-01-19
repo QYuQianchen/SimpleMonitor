@@ -15,7 +15,7 @@ var SinglePVFactory = artifacts.require("SinglePVFactory");
 var SingleBatteryFactory = artifacts.require("SingleBatteryFactory");
 var SingleHeatPumpFactory = artifacts.require("SingleHeatPumpFactory");
 var SingleWaterTankFactory = artifacts.require("SingleWaterTankFactory");
-// var GridFactory = artifacts.require("GridFactory");
+var GridFactory = artifacts.require("GridFactory");
 
 
 
@@ -37,7 +37,7 @@ module.exports = function(deployer) {
   }).then(function() {
     return deployer.deploy(TransactLib);
   }).then(function() {
-    return deployer.link(TransactLib,[SingleHouseFactory,SinglePVFactory,SingleBatteryFactory,SingleHeatPumpFactory,Configuration]);
+    return deployer.link(TransactLib,[GridFactory, SingleHouseFactory,SinglePVFactory,SingleBatteryFactory,SingleHeatPumpFactory,Configuration]);
   }).then(function() {
     return deployer.deploy(PriceLib);
   }).then(function() {
@@ -68,20 +68,17 @@ module.exports = function(deployer) {
     return deployer.deploy(SingleWaterTankFactory);
   }).then(function() {
     console.log("SingleWaterTankFactory ADDRESS: " + SingleWaterTankFactory.address);
-    
-  //   return deployer.deploy(GeneralDevice);
-  // }).then(function() {
-    
-  //   console.log("General Device ADDRESS: " + GeneralDevice.address);
 
-    // return deployer.deploy(GridFactory);
-  // }).then(function() {
-    // console.log("GridFactory ADDRESS: " + GridFactory.address);
-    // return deployer.deploy(Configuration, SingleHouseFactory.address);
-    return deployer.deploy(Configuration, SingleHouseFactory.address, SinglePVFactory.address, SingleBatteryFactory.address, SingleHeatPumpFactory.address,  SingleWaterTankFactory.address);
-    // return deployer.deploy(Configuration, SingleHouseFactory.address, SinglePVFactory.address, SingleBatteryFactory.address, SingleHeatPumpFactory.address,  SingleWaterTankFactory.address, GridFactory.address);
+    return deployer.deploy(GridFactory);
   }).then(function() {
+    console.log("GridFactory ADDRESS: " + GridFactory.address);
+
+    return deployer.deploy(Configuration, GridFactory.address, SingleHouseFactory.address, SinglePVFactory.address, SingleBatteryFactory.address, SingleHeatPumpFactory.address,  SingleWaterTankFactory.address);
+
   }).then(function() {
+
     console.log("Configuration ADDRESS: " + Configuration.address);
+
+    console.log("\n\n----------------\nDEPLOYMENT DONE!\n----------------\n\n");
   });
 }

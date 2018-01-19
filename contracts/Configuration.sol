@@ -1,18 +1,9 @@
 pragma solidity ^0.4.16;
 
-//import './FactoryInterfaces.sol';
-import './DeviceFactoryInterface.sol';
-//import './SingleHouseInterface.sol';
- 
-//import "./SingleHouse.sol";
-//import "./SinglePV.sol";
-//import "./SingleBattery.sol";
-//import "./SingleHeatPump.sol";
-//import "./SingleWaterTank.sol";
 
+import './DeviceFactoryInterface.sol';
 import "./IGeneralDevice.sol";
-import "./GeneralDevice.sol";
-import "./Grid.sol";
+/* import "./Grid.sol"; */
 import "./GlobalTimer.sol";
 
 contract Configuration {
@@ -36,12 +27,13 @@ contract Configuration {
   mapping(address=>address) contractList;   // now putting all the linkage to real contract address into this mapping
 
   //mapping (address => SingleHouseInterface) houses;
+  GridFactoryInterface gridFactory;
   SingleHouseFactoryInterface singleHouseFactory;
   SinglePVFactoryInterface singlePVFactory;
   SingleBatteryFactoryInterface singleBatteryFactory;
   SingleHeatPumpFactoryInterface singleHeatPumpFactory;
   SingleWaterTankFactoryInterface singleWaterTankFactory;
-  
+
   // Restricts execution by admin only
   modifier adminOnly {
     if(msg.sender == admin) {
@@ -54,13 +46,16 @@ contract Configuration {
   event LogDevice(address deviceAdr);
   event LogConnection(address device1, address device2);
 
-  function Configuration(address _singleHouseFactoryAddress,
+  function Configuration(
+                        address _gridFactoryAddress,
+                        address _singleHouseFactoryAddress,
                         address _singlePVFactoryAddress,
                         address _singleBatteryFactoryAddress,
                         address _singleHeatPumpFactoryAddress,
                         address _singleWaterTankFactoryAddress) adminOnly public {
       statusAt = now;
       globalTimerAdr = new GlobalTimer();
+      gridFactory = GridFactoryInterface(_gridFactoryAddress);
       singleHouseFactory = SingleHouseFactoryInterface(_singleHouseFactoryAddress);
       singlePVFactory = SinglePVFactoryInterface(_singlePVFactoryAddress);
       singleBatteryFactory = SingleBatteryFactoryInterface(_singleBatteryFactoryAddress);
@@ -68,10 +63,10 @@ contract Configuration {
       singleWaterTankFactory = SingleWaterTankFactoryInterface(_singleWaterTankFactoryAddress);
   }
 
-  function addGrid(address adr) adminOnly public {
-      contractList[adr] = new Grid(adr);
-      GeneralDevice(contractList[adr]).setTimerAdr(globalTimerAdr);
-      gridAdr = address(contractList[adr]);
+  function addGrid(address _accountAddress) adminOnly public {
+    contractList[_accountAddress] = gridFactory.createGrid(_accountAddress);
+    IGeneralDevice(contractList[_accountAddress]).setTimerAdr(globalTimerAdr);
+    gridAdr = address(contractList[_accountAddress]);
   }
 
   function addDevice(uint8 _deviceType, address adr, uint capacity, bool g) adminOnly public {
@@ -87,10 +82,11 @@ contract Configuration {
       } else {
         contractList[adr] = singleWaterTankFactory.createSingleWaterTank(adr,capacity,0);
       }
-    //  if (g) {
-    //       GeneralDevice(contractList[adr]).setGridAdr(gridAdr);
-    //       GeneralDevice(gridAdr).addConnectedDevice(_deviceType, contractList[adr]);
-    //     }
+      if (g) {
+           IGeneralDevice(contractList[adr]).setGridAdr(gridAdr);
+           IGeneralDevice(gridAdr).addConnectedDevice(_deviceType, contractList[adr]);
+         }
+
     //   EndUser memory tempEU;
     //   tempEU.dType = deviceType(_deviceType);
     //   tempEU.cAddress = address(contractList[adr]);
@@ -102,18 +98,6 @@ contract Configuration {
 
     function getContractAddress(address adr) public view adminOnly returns(address) {
       return address(contractList[adr]);
-    }
-
-    function getCAddress(address adr) public returns(address) {
-      return singleHouseFactory.getSingleHouseAddress(adr);
-    }
-
-    function playwithGeneralDevice_setAdr(address adr) public {
-      singleHouseFactory.setTimerAddress(contractList[adr],globalTimerAdr);
-    }
-
-    function playwithGeneralDevice_getAdr(address adr) public returns (address) {
-      return singleHouseFactory.getTimerAddress(contractList[adr]);
     }
 
     function getDeviceType(address adr) public view returns (uint8) {
@@ -135,8 +119,8 @@ contract Configuration {
         userList[adr1].connectedUser[adr2] = userList[adr2];
         userList[adr2].connectedUser[adr1] = userList[adr1];
 
-        GeneralDevice(address(contractList[adr1])).addConnectedDevice(dt[1],address(contractList[adr2]));
-        GeneralDevice(address(contractList[adr2])).addConnectedDevice(dt[0],address(contractList[adr1]));
+        IGeneralDevice(address(contractList[adr1])).addConnectedDevice(dt[1],address(contractList[adr2]));
+        IGeneralDevice(address(contractList[adr2])).addConnectedDevice(dt[0],address(contractList[adr1]));
 
         LogConnection(adr1,adr2);
     }

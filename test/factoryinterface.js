@@ -9,10 +9,13 @@ var config = {
     }
   ],
 
-  'house': [
+  'grid': [
     {
       'accountAddress': 0
-    },
+    }
+  ],
+
+  'house': [
     {
       'accountAddress': 0
     }
@@ -23,13 +26,13 @@ var configuration = undefined;
 contract('Configuration', function(accounts) {
 
   config.admin[0].accountAddress = accounts[0];
-  config.house[0].accountAddress = accounts[1];
-  config.house[1].accountAddress = accounts[2];
+  config.grid[0].accountAddress = accounts[1];
+  config.house[0].accountAddress = accounts[2];
 
   Configuration.deployed().then(function(instance) {
     configuration = instance;
 
-    return configuration.addGrid(config.house[0].accountAddress);
+    return configuration.addGrid(config.grid[0].accountAddress);
   }).then(function(result) {
 
     console.log("TxHash: ");
@@ -39,33 +42,35 @@ contract('Configuration', function(accounts) {
   }).then(function(result) {
     console.log("Grid Address: " + result);
 
-    return configuration.addDevice(0, config.house[1].accountAddress, 0, true, {from: config.admin[0].accountAddress, gas: 2000000});
+    return configuration.addDevice(0, config.house[0].accountAddress, 0, true, {from: config.admin[0].accountAddress, gas: 2000000});
   }).then(function(result) {
 
     console.log("TxHash: ");
     console.log(result)
 
-    return configuration.getContractAddress.call(config.house[1].accountAddress);
+    return configuration.getContractAddress.call(config.house[0].accountAddress);
   }).then(function(result) {
-    console.log("House Address: " + result);
+    console.log("House Contract Address: " + result);
+    config.house[0].contractAddress = result;
+    config.house[0].contract = SingleHouse.at(result);
 
-    return configuration.getCAddress.call(config.house[1].accountAddress);
+    return config.house[0].contract.getTimerAddress.call();
   }).then(function(result) {
-    console.log("House Address (from function): " + result);
-
-    configuration.playwithGeneralDevice_setAdr(config.house[1].accountAddress);
-  // }).then(function(result) {
-  //   console.log("Set up Global Timer?");
-  //   console.log(result);
-
-    return configuration.playwithGeneralDevice_getAdr.call(config.house[1].accountAddress);
-  }).then(function(result) {
-    console.log("Global Timer address (function):");
-    console.log(result);
+    console.log("Timer Address (from SingleHouse contract): " + result);
 
     return configuration.getTimer.call();
   }).then(function(result) {
-    console.log("Global Timer address (parameter):" + result);
+    console.log("Global Timer address (from Configuration contract):" + result);
+
+
+    return config.house[0].contract.getGridAdr.call();
+  }).then(function(result) {
+    console.log("Grid Address (from SingleHouse contract): " + result);
+
+    return configuration.getGridAdr.call();
+  }).then(function(result) {
+    console.log("Grid Address (from Configuration contract): " + result);
+
 
     console.log("\n-----\ndone…\n-----\n");
 
