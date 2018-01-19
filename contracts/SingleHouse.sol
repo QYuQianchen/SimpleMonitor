@@ -14,7 +14,9 @@ import "./DeviceFactoryInterface.sol";
 
 
 contract SingleHouseFactory { //is SingleHouseFactoryInterface, IGeneralDevice
-  mapping(address => SingleHouse) houses;
+  //mapping(address => SingleHouse) houses;
+  mapping(address => address) houses;
+  
 
   function SingleHouseFactory() public {}
 
