@@ -8,6 +8,8 @@ var Grid = artifacts.require("./Grid.sol");
 var GlobalTimer = artifacts.require("./GlobalTimer.sol");
 var Configuration = artifacts.require("./Configuration.sol");
 
+var GeneralDevice = artifacts.require("GeneralDevice.sol")
+
 var SingleHouseFactory = artifacts.require("SingleHouseFactory");
 var SinglePVFactory = artifacts.require("SinglePVFactory");
 var SingleBatteryFactory = artifacts.require("SingleBatteryFactory");
@@ -66,6 +68,11 @@ module.exports = function(deployer) {
     return deployer.deploy(SingleWaterTankFactory);
   }).then(function() {
     console.log("SingleWaterTankFactory ADDRESS: " + SingleWaterTankFactory.address);
+    
+  //   return deployer.deploy(GeneralDevice);
+  // }).then(function() {
+    
+  //   console.log("General Device ADDRESS: " + GeneralDevice.address);
 
     // return deployer.deploy(GridFactory);
   // }).then(function() {

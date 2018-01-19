@@ -10,6 +10,7 @@ import './DeviceFactoryInterface.sol';
 //import "./SingleHeatPump.sol";
 //import "./SingleWaterTank.sol";
 
+import "./IGeneralDevice.sol";
 import "./GeneralDevice.sol";
 import "./Grid.sol";
 import "./GlobalTimer.sol";
@@ -76,26 +77,15 @@ contract Configuration {
   function addDevice(uint8 _deviceType, address adr, uint capacity, bool g) adminOnly public {
       require (_deviceType < 5); //addBattery
       if (_deviceType == 0) {   // addHouse
-        //contractList[adr] = new SingleHouse(adr);
-        address _singleHouseAddress = singleHouseFactory.createSingleHouse(adr);
-        contractList[adr] = _singleHouseAddress;//SingleHouseInterface(_singleHouseAddress);
-        //houses[adr] = SingleHouseInterface(adr);
+        contractList[adr] = singleHouseFactory.createSingleHouse(adr);
       } else if (_deviceType == 1) {    //addPV
-        //contractList[adr] = new SinglePV(adr);
-        address _singlePVAddress = singlePVFactory.createSinglePV(adr);
-        contractList[adr] = _singlePVAddress;
+        contractList[adr] = singlePVFactory.createSinglePV(adr);
       } else if (_deviceType == 2) {
-        //contractList[adr] = new SingleBattery(adr, capacity);
-        address _singleBatteryAddress = singleBatteryFactory.createSingleBattery(adr,capacity);
-        contractList[adr] = _singleBatteryAddress;
+        contractList[adr] =singleBatteryFactory.createSingleBattery(adr,capacity);
       } else if (_deviceType == 3) {
-        //contractList[adr] = new SingleHeatPump(adr, capacity);    // here the capacity actually refers to waterType
-        address _singleHeatPumpAddress = singleHeatPumpFactory.createSingleHeatPump(adr,capacity);
-        contractList[adr] = _singleHeatPumpAddress;
+        contractList[adr] = singleHeatPumpFactory.createSingleHeatPump(adr,capacity);
       } else {
-        //contractList[adr] = new SingleWaterTank(adr, capacity, 0);    // need to change other functions (especially in test file)
-        address _singleWaterTankAddress = singleWaterTankFactory.createSingleWaterTank(adr,capacity,0);
-        contractList[adr] = _singleWaterTankAddress;
+        contractList[adr] = singleWaterTankFactory.createSingleWaterTank(adr,capacity,0);
       }
     //  if (g) {
     //       GeneralDevice(contractList[adr]).setGridAdr(gridAdr);
@@ -106,7 +96,7 @@ contract Configuration {
     //   tempEU.cAddress = address(contractList[adr]);
     //   tempEU.statusAt = now;
     //   userList[adr] = tempEU;
-    //   GeneralDevice(contractList[adr]).setTimerAdr(globalTimerAdr);
+       IGeneralDevice(contractList[adr]).setTimerAdr(globalTimerAdr);
     //   LogDevice(adr);
   }
 
@@ -118,11 +108,11 @@ contract Configuration {
       return singleHouseFactory.getSingleHouseAddress(adr);
     }
 
-    function playwithGeneralDevice_setAdr(address adr) {
+    function playwithGeneralDevice_setAdr(address adr) public {
       singleHouseFactory.setTimerAddress(contractList[adr],globalTimerAdr);
     }
 
-    function playwithGeneralDevice_getAdr(address adr) returns (address) {
+    function playwithGeneralDevice_getAdr(address adr) public returns (address) {
       return singleHouseFactory.getTimerAddress(contractList[adr]);
     }
 

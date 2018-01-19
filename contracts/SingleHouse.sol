@@ -9,6 +9,7 @@ import "./IBattery.sol";
 import "./IHouseE.sol";
 import "./IHouseH.sol";
 import "./GeneralDevice.sol";
+//import "./IGeneralDevice.sol";
 import "./DeviceFactoryInterface.sol";
 
 contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
@@ -153,7 +154,7 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
   }
 }
 
-contract SingleHouseFactory is SingleHouseFactoryInterface {
+contract SingleHouseFactory { //is SingleHouseFactoryInterface, IGeneralDevice 
   mapping(address => SingleHouse) houses;
 
   function SingleHouseFactory() public {}

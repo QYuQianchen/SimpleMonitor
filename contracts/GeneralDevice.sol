@@ -1,4 +1,4 @@
-pragma solidity ^0.4.4;
+pragma solidity ^0.4.16;
 
 import "./AdrLib.sol";
 //import "./ClockLib.sol";
@@ -83,11 +83,13 @@ contract GeneralDevice {
     grid = adr;
   }
 
-  function setTimerAdr(address adr) adminOnly public {
+  function setTimerAdr(address adr) public {    //adminOnly
+    //require(tx.origin == Admin);
     globalTimer = adr;
   }
 
-  function addConnectedDevice(uint a, address adr) adminOnly public {
+  function addConnectedDevice(uint a, address adr) public { //adminOnly
+    require(tx.origin == Admin);
     connectedDevice[a].push(adr);
   }
   // a function that disconnects devices can be added here, if needed
