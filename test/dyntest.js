@@ -430,7 +430,7 @@ contract('Configuration', function (accounts) {
 
 
   it("I. Create 3 SingleHouse contracts and link to 3 SinglePVs", function () {
-  
+
     return Configuration.deployed().then(function (instance) {
       configuration = instance;
       console.log("Starting to register devices...");
@@ -569,7 +569,7 @@ contract('Configuration', function (accounts) {
       console.log("Here time is been increased (1)");
       return checkStep();
     }).then(function (result) {
-      console.log("We are at step ", result.toNumber());
+      console.log("We are at step ", result.toNumber() + " / 2");
 
       var takeActionPromises1 = [];
 
@@ -592,7 +592,7 @@ contract('Configuration', function (accounts) {
       console.log("Here time is been increased (2)");
       return checkStep();
     }).then(function (result) {
-      console.log("We are at step: ", result.toNumber());
+      console.log("We are at step: ", result.toNumber() + " / 3");
 
       var takeActionPromises2 = [];
 
@@ -609,12 +609,13 @@ contract('Configuration', function (accounts) {
     });
   });
 
+
   it("III. Price communication House<->PV (3. PV and Battery intiate Transaction)", function () {
     jumpTime(16).then(function() {
       console.log("Here time is been increased (3)");
       return checkStep();
     }).then(function (result) {
-      console.log("We are at step ", result.toNumber());
+      console.log("We are at step ", result.toNumber() + " / 4");
       var sellEnergyPromises = [];
 
       for (var actionNo in sellEnergyOrder) {
@@ -671,7 +672,7 @@ contract('Configuration', function (accounts) {
       console.log("Here time is been increased (4)");
       return checkStep();
     }).then(function (result) {
-      console.log("We are at step ", result.toNumber());
+      console.log("We are at step ", result.toNumber() + " / 5");
 
       var takeActionPromises3 = [];
 
