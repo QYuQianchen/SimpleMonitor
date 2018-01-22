@@ -326,7 +326,7 @@ function getPrice(element) {
 
 function checkStep() {
   // we use house0 (could be any element in theory) to check the time step of the system....
-  return config.house[0].contract.getTime.call({from: config.house[0].address, gas: 2000000});
+  return configuration.getTime.call({from: config.admin[0].address, gas: 2000000});
 }
 
 function getNow() {
@@ -565,7 +565,7 @@ contract('Configuration', function (accounts) {
 
     //var increaseTimePromise = increaseTimeTo(latestTime() + duration.seconds(15));
     //return increaseTimePromise.then(function (result) {
-    jumpTime(16).then(function (result) {
+    jumpTime(15).then(function (result) {
       console.log("Here time is been increased (1)");
       return checkStep();
     }).then(function (result) {
@@ -588,7 +588,7 @@ contract('Configuration', function (accounts) {
   it("III. Price communication House<->PV (2. PV collect Info)", function () {
 
     //var increaseTimePromise = increaseTimeTo(latestTime() + duration.seconds(20));
-    jumpTime(16).then(function() {
+    jumpTime(15).then(function() {
       console.log("Here time is been increased (2)");
       return checkStep();
     }).then(function (result) {
@@ -611,7 +611,7 @@ contract('Configuration', function (accounts) {
 
 
   it("III. Price communication House<->PV (3. PV and Battery intiate Transaction)", function () {
-    jumpTime(16).then(function() {
+    jumpTime(15).then(function() {
       console.log("Here time is been increased (3)");
       return checkStep();
     }).then(function (result) {
@@ -668,7 +668,7 @@ contract('Configuration', function (accounts) {
   });
 
   it("III. Price communication House<->PV (4. PV sell excess energy to battery; House buy energy from battery)", async function () {
-    jumpTime(16).then(function (result) {
+    jumpTime(15).then(function (result) {
       console.log("Here time is been increased (4)");
       return checkStep();
     }).then(function (result) {

@@ -4,6 +4,7 @@ pragma solidity ^0.4.16;
 import './DeviceFactoryInterface.sol';
 import "./IGeneralDevice.sol";
 /* import "./Grid.sol"; */
+import "./ITimer.sol";
 import "./GlobalTimer.sol";
 
 contract Configuration {
@@ -128,11 +129,15 @@ contract Configuration {
     // test functions
 
     function getTimer() public constant returns (address) {
-        return globalTimerAdr;
+      return globalTimerAdr;
     }
 
     function getGridAdr() public constant returns(address) {
-        return gridAdr;
+      return gridAdr;
+    }
+
+    function getTime() public returns (uint) {
+      return ITimer(globalTimerAdr).checkStatus();
     }
 
 }
