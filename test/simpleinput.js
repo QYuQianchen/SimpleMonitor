@@ -50,14 +50,15 @@ exports.inputs = {
 
   "battery" : [
     {
-      "volume" : [
-        5
-      ],
+      // setVolume can only be used once in the beginning...
+      // "volume" : [
+      //   5
+      // ],
       "consumption" : [
-        3
+        3, 2, 1
       ],
       "price" : [
-        [20, 3]
+        [20, 3],[20, 3],[20, 3]
       ]
     }
   ],
@@ -155,7 +156,7 @@ exports.actions = {
     5 : ["sellExcess"]
   },
   "battery" : {
-    1 : ["setVolume", "setConsumption", "setPrice"],
+    1 : ["setConsumption", "setPrice"],   // remove the "setVolume"
     2 : ["askForPrice", "sortPrice"],
     3 : ["askForRank", "sortRank"],
     4 : ["sellEnergy"]
@@ -163,22 +164,26 @@ exports.actions = {
 };
 
 exports.checkStatusActions = {
-  "grid" : [
-    "getPrice"
-  ],
-  "house" : [
-    "getConsumptionE",
-    // "getConsumptionH"
-  ],
-  "pv" : [
-    "getProduction",
-    "getPrice"
-  ],
-  "battery" : [
-    "getConsumption",
-    "getVolumeCapacity",
-    "getSalePrice"
-  ]
+  "grid" : {
+    1: "getPrice"
+  },
+
+  "house" : {
+    1: "getConsumptionE",
+    // 2: ["getConsumptionH"]
+  },
+
+  "pv" : {
+    1: "getProduction",
+    2: "getPrice",
+
+  },
+
+  "battery" : {
+    1: "getConsumption",
+    2: "getVolumeCapacity",
+    3: "getSalePrice"
+  }
 };
 
 

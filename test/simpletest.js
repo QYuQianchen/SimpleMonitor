@@ -114,8 +114,11 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       var currentStep = result.toNumber();
       console.log("We are at step: ", currentStep + " / 1");
+
+      // here we set the initial volume of battery
+      config.battery[0].contract.setVolume(5, {from: config.battery[0].address});
       
-      return step(currentStep);
+      return step(0,currentStep);
     }).then(function (result) {
       console.log("Step 1 done.");
 
@@ -133,7 +136,7 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       var currentStep = result.toNumber();
       console.log("We are at step: ", currentStep + " / 2");
-      return step(currentStep);
+      return step(0,currentStep);
     }).then(function (result) {
       console.log("Step 2 done.");
 
@@ -146,7 +149,7 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       var currentStep = result.toNumber();
       console.log("We are at step: ", currentStep + " / 3");
-      return step(currentStep);
+      return step(0,currentStep);
     }).then(function (result) {
       console.log("Step 3 done.");
 
@@ -159,7 +162,7 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       var currentStep = result.toNumber();
       console.log("We are at step: ", currentStep + " / 4");
-      return step(currentStep);
+      return step(0,currentStep);
     }).then(function (result) {
       console.log("Step 4 done.");
 
@@ -172,9 +175,28 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       var currentStep = result.toNumber();
       console.log("We are at step: ", currentStep + " / 5");
-      return step(currentStep);
+      return step(0,currentStep);
     }).then(function (result) {
       console.log("Step 5 done.");
+
+      return checkAllDeviceStatus();
+
+    }).then(function (result) {
+      console.log("checking stauts done.");
+      console.log("We should start the 2nd round...");
+
+      jumpTime(16);
+    }).then(function (result) {
+      return getNow();
+    }).then(function (result) {
+      console.log("Current timestamp is: ", result.toNumber());
+      return checkStep.call();
+    }).then(function (result) {
+      var currentStep = result.toNumber();
+      console.log("We are at step: ", currentStep + " / 1");
+      return step(1,currentStep);
+    }).then(function (result) {
+      console.log("Step 1 done.");
 
     });
   });
@@ -275,7 +297,7 @@ function checkStep() {
   return configuration.getTime.call({from: config.admin[0].address, gas: 2000000});
 }
 
-function step(currentStep) {
+function step(period, currentStep) {
   var stepPromises = [];
 
   // for (var device_type in _inputs) {
@@ -293,7 +315,7 @@ function step(currentStep) {
       if (actions[device_type][currentStep] != undefined) {
         for (var currentAction in actions[device_type][currentStep]) {
           for (var device_id in config[device_type]) {
-            var period = 0;
+            // var period = 0;
             var element = config[device_type][device_id];
             var action = actions[device_type][currentStep][currentAction];
             var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
@@ -314,7 +336,7 @@ function step(currentStep) {
       if (actions[device_type][currentStep] != undefined) {
         for (var currentAction in actions[device_type][currentStep]) {
           for (var device_id in config[device_type]) {
-            var period = 0;
+            // var period = 0;
             var element = config[device_type][device_id];
             var action = actions[device_type][currentStep][currentAction];
             // var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
@@ -357,23 +379,23 @@ function checkAllDeviceStatus() {
 
   for (var device_type in config) {
     for (var device_id in config[device_type]) {
-      
-      (function (element) {
-        for (var action_id in checkStatusActions[element.device_type]) {
-
+      for (var action_id in checkStatusActions[device_type]) {
+        (function (element) {
           if (checkStatusActions[element.device_type] != undefined) {
             var action = checkStatusActions[element.device_type][action_id];
-
+            var name = action.slice(3,action.length);
+            
             allDeviceStatusPromises.push(element.contract[action].call().then(function (result) {
+              
               if (result[0] != undefined) {
-                console.log(" -> the " + action.slice(3,action.length) + " of " + element.device_name + " is:", result[0].toNumber());
+                console.log(" -> the " + name + " of " + element.device_name + " is:", result[0].toNumber());
               } else {
-                console.log(" -> the " + action.slice(3,action.length) + " of " + element.device_name + " is:", result.toNumber());
+                console.log(" -> the " + name + " of " + element.device_name + " is:", result.toNumber());
               }
             }));
           }
-        }
-      })(config[device_type][device_id]);
+        })(config[device_type][device_id]);
+      }
     }
   }
   return Promise.all(allDeviceStatusPromises)
