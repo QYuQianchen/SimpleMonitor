@@ -105,21 +105,50 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       console.log("Linking of devices done.");
       console.log("1. Time to set production and price");
+      
+    //   return getNow();
+    // }).then(function (result) {
+    //   console.log("Current timestamp is: ", result.toNumber());
 
       return checkStep.call();
     }).then(function (result) {
       var currentStep = result.toNumber();
-      console.log("We are at step: ", currentStep);
+      console.log("We are at step: ", currentStep + " / 1");
       
-      return step(1);
+      return step(currentStep);
     }).then(function (result) {
-
       console.log("Step 1 done.");
 
       return checkAllDeviceStatus();
 
     }).then(function (result) {
       console.log("checking stauts done.");
+
+      jumpTime(16);
+    }).then(function (result) {
+      return getNow();
+    }).then(function (result) {
+      console.log("Current timestamp is: ", result.toNumber());
+      return checkStep.call();
+    }).then(function (result) {
+      var currentStep = result.toNumber();
+      console.log("We are at step: ", currentStep + " / 2");
+      return step(currentStep);
+    }).then(function (result) {
+      console.log("Step 2 done.");
+
+      jumpTime(16);
+    }).then(function (result) {
+      return getNow();
+    }).then(function (result) {
+      console.log("Current timestamp is: ", result.toNumber());
+      return checkStep.call();
+    }).then(function (result) {
+      var currentStep = result.toNumber();
+      console.log("We are at step: ", currentStep + " / 3");
+      return step(currentStep);
+    }).then(function (result) {
+      console.log("Step 3 done.");
 
     });
   });
@@ -231,25 +260,47 @@ function step(currentStep) {
   //     }
   //   }
   // }
+  if (currentStep == 1) {
 
-  for (var device_type in actions) {
+    for (var device_type in actions) {
 
-    if (actions[device_type][currentStep] != undefined) {
-      for (var currentAction in actions[device_type][currentStep]) {
-        for (var device_id in config[device_type]) {
-          var period = 0;
-          var element = config[device_type][device_id];
-          var action = actions[device_type][currentStep][currentAction];
-          var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
-
-          (function(_element, _action, _input) {
-            console.log("Executing " + _action + "(" + _input + ") <-- " + _element.device_name);
-            stepPromises.push(execute(_element, _action, _input));
-          })(element, action, input);
+      if (actions[device_type][currentStep] != undefined) {
+        for (var currentAction in actions[device_type][currentStep]) {
+          for (var device_id in config[device_type]) {
+            var period = 0;
+            var element = config[device_type][device_id];
+            var action = actions[device_type][currentStep][currentAction];
+            var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
+  
+            (function(_element, _action, _input) {
+              console.log("Executing " + _action + "(" + _input + ") <-- " + _element.device_name);
+              stepPromises.push(execute(_element, _action, _input));
+            })(element, action, input);
+          }
         }
+      } else {
+        console.log("Nothing to do at this step <-- " + device_type);
       }
-    } else {
-      console.log("Nothing to do at this step <-- " + device_type);
+    }
+  } else {
+    for (var device_type in actions) {
+
+      if (actions[device_type][currentStep] != undefined) {
+        for (var currentAction in actions[device_type][currentStep]) {
+          for (var device_id in config[device_type]) {
+            var period = 0;
+            var element = config[device_type][device_id];
+            var action = actions[device_type][currentStep][currentAction];
+            // var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
+            (function(_element, _action) {
+              console.log("Executing " + _action + " <-- " + _element.device_name);
+              stepPromises.push(element.contract[action]);
+            })(element, action);
+          }
+        }
+      } else {
+        console.log("Nothing to do at this step <-- " + device_type);
+      }
     }
   }
 
@@ -301,6 +352,14 @@ function checkAllDeviceStatus() {
   }
   return Promise.all(allDeviceStatusPromises)
 
+}
+
+function jumpTime(a) {
+  return increaseTimeTo(latestTime() + duration.seconds(a));
+}
+
+function getNow() {
+  return configuration.getNow.call();
 }
 
 

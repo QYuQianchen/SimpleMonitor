@@ -140,4 +140,8 @@ contract Configuration {
       return ITimer(globalTimerAdr).checkStatus();
     }
 
+    function getNow() public view returns (uint) {
+    return now;
+    }
+
 }

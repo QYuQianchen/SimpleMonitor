@@ -156,7 +156,7 @@ exports.actions = {
   },
   "battery" : {
     1 : ["setVolume", "setConsumption", "setPrice"],
-    2 : ["askPrice", "sortPrice"],
+    2 : ["askForPrice", "sortPrice"],
     3 : ["askForRank", "sortRank"],
     4 : ["sellEnergy"]
   }
