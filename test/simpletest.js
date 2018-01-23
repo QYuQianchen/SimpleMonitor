@@ -150,6 +150,19 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       console.log("Step 3 done.");
 
+      jumpTime(16);
+    }).then(function (result) {
+      return getNow();
+    }).then(function (result) {
+      console.log("Current timestamp is: ", result.toNumber());
+      return checkStep.call();
+    }).then(function (result) {
+      var currentStep = result.toNumber();
+      console.log("We are at step: ", currentStep + " / 4");
+      return step(currentStep);
+    }).then(function (result) {
+      console.log("Step 4 done.");
+
     });
   });
 });
