@@ -177,7 +177,7 @@ exports.checkStatusActions = {
   "battery" : [
     "getConsumption",
     "getVolumeCapacity",
-    "getPrice"
+    "getSalePrice"
   ]
 };
 

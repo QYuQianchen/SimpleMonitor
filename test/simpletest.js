@@ -113,7 +113,9 @@ contract('simpletest', function(accounts) {
       
       return step(1);
     }).then(function (result) {
+
       console.log("Step 1 done.");
+
       return checkAllDeviceStatus();
 
     }).then(function (result) {
@@ -272,70 +274,32 @@ function execute(element, action, input) {
   return executePromise;
 }  
 
-function checkDeviceStatus(element) {
-  if (checkStatusActions[element.device_type] != undefined) {
-    for (var action_id in checkStatusActions[element.device_type]) {
-      (function(element, action_id) {
-        var action = checkStatusActions[element.device_type][action_id];
-        console.log("    doing " + action + " of " + element.device_name);
-        return element.contract[action].call({from: element.address });
-      })(element, action_id);
-    }
-  }
-}
-
 function checkAllDeviceStatus() {
   var allDeviceStatusPromises = [];
+  console.log("------------------------------------\n Current Status of All Devices\n------------------------------------");
 
   for (var device_type in config) {
     for (var device_id in config[device_type]) {
+      
       (function (element) {
-        if (checkStatusActions[element.device_type] != undefined) {
-          console.log(" -> the element is: " + element.device_name);
-          allDeviceStatusPromises.push(checkDeviceStatus(element).then(function (result) {
-          console.log(" -> the value is: " + result);
-          }));
+        for (var action_id in checkStatusActions[element.device_type]) {
+
+          if (checkStatusActions[element.device_type] != undefined) {
+            var action = checkStatusActions[element.device_type][action_id];
+
+            allDeviceStatusPromises.push(element.contract[action].call().then(function (result) {
+              if (result[0] != undefined) {
+                console.log(" -> the " + action.slice(3,action.length) + " of " + element.device_name + " is:", result[0].toNumber());
+              } else {
+                console.log(" -> the " + action.slice(3,action.length) + " of " + element.device_name + " is:", result.toNumber());
+              }
+            }));
+          }
         }
       })(config[device_type][device_id]);
-
-      // for (var action in checkStatusActions[device_type]) {
-      //   (function(_element, _action) {
-      //     console.log(_action + " of " + _element.device_name);
-      //     var statusPromise = element.contract[action]({from: element.address })
-      //     allDeviceStatusPromises.push(statusPromise);
-      //     stepPromises.push(execute(_element, _action, _input));
-      //   })(element, action);
-        
-      // }
-
-      // (function (element) {
-      //   if (element.device_type == "pv") {
-      //     getValuePromises.push(getValue(element).then(function (result) {
-      //       console.log("The production of", element.device_name, "is ", result[0].toNumber());
-      //       return getPrice(element);
-      //     }).then(function (result) {
-      //       console.log("The price of", element.device_name, "is ", result[0].toNumber());
-      //     }));
-      //   } else if (element.device_type == "house") {
-      //     getValuePromises.push(getValue(element).then(function (result) {
-      //       console.log("The consumption of", element.device_name, "is ", result[0].toNumber());
-      //     }));
-      //   } else if (element.device_type == "battery") {
-      //     getValuePromises.push(getValue(element).then(function (result) {
-      //       console.log("The consumption of", element.device_name, "is ", result.toNumber());
-      //       return getPrice(element);
-      //     }).then(function (result) {
-      //       console.log("The selling price of", element.device_name, "is ", result[0].toNumber());
-      //     }));
-      //   } else if (element.device_type == "grid") {
-      //     getValuePromises.push(getPrice(element).then(function (result) {
-      //       console.log("The price of", element.device_name, "is ", result[0].toNumber());
-      //     }));
-      //   }
-      // })(config[device_type][device_id]);
     }
   }
-  return Promise.all(deviceStatusPromises)
+  return Promise.all(allDeviceStatusPromises)
 
 }
 
