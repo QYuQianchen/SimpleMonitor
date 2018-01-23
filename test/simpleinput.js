@@ -162,6 +162,25 @@ exports.actions = {
   }
 };
 
+exports.checkStatusActions = {
+  "grid" : [
+    "getPrice"
+  ],
+  "house" : [
+    "getConsumptionE",
+    // "getConsumptionH"
+  ],
+  "pv" : [
+    "getProduction",
+    "getPrice"
+  ],
+  "battery" : [
+    "getConsumption",
+    "getVolumeCapacity",
+    "getPrice"
+  ]
+};
+
 
 exports.input_at_moment = [
   {
