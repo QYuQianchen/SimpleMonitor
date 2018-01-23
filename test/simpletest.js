@@ -67,6 +67,8 @@ contract('simpletest', function(accounts) {
 
       return registerAll(config);
 
+    }).then(function (result) {
+
       console.log("All participants registered");
       console.log("Starting to get contract addresses...");
 
@@ -144,7 +146,7 @@ function registerAll(_config) {
         if (element.device_type == "house" || element.device_type == "pv" || element.device_type == "grid" || element.device_type == "battery") {
           registerPromises.push(register(element));
         }
-      })(config[device_type][device_id]);
+      })(_config[device_type][device_id]);
     }
   }
   return Promise.all(registerPromises)
@@ -271,11 +273,14 @@ function execute(element, action, input) {
 }  
 
 function checkDeviceStatus(element) {
-  for (var action in checkStatusActions[element.device_type]) {
-    (function(_element, _action) {
-      console.log("Doing " + _action + " of " + _element.device_name);
-      return element.contract[action]({from: element.address })
-    })(element, action);
+  if (checkStatusActions[element.device_type] != undefined) {
+    for (var action_id in checkStatusActions[element.device_type]) {
+      (function(element, action_id) {
+        var action = checkStatusActions[element.device_type][action_id];
+        console.log("    doing " + action + " of " + element.device_name);
+        return element.contract[action].call({from: element.address });
+      })(element, action_id);
+    }
   }
 }
 
@@ -285,10 +290,13 @@ function checkAllDeviceStatus() {
   for (var device_type in config) {
     for (var device_id in config[device_type]) {
       (function (element) {
-        allDeviceStatusPromises.push(checkDeviceStatus(element).then(function (result) {
-          console.log("   , the value is: " + result[0].toNumber());
-        }));
-      })(_config[device_type][device_id]);
+        if (checkStatusActions[element.device_type] != undefined) {
+          console.log(" -> the element is: " + element.device_name);
+          allDeviceStatusPromises.push(checkDeviceStatus(element).then(function (result) {
+          console.log(" -> the value is: " + result);
+          }));
+        }
+      })(config[device_type][device_id]);
 
       // for (var action in checkStatusActions[device_type]) {
       //   (function(_element, _action) {
