@@ -312,7 +312,7 @@ function step(period, currentStep) {
             var element = config[device_type][device_id];
             var action = actions[device_type][currentStep][currentAction];
             var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
-  
+
             (function(_element, _action, _input) {
               console.log("Executing " + _action + "(" + _input + ") <-- " + _element.device_name);
               stepPromises.push(execute(_element, _action, _input));

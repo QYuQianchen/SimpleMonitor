@@ -195,7 +195,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     uint lastITime = now - 15 seconds;
 
     do {
-      // if (lastITime + 1 seconds <= now) {
+      if (lastITime + 1 seconds <= now) {
       i = getTimerIndex();
       TestLog(i);
       for (uint j = counter; j < tL; j++) {
@@ -225,7 +225,7 @@ contract SingleBattery is GeneralDevice, IBattery {
         break;
         
       }
-      // }
+      }
     } while (waiting);
     return;
   }

@@ -88,15 +88,7 @@ exports.config = {
       "contract_address": 0
     }
   ],
-  
-  "battery": [
-    {
-      "id": 0,
-      "address": 0,
-      "capacity": 20,
-      "contract_address": 0
-    }
-  ],
+
 
   "house": [
     {
@@ -118,6 +110,7 @@ exports.config = {
       "contract_address": 0
     }
   ],
+  
   "pv": [
     {
       "id": 0,
@@ -137,7 +130,16 @@ exports.config = {
       "address": 0,
       "contract_address": 0
     }
-  ]
+  ],
+    
+  "battery": [
+    {
+      "id": 0,
+      "address": 0,
+      "capacity": 20,
+      "contract_address": 0
+    }
+  ],
 };
 
 
@@ -150,17 +152,17 @@ exports.actions = {
     2 : ["askForPrice", "sortPrice"],
     5 : ["buyExtra"]
   },
-  "battery" : {
-    1 : ["setConsumption", "setPrice"],   // remove the "setVolume"
-    2 : ["askForPrice", "sortPrice"],
-    3 : ["askForRank", "sortRank"],
-    4 : ["sellEnergy"]
-  },
   "pv" : {
     1 : ["setProduction", "setPrice"],
     3 : ["askForRank", "sortRank"],
     4 : ["sellEnergy"],
     5 : ["sellExcess"]
+  },
+  "battery" : {
+    1 : ["setConsumption", "setPrice"],   // remove the "setVolume"
+    2 : ["askForPrice", "sortPrice"],
+    3 : ["askForRank", "sortRank"],
+    4 : ["sellEnergy"]
   }
 };
 
