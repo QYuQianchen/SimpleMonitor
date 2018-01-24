@@ -36,11 +36,11 @@ var actions = simpleinputs.actions;
 var inputs = simpleinputs.inputs;
 var checkStatusActions = simpleinputs.checkStatusActions;
 
-var input_at_moment_0 = simpleinputs.input_at_moment;
-var action_at_moment_1 = simpleinputs.action_at_moment_1;
-var action_at_moment_2 = simpleinputs.action_at_moment_2;
-var order_at_moment_3 = simpleinputs.sellEnergyOrder;
-var order_at_moment_4 = simpleinputs.sellExcessOrder;
+// var input_at_moment_0 = simpleinputs.input_at_moment;
+// var action_at_moment_1 = simpleinputs.action_at_moment_1;
+// var action_at_moment_2 = simpleinputs.action_at_moment_2;
+// var order_at_moment_3 = simpleinputs.sellEnergyOrder;
+// var order_at_moment_4 = simpleinputs.sellExcessOrder;
 
 
 contract('simpletest', function(accounts) {
@@ -116,7 +116,7 @@ contract('simpletest', function(accounts) {
       console.log("We are at step: ", currentStep + " / 1");
 
       // here we set the initial volume of battery
-      config.battery[0].contract.setVolume(5, {from: config.battery[0].address});
+      // config.battery[0].contract.setVolume(5, {from: config.battery[0].address});
       
       return step(0,currentStep);
     }).then(function (result) {
@@ -284,11 +284,11 @@ function linkDevices(_config) {
         linkDevicesPromises.push(configuration.linkDevices(_config.house[house_list[house_id]].address, _config.pv[pv_list[pv_id]].address, { from: _config.admin[0].address, gas: 2000000 }));
       }
     }
-  // linking battery0 with house0,2
-  console.log("Linking battery[0] with house[0]");
-  linkDevicesPromises.push(configuration.linkDevices(_config.house[0].address, _config.battery[0].address, { from: _config.admin[0].address, gas: 2000000 }));
-  console.log("Linking battery[0] with house[2]");
-  linkDevicesPromises.push(configuration.linkDevices(_config.house[2].address, _config.battery[0].address, { from: _config.admin[0].address, gas: 2000000 }));
+  // // linking battery0 with house0,2
+  // console.log("Linking battery[0] with house[0]");
+  // linkDevicesPromises.push(configuration.linkDevices(_config.house[0].address, _config.battery[0].address, { from: _config.admin[0].address, gas: 2000000 }));
+  // console.log("Linking battery[0] with house[2]");
+  // linkDevicesPromises.push(configuration.linkDevices(_config.house[2].address, _config.battery[0].address, { from: _config.admin[0].address, gas: 2000000 }));
   return Promise.all(linkDevicesPromises);
 }
 
@@ -342,7 +342,7 @@ function step(period, currentStep) {
             // var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
             (function(_element, _action) {
               console.log("Executing " + _action + " <-- " + _element.device_name);
-              stepPromises.push(element.contract[action]);
+              stepPromises.push(element.contract[action]());
             })(element, action);
           }
         }
@@ -409,50 +409,3 @@ function jumpTime(a) {
 function getNow() {
   return configuration.getNow.call();
 }
-
-
-// function takeAction(element) {
-//   var addTakeActionPromise;
-//   var takeActionPromise = [];
-//   var config_element = config[element.device_type][element.device_id];
-
-//   if (element.action == "askandsortprice") {
-//     if (element.device_type == "house" || element.device_type == "battery") {
-//       // addTakeActionPromise = config[element.device_type][element.device_id].contract.askForPrice({from: config[element.device_type][element.device_id].address});
-//       //
-//       // takeActionPromise.push(addTakeActionPromise.then(function(result){
-//       //   addTakeActionPromise = config[element.device_type][element.device_id].contract.sortPrice({from: config[element.device_type][element.device_id].address});
-//       //   takeActionPromise.push(addTakeActionPromise);
-//       // }));
-
-//       takeActionPromise.push(config_element.contract.askForPrice({from: config_element.address, gas: 2000000}).then(function(result) {
-//         config_element.contract.sortPrice({from: config_element.address, gas: 2000000})
-//       }));
-
-//     }
-//   } else if (element.action == "askandsortrank") {
-//     if (element.device_type == "pv" || element.device_type == "battery") {
-//       // addTakeActionPromise = config[element.device_type][element.device_id].contract.askForRank({from: config[element.device_type][element.device_id].address, gas: 2000000});
-//       // takeActionPromise.push(addTakeActionPromise.then(function(result){
-//       //   addTakeActionPromise = config[element.device_type][element.device_id].contract.sortRank({from: config[element.device_type][element.device_id].address, gas: 2000000});
-//       //   takeActionPromise.push(addTakeActionPromise);
-//       // }));
-
-//       takeActionPromise.push(config_element.contract.askForRank({from: config_element.address, gas: 2000000}).then(function(result) {
-//         config_element.contract.sortRank({from: config_element.address, gas: 2000000})
-//       }));
-//     }
-//   } else if (element.action == "sellenergy") {
-//     if (element.device_type == "pv" || element.device_type == "battery") {
-//       addTakeActionPromise = config[element.device_type][element.device_id].contract.sellEnergy({from: config[element.device_type][element.device_id].address, gas: 2000000});
-//       takeActionPromise.push(addTakeActionPromise);
-//     }
-//   } else if (element.action == "sellexcessenergy") {
-//     if (element.device_type == "pv") {
-//       addTakeActionPromise = config[element.device_type][element.device_id].contract.sellExcess({from: config[element.device_type][element.device_id].address, gas: 2000000});
-//       takeActionPromise.push(addTakeActionPromise);
-//     }
-//   }
-//   return takeActionPromise;
-//   //return Promise.all(takeActionPromise)
-// }

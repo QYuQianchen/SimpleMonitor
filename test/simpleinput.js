@@ -48,20 +48,20 @@ exports.inputs = {
     }
   ],
 
-  "battery" : [
-    {
-      // setVolume can only be used once in the beginning...
-      // "volume" : [
-      //   5
-      // ],
-      "consumption" : [
-        3, 2, 1
-      ],
-      "price" : [
-        [20, 3],[20, 3],[20, 3]
-      ]
-    }
-  ],
+  // "battery" : [
+  //   {
+  //     // setVolume can only be used once in the beginning...
+  //     // "volume" : [
+  //     //   5
+  //     // ],
+  //     "consumption" : [
+  //       3, 2, 1
+  //     ],
+  //     "price" : [
+  //       [20, 3],[20, 3],[20, 3]
+  //     ]
+  //   }
+  // ],
   "grid" : [
     {
       "price" : [
@@ -128,15 +128,15 @@ exports.config = {
       "address": 0,
       "contract_address": 0
     }
-  ],
-  "battery": [
-    {
-      "id": 0,
-      "address": 0,
-      "capacity": 20,
-      "contract_address": 0
-    }
-  ]
+  ]//,
+  // "battery": [
+  //   {
+  //     "id": 0,
+  //     "address": 0,
+  //     "capacity": 20,
+  //     "contract_address": 0
+  //   }
+  // ]
 };
 
 
@@ -165,209 +165,212 @@ exports.actions = {
 
 exports.checkStatusActions = {
   "grid" : {
-    1: "getPrice"
+    1: "getPrice",
+    // 2: "getWallet"
   },
 
   "house" : {
     1: "getConsumptionE",
+    2: "getWallet"
     // 2: ["getConsumptionH"]
   },
 
   "pv" : {
     1: "getProduction",
     2: "getPrice",
-
+    3: "getWallet"
   },
 
   "battery" : {
     1: "getConsumption",
     2: "getVolumeCapacity",
-    3: "getSalePrice"
+    3: "getSalePrice",
+    4: "getWallet"
   }
 };
 
 
-exports.input_at_moment = [
-  {
-    "device_type": "house",
-    "device_id": 0,
-    "element": exports.config.house[0],
-    "action": "setconsumption",
-    "value": 3
-  },
-  {
-    "device_type": "house",
-    "device_id": 1,
-    "element": exports.config.house[1],
-    "action": "setconsumption",
-    "value": 3
-  },
-  {
-    "device_type": "house",
-    "device_id": 2,
-    "element": exports.config.house[2],
-    "action": "setconsumption",
-    "value": 8
-  },
-  {
-    "device_type": "pv",
-    "device_id": 0,
-    "element": exports.config.pv[0],
-    "action": "setproduction",
-    "value": 5
-  },
-  {
-    "device_type": "pv",
-    "device_id": 1,
-    "element": exports.config.pv[1],
-    "action": "setproduction",
-    "value": 10
-  },
-  {
-    "device_type": "pv",
-    "device_id": 2,
-    "element": exports.config.pv[2],
-    "action": "setproduction",
-    "value": 10
-  },
-  {
-    "device_type": "battery",
-    "device_id": 0,
-    "element": exports.config.battery[0],
-    "action": "setvolume",
-    "value": 5
-  },
-  {
-    "device_type": "battery",
-    "device_id": 0,
-    "element": exports.config.battery[0],
-    "action": "setconsumption",
-    "value": 3
-  },
-  {
-    "device_type": "pv",
-    "device_id": 0,
-    "element": exports.config.pv[0],
-    "action": "setprice",
-    "value": 20
-  },
-  {
-    "device_type": "pv",
-    "device_id": 1,
-    "element": exports.config.pv[1],
-    "action": "setprice",
-    "value": 15
-  },
-  {
-    "device_type": "pv",
-    "device_id": 2,
-    "element": exports.config.pv[2],
-    "action": "setprice",
-    "value": 30
-  },
-  {
-    "device_type": "battery",
-    "device_id": 0,
-    "element": exports.config.battery[0],
-    "action": "setprice",
-    "value": [20, 3]
-  },
-  {
-    "device_type": "grid",
-    "device_id": 0,
-    "element": exports.config.grid[0],
-    "action": "setprice",
-    "value": [10, 1]
-  }
-];
+// exports.input_at_moment = [
+//   {
+//     "device_type": "house",
+//     "device_id": 0,
+//     "element": exports.config.house[0],
+//     "action": "setconsumption",
+//     "value": 3
+//   },
+//   {
+//     "device_type": "house",
+//     "device_id": 1,
+//     "element": exports.config.house[1],
+//     "action": "setconsumption",
+//     "value": 3
+//   },
+//   {
+//     "device_type": "house",
+//     "device_id": 2,
+//     "element": exports.config.house[2],
+//     "action": "setconsumption",
+//     "value": 8
+//   },
+//   {
+//     "device_type": "pv",
+//     "device_id": 0,
+//     "element": exports.config.pv[0],
+//     "action": "setproduction",
+//     "value": 5
+//   },
+//   {
+//     "device_type": "pv",
+//     "device_id": 1,
+//     "element": exports.config.pv[1],
+//     "action": "setproduction",
+//     "value": 10
+//   },
+//   {
+//     "device_type": "pv",
+//     "device_id": 2,
+//     "element": exports.config.pv[2],
+//     "action": "setproduction",
+//     "value": 10
+//   },
+//   {
+//     "device_type": "battery",
+//     "device_id": 0,
+//     "element": exports.config.battery[0],
+//     "action": "setvolume",
+//     "value": 5
+//   },
+//   {
+//     "device_type": "battery",
+//     "device_id": 0,
+//     "element": exports.config.battery[0],
+//     "action": "setconsumption",
+//     "value": 3
+//   },
+//   {
+//     "device_type": "pv",
+//     "device_id": 0,
+//     "element": exports.config.pv[0],
+//     "action": "setprice",
+//     "value": 20
+//   },
+//   {
+//     "device_type": "pv",
+//     "device_id": 1,
+//     "element": exports.config.pv[1],
+//     "action": "setprice",
+//     "value": 15
+//   },
+//   {
+//     "device_type": "pv",
+//     "device_id": 2,
+//     "element": exports.config.pv[2],
+//     "action": "setprice",
+//     "value": 30
+//   },
+//   {
+//     "device_type": "battery",
+//     "device_id": 0,
+//     "element": exports.config.battery[0],
+//     "action": "setprice",
+//     "value": [20, 3]
+//   },
+//   {
+//     "device_type": "grid",
+//     "device_id": 0,
+//     "element": exports.config.grid[0],
+//     "action": "setprice",
+//     "value": [10, 1]
+//   }
+// ];
 
-exports.action_at_moment_1 = [
-  {
-    "device_type": "house",
-    "device_id": 2,
-    "action": "askandsortprice",
-    "timelapse": 1      //15
-  },
-  {
-    "device_type": "house",
-    "device_id": 0,
-    "action": "askandsortprice",
-    "timelapse": 1
-  },
-  {
-    "device_type": "house",
-    "device_id": 1,
-    "action": "askandsortprice",
-    "timelapse": 2
-  },
-  {
-    "device_type": "battery",
-    "device_id": 0,
-    "action": "askandsortprice",
-    "timelapse": 3
-  }
-];
+// exports.action_at_moment_1 = [
+//   {
+//     "device_type": "house",
+//     "device_id": 2,
+//     "action": "askandsortprice",
+//     "timelapse": 1      //15
+//   },
+//   {
+//     "device_type": "house",
+//     "device_id": 0,
+//     "action": "askandsortprice",
+//     "timelapse": 1
+//   },
+//   {
+//     "device_type": "house",
+//     "device_id": 1,
+//     "action": "askandsortprice",
+//     "timelapse": 2
+//   },
+//   {
+//     "device_type": "battery",
+//     "device_id": 0,
+//     "action": "askandsortprice",
+//     "timelapse": 3
+//   }
+// ];
 
-exports.action_at_moment_2 = [
-  {
-    "device_type": "pv",
-    "device_id": 1,
-    "action": "askandsortrank",
-    "timelapse": 1      //15
-  },
-  {
-    "device_type": "pv",
-    "device_id": 0,
-    "action": "askandsortrank",
-    "timelapse": 1
-  },
-  {
-    "device_type": "pv",
-    "device_id": 2,
-    "action": "askandsortrank",
-    "timelapse": 2
-  },
-  {
-    "device_type": "battery",
-    "device_id": 0,
-    "action": "askandsortrank",
-    "timelapse": 3
-  }
-];
+// exports.action_at_moment_2 = [
+//   {
+//     "device_type": "pv",
+//     "device_id": 1,
+//     "action": "askandsortrank",
+//     "timelapse": 1      //15
+//   },
+//   {
+//     "device_type": "pv",
+//     "device_id": 0,
+//     "action": "askandsortrank",
+//     "timelapse": 1
+//   },
+//   {
+//     "device_type": "pv",
+//     "device_id": 2,
+//     "action": "askandsortrank",
+//     "timelapse": 2
+//   },
+//   {
+//     "device_type": "battery",
+//     "device_id": 0,
+//     "action": "askandsortrank",
+//     "timelapse": 3
+//   }
+// ];
 
 
-exports.sellEnergyOrder = [
-  {
-    "device_type": "pv",
-    "device_id": 1,
-    "action": "sellenergy",
-    "timelapse": 1      //15
-  },
-  {
-    "device_type": "pv",
-    "device_id": 0,
-    "action": "sellenergy",
-    "timelapse": 1
-  },
-  {
-    "device_type": "battery",
-    "device_id": 0,
-    "action": "sellenergy",
-    "timelapse": 3
-  },
-  {
-    "device_type": "pv",
-    "device_id": 2,
-    "action": "sellenergy",
-    "timelapse": 2
-  }
-];
+// exports.sellEnergyOrder = [
+//   {
+//     "device_type": "pv",
+//     "device_id": 1,
+//     "action": "sellenergy",
+//     "timelapse": 1      //15
+//   },
+//   {
+//     "device_type": "pv",
+//     "device_id": 0,
+//     "action": "sellenergy",
+//     "timelapse": 1
+//   },
+//   {
+//     "device_type": "battery",
+//     "device_id": 0,
+//     "action": "sellenergy",
+//     "timelapse": 3
+//   },
+//   {
+//     "device_type": "pv",
+//     "device_id": 2,
+//     "action": "sellenergy",
+//     "timelapse": 2
+//   }
+// ];
 
-exports.sellExcessOrder = [
-  {
-    "device_type": "pv",
-    "device_id": 2,
-    "action": "sellexcessenergy",
-    "timelapse": 1      //15
-  }
-];
+// exports.sellExcessOrder = [
+//   {
+//     "device_type": "pv",
+//     "device_id": 2,
+//     "action": "sellexcessenergy",
+//     "timelapse": 1      //15
+//   }
+// ];

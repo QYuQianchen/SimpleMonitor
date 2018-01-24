@@ -110,7 +110,7 @@ contract GeneralDevice {
     return ITimer(globalTimer).getTimeToNextStatus();
   }
 
-  function getWallet() private view returns (int) {
+  function getWallet() public view returns (int) {
     return wallet;
   }
 
