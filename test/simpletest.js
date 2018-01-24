@@ -36,12 +36,6 @@ var actions = simpleinputs.actions;
 var inputs = simpleinputs.inputs;
 var checkStatusActions = simpleinputs.checkStatusActions;
 
-// var input_at_moment_0 = simpleinputs.input_at_moment;
-// var action_at_moment_1 = simpleinputs.action_at_moment_1;
-// var action_at_moment_2 = simpleinputs.action_at_moment_2;
-// var order_at_moment_3 = simpleinputs.sellEnergyOrder;
-// var order_at_moment_4 = simpleinputs.sellExcessOrder;
-
 
 contract('simpletest', function(accounts) {
 
@@ -104,19 +98,15 @@ contract('simpletest', function(accounts) {
 
     }).then(function (result) {
       console.log("Linking of devices done.");
-      console.log("1. Time to set production and price");
+      console.log("Here we are starting the 1st round...");
       
-    //   return getNow();
-    // }).then(function (result) {
-    //   console.log("Current timestamp is: ", result.toNumber());
-
       return checkStep.call();
     }).then(function (result) {
       var currentStep = result.toNumber();
       console.log("We are at step: ", currentStep + " / 1");
 
       // here we set the initial volume of battery
-      // config.battery[0].contract.setVolume(5, {from: config.battery[0].address});
+      config.battery[0].contract.setVolume(5, {from: config.battery[0].address});
       
       return step(0,currentStep);
     }).then(function (result) {
@@ -284,11 +274,14 @@ function linkDevices(_config) {
         linkDevicesPromises.push(configuration.linkDevices(_config.house[house_list[house_id]].address, _config.pv[pv_list[pv_id]].address, { from: _config.admin[0].address, gas: 2000000 }));
       }
     }
-  // // linking battery0 with house0,2
-  // console.log("Linking battery[0] with house[0]");
-  // linkDevicesPromises.push(configuration.linkDevices(_config.house[0].address, _config.battery[0].address, { from: _config.admin[0].address, gas: 2000000 }));
-  // console.log("Linking battery[0] with house[2]");
-  // linkDevicesPromises.push(configuration.linkDevices(_config.house[2].address, _config.battery[0].address, { from: _config.admin[0].address, gas: 2000000 }));
+  // linking battery0 with house0,2
+  console.log("Linking battery[0] with house[0]");
+  linkDevicesPromises.push(configuration.linkDevices(_config.house[0].address, _config.battery[0].address, { from: _config.admin[0].address, gas: 2000000 }));
+  console.log("Linking battery[0] with house[2]");
+  linkDevicesPromises.push(configuration.linkDevices(_config.house[2].address, _config.battery[0].address, { from: _config.admin[0].address, gas: 2000000 }));
+  // linking battery0 with pv0
+  console.log("Linking battery[0] with pv[0]");
+  linkDevicesPromises.push(configuration.linkDevices(_config.pv[0].address, _config.battery[0].address, { from: _config.admin[0].address, gas: 2000000 }));
   return Promise.all(linkDevicesPromises);
 }
 
@@ -339,10 +332,14 @@ function step(period, currentStep) {
             // var period = 0;
             var element = config[device_type][device_id];
             var action = actions[device_type][currentStep][currentAction];
+            var account = element.address;
+            var name = element.device_name;
             // var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
             (function(_element, _action) {
               console.log("Executing " + _action + " <-- " + _element.device_name);
-              stepPromises.push(element.contract[action]());
+              stepPromises.push(element.contract[action]({ from: account, gas: 4900000}).then(function (result) {
+                console.log(name + "has passed through");
+              }));
             })(element, action);
           }
         }

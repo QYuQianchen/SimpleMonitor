@@ -13,13 +13,13 @@ import "./TransactLib.sol";
 import "./DeviceFactoryInterface.sol";
 
 contract SingleBatteryFactory is SingleBatteryFactoryInterface {
-  mapping(address => SingleBattery) batteries;
+  mapping(address => address) batteries;
 
   function SingleBatteryFactory() public {}
 
   function createSingleBattery(address _accountAddress, uint _capacity) public returns (address batteryAddress) {
     batteries[_accountAddress] = new SingleBattery(_accountAddress, _capacity);
-    return batteries[_accountAddress];
+    return address(batteries[_accountAddress]);
   }
 
   function getSingleBatteryAddress(address _accountAddress) public constant returns (address batteryAddress) {
@@ -51,8 +51,9 @@ contract SingleBattery is GeneralDevice, IBattery {
 // ======= Event Logs =======
 
   event VolLog(address adr, uint vol, uint volAt);
-  //event ConfigurationLog(string confMod, uint statusAt);
   event PriceUpdate(uint updateAt);
+  event TestLog(uint stepNum_i);
+  event TestLog2(uint rank, uint stepNum_j);
 
 // ======= Basic Functionalities =======
 
@@ -107,25 +108,29 @@ contract SingleBattery is GeneralDevice, IBattery {
   // ---    Sort the list of offers. --- 
 
   function askForPrice() public timed(2) {
-    // Battery query price info to all the connected PV/Battery. 
-    uint tP = 0;
-    bool tF = false;
-    draftPriceMap.initPrsTable();
-    for (uint i = 0; i < connectedDevice[1].length; i++) {
-      (tP,tF) = IPV(connectedDevice[1][i]).getPrice();
-      draftPriceMap.addToPrsTable(connectedDevice[1][i],tP,tF);
+    if (connectedDevice[1].length > 0) {
+      // Battery query price info to all the connected PV/Battery. 
+      uint tP = 0;
+      bool tF = false;
+      draftPriceMap.initPrsTable();
+      for (uint i = 0; i < connectedDevice[1].length; i++) {
+        (tP,tF) = IPV(connectedDevice[1][i]).getPrice();
+        draftPriceMap.addToPrsTable(connectedDevice[1][i],tP,tF);
+      }
+      lastPriceQueryAt = now;
     }
-    lastPriceQueryAt = now;
   }
 
   function sortPrice() public timed(2) {
-    draftPriceMap.sortPrsTable();
-    // if the grid is connected -> add the price from the grid to the end of the sorted list 
-    if (grid != 0x0) {
-      uint tP = 0;
-      bool tF = false;
-      (tP,tF) = IGrid(grid).getPrice();
-      draftPriceMap.addToPrsTable(grid,tP,tF);
+    if (connectedDevice[1].length > 0) {
+      draftPriceMap.sortPrsTable();
+      // if the grid is connected -> add the price from the grid to the end of the sorted list 
+      if (grid != 0x0) {
+        uint tP = 0;
+        bool tF = false;
+        (tP,tF) = IGrid(grid).getPrice();
+        draftPriceMap.addToPrsTable(grid,tP,tF);
+      }
     }
   }
 
@@ -189,31 +194,40 @@ contract SingleBattery is GeneralDevice, IBattery {
     uint lastIndex;
     uint lastITime = now - 15 seconds;
 
-    while (waiting) {
-      if (lastITime + 1 seconds <= now) {
+    do {
+      // if (lastITime + 1 seconds <= now) {
       i = getTimerIndex();
+      TestLog(i);
       for (uint j = counter; j < tL; j++) {
         (adr,consum,rank,tot) = getSortedRank(counter);
+        TestLog2(rank,j);
         if (rank == i) {
           // time to make transaction
           initiateTransaction(counter);
           counter++;
+          TestLog(99);
         } else if (rank < i) {
           // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
           counter++;
+          TestLog(98);
         } else {
           // when rank > i, need to wait
           lastIndex = i;  // note down the index that has been requested last time. 
           lastITime = now;  // The next query should be ideally in 15s...
+          TestLog(97);
           break;
         }
+
       }
       if (counter >= tL) {
+        TestLog(tL);
         waiting = false;
         break;
+        
       }
-      }
-    }
+      // }
+    } while (waiting);
+    return;
   }
 
   function initiateTransaction(uint _id) public timed(4) returns (uint, uint) {

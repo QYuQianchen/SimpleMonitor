@@ -45,8 +45,10 @@ contract SinglePV is GeneralDevice, IPV {
 // ======= Event Logs =======
 
   event ProductionLog(address adr, uint produc, uint prodAt);
-  //event ConfigurationLog(string confMod, uint statusAt);
   event PriceUpdate(uint updateAt);
+  event TestLog(uint stepNum_i);
+  event TestLog2(uint rank, uint stepNum_j);
+
 
 // ======= Basic Functionalities =======
 
@@ -153,23 +155,29 @@ contract SinglePV is GeneralDevice, IPV {
     while (waiting) {
       if (lastITime + 1 seconds <= now) {
       i = getTimerIndex();
+      TestLog(i);
       for (uint j = counter; j < tL; j++) {
         (adr,consum,rank,tot) = getSortedRank(counter);
+        TestLog2(rank,j);
         if (rank == i) {
           // time to make transaction
           initiateTransaction(counter);
           counter++;
+          TestLog(99);
         } else if (rank < i) {
           // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
           counter++;
+          TestLog(98);
         } else {
           // when rank > i, need to wait
           lastIndex = i;  // note down the index that has been requested last time.
           lastITime = now;  // The next query should be ideally in 15s...
+          TestLog(97);
           break;
         }
       }
       if (counter >= tL) {
+        TestLog(tL);
         waiting = false;
         break;
       }
