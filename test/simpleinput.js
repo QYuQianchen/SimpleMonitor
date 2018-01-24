@@ -166,7 +166,7 @@ exports.actions = {
 exports.checkStatusActions = {
   "grid" : {
     1: "getPrice",
-    // 2: "getWallet"
+    2: "getWallet"
   },
 
   "house" : {
