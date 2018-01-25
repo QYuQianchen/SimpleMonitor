@@ -3,18 +3,27 @@ exports.inputs = {
     {
       "consumption" : [
         3, 4, 5
+      ],
+      "consumptionH" : [
+        20, 30, 40
       ]
     },
 
     {
       "consumption" : [
         3, 4, 5
+      ],
+      "consumptionH" : [
+        20, 30, 40
       ]
     },
 
     {
       "consumption" : [
         8, 9, 10
+      ],
+      "consumptionH" : [
+        20, 30, 40
       ]
     }
   ],
@@ -137,9 +146,37 @@ exports.config = {
       "id": 0,
       "address": 0,
       "capacity": 20,
+      "volume": 5,
       "contract_address": 0
     }
   ],
+
+  "watertank":[
+    {
+      "id": 0,
+      "address": 0,
+      "capacity": 120,
+      "contact_address": 0
+    },
+    {
+      "id": 1,
+      "address": 0,
+      "capacity": 120,
+      "contact_address": 0
+    },
+    {
+      "id": 2,
+      "address": 0,
+      "capacity": 120,
+      "contact_address": 0
+    },
+    {
+      "id": 3,
+      "address": 0,
+      "capacity": 120,
+      "contact_address": 0
+    }
+  ]
 };
 
 
@@ -148,7 +185,7 @@ exports.actions = {
     1 : ["setPrice"]
   },
   "house" : {
-    1 : ["setConsumption"],
+    1 : ["setConsumption", "setConsumptionH"],
     2 : ["askForPrice", "sortPrice"],
     5 : ["buyExtra"]
   },
@@ -174,8 +211,8 @@ exports.checkStatusActions = {
 
   "house" : {
     1: "getConsumptionE",
-    2: "getWallet"
-    // 2: ["getConsumptionH"]
+    2: "getConsumptionH",
+    3: "getWallet"
   },
 
   "pv" : {

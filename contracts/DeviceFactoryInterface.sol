@@ -21,7 +21,7 @@ contract SingleHeatPumpFactoryInterface {
 }
 
 contract SingleWaterTankFactoryInterface {
-  function createSingleWaterTank(address _accountAddress, uint _capacity, uint _waterType) public returns (address watertankAddress);
+  function createSingleWaterTank(address _accountAddress, uint _capacity, bool _waterType) public returns (address watertankAddress);
   function getSingleWaterTankAddress(address _accountAddress) public constant returns (address watertankAddress);
 }
 

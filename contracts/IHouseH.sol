@@ -16,6 +16,6 @@ contract IHouseH is GeneralDevice {
     consumAt = consumWaterStatusAt;
   }
 
-  function goNoGoHeating(uint giveoutvol, uint prs, uint wType) public timed(4) returns (uint);
+  function goNoGoHeating(uint giveoutvol, uint prs, bool wType) public timed(4) returns (uint);
   
 }

@@ -46,7 +46,6 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
 // ======= Event Logs =======
 
   event ConsumptionLog(address adr, uint consum, uint consumAt);
-  //event ConfigurationLog(string confMod, uint statusAt);
   event EnergyTransferLog(address adrFrom, address adrTo, uint eVol, uint transferAt);
 
 // ======= Basic Functionalities =======
@@ -63,21 +62,17 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
     ConsumptionLog(owner, consumption, consumStatusAt);
   }
 
-  // function getConsumption() public {
-  //   return consumption;
-  // }
-
   // overload function of setConsumption
   // consum1: electricity consumption; consum2: Medium-Temperature water consumption (liter); consum3: High-Temperature water consumption (liter)
   
-  // function setConsumption(uint consum1, uint consum2, uint consum3) public timed(1) ownerOnly {
-  //   consumption = consum1;
-  //   consumptionMTWater = consum2;
-  //   consumptionHTWater = consum3;
-  //   consumStatusAt = now;
-  //   consumWaterStatusAt = now;
-  //   ConsumptionLog(owner, consumption, consumStatusAt);
-  // }
+  function setConsumptionH(uint consum1, uint consum2, uint consum3) public timed(1) ownerOnly {
+    consumption = consum1;
+    consumptionMTWater = consum2;
+    consumptionHTWater = consum3;
+    consumStatusAt = now;
+    consumWaterStatusAt = now;
+    ConsumptionLog(owner, consumption, consumStatusAt);
+  }
 
   // --- 2. ask for connected PV / batteries / grid for price of electricity supply ---
 
@@ -129,12 +124,12 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
     return (takeoutvol);
   }
     // --- 4.1 heating transaction ---
-  function goNoGoHeating(uint giveoutvol, uint prs, uint wType) public timed(4) returns (uint) {
+  function goNoGoHeating(uint giveoutvol, uint prs, bool wType) public timed(4) returns (uint) {
     // possible to overload the function with goNoGo -> simplify the code of calling
     address adrDevice = msg.sender;
     uint takeoutvol;
     require(connectedDevice[4].assertInside(adrDevice));
-    if (wType == 0) {
+    if (wType == false) {
       takeoutvol = consumptionMTWater.findMin(giveoutvol);
       consumptionMTWater -= takeoutvol;
     } else {  // high temperature water

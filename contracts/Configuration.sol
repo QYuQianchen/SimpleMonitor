@@ -81,9 +81,9 @@ contract Configuration {
       } else if (_deviceType == 3) {
         contractList[adr] = singleHeatPumpFactory.createSingleHeatPump(adr,capacity);
       } else {
-        contractList[adr] = singleWaterTankFactory.createSingleWaterTank(adr,capacity,0);
+        contractList[adr] = singleWaterTankFactory.createSingleWaterTank(adr,capacity,g);
       }
-      if (g) {
+      if (g && _deviceType != 4) {
            IGeneralDevice(contractList[adr]).setGridAdr(gridAdr);
            IGeneralDevice(gridAdr).addConnectedDevice(_deviceType, contractList[adr]);
          }

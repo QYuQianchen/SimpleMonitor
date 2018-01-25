@@ -5,6 +5,8 @@ var Configuration = artifacts.require("./Configuration.sol");
 var SingleHouse = artifacts.require("./SingleHouse.sol");
 var SinglePV = artifacts.require("./SinglePV.sol");
 var SingleBattery = artifacts.require("./SingleBattery.sol");
+var SingleWaterTank = artifacts.require("./SingleWaterTank.sol");
+var SingleHeatPump = artifacts.require("./SingleHeatPump.sol");
 var Grid = artifacts.require("./Grid.sol");
 
 var contracts = {
@@ -12,20 +14,25 @@ var contracts = {
   "pv": artifacts.require("./SinglePV.sol"),
   "battery": artifacts.require("./SingleBattery.sol"),
   "grid": artifacts.require("./Grid.sol"),
+  "watertank": artifacts.require("./SingleWaterTank.sol"),
+  "heatpump": artifacts.require("./SingleHeatPump.sol")
 };
 
 var category_nums = {
   "house": 0,
   "pv": 1,
   "battery": 2,
-  "grid": 3
+  "grid": 3,
+  "watertank": 4,
+  "heatpump": 5
 };
 
 var actionInputs = {
   "setConsumption" : "consumption",
+  "setConsumptionH" : "consumptionH",
   "setProduction" : "production",
   "setPrice" : "price",
-  "setVolume" : "volume"
+  // "setVolume" : "volume"
 };
 
 var configuration = null;
@@ -79,13 +86,20 @@ contract('simpletest', function(accounts) {
           (function (element) {
             // console.log("--> instatiating now...");
             // console.log(element.device_type, " at address",element.contract_address);
-            if (element.device_type == "house" || element.device_type == "pv" || element.device_type == "grid" || element.device_type == "battery") {
+            if (element.device_type == "house" || element.device_type == "pv" || element.device_type == "grid") {
               element.contract = contracts[element.device_type].at(element.contract_address);
+            } else if (element.device_type == "battery") {
+              element.contract = contracts[element.device_type].at(element.contract_address);
+              // here we set the initial volume of batterys and watertanks
+              element.contract.setVolume(element.volume, {from: element.address});
             }
 
           })(config[device_type][device_id]);
         }
       }
+
+      
+
 
       return configuration.getGridAdr.call()
 
@@ -104,9 +118,6 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       var currentStep = result.toNumber();
       console.log("We are at step: ", currentStep + " / 1");
-
-      // here we set the initial volume of battery
-      config.battery[0].contract.setVolume(5, {from: config.battery[0].address});
       
       return step(0,currentStep);
     }).then(function (result) {

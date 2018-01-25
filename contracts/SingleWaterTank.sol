@@ -13,7 +13,7 @@ contract SingleWaterTankFactory is SingleWaterTankFactoryInterface {
 
   function SingleWaterTankFactory() public {}
 
-  function createSingleWaterTank(address _accountAddress, uint _capacity, uint _waterType) public returns (address watertankAddress) {
+  function createSingleWaterTank(address _accountAddress, uint _capacity, bool _waterType) public returns (address watertankAddress) {
     SingleWaterTank _singleWaterTank = new SingleWaterTank(_accountAddress, _capacity, _waterType);
     watertanks[_accountAddress] = _singleWaterTank;
     return _singleWaterTank;
@@ -33,7 +33,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
   uint    previousVolume;
   uint    consumption;              // amount of water that needs to be supplied by HP (estimed by the water tank) for the next 10 min
   uint    price;
-  uint    waterType;                // two types of water : 0 - medium temperature and 1 - high temperature
+  bool    waterType;                // two types of water : false - medium temperature and true - high temperature
   uint[]  volMap;
 
   PriceLib.PriceMap prsMap;
@@ -50,7 +50,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
 
   // --- 0. Upon contract creation and configuration ---
 
-  function SingleWaterTank (address adr,  uint cap, uint wType) GeneralDevice(adr) public adminOnly {
+  function SingleWaterTank (address adr,  uint cap, bool wType) GeneralDevice(adr) public adminOnly {
     capacity = cap;
     waterType = wType;
   }
@@ -113,7 +113,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
     // draftRankMap.initRnkTable();
     for (uint i = 0; i < connectedDevice[0].length; i++) {
       (consumMT, consumHT, consumAt) = IHouseH(connectedDevice[0][i]).getConsumptionH();
-      if (waterType == 0) {   //Medium temperature water tank
+      if (waterType == false) {   //Medium temperature water tank
         //draftRankMap.addToRnkTable(connectedDevice[0][i],consum, rank, tot);
         volMap[i] = consumMT;
       } else {
