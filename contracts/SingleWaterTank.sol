@@ -55,7 +55,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
     waterType = wType;
   }
 
-  function setVolume(uint vol) public ownerOnly {
+  function setVolume(uint vol) public adminOnly {
     // Can only be triggered once....Should be moved into the constructor...Once the initial volumne is set, can only be changed by energy trading.
     previousVolume = currentVolume;
     currentVolume = vol;

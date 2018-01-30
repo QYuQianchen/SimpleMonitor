@@ -86,14 +86,13 @@ contract('simpletest', function(accounts) {
           (function (element) {
             // console.log("--> instatiating now...");
             // console.log(element.device_type, " at address",element.contract_address);
-            if (element.device_type == "house" || element.device_type == "pv" || element.device_type == "grid") {
+            if (element.device_type == "house" || element.device_type == "pv" || element.device_type == "grid" || element.device_type == "heatpump") {
               element.contract = contracts[element.device_type].at(element.contract_address);
-            } else if (element.device_type == "battery") {
+            } else if (element.device_type == "battery" || element.device_type == "watertank") {
               element.contract = contracts[element.device_type].at(element.contract_address);
               // here we set the initial volume of batterys and watertanks
               element.contract.setVolume(element.volume, {from: config.admin[0].address}); //{from: element.address}
-            }
-
+            } 
           })(config[device_type][device_id]);
         }
       }
@@ -260,7 +259,7 @@ function getAllContractAddresses(_config) {
     for (var device_id in _config[device_type]) {
 
       (function (element) {
-        if (element.device_type == "house" || element.device_type == "pv" || element.device_type == "grid" || element.device_type == "battery") {
+        if (element.device_type == "house" || element.device_type == "pv" || element.device_type == "grid" || element.device_type == "battery" || element.device_type == "heatpump" || element.device_type == "watertank") {
             getContractAddressPromises.push(getContractAddress(element).then(function (result) {
             element.contract_address = result;
             console.log(element.device_name, result);
