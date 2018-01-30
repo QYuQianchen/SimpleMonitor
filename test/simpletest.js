@@ -276,18 +276,12 @@ function getAllContractAddresses(_config) {
 function linkDevices(_config) {
   var linkDevicesPromises = [];
 
-  // for (var house_id in _config.house) {
-  //   for (var pv_id in _config.pv) {
-  //     console.log("Linking house[" + house_id + "] with pv[" + pv_id + "]");
-  //     linkDevicesPromises.push(configuration.linkDevices(_config.house[house_id].address, _config.pv[pv_id].address, { from: _config.admin[0].address, gas: 2000000 }));
-  //   }
-  // }
-
   // linking house0 with pv0
   var house_id = 0;
   var pv_id = 0;
   console.log("Linking house[" + house_id + "] with pv[" + pv_id + "]");
   linkDevicesPromises.push(configuration.linkDevices(_config.house[house_id].address, _config.pv[pv_id].address, { from: _config.admin[0].address, gas: 2000000 }));
+  
   // linking house1,2 with pv1,2
   var house_list = [1,2];
   var pv_list = [1,2];
@@ -297,6 +291,7 @@ function linkDevices(_config) {
         linkDevicesPromises.push(configuration.linkDevices(_config.house[house_list[house_id]].address, _config.pv[pv_list[pv_id]].address, { from: _config.admin[0].address, gas: 2000000 }));
       }
     }
+
   // linking battery0 with house0,2
   console.log("Linking battery[0] with house[0]");
   linkDevicesPromises.push(configuration.linkDevices(_config.house[0].address, _config.battery[0].address, { from: _config.admin[0].address, gas: 2000000 }));
@@ -305,6 +300,25 @@ function linkDevices(_config) {
   // linking battery0 with pv0
   console.log("Linking battery[0] with pv[0]");
   linkDevicesPromises.push(configuration.linkDevices(_config.pv[0].address, _config.battery[0].address, { from: _config.admin[0].address, gas: 2000000 }));
+
+  // linking the heating network
+    // let's try a simple one first
+      for (let i = 0; i < 3; i++) {
+        console.log("Linking house[" + i + "] with watertank[" + i + "]");
+        linkDevicesPromises.push(configuration.linkDevices(_config.house[i].address, _config.watertank[i].address, { from: _config.admin[0].address, gas: 2000000 }));
+        console.log("Linking watertank[" + i + "] with heatpump[" + i + "]");
+        linkDevicesPromises.push(configuration.linkDevices(_config.heatpump[i].address, _config.watertank[i].address, { from: _config.admin[0].address, gas: 2000000 }));
+      }
+
+  // console.log("Linking watertank[0] with house[0]");
+  // linkDevicesPromises.push(configuration.linkDevices(_config.house[0].address, _config.watertank[0].address, { from: _config.admin[0].address, gas: 2000000 }));
+  // console.log("Linking watertank[1] with house[0]");
+  // linkDevicesPromises.push(configuration.linkDevices(_config.house[0].address, _config.watertank[1].address, { from: _config.admin[0].address, gas: 2000000 }));
+  // console.log("Linking watertank[2] with house[1]");
+  // linkDevicesPromises.push(configuration.linkDevices(_config.house[1].address, _config.watertank[2].address, { from: _config.admin[0].address, gas: 2000000 }));
+  // console.log("Linking watertank[3] with house[2]");
+  // linkDevicesPromises.push(configuration.linkDevices(_config.house[2].address, _config.watertank[3].address, { from: _config.admin[0].address, gas: 2000000 }));
+
   return Promise.all(linkDevicesPromises);
 }
 
