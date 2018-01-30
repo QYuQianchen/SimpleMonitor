@@ -63,7 +63,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     capacity = cap;
   }
 
-  function setVolume(uint vol) public ownerOnly {
+  function setVolume(uint vol) public adminOnly {
     // Can only be triggered once....Should be moved into the constructor...Once the initial volumne is set, can only be changed by energy trading.
     currentVolume = vol;
     volStatusAt = now;
@@ -180,7 +180,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     return (takeoutvol); 
   }
 
-  function sellEnergy() public timed(4) {
+  function sellEnergy() public timed(4) returns (bool) {
     uint counter = 0;
     uint tL = draftRankMap.totalLength;
     bool waiting = true;
@@ -195,42 +195,45 @@ contract SingleBattery is GeneralDevice, IBattery {
     uint lastITime = now - 15 seconds;
 
     do {
+      // TestLog(31);
       if (lastITime + 1 seconds <= now) {
       i = getTimerIndex();
-      TestLog(i);
+      // TestLog(i);
       for (uint j = counter; j < tL; j++) {
         (adr,consum,rank,tot) = getSortedRank(counter);
-        TestLog2(rank,j);
+        // TestLog2(rank,j);
         if (rank == i) {
           // time to make transaction
           initiateTransaction(counter);
           counter++;
-          TestLog(99);
+          // TestLog(99);
         } else if (rank < i) {
           // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
           counter++;
-          TestLog(98);
+          // TestLog(98);
         } else {
           // when rank > i, need to wait
           lastIndex = i;  // note down the index that has been requested last time. 
           lastITime = now;  // The next query should be ideally in 15s...
-          TestLog(97);
+          // TestLog(97);
           break;
         }
 
       }
       if (counter >= tL) {
-        TestLog(tL);
+        // TestLog(tL);
         waiting = false;
         break;
-        
+        return;
       }
       }
+      // TestLog(32);
     } while (waiting);
-    return;
+    TestLog(33);
+    return true;
   }
 
-  function initiateTransaction(uint _id) public timed(4) returns (uint, uint) {
+  function initiateTransaction(uint _id) private returns (uint, uint) { //public timed(4)
     uint giveoutVol;
     address adr;
     uint consum;

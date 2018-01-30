@@ -53,7 +53,7 @@ contract('simpletest', function(accounts) {
         element.device_name = device_type + element.id;
         element.device_type = device_type;
         element.address = accounts[i];
-        console.log("Device name: " + element.device_name);
+        console.log("Device name: " + element.device_name +", account No. :" + i);
         i++;
       })(config[device_type][device_id]);
     }
@@ -91,7 +91,7 @@ contract('simpletest', function(accounts) {
             } else if (element.device_type == "battery") {
               element.contract = contracts[element.device_type].at(element.contract_address);
               // here we set the initial volume of batterys and watertanks
-              element.contract.setVolume(element.volume, {from: element.address});
+              element.contract.setVolume(element.volume, {from: config.admin[0].address}); //{from: element.address}
             }
 
           })(config[device_type][device_id]);
@@ -99,18 +99,17 @@ contract('simpletest', function(accounts) {
       }
 
       
-
-
       return configuration.getGridAdr.call()
 
     }).then(function (result) {
       console.log("Contracts instantiated!");
       console.log("Contract Creator = ", result);
+
       console.log("Linking devices:");
 
       return linkDevices(config);
-
     }).then(function (result) {
+      
       console.log("Linking of devices done.");
       console.log("Here we are starting the 1st round...");
       
@@ -122,6 +121,11 @@ contract('simpletest', function(accounts) {
       return step(0,currentStep);
     }).then(function (result) {
       console.log("Step 1 done.");
+
+    }).then(function (result) {
+      return getGasConsump();
+      
+    }).then(function (result) {
 
       return checkAllDeviceStatus();
 
@@ -140,6 +144,11 @@ contract('simpletest', function(accounts) {
       return step(0,currentStep);
     }).then(function (result) {
       console.log("Step 2 done.");
+
+    }).then(function (result) {
+      return getGasConsump();
+      
+    }).then(function (result) {
 
       jumpTime(16);
     }).then(function (result) {
@@ -339,17 +348,18 @@ function step(period, currentStep) {
 
       if (actions[device_type][currentStep] != undefined) {
         for (var currentAction in actions[device_type][currentStep]) {
+          // var stepPromises = [];
           for (var device_id in config[device_type]) {
             // var period = 0;
             var element = config[device_type][device_id];
             var action = actions[device_type][currentStep][currentAction];
-            var account = element.address;
-            var name = element.device_name;
+            // var account = element.address;
+            // var name = element.device_name;
             // var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
             (function(_element, _action) {
               console.log("Executing " + _action + " <-- " + _element.device_name);
-              stepPromises.push(element.contract[action]({ from: account, gas: 4900000}).then(function (result) {
-                console.log(name + "has passed through");
+              stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6712300}).then(function (result) {
+                console.log(_element.device_name + " has passed through");
               }));
             })(element, action);
           }
@@ -372,9 +382,9 @@ function execute(element, action, input) {
       var executePromise = element.contract[action](input, { from: element.address });
     } else if (action == "setPrice") {
       if (element.device_type == "battery" || element.device_type == "grid") {
-        var executePromise = element.contract[action](input[0], input[1], { from: element.address });
+        var executePromise = element.contract[action](input[0], input[1], { from: element.address, gas: 2000000});
       } else {
-        var executePromise = element.contract[action](input, { from: element.address });
+        var executePromise = element.contract[action](input, { from: element.address, gas: 2000000});
       }
     }
   }
@@ -393,7 +403,7 @@ function checkAllDeviceStatus() {
             var action = checkStatusActions[element.device_type][action_id];
             var name = action.slice(3,action.length);
             
-            allDeviceStatusPromises.push(element.contract[action].call().then(function (result) {
+            allDeviceStatusPromises.push(element.contract[action].call({from:config.admin[0].address}).then(function (result) {
               
               if (result[0] != undefined) {
                 console.log(" -> the " + name + " of " + element.device_name + " is:", result[0].toNumber());
@@ -411,9 +421,15 @@ function checkAllDeviceStatus() {
 }
 
 function jumpTime(a) {
-  return increaseTimeTo(latestTime() + duration.seconds(a));
+  return increaseTimeTo(latestTime() + duration.seconds(a),{from:config.admin[0].address});
 }
 
 function getNow() {
-  return configuration.getNow.call();
+  return configuration.getNow.call({from:config.admin[0].address});
+}
+
+function getGasConsump() {
+  for (let i = 5; i < 9; i++) {
+    console.log("account " + i + " has " + web3.eth.getBalance(web3.eth.accounts[i]).toNumber());
+  }
 }
