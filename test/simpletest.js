@@ -22,9 +22,9 @@ var category_nums = {
   "house": 0,
   "pv": 1,
   "battery": 2,
-  "grid": 3,
+  "grid": 5,
   "watertank": 4,
-  "heatpump": 5
+  "heatpump": 3
 };
 
 var actionInputs = {
@@ -218,10 +218,14 @@ function register(element) {
 
   if (element.device_type == "grid") {
     var addPromise = configuration.addGrid(element.address, { from: config.admin[0].address, gas: 2000000 });
-  } else if (element.device_type != "battery") {
-    var addPromise = configuration.addDevice(category_nums[element.device_type], element.address, 0, true, { from: config.admin[0].address, gas: 2000000 });
-  } else {
+  } else if (element.device_type == "battery") {
     var addPromise = configuration.addDevice(category_nums[element.device_type], element.address, element.capacity, true, { from: config.admin[0].address, gas: 2000000 });
+  } else if (element.device_type == "heatpump") {
+    var addPromise = configuration.addDevice(category_nums[element.device_type], element.address, element.watertype, true, { from: config.admin[0].address, gas: 2000000 });
+  } else if (element.device_type == "watertank") {
+    var addPromise = configuration.addDevice(category_nums[element.device_type], element.address, element.capacity, element.watertype, { from: config.admin[0].address, gas: 2000000 });
+  } else {
+    var addPromise = configuration.addDevice(category_nums[element.device_type], element.address, 0, true, { from: config.admin[0].address, gas: 2000000 });
   }
 
   return addPromise;
@@ -232,7 +236,7 @@ function registerAll(_config) {
   for (var device_type in _config) {
     for (var device_id in _config[device_type]) {
       (function (element) {
-        if (element.device_type == "house" || element.device_type == "pv" || element.device_type == "grid" || element.device_type == "battery") {
+        if (element.device_type == "house" || element.device_type == "pv" || element.device_type == "grid" || element.device_type == "battery" || element.device_type == "heatpump" || element.device_type == "watertank") {
           registerPromises.push(register(element));
         }
       })(_config[device_type][device_id]);

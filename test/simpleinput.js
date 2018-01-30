@@ -151,29 +151,58 @@ exports.config = {
     }
   ],
 
+  "heatpump": [
+    { 
+      "id": 0, 
+      "address": 0, 
+      "watertype": 0, 
+      "contact_address": 0 
+    }, 
+    { 
+      "id": 1, 
+      "address": 0, 
+      "watertype": 1, 
+      "contact_address": 0 
+    }, 
+    { 
+      "id": 2, 
+      "address": 0, 
+      "watertype": 0, 
+      "contact_address": 0 
+    } 
+  ],
+
   "watertank":[
     {
       "id": 0,
       "address": 0,
-      "capacity": 120,
+      "watertype": false, 
+      "volume": 10, 
+      "capacity": 20,
       "contact_address": 0
     },
     {
       "id": 1,
       "address": 0,
-      "capacity": 120,
+      "watertype": true, 
+      "volume": 10, 
+      "capacity": 20,
       "contact_address": 0
     },
     {
       "id": 2,
       "address": 0,
-      "capacity": 120,
+      "watertype": true, 
+      "volume": 10, 
+      "capacity": 12,
       "contact_address": 0
     },
     {
       "id": 3,
       "address": 0,
-      "capacity": 120,
+      "watertype": false, 
+      "volume": 10, 
+      "capacity": 12,
       "contact_address": 0
     }
   ]
