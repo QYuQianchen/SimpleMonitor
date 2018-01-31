@@ -65,8 +65,8 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
   // overload function of setConsumption
   // consum1: electricity consumption; consum2: Medium-Temperature water consumption (liter); consum3: High-Temperature water consumption (liter)
   
-  function setConsumptionH(uint consum1, uint consum2, uint consum3) public timed(1) ownerOnly {
-    consumption = consum1;
+  function setConsumptionH(uint consum2, uint consum3) public timed(1) ownerOnly {
+    // consumption = consum1;
     consumptionMTWater = consum2;
     consumptionHTWater = consum3;
     consumStatusAt = now;

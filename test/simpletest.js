@@ -403,6 +403,8 @@ function execute(element, action, input) {
       } else {
         var executePromise = element.contract[action](input, { from: element.address, gas: 2000000});
       }
+    } else if (action == "setConsumptionH" ) {
+      var executePromise = element.contract[action](input[0], input[1], { from: element.address, gas: 2000000});
     }
   }
   return executePromise;
@@ -423,7 +425,11 @@ function checkAllDeviceStatus() {
             allDeviceStatusPromises.push(element.contract[action].call({from:config.admin[0].address}).then(function (result) {
               
               if (result[0] != undefined) {
-                console.log(" -> the " + name + " of " + element.device_name + " is:", result[0].toNumber());
+                if (action == "getConsumptionH") {
+                  console.log(" -> the " + name + " of " + element.device_name + " is:", result[0].toNumber(), result[1].toNumber());
+                } else {
+                  console.log(" -> the " + name + " of " + element.device_name + " is:", result[0].toNumber());
+                }
               } else {
                 console.log(" -> the " + name + " of " + element.device_name + " is:", result.toNumber());
               }
