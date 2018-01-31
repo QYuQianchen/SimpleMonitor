@@ -352,7 +352,9 @@ function step(period, currentStep) {
 
             (function(_element, _action, _input) {
               console.log("Executing " + _action + "(" + _input + ") <-- " + _element.device_name);
-              stepPromises.push(execute(_element, _action, _input));
+              stepPromises.push(execute(_element, _action, _input).then(function (result) {
+                console.log(_element.device_name + " doing " + _action + " is done");
+              }));
             })(element, action, input);
           }
         }
@@ -360,6 +362,7 @@ function step(period, currentStep) {
         console.log("Nothing to do at this step <-- " + device_type);
       }
     }
+    console.log("That is all we need to do in step " + currentStep);
   } else {
     for (var device_type in actions) {
 

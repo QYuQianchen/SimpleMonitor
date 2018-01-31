@@ -60,7 +60,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
   // --- 1. ask for connected water tank for water consumption ---
   //        and convert the water consumption into electricity consumption
 
-  function askForConsump() public timed(1) {
+  function askForConsump() public timed(2) {
     uint tC = 0;
     bool tF = false;
     for (uint i = 0; i < connectedDevice[4].length; i++) {

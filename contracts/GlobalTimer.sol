@@ -19,7 +19,7 @@ contract GlobalTimer is ITimer {
     timeLapse = 0;
     //maxLoop = 30;  // each rank take 1s to finish transaction (5 min/10s = 30 times)
     currentLoop = 0;
-    cumulatedTime = [9, 15, 30, 45, 60, 75]; //[inf, 1, 2, 2, 5, 2];
+    cumulatedTime = [9, 20, 35, 50, 65, 80]; //[inf, 1, 2, 2, 5, 2];
   }
 
   /*function setStatus(uint s) {

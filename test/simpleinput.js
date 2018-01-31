@@ -14,7 +14,7 @@ exports.inputs = {
         3, 4, 5
       ],
       "consumptionH" : [
-        [20,0], [30,0], [40,0]
+        [10,0], [30,0], [40,0]
       ]
     },
 
@@ -78,6 +78,23 @@ exports.inputs = {
       ]
     }
   ],
+  "watertank" : [
+    {
+      "consumption" : [
+        20, 30, 40
+      ]
+    },
+    {
+      "consumption" : [
+        20, 30, 40
+      ]
+    },
+    {
+      "consumption" : [
+        20, 30, 40
+      ]
+    }
+  ]
 }
 
 exports.config = {
@@ -178,7 +195,7 @@ exports.config = {
       "address": 0,
       "watertype": false, 
       "volume": 10, 
-      "capacity": 20,
+      "capacity": 80,
       "contact_address": 0
     },
     {
@@ -186,7 +203,7 @@ exports.config = {
       "address": 0,
       "watertype": true, 
       "volume": 10, 
-      "capacity": 20,
+      "capacity": 80,
       "contact_address": 0
     },
     {
@@ -194,15 +211,7 @@ exports.config = {
       "address": 0,
       "watertype": true, 
       "volume": 10, 
-      "capacity": 12,
-      "contact_address": 0
-    },
-    {
-      "id": 3,
-      "address": 0,
-      "watertype": false, 
-      "volume": 10, 
-      "capacity": 12,
+      "capacity": 90,
       "contact_address": 0
     }
   ]
@@ -229,6 +238,14 @@ exports.actions = {
     2 : ["askForPrice", "sortPrice"],
     3 : ["askForRank", "sortRank"],
     4 : ["sellEnergy"]
+  },
+  "watertank" : {
+    1 : ["setConsumption"],
+    2 : ["askForPrice"]
+  },
+  "heatpump" : {
+    // 1 : [],
+    2 : ["askForConsump", "askForPrice", "sortPrice"]
   }
 };
 
