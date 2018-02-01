@@ -112,6 +112,12 @@ contract('simpletest', function(accounts) {
       console.log("Linking of devices done.");
       console.log("Here we are starting the 1st round...");
       
+    }).then(function (result) {
+      return getNow();
+    }).then(function (result) {
+      // console.log("Current timestamp is: ", result.toNumber());
+      console.log("-");
+
       return checkStep.call();
     }).then(function (result) {
       var currentStep = result.toNumber();
@@ -121,21 +127,16 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       console.log("Step 1 done.");
 
-    }).then(function (result) {
       return getGasConsump();
-      
-    }).then(function (result) {
-
-      return checkAllDeviceStatus();
 
     }).then(function (result) {
-      console.log("checking stauts done.");
+      console.log("check account gas done.");
 
-      jumpTime(16);
+      jumpTime(12);
     }).then(function (result) {
       return getNow();
     }).then(function (result) {
-      console.log("Current timestamp is: ", result.toNumber());
+      console.log("-");
       return checkStep.call();
     }).then(function (result) {
       var currentStep = result.toNumber();
@@ -145,15 +146,23 @@ contract('simpletest', function(accounts) {
       console.log("Step 2 done.");
 
     }).then(function (result) {
+
+      return checkAllDeviceStatus();
+
+    }).then(function (result) {
+      console.log("checking stauts done.");
+
+    // }).then(function (result) {
       return getGasConsump();
 
     }).then(function (result) {
+      console.log("check account gas done.");
 
-      jumpTime(16);
+      jumpTime(14);
     }).then(function (result) {
       return getNow();
     }).then(function (result) {
-      console.log("Current timestamp is: ", result.toNumber());
+      console.log("-");
       return checkStep.call();
     }).then(function (result) {
       var currentStep = result.toNumber();
@@ -166,7 +175,7 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       return getNow();
     }).then(function (result) {
-      console.log("Current timestamp is: ", result.toNumber());
+      console.log("-");
       return checkStep.call();
     }).then(function (result) {
       var currentStep = result.toNumber();
@@ -175,11 +184,11 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       console.log("Step 4 done.");
 
-      jumpTime(16);
+      jumpTime(12);
     }).then(function (result) {
       return getNow();
     }).then(function (result) {
-      console.log("Current timestamp is: ", result.toNumber());
+      console.log("-");
       return checkStep.call();
     }).then(function (result) {
       var currentStep = result.toNumber();
@@ -198,7 +207,7 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       return getNow();
     }).then(function (result) {
-      console.log("Current timestamp is: ", result.toNumber());
+      console.log("-");
       return checkStep.call();
     }).then(function (result) {
       var currentStep = result.toNumber();
@@ -207,6 +216,7 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       console.log("Step 1 done.");
 
+      return checkAllDeviceStatus();
     });
   });
 });
@@ -361,7 +371,6 @@ function step(period, currentStep) {
         console.log("Nothing to do at this step <-- " + device_type);
       }
     }
-    console.log("That is all we need to do in step " + currentStep);
   } else {
     for (var device_type in actions) {
 
@@ -428,12 +437,12 @@ function checkAllDeviceStatus() {
               
               if (result[0] != undefined) {
                 if (action == "getConsumptionH") {
-                  console.log(" -> the " + name + " of " + element.device_name + " is:", result[0].toNumber(), result[1].toNumber());
+                  console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber(), result[1].toNumber());
                 } else {
-                  console.log(" -> the " + name + " of " + element.device_name + " is:", result[0].toNumber());
+                  console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber());
                 }
               } else {
-                console.log(" -> the " + name + " of " + element.device_name + " is:", result.toNumber());
+                console.log(" -> " + element.device_name + " -- " + name + " : ", result.toNumber());
               }
             }));
           }
@@ -450,7 +459,10 @@ function jumpTime(a) {
 }
 
 function getNow() {
-  return configuration.getNow.call({from:config.admin[0].address});
+  // return configuration.getNow.call({from:config.admin[0].address});
+  configuration.getNow.call().then(function(result) {
+    console.log("Current timestamp is: ", result.toNumber());
+  });
 }
 
 function getGasConsump() {

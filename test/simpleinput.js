@@ -197,24 +197,24 @@ exports.config = {
       "id": 0,
       "address": 0,
       "watertype": false, 
-      "volume": 10, 
-      "capacity": 80,
+      "volume": 80, 
+      "capacity": 100,
       "contact_address": 0
     },
     {
       "id": 1,
       "address": 0,
       "watertype": true, 
-      "volume": 10, 
-      "capacity": 80,
+      "volume": 80, 
+      "capacity": 100,
       "contact_address": 0
     },
     {
       "id": 2,
       "address": 0,
       "watertype": true, 
-      "volume": 10, 
-      "capacity": 90,
+      "volume": 90, 
+      "capacity": 120,
       "contact_address": 0
     }
   ]
@@ -244,10 +244,13 @@ exports.actions = {
   },
   "watertank" : {
     1 : ["setConsumption"],
-    2 : ["askForPrice"]
+    2 : ["askForPrice"],
+    3 : ["askForNeed"],
+    4 : ["sellEnergy"]
   },
   "heatpump" : {
     2 : ["askForConsump", "askForPrice", "sortPrice"],
+    5 : ["buyExtra"]
 
   }
 };
@@ -274,6 +277,20 @@ exports.checkStatusActions = {
     1: "getConsumption",
     2: "getVolumeCapacity",
     3: "getSalePrice",
+    4: "getWallet"
+  },
+
+  "heatpump" : {
+    1: "getConsumptionE",
+    2: "getConsumptionW",
+    3: "getPrice",
+    4: "getWallet"
+  },
+
+  "watertank" : {
+    1: "getConsumption",
+    2: "getVolume",
+    3: "getPrice",
     4: "getWallet"
   }
 };

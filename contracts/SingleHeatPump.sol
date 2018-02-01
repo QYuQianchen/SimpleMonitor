@@ -39,8 +39,6 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
   SortPLib.PriceMap draftPriceMap;
 
   bool waterType;   // coefficience of performance, (*1e-1). Some typical values are 30 and 45 (coef of performance is 3 and 4.5)
-  uint consumptionWater;
-  uint consumptionElec;
   uint price;
   uint maxSupplyPrice;
 

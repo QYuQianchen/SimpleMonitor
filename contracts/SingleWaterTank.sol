@@ -45,6 +45,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
   event VolLog(address adr, uint vol, uint volAt);
   event PrsLog(uint price, uint priceAt);
   event ConsumptionUpdate(uint updateAt);
+  event TestLog(uint tl);
 
 // ======= Basic Functionalities =======
 
@@ -61,6 +62,10 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
     currentVolume = vol;
     volStatusAt = now;
     VolLog(owner,vol,volStatusAt);
+  }
+
+  function getVolume() external view returns (uint) {
+    return currentVolume;
   }
 
   // --- 1. set and get the active purchase volume (if battery wants) and selling price every 15 min (or less) ---
@@ -105,19 +110,23 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
 
   // --- 3. Water tank ask Houses for their water consumption --- 
 
-  function askForNeed() public timed(3) {
+  function askForNeed() public { //timed(3) 
     uint consumMT;
     uint consumHT;
     uint consumAt;
+    TestLog(0);
 
     // draftRankMap.initRnkTable();
     for (uint i = 0; i < connectedDevice[0].length; i++) {
+      TestLog(1);
       (consumMT, consumHT, consumAt) = IHouseH(connectedDevice[0][i]).getConsumptionH();
       if (waterType == false) {   //Medium temperature water tank
         //draftRankMap.addToRnkTable(connectedDevice[0][i],consum, rank, tot);
         volMap[i] = consumMT;
+        TestLog(2);
       } else {
         volMap[i] = consumHT;
+        TestLog(3);
       }
     }
     needStatusAt = now;
