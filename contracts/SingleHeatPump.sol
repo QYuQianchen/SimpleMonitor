@@ -97,7 +97,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
 
     // --- 3. HP sorts all the information internally ---
 
-  function sortPrice() public timed(2) {
+  function sortPrice() public  { //timed(2)
     draftPriceMap.sortPrsTable();
     // if the grid is connected -> add the price from the grid to the end of the sorted list
     if (grid != 0x0) {

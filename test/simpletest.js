@@ -131,7 +131,7 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       console.log("checking stauts done.");
 
-      jumpTime(16);
+      jumpTime(20);
     }).then(function (result) {
       return getNow();
     }).then(function (result) {
@@ -308,7 +308,14 @@ function linkDevices(_config) {
         linkDevicesPromises.push(configuration.linkDevices(_config.house[i].address, _config.watertank[i].address, { from: _config.admin[0].address, gas: 2000000 }));
         console.log("Linking watertank[" + i + "] with heatpump[" + i + "]");
         linkDevicesPromises.push(configuration.linkDevices(_config.heatpump[i].address, _config.watertank[i].address, { from: _config.admin[0].address, gas: 2000000 }));
+        console.log("Linking pv[" + i + "] with heatpump[" + i + "]");
+        linkDevicesPromises.push(configuration.linkDevices(_config.heatpump[i].address, _config.pv[i].address, { from: _config.admin[0].address, gas: 2000000 }));
+
       }
+    // link one battery with hp
+    console.log("Linking battery[0] with heatpump[0]");
+    linkDevicesPromises.push(configuration.linkDevices(_config.battery[0].address, _config.heatpump[0].address, { from: _config.admin[0].address, gas: 2000000 }));
+  
 
   // console.log("Linking watertank[0] with house[0]");
   // linkDevicesPromises.push(configuration.linkDevices(_config.house[0].address, _config.watertank[0].address, { from: _config.admin[0].address, gas: 2000000 }));
@@ -379,7 +386,7 @@ function step(period, currentStep) {
             (function(_element, _action) {
               console.log("Executing " + _action + " <-- " + _element.device_name);
               stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6712300}).then(function (result) {
-                console.log(_element.device_name + " has passed through");
+                console.log(_element.device_name + " has passed through <--" + _action);
               }));
             })(element, action);
           }

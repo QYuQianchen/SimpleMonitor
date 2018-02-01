@@ -244,8 +244,8 @@ exports.actions = {
     2 : ["askForPrice"]
   },
   "heatpump" : {
-    // 1 : [],
-    2 : ["askForConsump", "askForPrice", "sortPrice"]
+    2 : ["askForConsump", "askForPrice", "sortPrice"],
+    
   }
 };
 
