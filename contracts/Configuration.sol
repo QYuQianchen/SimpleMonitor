@@ -79,11 +79,11 @@ contract Configuration {
       } else if (_deviceType == 2) {
         contractList[adr] =singleBatteryFactory.createSingleBattery(adr,capacity);
       } else if (_deviceType == 3) {
-        contractList[adr] = singleHeatPumpFactory.createSingleHeatPump(adr,capacity);
+        contractList[adr] = singleHeatPumpFactory.createSingleHeatPump(adr,capacity,g);
       } else {
         contractList[adr] = singleWaterTankFactory.createSingleWaterTank(adr,capacity,g);
       }
-      if (g && _deviceType != 4) {
+      if (g && _deviceType < 3) {
            IGeneralDevice(contractList[adr]).setGridAdr(gridAdr);
            IGeneralDevice(gridAdr).addConnectedDevice(_deviceType, contractList[adr]);
          }

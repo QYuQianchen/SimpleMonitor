@@ -146,7 +146,7 @@ contract('simpletest', function(accounts) {
 
     }).then(function (result) {
       return getGasConsump();
-      
+
     }).then(function (result) {
 
       jumpTime(16);
@@ -220,7 +220,7 @@ function register(element) {
   } else if (element.device_type == "battery") {
     var addPromise = configuration.addDevice(category_nums[element.device_type], element.address, element.capacity, true, { from: config.admin[0].address, gas: 2000000 });
   } else if (element.device_type == "heatpump") {
-    var addPromise = configuration.addDevice(category_nums[element.device_type], element.address, element.watertype, true, { from: config.admin[0].address, gas: 2000000 });
+    var addPromise = configuration.addDevice(category_nums[element.device_type], element.address, element.price, element.watertype, { from: config.admin[0].address, gas: 2000000 });
   } else if (element.device_type == "watertank") {
     var addPromise = configuration.addDevice(category_nums[element.device_type], element.address, element.capacity, element.watertype, { from: config.admin[0].address, gas: 2000000 });
   } else {
@@ -337,14 +337,6 @@ function checkStep() {
 function step(period, currentStep) {
   var stepPromises = [];
 
-  // for (var device_type in _inputs) {
-  //   for (var device_id in _inputs[device_type]) {
-  //     for (var action_type in _inputs[device_type][device_id]) {
-  //       console.log("Setting" + device_type + "[" + device_id + "]: set " + action_type + ", with value of " + _inputs[device_type][device_id][action_type][0]);
-  //       step1Promises.push();
-  //     }
-  //   }
-  // }
   if (currentStep == 1) {
 
     for (var device_type in actions) {

@@ -17,8 +17,8 @@ contract SingleHeatPumpFactory is SingleHeatPumpFactoryInterface {
 
   function SingleHeatPumpFactory() public {}
 
-  function createSingleHeatPump(address _accountAddress, uint _capacity) public returns (address heatpumpAddress) {
-    SingleHeatPump _singleHeatPump = new SingleHeatPump(_accountAddress, _capacity);
+  function createSingleHeatPump(address _accountAddress, uint _price, bool _capacity) public returns (address heatpumpAddress) {
+    SingleHeatPump _singleHeatPump = new SingleHeatPump(_accountAddress, _price, _capacity);
     heatpumps[_accountAddress] = _singleHeatPump;
     return _singleHeatPump;
   }
@@ -38,7 +38,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
 
   SortPLib.PriceMap draftPriceMap;
 
-  uint waterType;   // coefficience of performance, (*1e-1). Some typical values are 30 and 45 (coef of performance is 3 and 4.5)
+  bool waterType;   // coefficience of performance, (*1e-1). Some typical values are 30 and 45 (coef of performance is 3 and 4.5)
   uint consumptionWater;
   uint consumptionElec;
   uint price;
@@ -52,8 +52,9 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
 
   // --- 0. Upon contract creation and configuration ---
 
-  function SingleHeatPump (address adr, uint wT) public adminOnly GeneralDevice(adr) {
+  function SingleHeatPump (address adr, uint prs, bool wT) public adminOnly GeneralDevice(adr) {
     waterType = wT;
+    price = prs;
     consumptionWater = 0;
   }
 

@@ -172,20 +172,23 @@ exports.config = {
     { 
       "id": 0, 
       "address": 0, 
-      "watertype": 0, 
-      "contact_address": 0 
+      "watertype": false, 
+      "contact_address": 0,
+      "price": 3
     }, 
     { 
       "id": 1, 
       "address": 0, 
-      "watertype": 1, 
-      "contact_address": 0 
+      "watertype": true, 
+      "contact_address": 0,
+      "price": 4
     }, 
     { 
       "id": 2, 
       "address": 0, 
-      "watertype": 0, 
-      "contact_address": 0 
+      "watertype": false, 
+      "contact_address": 0,
+      "price": 5
     } 
   ],
 
@@ -245,7 +248,7 @@ exports.actions = {
   },
   "heatpump" : {
     2 : ["askForConsump", "askForPrice", "sortPrice"],
-    
+
   }
 };
 

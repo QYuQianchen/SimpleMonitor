@@ -16,7 +16,7 @@ contract SingleBatteryFactoryInterface {
 }
 
 contract SingleHeatPumpFactoryInterface {
-  function createSingleHeatPump(address _accountAddress, uint _capacity) public returns (address heatpumpAddress);
+  function createSingleHeatPump(address _accountAddress, uint _price, bool _capacity) public returns (address heatpumpAddress);
   function getSingleHeatPumpAddress(address _accountAddress) public constant returns (address heatpumpAddress);
 }
 
