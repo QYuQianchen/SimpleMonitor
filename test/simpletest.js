@@ -131,7 +131,7 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       console.log("checking stauts done.");
 
-      jumpTime(20);
+      jumpTime(16);
     }).then(function (result) {
       return getNow();
     }).then(function (result) {
@@ -194,7 +194,7 @@ contract('simpletest', function(accounts) {
       console.log("checking stauts done.");
       console.log("We should start the 2nd round...");
 
-      jumpTime(16);
+      jumpTime(14);
     }).then(function (result) {
       return getNow();
     }).then(function (result) {

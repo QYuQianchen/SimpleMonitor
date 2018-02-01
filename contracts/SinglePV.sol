@@ -3,6 +3,7 @@ pragma solidity ^0.4.16;
 import "./IPV.sol";
 import "./IHouseE.sol";
 import "./IBattery.sol";
+import "./IHeatPump.sol";
 import "./IGrid.sol";
 import "./SortRLib.sol";
 import "./AdrLib.sol";
@@ -105,6 +106,12 @@ contract SinglePV is GeneralDevice, IPV {
       (consum,rank,tot,updated) = IBattery(connectedDevice[2][i]).getSortedPrice();
       if (updated) {
         draftRankMap.addToRnkTable(connectedDevice[2][i],consum, rank, tot);
+      }
+    }
+    for (i = 0; i < connectedDevice[3].length; i++) {
+      (consum,rank,tot,updated) = IHeatPump(connectedDevice[3][i]).getSortedPrice();
+      if (updated) {
+        draftRankMap.addToRnkTable(connectedDevice[3][i],consum, rank, tot);
       }
     }
     lastRankingAt = now;

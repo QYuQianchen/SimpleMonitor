@@ -4,6 +4,7 @@ import "./IBattery.sol";
 import "./IPV.sol";
 import "./IGrid.sol";
 import "./IHouseE.sol";
+import "./IHeatPump.sol";
 import "./GeneralDevice.sol";
 
 import "./SortRLib.sol";
@@ -152,6 +153,12 @@ contract SingleBattery is GeneralDevice, IBattery {
       (consum, rank, tot, updated) = IHouseE(connectedDevice[0][i]).getSortedPrice();
       if (updated) {
         draftRankMap.addToRnkTable(connectedDevice[0][i],consum, rank, tot);
+      }
+    }
+    for (i = 0; i < connectedDevice[3].length; i++) {
+      (consum,rank,tot,updated) = IHeatPump(connectedDevice[3][i]).getSortedPrice();
+      if (updated) {
+        draftRankMap.addToRnkTable(connectedDevice[3][i],consum, rank, tot);
       }
     }
     lastRankingAt = now;
