@@ -30,6 +30,15 @@ contract GlobalTimer is ITimer {
     currentLoop = s;
   }*/
 
+  // this function is only for testing.
+  // it changes the step of the global timer according to the need. 
+  function testSetStep(uint forcedChange) public returns (bool) {
+    if (statusNo != forcedChange) {
+      statusNo = forcedChange;
+    }
+    return true;
+  }
+
   function checkStatus() public returns (uint) {
     // everytime one asks for Status, the GlobalTimer updates the status.
     if (statusNo == 0) {
