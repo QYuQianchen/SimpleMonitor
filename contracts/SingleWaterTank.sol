@@ -2,6 +2,7 @@ pragma solidity ^0.4.16;
 
 import "./IWaterTank.sol";
 import "./IHouseH.sol";
+import "./IHouseE.sol";
 import "./IHeatPump.sol";
 import "./GeneralDevice.sol";
 
@@ -110,7 +111,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
 
   // --- 3. Water tank ask Houses for their water consumption --- 
 
-  function askForNeed() public { //timed(3) 
+  function askForNeed() public timed(3) { 
     uint consumMT;
     uint consumHT;
     uint consumAt;
