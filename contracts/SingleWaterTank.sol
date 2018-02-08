@@ -158,8 +158,8 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
 
     for (uint i = 0; i < connectedDevice[0].length; i++) {
       giveoutVol = currentVolume.findMin(volMap[i]);
-      // whatDeviceAccept = IHouseH(connectedDevice[0][i]).goNoGoHeating(giveoutVol,price,waterType);
-      whatDeviceAccept = giveoutVol;
+      whatDeviceAccept = IHouseH(connectedDevice[0][i]).goNoGoHeating(giveoutVol,price,waterType);
+      // whatDeviceAccept = giveoutVol;
       currentVolume -= whatDeviceAccept;
       volStatusAt = now;
       VolLog(owner,currentVolume,volStatusAt);
