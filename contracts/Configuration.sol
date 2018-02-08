@@ -80,13 +80,16 @@ contract Configuration {
         contractList[adr] =singleBatteryFactory.createSingleBattery(adr,capacity);
       } else if (_deviceType == 3) {
         contractList[adr] = singleHeatPumpFactory.createSingleHeatPump(adr,capacity,g);
+        // connect HP to the grid
+        IGeneralDevice(contractList[adr]).setGridAdr(gridAdr);
+        IGeneralDevice(gridAdr).addConnectedDevice(_deviceType, contractList[adr]);
       } else {
         contractList[adr] = singleWaterTankFactory.createSingleWaterTank(adr,capacity,g);
       }
       if (g && _deviceType < 3) {
-           IGeneralDevice(contractList[adr]).setGridAdr(gridAdr);
-           IGeneralDevice(gridAdr).addConnectedDevice(_deviceType, contractList[adr]);
-         }
+        IGeneralDevice(contractList[adr]).setGridAdr(gridAdr);
+        IGeneralDevice(gridAdr).addConnectedDevice(_deviceType, contractList[adr]);
+      }
 
       EndUser memory tempEU;
       tempEU.dType = deviceType(_deviceType);
