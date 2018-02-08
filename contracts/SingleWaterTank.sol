@@ -141,6 +141,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
     require(connectedDevice[3].assertInside(adrDevice));
     takeoutvol = consumption.findMin(giveoutvol);
     // takeoutvol = giveoutvol; // for testing
+    prsMap.setVolume(adrDevice,takeoutvol);
     currentVolume += takeoutvol;
     volStatusAt = now;
     VolLog(owner,currentVolume,volStatusAt);

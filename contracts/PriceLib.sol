@@ -23,8 +23,12 @@ library PriceLib {
      _prm.order[i] = _adr;
   }
 
-  function calPrice(PriceMap storage _prm, uint _pOld, uint _vOld, uint _vCurrent) public view returns (uint _pNew) {
+  function setVolume(PriceMap storage _prm, address _adr, uint _v) public {
+    _prm.prsTable[_adr].vol = _v;
+  }
 
+  function calPrice(PriceMap storage _prm, uint _pOld, uint _vOld, uint _vCurrent) public view returns (uint) {
+    uint _pNew;
     uint pavg;
     uint temp1;
     uint temp2;
@@ -45,8 +49,13 @@ library PriceLib {
       temp1 = 0;
     }
 
-    // _pNew = uint((_pOld*temp1+temp2*(2))/_vCurrent);  // here (2) is the factor... too big but cannot use ufixed for now
-    _pNew = 5;    // for test;
+    _pNew = uint((_pOld*temp1+temp2*(2))/_vCurrent);  // here (2) is the factor... too big but cannot use ufixed for now
+
+    if (_pNew <= 0) {
+      _pNew = 5;  // for test;
+    }
+
+    return _pNew;
   }
 
   // calculateMin...
