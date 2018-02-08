@@ -251,7 +251,6 @@ exports.actions = {
   "heatpump" : {
     2 : ["askForConsump", "askForPrice", "sortPrice"],
     5 : ["buyExtra"]
-
   }
 };
 
@@ -313,5 +312,5 @@ exports.actionInputs = {
 };
 
 exports.deviceLinking = {
-  
+
 };

@@ -187,6 +187,39 @@ contract SingleBattery is GeneralDevice, IBattery {
     return (takeoutvol); 
   }
 
+  // @ param i is the current index (stage);
+  //         counter is the number of transactions that have been executed/passed, ranging from 0 to (totalNumber - 1);
+  function verifySellEnergy(uint i, uint counter) public timed(4) returns (uint newCounter) {
+    uint totalNumber = draftRankMap.totalLength;
+
+    address adr;
+    uint consum;
+    uint rank;
+    uint tot;
+    
+    if (counter < totalNumber) {
+
+      for (uint j = counter; j < totalNumber; j++) {
+        (adr,consum,rank,tot) = getSortedRank(counter);
+
+        if (rank == i) {
+            // time to make transaction
+            initiateTransaction(counter);
+            counter++;
+          } else if (rank < i) {
+            // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
+            counter++;
+          } else {
+            // when rank > i, need to wait
+            break;
+          }
+      }
+    }
+
+    newCounter = counter;
+
+  }
+
   function sellEnergy() public timed(4) returns (bool) {
     uint counter = 0;
     uint tL = draftRankMap.totalLength;

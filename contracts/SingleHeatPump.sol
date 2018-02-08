@@ -142,8 +142,8 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
     // when houses still have extra needs...
     uint whatDeviceAccept;
     uint unitPrs;
-    require(grid != 0x0);
-    if (consumptionElec > 0) {
+    // require(grid != 0x0);
+    if (grid != 0x0 && consumptionElec > 0) {
       (whatDeviceAccept, unitPrs) = IGrid(grid).goExtra(consumptionElec);
       consumptionElec = consumptionElec.clearEnergyTransfer(whatDeviceAccept, address(this));
       //wallet -= int(whatDeviceAccept * unitPrs);

@@ -18,7 +18,7 @@ var contracts = {
   "heatpump": artifacts.require("./SingleHeatPump.sol")
 };
 
-
+var totalStages = 5; // There are 5 stages in Step 4
 
 var configuration = null;
 
@@ -358,6 +358,46 @@ function step(period, currentStep) {
         console.log("Nothing to do at this step <-- " + device_type);
       }
     }
+  } else if (currentStep == 4) {
+    for (var device_type in actions) {
+      if (device_type == "watertank") { 
+        for (var device_id in config[device_type]) {
+          // var period = 0;
+          var element = config[device_type][device_id];
+          var action = "sellEnergy";
+          // var account = element.address;
+          // var name = element.device_name;
+          // var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
+          (function(_element, _action) {
+            console.log("Executing " + _action + " <-- " + _element.device_name);
+            stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
+              console.log(_element.device_name + " has passed through <--" + _action);
+            }));
+          })(element, action);
+        }
+      } else if (actions[device_type][currentStep] == ["sellEnergy"]) {
+        for (let i = 0; i < totalStages; i++) {
+          for (var device_id in config[device_type]) {
+            var element = config[device_type][device_id];
+            if (i == 0) {
+              // initialization
+              element.counter = 0;
+            }
+            // var action = "verifySellEnergy";
+            // var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
+ 
+            (function(_element) {
+              console.log("Executing verifySellEnergy() <-- " + _element.device_name);
+              stepPromises.push(cordinateSellEnergy(i,_element).then(function (result) {
+                console.log(_element.device_name + " doing verifySellEnergy is done");
+              }));
+            })(element);
+          }
+        }
+      } else {
+        console.log("Nothing to do at this step <-- " + device_type);
+      }
+    }
   } else {
     for (var device_type in actions) {
 
@@ -373,7 +413,7 @@ function step(period, currentStep) {
             // var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
             (function(_element, _action) {
               console.log("Executing " + _action + " <-- " + _element.device_name);
-              stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 100000000}).then(function (result) {
+              stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
                 console.log(_element.device_name + " has passed through <--" + _action);
               }));
             })(element, action);
@@ -386,6 +426,10 @@ function step(period, currentStep) {
   }
 
   return Promise.all(stepPromises)
+}
+
+function cordinateSellEnergy(i,element) {
+  element.counter = element.contract["verifySellEnergy"](i, element.counter, { from: element.address, gas: 6700000});
 }
 
 function execute(element, action, input) {
