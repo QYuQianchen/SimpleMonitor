@@ -35,7 +35,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
   uint    consumption;              // amount of water that needs to be supplied by HP (estimed by the water tank) for the next 10 min
   uint    price;
   bool    waterType;                // two types of water : false - medium temperature and true - high temperature
-  uint[]  volMap;
+  mapping(uint=>uint) volMap;
 
   PriceLib.PriceMap prsMap;
 
@@ -119,8 +119,10 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
 
     // draftRankMap.initRnkTable();
     for (uint i = 0; i < connectedDevice[0].length; i++) {
-      TestLog(1);
+      TestLog(i);
       (consumMT, consumHT, consumAt) = IHouseH(connectedDevice[0][i]).getConsumptionH();
+      // consumMT = 10;
+      // consumHT = 0;
       if (waterType == false) {   //Medium temperature water tank
         //draftRankMap.addToRnkTable(connectedDevice[0][i],consum, rank, tot);
         volMap[i] = consumMT;
@@ -156,7 +158,8 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
 
     for (uint i = 0; i < connectedDevice[0].length; i++) {
       giveoutVol = currentVolume.findMin(volMap[i]);
-      whatDeviceAccept = IHouseH(connectedDevice[0][i]).goNoGoHeating(giveoutVol,price,waterType);
+      // whatDeviceAccept = IHouseH(connectedDevice[0][i]).goNoGoHeating(giveoutVol,price,waterType);
+      whatDeviceAccept = giveoutVol;
       currentVolume -= whatDeviceAccept;
       volStatusAt = now;
       VolLog(owner,currentVolume,volStatusAt);

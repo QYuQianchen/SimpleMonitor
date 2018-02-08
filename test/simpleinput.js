@@ -204,7 +204,7 @@ exports.config = {
     {
       "id": 1,
       "address": 0,
-      "watertype": true, 
+      "watertype": false, 
       "volume": 80, 
       "capacity": 100,
       "contact_address": 0
@@ -293,4 +293,25 @@ exports.checkStatusActions = {
     3: "getPrice",
     4: "getWallet"
   }
+};
+
+exports.category_nums = {
+  "house": 0,
+  "pv": 1,
+  "battery": 2,
+  "grid": 5,
+  "watertank": 4,
+  "heatpump": 3
+};
+
+exports.actionInputs = {
+  "setConsumption" : "consumption",
+  "setConsumptionH" : "consumptionH",
+  "setProduction" : "production",
+  "setPrice" : "price",
+  // "setVolume" : "volume"
+};
+
+exports.deviceLinking = {
+  
 };

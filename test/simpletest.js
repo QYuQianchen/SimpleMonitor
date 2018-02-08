@@ -18,22 +18,7 @@ var contracts = {
   "heatpump": artifacts.require("./SingleHeatPump.sol")
 };
 
-var category_nums = {
-  "house": 0,
-  "pv": 1,
-  "battery": 2,
-  "grid": 5,
-  "watertank": 4,
-  "heatpump": 3
-};
 
-var actionInputs = {
-  "setConsumption" : "consumption",
-  "setConsumptionH" : "consumptionH",
-  "setProduction" : "production",
-  "setPrice" : "price",
-  // "setVolume" : "volume"
-};
 
 var configuration = null;
 
@@ -42,6 +27,8 @@ var config = simpleinputs.config;
 var actions = simpleinputs.actions;
 var inputs = simpleinputs.inputs;
 var checkStatusActions = simpleinputs.checkStatusActions;
+var category_nums = simpleinputs.category_nums;
+var actionInputs = simpleinputs.actionInputs;
 
 
 contract('simpletest', function(accounts) {
@@ -386,7 +373,7 @@ function step(period, currentStep) {
             // var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
             (function(_element, _action) {
               console.log("Executing " + _action + " <-- " + _element.device_name);
-              stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6712300}).then(function (result) {
+              stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 100000000}).then(function (result) {
                 console.log(_element.device_name + " has passed through <--" + _action);
               }));
             })(element, action);
