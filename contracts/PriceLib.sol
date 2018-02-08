@@ -16,6 +16,7 @@ library PriceLib {
   function setPrice(PriceMap storage _prm, address _adr, uint i, uint _p, bool _tf) public {
     if (_tf == false) {
       _prm.prsTable[_adr].prs = 0;
+      // _prm.prsTable[_adr].prs = _p;   // for test
     } else {
       _prm.prsTable[_adr].prs = _p;
     }
@@ -44,8 +45,8 @@ library PriceLib {
       temp1 = 0;
     }
 
-    _pNew = uint((_pOld*temp1+temp2*(2))/_vCurrent);  // here (2) is the factor... too big but cannot use ufixed for now
-
+    // _pNew = uint((_pOld*temp1+temp2*(2))/_vCurrent);  // here (2) is the factor... too big but cannot use ufixed for now
+    _pNew = 5;    // for test;
   }
 
   // calculateMin...
