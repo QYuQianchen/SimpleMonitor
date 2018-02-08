@@ -30,6 +30,7 @@ library PriceLib {
     
     if (_pOld == 0 || _vCurrent == 0) {
       pavg = 5;
+      _pNew = 5; // test
     }
 
     for (uint i = 0; i < _prm.totalLength-1; i++) {

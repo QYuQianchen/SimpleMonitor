@@ -121,8 +121,6 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
     for (uint i = 0; i < connectedDevice[0].length; i++) {
       TestLog(i);
       (consumMT, consumHT, consumAt) = IHouseH(connectedDevice[0][i]).getConsumptionH();
-      // consumMT = 10;
-      // consumHT = 0;
       if (waterType == false) {   //Medium temperature water tank
         //draftRankMap.addToRnkTable(connectedDevice[0][i],consum, rank, tot);
         volMap[i] = consumMT;
@@ -137,11 +135,12 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
 
   // --- 4. HP sell water to water tank ---
 
-  function goNoGo(uint giveoutvol, uint prs) public timed(4) returns (uint) {
+  function goNoGo(uint giveoutvol, uint prs) public returns (uint) {  //timed(4) or timed(5)
     address adrDevice = msg.sender;
     uint takeoutvol;
     require(connectedDevice[3].assertInside(adrDevice));
     takeoutvol = consumption.findMin(giveoutvol);
+    // takeoutvol = giveoutvol; // for testing
     currentVolume += takeoutvol;
     volStatusAt = now;
     VolLog(owner,currentVolume,volStatusAt);
@@ -159,7 +158,6 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
     for (uint i = 0; i < connectedDevice[0].length; i++) {
       giveoutVol = currentVolume.findMin(volMap[i]);
       whatDeviceAccept = IHouseH(connectedDevice[0][i]).goNoGoHeating(giveoutVol,price,waterType);
-      // whatDeviceAccept = giveoutVol;
       currentVolume -= whatDeviceAccept;
       volStatusAt = now;
       VolLog(owner,currentVolume,volStatusAt);

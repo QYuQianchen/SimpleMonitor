@@ -97,6 +97,9 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       
       console.log("Linking of devices done.");
+      return printDevice(config);
+    }).then(function (result) {
+
       console.log("Here we are starting the 1st round...");
       
     }).then(function (result) {
@@ -500,4 +503,18 @@ function getGasConsump() {
   for (let i = 5; i < 9; i++) {
     console.log("account " + i + " has " + web3.eth.getBalance(web3.eth.accounts[i]).toNumber());
   }
+}
+
+function printDevice(_config) {
+  // @param element is heatpump
+  var printPromises = [];
+  for (var hp_id in _config.heatpump) {
+    for (let i = 0; i < 1; i++) {
+      console.log("Single HeatPump[" + hp_id + "] has");
+      printPromises.push(_config.heatpump[hp_id].contract.printConnectedWT(i).then(function(result){
+        console.log(_config.heatpump[hp_id].device_name + "has connected WT as" + result);
+      }));
+    }
+  }
+  return Promise.all(printPromises);
 }

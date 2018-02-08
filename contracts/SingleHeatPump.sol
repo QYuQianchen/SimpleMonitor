@@ -131,9 +131,10 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
       maxSupplyPrice = draftPriceMap.prsTable[adrDevice].prs;
     }
     setPrice();
-    initiateTransaction(takeoutvol);
+    
 
     // Here HP trigger the transaction to water tank...
+    initiateTransaction(takeoutvol);
     return (takeoutvol);
   }
 
@@ -154,9 +155,10 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
         maxSupplyPrice = unitPrs;
       }
       setPrice();
-      initiateTransaction(whatDeviceAccept);
       
       // Here HP trigger the transaction to water tank...
+
+      initiateTransaction(whatDeviceAccept);
     } 
   }
 
@@ -164,17 +166,27 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
   function initiateTransaction(uint takeoutvolE) private {
     uint whatDeviceAccept;
     uint waterFlow;
+    uint waterPrice;
 
     waterFlow = takeoutvolE.convertToHeat(waterType);
+    waterPrice = price.convertToElec(waterType);
 
     for (uint i = 0; i < connectedDevice[4].length; i++) {
       //giveoutVol = currentVolume.findMin(volMap[i]);
-      whatDeviceAccept = IWaterTank(connectedDevice[4][i]).goNoGo(waterFlow,price);
+      whatDeviceAccept = IWaterTank(connectedDevice[4][i]).goNoGo(waterFlow,waterPrice);
+      // whatDeviceAccept = waterFlow;   // for testing
       TestLog(whatDeviceAccept);
+      waterFlow -= whatDeviceAccept;
       consumptionWater -= whatDeviceAccept;
-      wallet +=  int(whatDeviceAccept * price * 2); // here 2 is factor to gain money...
+      wallet +=  int(whatDeviceAccept * waterPrice * 2); // here 2 is factor to gain money...
     }
  
+  }
+
+
+  // for testing 
+  function printConnectedWT(uint i) view public returns (address) {
+    return connectedDevice[4][i];
   }
   
   // not yet set the phase
