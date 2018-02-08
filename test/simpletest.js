@@ -365,12 +365,8 @@ function step(period, currentStep) {
     for (var device_type in actions) {
       if (device_type == "watertank") { 
         for (var device_id in config[device_type]) {
-          // var period = 0;
           var element = config[device_type][device_id];
           var action = "sellEnergy";
-          // var account = element.address;
-          // var name = element.device_name;
-          // var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
           (function(_element, _action) {
             console.log("Executing " + _action + " <-- " + _element.device_name);
             stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
@@ -386,9 +382,6 @@ function step(period, currentStep) {
               // initialization
               element.counter = 0;
             }
-            // var action = "verifySellEnergy";
-            // var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
- 
             (function(_element) {
               console.log("Executing verifySellEnergy() <-- " + _element.device_name);
               stepPromises.push(cordinateSellEnergy(i,_element).then(function (result) {
