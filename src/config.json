@@ -3,6 +3,7 @@
     {
 			"id": 0,
 			"address": 0,
+			"picture": "images/admin.png",
 			"contract_address": 0
 		}
   ],

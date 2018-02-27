@@ -61,8 +61,9 @@ Controller = {
         for (device_type in Model.config) {
           for (device_id in Model.config[device_type]) {
             (function(_type, _id) {
-              promises.push(Model.instances.Configuration.getContractAddress.call(Model.config[_type][_id].address).then(function(result) {
-                // console.log("contract address of " + _type + _id + ": " + result);
+              promises.push(Model.instances.Configuration.getContractAddress.call(Model.config[_type][_id].address, {from : Model.config.admin[0].address}).then(function(result) {
+                // console.log(Model.config[_type][_id].address);
+                console.log("contract address of " + _type + _id + ": " + result);
                 Model.config[_type][_id].contract_address = result;
                 if (Model.contract_names[_type] != undefined ) {
                   // Controller.log(Model.contract_names[_type]);
@@ -268,7 +269,7 @@ Controller = {
       }
     }).then(function(result) {
       Controller.log(result);
-      return configurationInstance.getContractAddress.call(element.address);
+      return configurationInstance.getContractAddress.call(element.address, {from: Model.config.admin[0].address});
 
     }).then(function(result) {
       Controller.log("Contract address:", result);
@@ -311,6 +312,9 @@ Controller = {
     Model.contracts.Configuration.deployed().then(function(instance) {
       configurationInstance = instance;
       var link_promises = [];
+      // console.log(Model.config.house);
+      // console.log(Model.config.pv);
+
       for (house_id in Model.config.house) {
         for (pv_id in Model.config.pv) {
           Controller.log("Linking house[" + house_id + "] with pv[" + pv_id + "]");
