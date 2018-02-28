@@ -115,122 +115,21 @@ contract('simpletest', function(accounts) {
       return allRounds(96);      // here indicates the total rounds ... should be 96
     }).then(function (result) {
       console.log("Finished");
-      
-    // //   // Start with the first round...
-    // // }).then(function (result) {
-    // //   return getNow();
-    // // }).then(function (result) {
-    // //   // console.log("Current timestamp is: ", result.toNumber());
-    // //   console.log("-");
-  
-    // // }).then(function (result) {
-
-    // //   return checkStep.call();
-    // // }).then(function (result) {
-    // //   var currentStep = result.toNumber();
-    // //   console.log("We are at step: ", currentStep + " / 1");
-      
-    // //   return step(0,currentStep);
-    // // }).then(function (result) {
-    // //   console.log("Step 1 done.");
-
-    // //   return getGasConsump();
-
-    // // }).then(function (result) {
-    // //   console.log("check account gas done.");
-
-    // //   jumpTime(12);
-    // // }).then(function (result) {
-    // //   return getNow();
-    // // }).then(function (result) {
-    // //   console.log("-");
-    // //   return checkStep.call();
-    // // }).then(function (result) {
-    // //   var currentStep = result.toNumber();
-    // //   console.log("We are at step: ", currentStep + " / 2");
-    // //   return step(0,currentStep);
-    // // }).then(function (result) {
-    // //   console.log("Step 2 done.");
-
-    // // }).then(function (result) {
-
-    // //   return checkAllDeviceStatus();
-
-    // // }).then(function (result) {
-    // //   console.log("checking stauts done.");
-
-    // // // }).then(function (result) {
-    // //   return getGasConsump();
-
-    // // }).then(function (result) {
-    // //   console.log("check account gas done.");
-
-    // //   jumpTime(14);
-    // // }).then(function (result) {
-    // //   return getNow();
-    // // }).then(function (result) {
-    // //   console.log("-");
-    // //   return checkStep.call();
-    // // }).then(function (result) {
-    // //   var currentStep = result.toNumber();
-    // //   console.log("We are at step: ", currentStep + " / 3");
-    // //   return step(0,currentStep);
-    // // }).then(function (result) {
-    // //   console.log("Step 3 done.");
-
-    // //   jumpTime(16);
-    // // }).then(function (result) {
-    // //   return getNow();
-    // // }).then(function (result) {
-    // //   console.log("-");
-    // //   return checkStep.call();
-    // // }).then(function (result) {
-    // //   var currentStep = result.toNumber();
-    // //   console.log("We are at step: ", currentStep + " / 4");
-    // //   return step(0,currentStep);
-    // // }).then(function (result) {
-    // //   console.log("Step 4 done.");
-
-    // //   jumpTime(12);
-    // // }).then(function (result) {
-    // //   return getNow();
-    // // }).then(function (result) {
-    // //   console.log("-");
-    // //   return checkStep.call();
-    // // }).then(function (result) {
-    // //   var currentStep = result.toNumber();
-    // //   console.log("We are at step: ", currentStep + " / 5");
-    // //   return step(0,currentStep);
-    // // }).then(function (result) {
-    // //   console.log("Step 5 done.");
-
-    // //   return checkAllDeviceStatus();
-
-    // // }).then(function (result) {
-    // //   console.log("checking stauts done.");
-    // //   return WriteJson();
-
-    // }).then(function (result) {
-    //   // start with the second round...
-    //   console.log("We should start the 2nd round...");
-
-    //   jumpTime(14);
-    // }).then(function (result) {
-    //   return getNow();
-    // }).then(function (result) {
-    //   console.log("-");
-    //   return checkStep.call();
-    // }).then(function (result) {
-    //   var currentStep = result.toNumber();
-    //   console.log("We are at step: ", currentStep + " / 1");
-    //   return step(1,currentStep);
-    // }).then(function (result) {
-    //   console.log("Step 1 done.");
-
-    //   return checkAllDeviceStatus();
     });
   });
 });
+
+
+// it('make rounds', async function () {
+//   const result = await allRounds(96);
+//   expect(result).to.equal('promise resolved'); 
+//   console.log("Finished");
+// });
+
+
+//// ---------------------
+////  Here are functions
+//// ---------------------
 
 function register(element) {
   console.log("Registering " + element.device_type + " " + element.id);
