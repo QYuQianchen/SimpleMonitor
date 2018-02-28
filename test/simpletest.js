@@ -105,16 +105,16 @@ contract('simpletest', function(accounts) {
       console.log("Linking of devices done.");
       return printDevice(config);
     }).then(function (result) {
-
+      return OpenJson();
       console.log("Here we are starting the 1st round...");
       
+      // Start with the first round...
     }).then(function (result) {
       return getNow();
     }).then(function (result) {
       // console.log("Current timestamp is: ", result.toNumber());
       console.log("-");
-      return OpenJson();
-
+  
     }).then(function (result) {
 
       return checkStep.call();
@@ -200,6 +200,10 @@ contract('simpletest', function(accounts) {
 
     }).then(function (result) {
       console.log("checking stauts done.");
+      return WriteJson();
+
+    }).then(function (result) {
+      // start with the second round...
       console.log("We should start the 2nd round...");
 
       jumpTime(14);
@@ -544,7 +548,12 @@ function OpenJson() {
 }
 
 function WriteJson() {
-    // obj.table.push({id: 2, square:3}); //add some data
-  json = JSON.stringify(database); //convert it back to json
-  return fs.writeFile('./test/data/output/record_new.json', database, 'utf8', callback); // write it back 
+  var json = JSON.stringify(database, null, 4); //convert it back to json
+  return fs.writeFile('./test/data/output/record_new.json', json, 'utf8', function(err) {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log("JSON saved");
+    }
+});
 }

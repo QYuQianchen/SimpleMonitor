@@ -1,0 +1,252 @@
+{
+    "house": [
+        {
+            "ConsumptionE": [
+                "3",
+                "0"
+            ],
+            "ConsumptionH": [
+                [
+                    3,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ]
+            ],
+            "Wallet": [
+                0,
+                -75
+            ]
+        },
+        {
+            "ConsumptionE": [
+                "2",
+                "0"
+            ],
+            "ConsumptionH": [
+                [
+                    6,
+                    0
+                ],
+                [
+                    0,
+                    0
+                ]
+            ],
+            "Wallet": [
+                0,
+                -70
+            ]
+        },
+        {
+            "ConsumptionE": [
+                "2",
+                "0"
+            ],
+            "ConsumptionH": [
+                [
+                    0,
+                    5
+                ],
+                [
+                    0,
+                    0
+                ]
+            ],
+            "Wallet": [
+                0,
+                -65
+            ]
+        }
+    ],
+    "pv": [
+        {
+            "Production": [
+                "0",
+                "0"
+            ],
+            "Price": [
+                "10",
+                "10"
+            ],
+            "Wallet": [
+                0,
+                0
+            ]
+        },
+        {
+            "Production": [
+                "0",
+                "0"
+            ],
+            "Price": [
+                "9",
+                "9"
+            ],
+            "Wallet": [
+                0,
+                0
+            ]
+        },
+        {
+            "Production": [
+                "0",
+                "0"
+            ],
+            "Price": [
+                "7",
+                "7"
+            ],
+            "Wallet": [
+                0,
+                0
+            ]
+        }
+    ],
+    "battery": [
+        {
+            "Consumption": [
+                0,
+                0
+            ],
+            "VolumeCapacity": [
+                "5",
+                "5"
+            ],
+            "SalePrice": [
+                "20",
+                "20"
+            ],
+            "Wallet": [
+                0,
+                0
+            ]
+        }
+    ],
+    "grid": [
+        {
+            "Price": [
+                "20",
+                "20"
+            ],
+            "Wallet": [
+                0,
+                180
+            ]
+        }
+    ],
+    "watertank": [
+        {
+            "Consumption": [
+                "10",
+                "0"
+            ],
+            "Volume": [
+                80,
+                87
+            ],
+            "Price": [
+                5,
+                5
+            ],
+            "Wallet": [
+                0,
+                -5
+            ]
+        },
+        {
+            "Consumption": [
+                "0",
+                "0"
+            ],
+            "Volume": [
+                80,
+                74
+            ],
+            "Price": [
+                5,
+                5
+            ],
+            "Wallet": [
+                0,
+                30
+            ]
+        },
+        {
+            "Consumption": [
+                "11",
+                "1"
+            ],
+            "Volume": [
+                90,
+                95
+            ],
+            "Price": [
+                5,
+                5
+            ],
+            "Wallet": [
+                0,
+                5
+            ]
+        }
+    ],
+    "heatpump": [
+        {
+            "ConsumptionE": [
+                1,
+                0
+            ],
+            "ConsumptionW": [
+                10,
+                0
+            ],
+            "Price": [
+                "3",
+                "20"
+            ],
+            "Wallet": [
+                0,
+                20
+            ]
+        },
+        {
+            "ConsumptionE": [
+                0,
+                0
+            ],
+            "ConsumptionW": [
+                0,
+                0
+            ],
+            "Price": [
+                "4",
+                "4"
+            ],
+            "Wallet": [
+                0,
+                0
+            ]
+        },
+        {
+            "ConsumptionE": [
+                1,
+                0
+            ],
+            "ConsumptionW": [
+                11,
+                1
+            ],
+            "Price": [
+                "5",
+                "20"
+            ],
+            "Wallet": [
+                0,
+                20
+            ]
+        }
+    ]
+}
