@@ -52,7 +52,7 @@ library PriceLib {
     _pNew = uint((_pOld*temp1+temp2*(2))/_vCurrent);  // here (2) is the factor... too big but cannot use ufixed for now
 
     if (_pNew <= 0) {
-      _pNew = 5;  // for test;
+      _pNew = 3;  // for test;
     }
 
     return _pNew;
