@@ -12,15 +12,15 @@ var inputs = {
     "watertank" : [],
 }
 
-function addElement() {
+function addElement(type,maxIndex) {
     var addPromise = [];
-    for (let i = 0; i < 3; i++) {
-        _dir = "./house_" + i + ".json"
+    for (let i = 0; i < maxIndex; i++) {
+        _dir = "./" + type + "_" + i + ".json"
         addPromise.push(readFile(_dir)
             // .then(e => console.log(e.toString()))
             .then(e => {
                 objs[i] = JSON.parse(e);
-                inputs["house"].push(objs[i]);
+                inputs[type].push(objs[i]);
                 // console.log(inputs["house"]);
             })
             .catch(e => console.log('FOOBAR ' + e)));
@@ -28,9 +28,18 @@ function addElement() {
     return Promise.all(addPromise);
 }
 
-addElement().then(function() {
+addElement("house",3).then(function() {
+    return addElement("pv",3);
+}).then(function(){
+    return addElement("battery",1);
+}).then(function(){
+    return addElement("grid",1);
+}).then(function(){
+    return addElement("watertank",3);
+}).then(function(){
+
     console.log(inputs);
-    console.log(inputs["house"][1]["consumptionH"]);
+    // console.log(inputs["house"][1]["consumptionH"]);
 
     // var json = JSON.stringify(inputs);
     fs.writeFile('dyn_input.json', JSON.stringify(inputs), function(err) {
