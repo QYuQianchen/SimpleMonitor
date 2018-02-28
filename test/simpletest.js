@@ -36,6 +36,8 @@ var checkStatusActions = simpleinputs.checkStatusActions;
 var category_nums = simpleinputs.category_nums;
 var actionInputs = simpleinputs.actionInputs;
 
+var currentRound = 1;
+
 
 contract('simpletest', function(accounts) {
 
@@ -107,100 +109,104 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       return OpenJson();
       console.log("Here we are starting the 1st round...");
+
+      // try with function
+    }).then(function (result) {
+      return oneRound(currentRound);
       
-      // Start with the first round...
-    }).then(function (result) {
-      return getNow();
-    }).then(function (result) {
-      // console.log("Current timestamp is: ", result.toNumber());
-      console.log("-");
+    //   // Start with the first round...
+    // }).then(function (result) {
+    //   return getNow();
+    // }).then(function (result) {
+    //   // console.log("Current timestamp is: ", result.toNumber());
+    //   console.log("-");
   
-    }).then(function (result) {
+    // }).then(function (result) {
 
-      return checkStep.call();
-    }).then(function (result) {
-      var currentStep = result.toNumber();
-      console.log("We are at step: ", currentStep + " / 1");
+    //   return checkStep.call();
+    // }).then(function (result) {
+    //   var currentStep = result.toNumber();
+    //   console.log("We are at step: ", currentStep + " / 1");
       
-      return step(0,currentStep);
-    }).then(function (result) {
-      console.log("Step 1 done.");
+    //   return step(0,currentStep);
+    // }).then(function (result) {
+    //   console.log("Step 1 done.");
 
-      return getGasConsump();
-
-    }).then(function (result) {
-      console.log("check account gas done.");
-
-      jumpTime(12);
-    }).then(function (result) {
-      return getNow();
-    }).then(function (result) {
-      console.log("-");
-      return checkStep.call();
-    }).then(function (result) {
-      var currentStep = result.toNumber();
-      console.log("We are at step: ", currentStep + " / 2");
-      return step(0,currentStep);
-    }).then(function (result) {
-      console.log("Step 2 done.");
-
-    }).then(function (result) {
-
-      return checkAllDeviceStatus();
-
-    }).then(function (result) {
-      console.log("checking stauts done.");
+    //   return getGasConsump();
 
     // }).then(function (result) {
-      return getGasConsump();
+    //   console.log("check account gas done.");
 
-    }).then(function (result) {
-      console.log("check account gas done.");
+    //   jumpTime(12);
+    // }).then(function (result) {
+    //   return getNow();
+    // }).then(function (result) {
+    //   console.log("-");
+    //   return checkStep.call();
+    // }).then(function (result) {
+    //   var currentStep = result.toNumber();
+    //   console.log("We are at step: ", currentStep + " / 2");
+    //   return step(0,currentStep);
+    // }).then(function (result) {
+    //   console.log("Step 2 done.");
 
-      jumpTime(14);
-    }).then(function (result) {
-      return getNow();
-    }).then(function (result) {
-      console.log("-");
-      return checkStep.call();
-    }).then(function (result) {
-      var currentStep = result.toNumber();
-      console.log("We are at step: ", currentStep + " / 3");
-      return step(0,currentStep);
-    }).then(function (result) {
-      console.log("Step 3 done.");
+    // }).then(function (result) {
 
-      jumpTime(16);
-    }).then(function (result) {
-      return getNow();
-    }).then(function (result) {
-      console.log("-");
-      return checkStep.call();
-    }).then(function (result) {
-      var currentStep = result.toNumber();
-      console.log("We are at step: ", currentStep + " / 4");
-      return step(0,currentStep);
-    }).then(function (result) {
-      console.log("Step 4 done.");
+    //   return checkAllDeviceStatus();
 
-      jumpTime(12);
-    }).then(function (result) {
-      return getNow();
-    }).then(function (result) {
-      console.log("-");
-      return checkStep.call();
-    }).then(function (result) {
-      var currentStep = result.toNumber();
-      console.log("We are at step: ", currentStep + " / 5");
-      return step(0,currentStep);
-    }).then(function (result) {
-      console.log("Step 5 done.");
+    // }).then(function (result) {
+    //   console.log("checking stauts done.");
 
-      return checkAllDeviceStatus();
+    // // }).then(function (result) {
+    //   return getGasConsump();
 
-    }).then(function (result) {
-      console.log("checking stauts done.");
-      return WriteJson();
+    // }).then(function (result) {
+    //   console.log("check account gas done.");
+
+    //   jumpTime(14);
+    // }).then(function (result) {
+    //   return getNow();
+    // }).then(function (result) {
+    //   console.log("-");
+    //   return checkStep.call();
+    // }).then(function (result) {
+    //   var currentStep = result.toNumber();
+    //   console.log("We are at step: ", currentStep + " / 3");
+    //   return step(0,currentStep);
+    // }).then(function (result) {
+    //   console.log("Step 3 done.");
+
+    //   jumpTime(16);
+    // }).then(function (result) {
+    //   return getNow();
+    // }).then(function (result) {
+    //   console.log("-");
+    //   return checkStep.call();
+    // }).then(function (result) {
+    //   var currentStep = result.toNumber();
+    //   console.log("We are at step: ", currentStep + " / 4");
+    //   return step(0,currentStep);
+    // }).then(function (result) {
+    //   console.log("Step 4 done.");
+
+    //   jumpTime(12);
+    // }).then(function (result) {
+    //   return getNow();
+    // }).then(function (result) {
+    //   console.log("-");
+    //   return checkStep.call();
+    // }).then(function (result) {
+    //   var currentStep = result.toNumber();
+    //   console.log("We are at step: ", currentStep + " / 5");
+    //   return step(0,currentStep);
+    // }).then(function (result) {
+    //   console.log("Step 5 done.");
+
+    //   return checkAllDeviceStatus();
+
+    // }).then(function (result) {
+    //   console.log("checking stauts done.");
+    //   return WriteJson();
 
     }).then(function (result) {
       // start with the second round...
@@ -556,4 +562,23 @@ function WriteJson() {
         console.log("JSON saved");
     }
 });
+}
+
+async function oneRound(currentRound) {
+
+  for (let currentStep = 1; currentStep < 6; currentStep++) {   // looping from step 1 to step 5
+    let cTS = await getNow();
+    console.log("Current timestamp is: ", cTS);
+
+    console.log("We are at step: ", currentStep);
+    await step(currentRound,currentStep);
+    console.log("Step " + currentStep + " done.");
+    await getGasConsump();
+
+    await jumpTime(12);
+  }
+
+  await checkAllDeviceStatus();
+  await WriteJson();
+
 }

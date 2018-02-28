@@ -81,11 +81,11 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
     bool tF = false;
     draftPriceMap.initPrsTable();
     for (i = 0; i < connectedDevice[2].length; i++) {
-      (tP,tF) = IBattery(connectedDevice[2][i]).getSalePrice();
+      (tP, tF) = IBattery(connectedDevice[2][i]).getSalePrice();
       draftPriceMap.addToPrsTable(connectedDevice[2][i],tP,tF);
     }
     for (uint i = 0; i < connectedDevice[1].length; i++) {
-      (tP,tF) = IPV(connectedDevice[1][i]).getPrice();
+      (tP, tF) = IPV(connectedDevice[1][i]).getPrice();
       draftPriceMap.addToPrsTable(connectedDevice[1][i],tP,tF);
     }
     lastPriceQueryAt = now;
@@ -93,13 +93,13 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
 
   // --- 3. House sorts all the information internally ---
 
-  function sortPrice() public timed(2) {
+  function sortPrice() public { // try out timed(2) 
     draftPriceMap.sortPrsTable();
     // if the grid is connected -> add the price from the grid to the end of the sorted list
     if (grid != 0x0) {
       uint tP = 0;
       bool tF = false;
-      (tP,tF) = IGrid(grid).getPrice();
+      (tP, tF) = IGrid(grid).getPrice();
       draftPriceMap.addToPrsTable(grid,tP,tF);
     }
   }
@@ -107,7 +107,7 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
   function getSortedPrice() external returns(uint consum, uint rank, uint tot, bool updated) {
     address adr = msg.sender;
     consum = consumption;
-    (rank,tot,updated) = draftPriceMap.getPrsTable(adr);
+    (rank, tot, updated) = draftPriceMap.getPrsTable(adr);
   }
 
   // --- 4. PV/Battery ask House to confirm ...

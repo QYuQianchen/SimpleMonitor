@@ -2,105 +2,78 @@
     "house": [
         {
             "ConsumptionE": [
-                "3",
                 "0"
             ],
             "ConsumptionH": [
-                [
-                    3,
-                    0
-                ],
                 [
                     0,
                     0
                 ]
             ],
             "Wallet": [
-                0,
-                -75
+                -35
             ]
         },
         {
             "ConsumptionE": [
-                "2",
                 "0"
             ],
             "ConsumptionH": [
-                [
-                    6,
-                    0
-                ],
                 [
                     0,
                     0
                 ]
             ],
             "Wallet": [
-                0,
-                -70
+                -50
             ]
         },
         {
             "ConsumptionE": [
-                "2",
                 "0"
             ],
             "ConsumptionH": [
-                [
-                    0,
-                    5
-                ],
                 [
                     0,
                     0
                 ]
             ],
             "Wallet": [
-                0,
-                -65
+                -45
             ]
         }
     ],
     "pv": [
         {
             "Production": [
-                "0",
                 "0"
             ],
             "Price": [
-                "10",
-                "10"
+                "11"
             ],
             "Wallet": [
-                0,
                 0
             ]
         },
         {
             "Production": [
-                "0",
                 "0"
             ],
             "Price": [
-                "9",
-                "9"
+                "11"
             ],
             "Wallet": [
-                0,
                 0
             ]
         },
         {
             "Production": [
-                "0",
                 "0"
             ],
             "Price": [
-                "7",
-                "7"
+                "8"
             ],
             "Wallet": [
-                0,
                 0
             ]
         }
@@ -108,19 +81,15 @@
     "battery": [
         {
             "Consumption": [
-                0,
                 0
             ],
             "VolumeCapacity": [
-                "5",
                 "5"
             ],
             "SalePrice": [
-                "20",
                 "20"
             ],
             "Wallet": [
-                0,
                 0
             ]
         }
@@ -128,124 +97,98 @@
     "grid": [
         {
             "Price": [
-                "20",
                 "20"
             ],
             "Wallet": [
-                0,
-                180
+                60
             ]
         }
     ],
     "watertank": [
         {
             "Consumption": [
-                "10",
                 "0"
             ],
             "Volume": [
-                80,
-                87
+                77
             ],
             "Price": [
-                5,
                 5
             ],
             "Wallet": [
-                0,
-                -5
+                15
             ]
         },
         {
             "Consumption": [
-                "0",
                 "0"
             ],
             "Volume": [
-                80,
                 74
             ],
             "Price": [
-                5,
                 5
             ],
             "Wallet": [
-                0,
                 30
             ]
         },
         {
             "Consumption": [
-                "11",
-                "1"
+                "0"
             ],
             "Volume": [
-                90,
-                95
+                85
             ],
             "Price": [
-                5,
                 5
             ],
             "Wallet": [
-                0,
-                5
+                25
             ]
         }
     ],
     "heatpump": [
         {
             "ConsumptionE": [
-                1,
                 0
             ],
             "ConsumptionW": [
-                10,
                 0
             ],
             "Price": [
-                "3",
-                "20"
+                "3"
             ],
             "Wallet": [
-                0,
-                20
+                0
             ]
         },
         {
             "ConsumptionE": [
-                0,
                 0
             ],
             "ConsumptionW": [
-                0,
                 0
             ],
             "Price": [
-                "4",
                 "4"
             ],
             "Wallet": [
-                0,
                 0
             ]
         },
         {
             "ConsumptionE": [
-                1,
                 0
             ],
             "ConsumptionW": [
-                11,
-                1
+                0
             ],
             "Price": [
-                "5",
-                "20"
+                "5"
             ],
             "Wallet": [
-                0,
-                20
+                0
             ]
         }
     ]
