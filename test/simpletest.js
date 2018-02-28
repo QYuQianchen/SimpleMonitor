@@ -474,29 +474,15 @@ function checkAllDeviceStatus() {
               
               if (result[0] != undefined) {
                 if (action == "getConsumptionH") {
-                  console.log(element.device_type + " with " + element.device_id);
-                  database[element.device_type][element.device_id][name].push([result[0].toNumber(), result[1].toNumber()]); //add some data
+                  database[element.device_type][element.id][name].push([result[0].toNumber(), result[1].toNumber()]); //add some data
                   console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber(), result[1].toNumber());
                 } else {
-                  if (element.device_id == undefined) {
-                    database[element.device_type][0][name].push(result[0]); //add some data
-                    console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber());
-                  } else {
-                    // console.log(" -> ~ type : " + element.device_type);
-                    // console.log(" -> ~ id : " + device_id);
-                    // console.log(database[element.device_type][element.device_id]);
-                    database[element.device_type][element.device_id][name].push(result[0]); //add some data
-                    console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber());
-                  }
+                  database[element.device_type][element.id][name].push(result[0]); //add some data
+                  console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber());
                 }
               } else {
-                if (element.device_id == undefined) {
-                  database[element.device_type][0][name].push(result); //add some data
-                  console.log(" -> " + element.device_name + " -- " + name + " : ", result.toNumber());
-                } else {
-                  database[element.device_type][element.device_id][name].push(result.toNumber()); //add some data
-                  console.log(" -> " + element.device_name + " -- " + name + " : ", result.toNumber());
-                }
+                database[element.device_type][element.id][name].push(result.toNumber()); //add some data
+                console.log(" -> " + element.device_name + " -- " + name + " : ", result.toNumber());
               }
             }));
           }
