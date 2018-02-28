@@ -112,7 +112,7 @@ contract('simpletest', function(accounts) {
 
       // try with function
     }).then(function (result) {
-      return allRounds(10);      // here indicates the total rounds ... should be 96
+      return allRounds(96);      // here indicates the total rounds ... should be 96
     }).then(function (result) {
       console.log("Finished");
       
@@ -383,6 +383,8 @@ function step(period, currentStep) {
       }
     }
   } else if (currentStep == 4) {
+    // when selling, there is competition. Order of execution matters.
+    // Therefore, we need to introduce the 
     for (var device_type in actions) {
       if (device_type == "watertank") { 
         for (var device_id in config[device_type]) {
@@ -518,7 +520,7 @@ function getNow() {
 }
 
 function getGasConsump() {
-  for (let i = 5; i < 9; i++) {
+  for (let i = 5; i < 9; i++) { // 5 - 9
     console.log("account " + i + " has " + web3.eth.getBalance(web3.eth.accounts[i]).toNumber());
   }
 }
@@ -569,14 +571,13 @@ function WriteJson() {
 async function oneRound(currentRound) {
 
   for (let currentStep = 1; currentStep < 6; currentStep++) {   // looping from step 1 to step 5
-    let cTS = await getNow();
-    console.log("Current timestamp is: ", cTS);
+    // let cTS = await getNow();
+    // console.log("Current timestamp is: ", cTS);
 
     console.log("We are at step: ", currentStep);
     await step(currentRound,currentStep);
     console.log("Step " + currentStep + " done.");
-    // await getGasConsump();
-
+    await getGasConsump();
     await jumpTime(12);
   }
 
