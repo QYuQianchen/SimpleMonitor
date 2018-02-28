@@ -1,6 +1,12 @@
 import latestTime from './helpers/latestTime'
 import increaseTime, { increaseTimeTo, duration } from './helpers/increaseTime'
 
+var fs = require('fs');
+const readFile = require('util').promisify(fs.readFile);
+var record = require("./data/output/record_struc.json");
+var recordPath = "./data/output/record_struc.json";
+var database = null;
+
 var Configuration = artifacts.require("./Configuration.sol");
 var SingleHouse = artifacts.require("./SingleHouse.sol");
 var SinglePV = artifacts.require("./SinglePV.sol");
@@ -107,6 +113,9 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       // console.log("Current timestamp is: ", result.toNumber());
       console.log("-");
+      return OpenJson();
+
+    }).then(function (result) {
 
       return checkStep.call();
     }).then(function (result) {
@@ -450,6 +459,7 @@ function execute(element, action, input) {
 
 function checkAllDeviceStatus() {
   var allDeviceStatusPromises = [];
+
   console.log("------------------------------------\n Current Status of All Devices\n------------------------------------");
 
   for (var device_type in config) {
@@ -464,11 +474,15 @@ function checkAllDeviceStatus() {
               
               if (result[0] != undefined) {
                 if (action == "getConsumptionH") {
+                  database[device_type][device_id][name].push([result[0].toNumber(), result[1].toNumber()]); //add some data
                   console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber(), result[1].toNumber());
                 } else {
+                  console.log(database);
+                  database[device_type][device_id][name].push(result[0].toNumber()); //add some data
                   console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber());
                 }
               } else {
+                database[device_type][device_id][name].push(result.toNumber()); //add some data
                 console.log(" -> " + element.device_name + " -- " + name + " : ", result.toNumber());
               }
             }));
@@ -510,4 +524,28 @@ function printDevice(_config) {
     }
   }
   return Promise.all(printPromises);
+}
+
+function OpenJson() {
+  // return fs.readFile(recordPath, 'utf8', function readFileCallback(err, data){
+  //   if (err){
+  //     console.log(err);
+  //   } else {
+  //   database = JSON.parse(data); //now it an object
+  // }});
+
+    var addPromise = [];
+    addPromise.push(readFile(recordPath)
+      .then(e => {
+        database = JSON.parse(e);
+        console.log(database);
+      })
+      .catch(e => console.log('FOOBAR ' + e)));
+    return Promise.all(addPromise);
+}
+
+function WriteJson() {
+    // obj.table.push({id: 2, square:3}); //add some data
+  json = JSON.stringify(database); //convert it back to json
+  return fs.writeFile('./data/output/record_new.json', database, 'utf8', callback); // write it back 
 }
