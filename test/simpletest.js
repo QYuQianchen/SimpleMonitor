@@ -4,7 +4,7 @@ import increaseTime, { increaseTimeTo, duration } from './helpers/increaseTime'
 var fs = require('fs');
 const readFile = require('util').promisify(fs.readFile);
 var record = require("./data/output/record_struc.json");
-var recordPath = "./data/output/record_struc.json";
+var recordPath = "./test/data/output/record_struc.json";
 var database = null;
 
 var Configuration = artifacts.require("./Configuration.sol");
@@ -474,16 +474,29 @@ function checkAllDeviceStatus() {
               
               if (result[0] != undefined) {
                 if (action == "getConsumptionH") {
-                  database[device_type][device_id][name].push([result[0].toNumber(), result[1].toNumber()]); //add some data
+                  console.log(element.device_type + " with " + element.device_id);
+                  database[element.device_type][element.device_id][name].push([result[0].toNumber(), result[1].toNumber()]); //add some data
                   console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber(), result[1].toNumber());
                 } else {
-                  console.log(database);
-                  database[device_type][device_id][name].push(result[0].toNumber()); //add some data
-                  console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber());
+                  if (element.device_id == undefined) {
+                    database[element.device_type][0][name].push(result[0]); //add some data
+                    console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber());
+                  } else {
+                    // console.log(" -> ~ type : " + element.device_type);
+                    // console.log(" -> ~ id : " + device_id);
+                    // console.log(database[element.device_type][element.device_id]);
+                    database[element.device_type][element.device_id][name].push(result[0]); //add some data
+                    console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber());
+                  }
                 }
               } else {
-                database[device_type][device_id][name].push(result.toNumber()); //add some data
-                console.log(" -> " + element.device_name + " -- " + name + " : ", result.toNumber());
+                if (element.device_id == undefined) {
+                  database[element.device_type][0][name].push(result); //add some data
+                  console.log(" -> " + element.device_name + " -- " + name + " : ", result.toNumber());
+                } else {
+                  database[element.device_type][element.device_id][name].push(result.toNumber()); //add some data
+                  console.log(" -> " + element.device_name + " -- " + name + " : ", result.toNumber());
+                }
               }
             }));
           }
@@ -547,5 +560,5 @@ function OpenJson() {
 function WriteJson() {
     // obj.table.push({id: 2, square:3}); //add some data
   json = JSON.stringify(database); //convert it back to json
-  return fs.writeFile('./data/output/record_new.json', database, 'utf8', callback); // write it back 
+  return fs.writeFile('./test/data/output/record_new.json', database, 'utf8', callback); // write it back 
 }
