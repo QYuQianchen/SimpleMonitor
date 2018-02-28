@@ -14,8 +14,8 @@ var inputs = {
 
 function addElement() {
     var addPromise = [];
-    for (let i = 0; i < 2; i++) {
-        _dir = "./house_" + i + "_sample.json"
+    for (let i = 0; i < 3; i++) {
+        _dir = "./house_" + i + ".json"
         addPromise.push(readFile(_dir)
             // .then(e => console.log(e.toString()))
             .then(e => {
