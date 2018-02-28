@@ -1,6 +1,7 @@
 import latestTime from './helpers/latestTime'
 import increaseTime, { increaseTimeTo, duration } from './helpers/increaseTime'
 
+
 var fs = require('fs');
 const readFile = require('util').promisify(fs.readFile);
 var record = require("./data/output/record_struc.json");
@@ -56,7 +57,10 @@ contract('simpletest', function(accounts) {
 
   var virtualTime;
 
-  it("I. Create 3 SingleHouse contracts and link to 3 SinglePVs", function () {
+  it("I. Create 3 SingleHouse contracts and link to 3 SinglePVs", async function () {
+
+    this.timeout(9999999);
+    
     return Configuration.deployed().then(function (instance) {
       configuration = instance;
       console.log("Starting to register devices...");
@@ -112,7 +116,11 @@ contract('simpletest', function(accounts) {
 
       // try with function
     }).then(function (result) {
-      return allRounds(96);      // here indicates the total rounds ... should be 96
+      return allRounds(1,30);      // here indicates the total rounds ... should be 96
+    }).then(function (result) {
+      return allRounds(31,60);      // here indicates the total rounds ... should be 96
+    }).then(function (result) {
+      return allRounds(61,96);      // here indicates the total rounds ... should be 96
     }).then(function (result) {
       console.log("Finished");
     });
@@ -120,10 +128,10 @@ contract('simpletest', function(accounts) {
 });
 
 
-// it('make rounds', async function () {
-//   const result = await allRounds(96);
-//   expect(result).to.equal('promise resolved'); 
-//   console.log("Finished");
+// it('make rounds 1-30', async function () {
+//   this.timeout(9999999);
+//   await allRounds(1,30);
+//   console.log("Finished 1-30");
 // });
 
 
@@ -270,15 +278,15 @@ function step(period, currentStep) {
             var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
 
             (function(_element, _action, _input) {
-              console.log("Executing " + _action + "(" + _input + ") <-- " + _element.device_name);
+              // console.log("Executing " + _action + "(" + _input + ") <-- " + _element.device_name);
               stepPromises.push(execute(_element, _action, _input).then(function (result) {
-                console.log(_element.device_name + " doing " + _action + " is done");
+                // console.log(_element.device_name + " doing " + _action + " is done");
               }));
             })(element, action, input);
           }
         }
       } else {
-        console.log("Nothing to do at this step <-- " + device_type);
+        // console.log("Nothing to do at this step <-- " + device_type);
       }
     }
   } else if (currentStep == 4) {
@@ -290,9 +298,9 @@ function step(period, currentStep) {
           var element = config[device_type][device_id];
           var action = "sellEnergy";
           (function(_element, _action) {
-            console.log("Executing " + _action + " <-- " + _element.device_name);
+            // console.log("Executing " + _action + " <-- " + _element.device_name);
             stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
-              console.log(_element.device_name + " has passed through <--" + _action);
+              // console.log(_element.device_name + " has passed through <--" + _action);
             }));
           })(element, action);
         }
@@ -305,15 +313,15 @@ function step(period, currentStep) {
               element.counter = 0;
             }
             (function(_element) {
-              console.log("Executing verifySellEnergy() <-- " + _element.device_name);
+              // console.log("Executing verifySellEnergy() <-- " + _element.device_name);
               stepPromises.push(cordinateSellEnergy(i,_element).then(function (result) {
-                console.log(_element.device_name + " doing verifySellEnergy is done");
+                // console.log(_element.device_name + " doing verifySellEnergy is done");
               }));
             })(element);
           }
         }
       } else {
-        console.log("Nothing to do at this step <-- " + device_type);
+        // console.log("Nothing to do at this step <-- " + device_type);
       }
     }
   } else {
@@ -330,15 +338,15 @@ function step(period, currentStep) {
             // var name = element.device_name;
             // var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
             (function(_element, _action) {
-              console.log("Executing " + _action + " <-- " + _element.device_name);
+              // console.log("Executing " + _action + " <-- " + _element.device_name);
               stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
-                console.log(_element.device_name + " has passed through <--" + _action);
+                // console.log(_element.device_name + " has passed through <--" + _action);
               }));
             })(element, action);
           }
         }
       } else {
-        console.log("Nothing to do at this step <-- " + device_type);
+        // console.log("Nothing to do at this step <-- " + device_type);
       }
     }
   }
@@ -486,8 +494,8 @@ async function oneRound(currentRound) {
 }
 
 
-async function allRounds(totalRound) {
-  for (let currentRound = 1; currentRound < totalRound + 1; currentRound++) {   // looping from step 1 to step 5
+async function allRounds(startRound, totalRound) {
+  for (let currentRound = startRound; currentRound < totalRound + 1; currentRound++) {   // looping from step 1 to step 5
     await oneRound(currentRound);
     console.log("------------------------------------\nRound " + currentRound + " finished.\n------------------------------------");
   }
