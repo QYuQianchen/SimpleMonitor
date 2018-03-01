@@ -93,7 +93,7 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
 
   // --- 3. House sorts all the information internally ---
 
-  function sortPrice() public { // try out timed(2) 
+  function sortPrice() public timed(2) { // try out 
     draftPriceMap.sortPrsTable();
     // if the grid is connected -> add the price from the grid to the end of the sorted list
     if (grid != 0x0) {

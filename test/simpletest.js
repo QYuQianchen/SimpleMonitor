@@ -6,7 +6,8 @@ var fs = require('fs');
 const readFile = require('util').promisify(fs.readFile);
 var record = require("./data/output/record_struc.json");
 var recordPath = "./test/data/output/record_struc.json";
-var database = null;
+var database_4 = null;
+var database_5 = null;
 
 var Configuration = artifacts.require("./Configuration.sol");
 var SingleHouse = artifacts.require("./SingleHouse.sol");
@@ -37,8 +38,6 @@ var checkStatusActions = simpleinputs.checkStatusActions;
 var category_nums = simpleinputs.category_nums;
 var actionInputs = simpleinputs.actionInputs;
 
-// var currentRound = 1;
-
 
 contract('simpletest', function(accounts) {
 
@@ -57,9 +56,10 @@ contract('simpletest', function(accounts) {
 
   var virtualTime;
 
-  it("I. Create 3 SingleHouse contracts and link to 3 SinglePVs", async function () {
 
-    this.timeout(9999999);
+  it("Should do all prep work",  function () {
+ 
+    // this.timeout(9999999);
     
     return Configuration.deployed().then(function (instance) {
       configuration = instance;
@@ -96,7 +96,6 @@ contract('simpletest', function(accounts) {
         }
       }
 
-      
       return configuration.getGridAdr.call()
 
     }).then(function (result) {
@@ -111,28 +110,29 @@ contract('simpletest', function(accounts) {
       console.log("Linking of devices done.");
       return printDevice(config);
     }).then(function (result) {
+      console.log("Here we are starting the 1st round.. ."); 
       return OpenJson();
-      console.log("Here we are starting the 1st round...");
 
-      // try with function
-    }).then(function (result) {
-      return allRounds(1,30);      // here indicates the total rounds ... should be 96
-    }).then(function (result) {
-      return allRounds(31,60);      // here indicates the total rounds ... should be 96
-    }).then(function (result) {
-      return allRounds(61,96);      // here indicates the total rounds ... should be 96
-    }).then(function (result) {
-      console.log("Finished");
+    //   // try with function
+    // }).then(function (result) {
+    //   return allRounds(1,30);      // here indicates the total rounds ... should be 96
+    // }).then(function (result) {
+    //   return allRounds(31,60);      // here indicates the total rounds ... should be 96
+    // }).then(function (result) {
+    //   return allRounds(61,96);      // here indicates the total rounds ... should be 96
+    // }).then(function (result) {
+    //   console.log("Finished");
+      // done();
     });
   });
+
+  for(let i = 1; i < 97; i++) {   // i should be until 96
+    it('round ' + i  + ' should be executed ',  function() {
+      return oneRound(i);
+    });
+  }
+
 });
-
-
-// it('make rounds 1-30', async function () {
-//   this.timeout(9999999);
-//   await allRounds(1,30);
-//   console.log("Finished 1-30");
-// });
 
 
 //// ---------------------
@@ -378,7 +378,7 @@ function execute(element, action, input) {
   return executePromise;
 }  
 
-function checkAllDeviceStatus() {
+function checkAllDeviceStatus(_database) {
   var allDeviceStatusPromises = [];
 
   console.log("----------------print status-------------------");
@@ -395,14 +395,14 @@ function checkAllDeviceStatus() {
               
               if (result[0] != undefined) {
                 if (action == "getConsumptionH") {
-                  database[element.device_type][element.id][name].push([result[0].toNumber(), result[1].toNumber()]); //add some data
+                  _database[element.device_type][element.id][name].push([result[0].toNumber(), result[1].toNumber()]); //add some data
                   // console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber(), result[1].toNumber());
                 } else {
-                  database[element.device_type][element.id][name].push(result[0]); //add some data
+                  _database[element.device_type][element.id][name].push(result[0]); //add some data
                   // console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber());
                 }
               } else {
-                database[element.device_type][element.id][name].push(result.toNumber()); //add some data
+                _database[element.device_type][element.id][name].push(result.toNumber()); //add some data
                 // console.log(" -> " + element.device_name + " -- " + name + " : ", result.toNumber());
               }
             }));
@@ -457,16 +457,17 @@ function OpenJson() {
     var addPromise = [];
     addPromise.push(readFile(recordPath)
       .then(e => {
-        database = JSON.parse(e);
-        console.log(database);
+        database_4 = JSON.parse(e);
+        database_5 = JSON.parse(e);
+        // console.log(database);
       })
       .catch(e => console.log('FOOBAR ' + e)));
     return Promise.all(addPromise);
 }
 
-function WriteJson() {
-  var json = JSON.stringify(database, null, 4); //convert it back to json
-  return fs.writeFile('./test/data/output/record_new.json', json, 'utf8', function(err) {
+function WriteJson(filename, _database) {
+  var json = JSON.stringify(_database, null, 4); //convert it back to json
+  return fs.writeFile('./test/data/output/' + filename + '.json', json, 'utf8', function(err) {
     if (err) {
         console.log(err);
     } else {
@@ -477,26 +478,30 @@ function WriteJson() {
 
 async function oneRound(currentRound) {
 
-  for (let currentStep = 1; currentStep < 6; currentStep++) {   // looping from step 1 to step 5
-    // let cTS = await getNow();
-    // console.log("Current timestamp is: ", cTS);
+  var asyncPromises = [];
 
+  for (let currentStep = 1; currentStep < 6; currentStep++) {   // looping from step 1 to step 5
     console.log("We are at step: ", currentStep);
     await step(currentRound,currentStep);
     console.log("Step " + currentStep + " done.");
     await getGasConsump();
+    if (currentStep == 4) {
+      await checkAllDeviceStatus(database_4);
+    } else if (currentStep == 5) {
+      await checkAllDeviceStatus(database_5);
+    }
     await jumpTime(12);
   }
 
-  await checkAllDeviceStatus();
-  await WriteJson();
+  asyncPromises.push(WriteJson("record_step_4", database_4));
+  asyncPromises.push(WriteJson("record_step_5", database_5));
+  return Promise.all(asyncPromises);
 
 }
 
-
-async function allRounds(startRound, totalRound) {
-  for (let currentRound = startRound; currentRound < totalRound + 1; currentRound++) {   // looping from step 1 to step 5
-    await oneRound(currentRound);
-    console.log("------------------------------------\nRound " + currentRound + " finished.\n------------------------------------");
-  }
-}
+// async function allRounds(startRound, totalRound) {
+//   for (let currentRound = startRound; currentRound < totalRound + 1; currentRound++) {   // looping from step 1 to step 5
+//     await oneRound(currentRound);
+//     console.log("------------------------------------\nRound " + currentRound + " finished.\n------------------------------------");
+//   }
+// }
