@@ -1,0 +1,3418 @@
+﻿
+C:\Users\qianc\Desktop>cd C:\Users\qianc\Documents\Thesis\Code\SimpleMonitor
+
+C:\Users\qianc\Documents\Thesis\Code\SimpleMonitor>cmd /k truffle test ./test/simpletest.js
+Using network 'development'.
+
+migrations deploying...
+SingleHouseFactory ADDRESS: 0xa6c5a800e426a7a76132a24004aea29a8651affe
+SinglePVFactory ADDRESS: 0x69ecd068a74602b2c999f5db6e763d6da7f36694
+SingleBatteryFactory ADDRESS: 0x0fe71aea3398e1226ae893bfe0ae55c8d76b1b61
+SingleHeatPumpFactory ADDRESS: 0x4e50a01f0bc06434264328b6cc9604217cc6101a
+SingleWaterTankFactory ADDRESS: 0xa9c79d8144573fcdd9994a19ce867289160c13c4
+GridFactory ADDRESS: 0x9323171e43a7fb8dfaa49ff9f0b388f824c0da7d
+Configuration ADDRESS: 0x56222229b00a7c7db59d282d815d80a37afc3328
+
+
+----------------
+DEPLOYMENT DONE!
+----------------
+
+
+Device name: admin0, account No. :0
+Device name: grid0, account No. :1
+Device name: house0, account No. :2
+Device name: house1, account No. :3
+Device name: house2, account No. :4
+Device name: pv0, account No. :5
+Device name: pv1, account No. :6
+Device name: pv2, account No. :7
+Device name: battery0, account No. :8
+Device name: heatpump0, account No. :9
+Device name: heatpump1, account No. :10
+Device name: heatpump2, account No. :11
+Device name: watertank0, account No. :12
+Device name: watertank1, account No. :13
+Device name: watertank2, account No. :14
+
+
+  Contract: simpletest
+Starting to register devices...
+Registering grid 0
+adding device type grid --> 5
+Registering house 0
+adding device type house --> 0
+Registering house 1
+adding device type house --> 0
+Registering house 2
+adding device type house --> 0
+Registering pv 0
+adding device type pv --> 1
+Registering pv 1
+adding device type pv --> 1
+Registering pv 2
+adding device type pv --> 1
+Registering battery 0
+adding device type battery --> 2
+Registering heatpump 0
+adding device type heatpump --> 3
+Registering heatpump 1
+adding device type heatpump --> 3
+Registering heatpump 2
+adding device type heatpump --> 3
+Registering watertank 0
+adding device type watertank --> 4
+Registering watertank 1
+adding device type watertank --> 4
+Registering watertank 2
+adding device type watertank --> 4
+All participants registered
+Starting to get contract addresses...
+grid0 0xbfb3e841bef2aecd865f3631e80806e692ec2365
+house0 0x96101668b6a5bb4561a54b003ca6628fbb21fd6a
+house1 0xda0bf7a9c82ca0a7ad1c268fc5c330e191ec109c
+house2 0x8e62f8d5c6d1e9b87d826ff464c5a63cbd85db75
+pv0 0x819401a0fa76a39a916b056d99a28b63f4f16bdf
+pv1 0xfe55442d2a8c8fc87ff96b17a3797617f8af6090
+pv2 0xfd69591f40493b7c04c200d23ad88a93efdbb79b
+battery0 0x55c499a1f4f7379729e558e552aaf55fa4a80014
+heatpump0 0x397845210621975b63b14696bfbcc2cdfb6dcc05
+heatpump1 0xb49e0550e1dc2026d2b68500784996f4ebc519ec
+heatpump2 0x645878781d4ba34fa83d7411e3327d9450bad033
+watertank0 0x76e73f8aa611ff5abc344ffd3c170091b24ec0ff
+watertank1 0xb90495b3f4876b52f3c472474eb56a9791b228cb
+watertank2 0xf9eb4a3e9470271f76a6864bb75eca2e192daf36
+Got all contract addresses!
+Starting to instatiate contracts...
+Contracts instantiated!
+Contract Creator =  0xbfb3e841bef2aecd865f3631e80806e692ec2365
+Linking devices:
+Linking house[0] with pv[0]
+Linking house[1] with pv[1]
+Linking house[1] with pv[2]
+Linking house[2] with pv[1]
+Linking house[2] with pv[2]
+Linking battery[0] with house[0]
+Linking battery[0] with house[2]
+Linking battery[0] with pv[0]
+Linking house[0] with watertank[0]
+Linking watertank[0] with heatpump[0]
+Linking pv[0] with heatpump[0]
+Linking house[1] with watertank[1]
+Linking watertank[1] with heatpump[1]
+Linking pv[1] with heatpump[1]
+Linking house[2] with watertank[2]
+Linking watertank[2] with heatpump[2]
+Linking pv[2] with heatpump[2]
+Linking battery[0] with heatpump[0]
+Linking of devices done.
+Single HeatPump[0] has
+Single HeatPump[1] has
+Single HeatPump[2] has
+heatpump2has connected WT as0x76e73f8aa611ff5abc344ffd3c170091b24ec0ff
+heatpump2has connected WT as0xb90495b3f4876b52f3c472474eb56a9791b228cb
+heatpump2has connected WT as0xf9eb4a3e9470271f76a6864bb75eca2e192daf36
+Here we are starting the 1st round.. .
+    √ Should do all prep work (4067ms)
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999999870000
+account 6 has 99999999999999870000
+account 7 has 99999999999999870000
+account 8 has 99999999999999870000
+We are at step:  2
+    1) round 1 should be executed
+
+    Events emitted during test:
+    ---------------------------
+
+    ConsumptionLog(adr: 0x1208fb7b1891b878db15ca213cb795f469a4f8b8, consum: 1, consumAt: 1519929801)
+    ConsumptionLog(adr: 0x0e5416aa107f5b8c6cbc960d566905fbbf3810d2, consum: 1, consumAt: 1519929801)
+    ConsumptionLog(adr: 0x7fc9b6ca67f19ab565c31d3b9c8f2bc335b66bb3, consum: 1, consumAt: 1519929801)
+    ConsumptionLog(adr: 0x1208fb7b1891b878db15ca213cb795f469a4f8b8, consum: 1, consumAt: 1519929801)
+    ConsumptionLog(adr: 0x0e5416aa107f5b8c6cbc960d566905fbbf3810d2, consum: 1, consumAt: 1519929801)
+    ConsumptionLog(adr: 0x7fc9b6ca67f19ab565c31d3b9c8f2bc335b66bb3, consum: 1, consumAt: 1519929801)
+    ProductionLog(adr: 0x93757c39826769180839e3567ec28afa208c2d1e, produc: 0, prodAt: 1519929802)
+    ProductionLog(adr: 0x5f8390637f13aaca4da19efcc5160fbd6ee48627, produc: 0, prodAt: 1519929802)
+    ProductionLog(adr: 0x478fd889318b8c60b1972806952c8363f33ca8df, produc: 0, prodAt: 1519929802)
+    PriceUpdate(updateAt: 1519929802)
+    PriceUpdate(updateAt: 1519929802)
+    PriceUpdate(updateAt: 1519929802)
+    PriceUpdate(updateAt: 1519929802)
+    ConsumptionUpdate(updateAt: 1519929802)
+    ConsumptionUpdate(updateAt: 1519929802)
+    ConsumptionUpdate(updateAt: 1519929802)
+    PrsLog(price: 3, priceAt: 1519929823)
+
+    ---------------------------
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999999790000
+account 6 has 99999999999999790000
+account 7 has 99999999999999790000
+account 8 has 99999999999993050000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999999790000
+account 6 has 99999999999999790000
+account 7 has 99999999999999790000
+account 8 has 99999999999992970000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999999720000
+account 6 has 99999999999999720000
+account 7 has 99999999999999720000
+account 8 has 99999999999992890000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999999720000
+account 6 has 99999999999999720000
+account 7 has 99999999999999720000
+account 8 has 99999999999992890000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999999690000
+account 6 has 99999999999999690000
+account 7 has 99999999999999690000
+account 8 has 99999999999992890000
+----------------print status-------------------
+    √ round 2 should be executed  (23999ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999999600000
+account 6 has 99999999999999600000
+account 7 has 99999999999999600000
+account 8 has 99999999999992820000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999999600000
+account 6 has 99999999999999600000
+account 7 has 99999999999999600000
+account 8 has 99999999999992740000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999999230000
+account 6 has 99999999999999230000
+account 7 has 99999999999999260000
+account 8 has 99999999999992380000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999999230000
+account 6 has 99999999999999230000
+account 7 has 99999999999999260000
+account 8 has 99999999999992380000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999999200000
+account 6 has 99999999999999200000
+account 7 has 99999999999999230000
+account 8 has 99999999999992380000
+----------------print status-------------------
+    √ round 3 should be executed  (24448ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999999120000
+account 6 has 99999999999999130000
+account 7 has 99999999999999150000
+account 8 has 99999999999992300000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999999120000
+account 6 has 99999999999999130000
+account 7 has 99999999999999150000
+account 8 has 99999999999992220000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999999050000
+account 6 has 99999999999999050000
+account 7 has 99999999999999080000
+account 8 has 99999999999992150000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999999050000
+account 6 has 99999999999999050000
+account 7 has 99999999999999080000
+account 8 has 99999999999992150000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999999020000
+account 6 has 99999999999999020000
+account 7 has 99999999999999050000
+account 8 has 99999999999992150000
+----------------print status-------------------
+    √ round 4 should be executed  (24281ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999998940000
+account 6 has 99999999999998950000
+account 7 has 99999999999998970000
+account 8 has 99999999999992070000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999998940000
+account 6 has 99999999999998950000
+account 7 has 99999999999998970000
+account 8 has 99999999999991990000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999998870000
+account 6 has 99999999999998870000
+account 7 has 99999999999998890000
+account 8 has 99999999999991920000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999998870000
+account 6 has 99999999999998870000
+account 7 has 99999999999998890000
+account 8 has 99999999999991920000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999998840000
+account 6 has 99999999999998840000
+account 7 has 99999999999998870000
+account 8 has 99999999999991920000
+----------------print status-------------------
+    √ round 5 should be executed  (21452ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999998750000
+account 6 has 99999999999998770000
+account 7 has 99999999999998790000
+account 8 has 99999999999991840000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999998750000
+account 6 has 99999999999998770000
+account 7 has 99999999999998790000
+account 8 has 99999999999991760000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999998570000
+account 6 has 99999999999998560000
+account 7 has 99999999999998590000
+account 8 has 99999999999991600000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999998570000
+account 6 has 99999999999998560000
+account 7 has 99999999999998590000
+account 8 has 99999999999991600000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999998540000
+account 6 has 99999999999998530000
+account 7 has 99999999999998560000
+account 8 has 99999999999991600000
+----------------print status-------------------
+    √ round 6 should be executed  (21981ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999998460000
+account 6 has 99999999999998440000
+account 7 has 99999999999998500000
+account 8 has 99999999999991510000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999998460000
+account 6 has 99999999999998440000
+account 7 has 99999999999998500000
+account 8 has 99999999999991430000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999998260000
+account 6 has 99999999999998230000
+account 7 has 99999999999998300000
+account 8 has 99999999999991230000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999998260000
+account 6 has 99999999999998230000
+account 7 has 99999999999998300000
+account 8 has 99999999999991230000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999998230000
+account 6 has 99999999999998200000
+account 7 has 99999999999998260000
+account 8 has 99999999999991230000
+----------------print status-------------------
+    √ round 7 should be executed  (21652ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999998150000
+account 6 has 99999999999998130000
+account 7 has 99999999999998200000
+account 8 has 99999999999991150000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999998150000
+account 6 has 99999999999998130000
+account 7 has 99999999999998200000
+account 8 has 99999999999991090000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999997950000
+account 6 has 99999999999997920000
+account 7 has 99999999999998000000
+account 8 has 99999999999990870000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999997950000
+account 6 has 99999999999997920000
+account 7 has 99999999999998000000
+account 8 has 99999999999990870000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999997920000
+account 6 has 99999999999997890000
+account 7 has 99999999999997970000
+account 8 has 99999999999990870000
+----------------print status-------------------
+    √ round 8 should be executed  (22164ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999997850000
+account 6 has 99999999999997800000
+account 7 has 99999999999997900000
+account 8 has 99999999999990810000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999997850000
+account 6 has 99999999999997800000
+account 7 has 99999999999997900000
+account 8 has 99999999999990730000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999997640000
+account 6 has 99999999999997590000
+account 7 has 99999999999997700000
+account 8 has 99999999999990640000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999997640000
+account 6 has 99999999999997590000
+account 7 has 99999999999997700000
+account 8 has 99999999999990640000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999997600000
+account 6 has 99999999999997560000
+account 7 has 99999999999997670000
+account 8 has 99999999999990640000
+----------------print status-------------------
+    √ round 9 should be executed  (22353ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999997540000
+account 6 has 99999999999997480000
+account 7 has 99999999999997600000
+account 8 has 99999999999990580000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999997540000
+account 6 has 99999999999997480000
+account 7 has 99999999999997600000
+account 8 has 99999999999990500000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999997330000
+account 6 has 99999999999997260000
+account 7 has 99999999999997410000
+account 8 has 99999999999990300000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999997330000
+account 6 has 99999999999997260000
+account 7 has 99999999999997410000
+account 8 has 99999999999990300000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999997300000
+account 6 has 99999999999997250000
+account 7 has 99999999999997380000
+account 8 has 99999999999990300000
+----------------print status-------------------
+    √ round 10 should be executed  (22045ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999997230000
+account 6 has 99999999999997170000
+account 7 has 99999999999997310000
+account 8 has 99999999999990240000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999997230000
+account 6 has 99999999999997170000
+account 7 has 99999999999997310000
+account 8 has 99999999999990150000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999997020000
+account 6 has 99999999999996950000
+account 7 has 99999999999997120000
+account 8 has 99999999999989960000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999997020000
+account 6 has 99999999999996950000
+account 7 has 99999999999997120000
+account 8 has 99999999999989960000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999997000000
+account 6 has 99999999999996920000
+account 7 has 99999999999997080000
+account 8 has 99999999999989960000
+----------------print status-------------------
+    √ round 11 should be executed  (22523ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999996920000
+account 6 has 99999999999996840000
+account 7 has 99999999999997000000
+account 8 has 99999999999989870000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999996920000
+account 6 has 99999999999996840000
+account 7 has 99999999999997000000
+account 8 has 99999999999989800000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999996720000
+account 6 has 99999999999996620000
+account 7 has 99999999999996820000
+account 8 has 99999999999989600000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999996720000
+account 6 has 99999999999996620000
+account 7 has 99999999999996820000
+account 8 has 99999999999989600000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999996690000
+account 6 has 99999999999996610000
+account 7 has 99999999999996790000
+account 8 has 99999999999989600000
+----------------print status-------------------
+    √ round 12 should be executed  (21394ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999996610000
+account 6 has 99999999999996530000
+account 7 has 99999999999996700000
+account 8 has 99999999999989510000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999996610000
+account 6 has 99999999999996530000
+account 7 has 99999999999996700000
+account 8 has 99999999999989450000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999996410000
+account 6 has 99999999999996310000
+account 7 has 99999999999996530000
+account 8 has 99999999999989240000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999996410000
+account 6 has 99999999999996310000
+account 7 has 99999999999996530000
+account 8 has 99999999999989240000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999996380000
+account 6 has 99999999999996280000
+account 7 has 99999999999996500000
+account 8 has 99999999999989240000
+----------------print status-------------------
+    √ round 13 should be executed  (21454ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999996300000
+account 6 has 99999999999996200000
+account 7 has 99999999999996410000
+account 8 has 99999999999989170000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999996300000
+account 6 has 99999999999996200000
+account 7 has 99999999999996410000
+account 8 has 99999999999989090000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999996100000
+account 6 has 99999999999995990000
+account 7 has 99999999999996230000
+account 8 has 99999999999988890000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999996100000
+account 6 has 99999999999995990000
+account 7 has 99999999999996230000
+account 8 has 99999999999988890000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999996070000
+account 6 has 99999999999995950000
+account 7 has 99999999999996200000
+account 8 has 99999999999988890000
+----------------print status-------------------
+    √ round 14 should be executed  (22219ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999995990000
+account 6 has 99999999999995890000
+account 7 has 99999999999996120000
+account 8 has 99999999999988810000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999995990000
+account 6 has 99999999999995890000
+account 7 has 99999999999996120000
+account 8 has 99999999999988730000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999995790000
+account 6 has 99999999999995670000
+account 7 has 99999999999995920000
+account 8 has 99999999999988660000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999995790000
+account 6 has 99999999999995670000
+account 7 has 99999999999995920000
+account 8 has 99999999999988660000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999995760000
+account 6 has 99999999999995640000
+account 7 has 99999999999995900000
+account 8 has 99999999999988660000
+----------------print status-------------------
+    √ round 15 should be executed  (21101ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999995670000
+account 6 has 99999999999995560000
+account 7 has 99999999999995820000
+account 8 has 99999999999988580000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999995670000
+account 6 has 99999999999995560000
+account 7 has 99999999999995820000
+account 8 has 99999999999988500000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999995480000
+account 6 has 99999999999995350000
+account 7 has 99999999999995630000
+account 8 has 99999999999988300000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999995480000
+account 6 has 99999999999995350000
+account 7 has 99999999999995630000
+account 8 has 99999999999988300000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999995450000
+account 6 has 99999999999995310000
+account 7 has 99999999999995600000
+account 8 has 99999999999988300000
+----------------print status-------------------
+    √ round 16 should be executed  (21548ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999995360000
+account 6 has 99999999999995250000
+account 7 has 99999999999995530000
+account 8 has 99999999999988220000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999995360000
+account 6 has 99999999999995250000
+account 7 has 99999999999995530000
+account 8 has 99999999999988150000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999995180000
+account 6 has 99999999999995050000
+account 7 has 99999999999995330000
+account 8 has 99999999999988070000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999995180000
+account 6 has 99999999999995050000
+account 7 has 99999999999995330000
+account 8 has 99999999999988070000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999995150000
+account 6 has 99999999999995020000
+account 7 has 99999999999995310000
+account 8 has 99999999999988070000
+----------------print status-------------------
+    √ round 17 should be executed  (22593ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999995080000
+account 6 has 99999999999994950000
+account 7 has 99999999999995230000
+account 8 has 99999999999987990000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999995080000
+account 6 has 99999999999994950000
+account 7 has 99999999999995230000
+account 8 has 99999999999987920000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999994870000
+account 6 has 99999999999994740000
+account 7 has 99999999999995040000
+account 8 has 99999999999987710000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999994870000
+account 6 has 99999999999994740000
+account 7 has 99999999999995040000
+account 8 has 99999999999987710000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999994840000
+account 6 has 99999999999994700000
+account 7 has 99999999999995000000
+account 8 has 99999999999987710000
+----------------print status-------------------
+    √ round 18 should be executed  (22495ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999994770000
+account 6 has 99999999999994630000
+account 7 has 99999999999994940000
+account 8 has 99999999999987650000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999994770000
+account 6 has 99999999999994630000
+account 7 has 99999999999994940000
+account 8 has 99999999999987560000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999994690000
+account 6 has 99999999999994560000
+account 7 has 99999999999994860000
+account 8 has 99999999999987480000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999994690000
+account 6 has 99999999999994560000
+account 7 has 99999999999994860000
+account 8 has 99999999999987480000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999994660000
+account 6 has 99999999999994530000
+account 7 has 99999999999994820000
+account 8 has 99999999999987480000
+----------------print status-------------------
+    √ round 19 should be executed  (24673ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999994600000
+account 6 has 99999999999994450000
+account 7 has 99999999999994760000
+account 8 has 99999999999987420000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999994600000
+account 6 has 99999999999994450000
+account 7 has 99999999999994760000
+account 8 has 99999999999987340000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999994510000
+account 6 has 99999999999994380000
+account 7 has 99999999999994680000
+account 8 has 99999999999987270000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999994510000
+account 6 has 99999999999994380000
+account 7 has 99999999999994680000
+account 8 has 99999999999987270000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999994480000
+account 6 has 99999999999994350000
+account 7 has 99999999999994640000
+account 8 has 99999999999987270000
+----------------print status-------------------
+    √ round 20 should be executed  (22748ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999994400000
+account 6 has 99999999999994270000
+account 7 has 99999999999994580000
+account 8 has 99999999999987190000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999994400000
+account 6 has 99999999999994270000
+account 7 has 99999999999994580000
+account 8 has 99999999999987100000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999994200000
+account 6 has 99999999999994050000
+account 7 has 99999999999994380000
+account 8 has 99999999999987040000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999994200000
+account 6 has 99999999999994050000
+account 7 has 99999999999994380000
+account 8 has 99999999999987040000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999994170000
+account 6 has 99999999999994020000
+account 7 has 99999999999994350000
+account 8 has 99999999999987040000
+----------------print status-------------------
+    √ round 21 should be executed  (23269ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999994100000
+account 6 has 99999999999993950000
+account 7 has 99999999999994270000
+account 8 has 99999999999986960000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999994100000
+account 6 has 99999999999993950000
+account 7 has 99999999999994270000
+account 8 has 99999999999986880000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999994020000
+account 6 has 99999999999993870000
+account 7 has 99999999999994200000
+account 8 has 99999999999986810000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999994020000
+account 6 has 99999999999993870000
+account 7 has 99999999999994200000
+account 8 has 99999999999986810000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999993990000
+account 6 has 99999999999993840000
+account 7 has 99999999999994170000
+account 8 has 99999999999986810000
+----------------print status-------------------
+    √ round 22 should be executed  (25333ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999993900000
+account 6 has 99999999999993770000
+account 7 has 99999999999994090000
+account 8 has 99999999999986730000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999993900000
+account 6 has 99999999999993770000
+account 7 has 99999999999994090000
+account 8 has 99999999999986650000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999993720000
+account 6 has 99999999999993580000
+account 7 has 99999999999994020000
+account 8 has 99999999999986580000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999993720000
+account 6 has 99999999999993580000
+account 7 has 99999999999994020000
+account 8 has 99999999999986580000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999993700000
+account 6 has 99999999999993540000
+account 7 has 99999999999993990000
+account 8 has 99999999999986580000
+----------------print status-------------------
+    √ round 23 should be executed  (21260ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999993630000
+account 6 has 99999999999993480000
+account 7 has 99999999999993900000
+account 8 has 99999999999986500000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999993630000
+account 6 has 99999999999993480000
+account 7 has 99999999999993900000
+account 8 has 99999999999986420000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999993410000
+account 6 has 99999999999993270000
+account 7 has 99999999999993720000
+account 8 has 99999999999986220000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999993410000
+account 6 has 99999999999993270000
+account 7 has 99999999999993720000
+account 8 has 99999999999986220000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999993380000
+account 6 has 99999999999993230000
+account 7 has 99999999999993700000
+account 8 has 99999999999986220000
+----------------print status-------------------
+    √ round 24 should be executed  (21797ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999993320000
+account 6 has 99999999999993150000
+account 7 has 99999999999993610000
+account 8 has 99999999999986140000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999993320000
+account 6 has 99999999999993150000
+account 7 has 99999999999993610000
+account 8 has 99999999999986070000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999993100000
+account 6 has 99999999999992940000
+account 7 has 99999999999993430000
+account 8 has 99999999999985860000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999993100000
+account 6 has 99999999999992940000
+account 7 has 99999999999993430000
+account 8 has 99999999999985860000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999993070000
+account 6 has 99999999999992900000
+account 7 has 99999999999993400000
+account 8 has 99999999999985860000
+----------------print status-------------------
+    √ round 25 should be executed  (21968ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999993000000
+account 6 has 99999999999992840000
+account 7 has 99999999999993320000
+account 8 has 99999999999985800000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999993000000
+account 6 has 99999999999992840000
+account 7 has 99999999999993320000
+account 8 has 99999999999985710000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999992800000
+account 6 has 99999999999992640000
+account 7 has 99999999999993230000
+account 8 has 99999999999985630000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999992800000
+account 6 has 99999999999992640000
+account 7 has 99999999999993230000
+account 8 has 99999999999985630000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999992790000
+account 6 has 99999999999992610000
+account 7 has 99999999999993220000
+account 8 has 99999999999985630000
+----------------print status-------------------
+    √ round 26 should be executed  (22837ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999992710000
+account 6 has 99999999999992550000
+account 7 has 99999999999993140000
+account 8 has 99999999999985570000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999992710000
+account 6 has 99999999999992550000
+account 7 has 99999999999993140000
+account 8 has 99999999999985480000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999992630000
+account 6 has 99999999999992460000
+account 7 has 99999999999993050000
+account 8 has 99999999999985420000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999992630000
+account 6 has 99999999999992460000
+account 7 has 99999999999993050000
+account 8 has 99999999999985420000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999992610000
+account 6 has 99999999999992430000
+account 7 has 99999999999993020000
+account 8 has 99999999999985420000
+----------------print status-------------------
+    √ round 27 should be executed  (22709ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999992530000
+account 6 has 99999999999992350000
+account 7 has 99999999999992950000
+account 8 has 99999999999985340000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999992530000
+account 6 has 99999999999992350000
+account 7 has 99999999999992950000
+account 8 has 99999999999985250000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999992450000
+account 6 has 99999999999992280000
+account 7 has 99999999999992870000
+account 8 has 99999999999985190000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999992450000
+account 6 has 99999999999992280000
+account 7 has 99999999999992870000
+account 8 has 99999999999985190000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999992410000
+account 6 has 99999999999992250000
+account 7 has 99999999999992840000
+account 8 has 99999999999985190000
+----------------print status-------------------
+    √ round 28 should be executed  (22405ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999992350000
+account 6 has 99999999999992170000
+account 7 has 99999999999992770000
+account 8 has 99999999999985100000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999992350000
+account 6 has 99999999999992170000
+account 7 has 99999999999992770000
+account 8 has 99999999999985030000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999992270000
+account 6 has 99999999999992100000
+account 7 has 99999999999992700000
+account 8 has 99999999999984960000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999992270000
+account 6 has 99999999999992100000
+account 7 has 99999999999992700000
+account 8 has 99999999999984960000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999992230000
+account 6 has 99999999999992070000
+account 7 has 99999999999992660000
+account 8 has 99999999999984960000
+----------------print status-------------------
+    √ round 29 should be executed  (23007ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999992170000
+account 6 has 99999999999991990000
+account 7 has 99999999999992600000
+account 8 has 99999999999984880000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999992170000
+account 6 has 99999999999991990000
+account 7 has 99999999999992600000
+account 8 has 99999999999984800000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999992090000
+account 6 has 99999999999991920000
+account 7 has 99999999999992510000
+account 8 has 99999999999984730000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999992090000
+account 6 has 99999999999991920000
+account 7 has 99999999999992510000
+account 8 has 99999999999984730000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999992050000
+account 6 has 99999999999991890000
+account 7 has 99999999999992480000
+account 8 has 99999999999984730000
+----------------print status-------------------
+    √ round 30 should be executed  (23108ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999991990000
+account 6 has 99999999999991800000
+account 7 has 99999999999992410000
+account 8 has 99999999999984650000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999991990000
+account 6 has 99999999999991800000
+account 7 has 99999999999992410000
+account 8 has 99999999999984570000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999991900000
+account 6 has 99999999999991740000
+account 7 has 99999999999992330000
+account 8 has 99999999999984500000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999991900000
+account 6 has 99999999999991740000
+account 7 has 99999999999992330000
+account 8 has 99999999999984500000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999991870000
+account 6 has 99999999999991710000
+account 7 has 99999999999992300000
+account 8 has 99999999999984500000
+----------------print status-------------------
+    √ round 31 should be executed  (22687ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999991790000
+account 6 has 99999999999991630000
+account 7 has 99999999999992220000
+account 8 has 99999999999984420000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999991790000
+account 6 has 99999999999991630000
+account 7 has 99999999999992220000
+account 8 has 99999999999984340000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999991730000
+account 6 has 99999999999991550000
+account 7 has 99999999999992150000
+account 8 has 99999999999984270000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999991730000
+account 6 has 99999999999991550000
+account 7 has 99999999999992150000
+account 8 has 99999999999984270000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999991700000
+account 6 has 99999999999991530000
+account 7 has 99999999999992120000
+account 8 has 99999999999984270000
+----------------print status-------------------
+    √ round 32 should be executed  (23430ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999991610000
+account 6 has 99999999999991450000
+account 7 has 99999999999992040000
+account 8 has 99999999999984190000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999991610000
+account 6 has 99999999999991450000
+account 7 has 99999999999992040000
+account 8 has 99999999999984120000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999991550000
+account 6 has 99999999999991370000
+account 7 has 99999999999991970000
+account 8 has 99999999999984040000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999991550000
+account 6 has 99999999999991370000
+account 7 has 99999999999991970000
+account 8 has 99999999999984040000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999991510000
+account 6 has 99999999999991330000
+account 7 has 99999999999991940000
+account 8 has 99999999999984040000
+----------------print status-------------------
+    √ round 33 should be executed  (23061ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999991430000
+account 6 has 99999999999991270000
+account 7 has 99999999999991860000
+account 8 has 99999999999983960000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999991430000
+account 6 has 99999999999991270000
+account 7 has 99999999999991860000
+account 8 has 99999999999983900000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999991370000
+account 6 has 99999999999991190000
+account 7 has 99999999999991790000
+account 8 has 99999999999983810000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999991370000
+account 6 has 99999999999991190000
+account 7 has 99999999999991790000
+account 8 has 99999999999983810000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999991330000
+account 6 has 99999999999991150000
+account 7 has 99999999999991760000
+account 8 has 99999999999983810000
+----------------print status-------------------
+    √ round 34 should be executed  (34923ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999991250000
+account 6 has 99999999999991090000
+account 7 has 99999999999991680000
+account 8 has 99999999999983730000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999991250000
+account 6 has 99999999999991090000
+account 7 has 99999999999991680000
+account 8 has 99999999999983670000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999991170000
+account 6 has 99999999999991000000
+account 7 has 99999999999991610000
+account 8 has 99999999999983580000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999991170000
+account 6 has 99999999999991000000
+account 7 has 99999999999991610000
+account 8 has 99999999999983580000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999991150000
+account 6 has 99999999999990970000
+account 7 has 99999999999991580000
+account 8 has 99999999999983580000
+----------------print status-------------------
+    √ round 35 should be executed  (23626ms)
+We are at step:  1
+JSON saved
+JSON saved
+Step 1 done.
+account 5 has 99999999999991070000
+account 6 has 99999999999990900000
+account 7 has 99999999999991500000
+account 8 has 99999999999983500000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999991070000
+account 6 has 99999999999990900000
+account 7 has 99999999999991500000
+account 8 has 99999999999983440000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999990990000
+account 6 has 99999999999990820000
+account 7 has 99999999999991410000
+account 8 has 99999999999983350000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999990990000
+account 6 has 99999999999990820000
+account 7 has 99999999999991410000
+account 8 has 99999999999983350000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999990960000
+account 6 has 99999999999990800000
+account 7 has 99999999999991400000
+account 8 has 99999999999983350000
+----------------print status-------------------
+    √ round 36 should be executed  (25072ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999990890000
+account 6 has 99999999999990730000
+account 7 has 99999999999991320000
+account 8 has 99999999999983270000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999990890000
+account 6 has 99999999999990730000
+account 7 has 99999999999991320000
+account 8 has 99999999999983200000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999990810000
+account 6 has 99999999999990640000
+account 7 has 99999999999991230000
+account 8 has 99999999999983120000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999990810000
+account 6 has 99999999999990640000
+account 7 has 99999999999991230000
+account 8 has 99999999999983120000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999990780000
+account 6 has 99999999999990610000
+account 7 has 99999999999991220000
+account 8 has 99999999999983120000
+----------------print status-------------------
+    √ round 37 should be executed  (23900ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999990710000
+account 6 has 99999999999990530000
+account 7 has 99999999999991140000
+account 8 has 99999999999983040000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999990710000
+account 6 has 99999999999990530000
+account 7 has 99999999999991140000
+account 8 has 99999999999982980000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999990630000
+account 6 has 99999999999990460000
+account 7 has 99999999999991050000
+account 8 has 99999999999982900000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999990630000
+account 6 has 99999999999990460000
+account 7 has 99999999999991050000
+account 8 has 99999999999982900000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999990600000
+account 6 has 99999999999990430000
+account 7 has 99999999999991020000
+account 8 has 99999999999982900000
+----------------print status-------------------
+    √ round 38 should be executed  (24155ms)
+We are at step:  1
+JSON saved
+JSON saved
+Step 1 done.
+account 5 has 99999999999990530000
+account 6 has 99999999999990350000
+account 7 has 99999999999990960000
+account 8 has 99999999999982830000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999990530000
+account 6 has 99999999999990350000
+account 7 has 99999999999990960000
+account 8 has 99999999999982750000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999990450000
+account 6 has 99999999999990280000
+account 7 has 99999999999990870000
+account 8 has 99999999999982670000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999990450000
+account 6 has 99999999999990280000
+account 7 has 99999999999990870000
+account 8 has 99999999999982670000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999990420000
+account 6 has 99999999999990250000
+account 7 has 99999999999990840000
+account 8 has 99999999999982670000
+----------------print status-------------------
+    √ round 39 should be executed  (23072ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999990330000
+account 6 has 99999999999990170000
+account 7 has 99999999999990780000
+account 8 has 99999999999982600000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999990330000
+account 6 has 99999999999990170000
+account 7 has 99999999999990780000
+account 8 has 99999999999982520000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999990270000
+account 6 has 99999999999990100000
+account 7 has 99999999999990700000
+account 8 has 99999999999982440000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999990270000
+account 6 has 99999999999990100000
+account 7 has 99999999999990700000
+account 8 has 99999999999982440000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999990240000
+account 6 has 99999999999990070000
+account 7 has 99999999999990660000
+account 8 has 99999999999982440000
+----------------print status-------------------
+    √ round 40 should be executed  (25566ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999990150000
+account 6 has 99999999999989990000
+account 7 has 99999999999990600000
+account 8 has 99999999999982370000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999990150000
+account 6 has 99999999999989990000
+account 7 has 99999999999990600000
+account 8 has 99999999999982290000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999990090000
+account 6 has 99999999999989920000
+account 7 has 99999999999990510000
+account 8 has 99999999999982200000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999990090000
+account 6 has 99999999999989920000
+account 7 has 99999999999990510000
+account 8 has 99999999999982200000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999990050000
+account 6 has 99999999999989890000
+account 7 has 99999999999990480000
+account 8 has 99999999999982200000
+----------------print status-------------------
+    √ round 41 should be executed  (24762ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999989970000
+account 6 has 99999999999989810000
+account 7 has 99999999999990420000
+account 8 has 99999999999982140000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999989970000
+account 6 has 99999999999989810000
+account 7 has 99999999999990420000
+account 8 has 99999999999982060000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999989900000
+account 6 has 99999999999989740000
+account 7 has 99999999999990330000
+account 8 has 99999999999981980000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999989900000
+account 6 has 99999999999989740000
+account 7 has 99999999999990330000
+account 8 has 99999999999981980000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999989870000
+account 6 has 99999999999989710000
+account 7 has 99999999999990300000
+account 8 has 99999999999981980000
+----------------print status-------------------
+    √ round 42 should be executed  (23780ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999989800000
+account 6 has 99999999999989630000
+account 7 has 99999999999990220000
+account 8 has 99999999999981910000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999989800000
+account 6 has 99999999999989630000
+account 7 has 99999999999990220000
+account 8 has 99999999999981830000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999989710000
+account 6 has 99999999999989550000
+account 7 has 99999999999990150000
+account 8 has 99999999999981760000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999989710000
+account 6 has 99999999999989550000
+account 7 has 99999999999990150000
+account 8 has 99999999999981760000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999989700000
+account 6 has 99999999999989530000
+account 7 has 99999999999990120000
+account 8 has 99999999999981760000
+----------------print status-------------------
+    √ round 43 should be executed  (24893ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999989610000
+account 6 has 99999999999989450000
+account 7 has 99999999999990040000
+account 8 has 99999999999981680000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999989610000
+account 6 has 99999999999989450000
+account 7 has 99999999999990040000
+account 8 has 99999999999981600000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999989530000
+account 6 has 99999999999989370000
+account 7 has 99999999999989970000
+account 8 has 99999999999981540000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999989530000
+account 6 has 99999999999989370000
+account 7 has 99999999999989970000
+account 8 has 99999999999981540000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999989510000
+account 6 has 99999999999989330000
+account 7 has 99999999999989940000
+account 8 has 99999999999981540000
+----------------print status-------------------
+    √ round 44 should be executed  (23804ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999989430000
+account 6 has 99999999999989270000
+account 7 has 99999999999989860000
+account 8 has 99999999999981450000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999989430000
+account 6 has 99999999999989270000
+account 7 has 99999999999989860000
+account 8 has 99999999999981370000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999989350000
+account 6 has 99999999999989190000
+account 7 has 99999999999989800000
+account 8 has 99999999999981300000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999989350000
+account 6 has 99999999999989190000
+account 7 has 99999999999989800000
+account 8 has 99999999999981300000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999989320000
+account 6 has 99999999999989150000
+account 7 has 99999999999989760000
+account 8 has 99999999999981300000
+----------------print status-------------------
+    √ round 45 should be executed  (26062ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999989250000
+account 6 has 99999999999989090000
+account 7 has 99999999999989680000
+account 8 has 99999999999981220000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999989250000
+account 6 has 99999999999989090000
+account 7 has 99999999999989680000
+account 8 has 99999999999981140000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999989170000
+account 6 has 99999999999989000000
+account 7 has 99999999999989610000
+account 8 has 99999999999981080000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999989170000
+account 6 has 99999999999989000000
+account 7 has 99999999999989610000
+account 8 has 99999999999981080000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999989140000
+account 6 has 99999999999988970000
+account 7 has 99999999999989580000
+account 8 has 99999999999981080000
+----------------print status-------------------
+    √ round 46 should be executed  (25341ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999989070000
+account 6 has 99999999999988900000
+account 7 has 99999999999989500000
+account 8 has 99999999999981000000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999989070000
+account 6 has 99999999999988900000
+account 7 has 99999999999989500000
+account 8 has 99999999999980910000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999988990000
+account 6 has 99999999999988830000
+account 7 has 99999999999989420000
+account 8 has 99999999999980850000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999988990000
+account 6 has 99999999999988830000
+account 7 has 99999999999989420000
+account 8 has 99999999999980850000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999988960000
+account 6 has 99999999999988800000
+account 7 has 99999999999989400000
+account 8 has 99999999999980850000
+----------------print status-------------------
+    √ round 47 should be executed  (28410ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999988890000
+account 6 has 99999999999988730000
+account 7 has 99999999999989320000
+account 8 has 99999999999980770000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999988890000
+account 6 has 99999999999988730000
+account 7 has 99999999999989320000
+account 8 has 99999999999980680000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999988810000
+account 6 has 99999999999988650000
+account 7 has 99999999999989240000
+account 8 has 99999999999980620000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999988810000
+account 6 has 99999999999988650000
+account 7 has 99999999999989240000
+account 8 has 99999999999980620000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999988780000
+account 6 has 99999999999988610000
+account 7 has 99999999999989220000
+account 8 has 99999999999980620000
+----------------print status-------------------
+    √ round 48 should be executed  (28040ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999988700000
+account 6 has 99999999999988530000
+account 7 has 99999999999989140000
+account 8 has 99999999999980540000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999988700000
+account 6 has 99999999999988530000
+account 7 has 99999999999989140000
+account 8 has 99999999999980470000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999988630000
+account 6 has 99999999999988470000
+account 7 has 99999999999989060000
+account 8 has 99999999999980390000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999988630000
+account 6 has 99999999999988470000
+account 7 has 99999999999989060000
+account 8 has 99999999999980390000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999988600000
+account 6 has 99999999999988430000
+account 7 has 99999999999989020000
+account 8 has 99999999999980390000
+----------------print status-------------------
+    √ round 49 should be executed  (27467ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999988510000
+account 6 has 99999999999988350000
+account 7 has 99999999999988960000
+account 8 has 99999999999980300000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999988510000
+account 6 has 99999999999988350000
+account 7 has 99999999999988960000
+account 8 has 99999999999980240000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999988450000
+account 6 has 99999999999988290000
+account 7 has 99999999999988880000
+account 8 has 99999999999980160000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999988450000
+account 6 has 99999999999988290000
+account 7 has 99999999999988880000
+account 8 has 99999999999980160000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999988420000
+account 6 has 99999999999988250000
+account 7 has 99999999999988840000
+account 8 has 99999999999980160000
+----------------print status-------------------
+    √ round 50 should be executed  (27198ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999988330000
+account 6 has 99999999999988170000
+account 7 has 99999999999988780000
+account 8 has 99999999999980080000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999988330000
+account 6 has 99999999999988170000
+account 7 has 99999999999988780000
+account 8 has 99999999999980010000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999988270000
+account 6 has 99999999999988100000
+account 7 has 99999999999988700000
+account 8 has 99999999999979930000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999988270000
+account 6 has 99999999999988100000
+account 7 has 99999999999988700000
+account 8 has 99999999999979930000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999988240000
+account 6 has 99999999999988070000
+account 7 has 99999999999988660000
+account 8 has 99999999999979930000
+----------------print status-------------------
+    √ round 51 should be executed  (27868ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999988150000
+account 6 has 99999999999987990000
+account 7 has 99999999999988600000
+account 8 has 99999999999979850000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999988150000
+account 6 has 99999999999987990000
+account 7 has 99999999999988600000
+account 8 has 99999999999979780000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999988070000
+account 6 has 99999999999987920000
+account 7 has 99999999999988510000
+account 8 has 99999999999979700000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999988070000
+account 6 has 99999999999987920000
+account 7 has 99999999999988510000
+account 8 has 99999999999979700000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999988060000
+account 6 has 99999999999987900000
+account 7 has 99999999999988480000
+account 8 has 99999999999979700000
+----------------print status-------------------
+    √ round 52 should be executed  (25675ms)
+We are at step:  1
+JSON saved
+JSON saved
+Step 1 done.
+account 5 has 99999999999987970000
+account 6 has 99999999999987810000
+account 7 has 99999999999988420000
+account 8 has 99999999999979620000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999987970000
+account 6 has 99999999999987810000
+account 7 has 99999999999988420000
+account 8 has 99999999999979550000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999987900000
+account 6 has 99999999999987730000
+account 7 has 99999999999988330000
+account 8 has 99999999999979470000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999987900000
+account 6 has 99999999999987730000
+account 7 has 99999999999988330000
+account 8 has 99999999999979470000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999987860000
+account 6 has 99999999999987710000
+account 7 has 99999999999988300000
+account 8 has 99999999999979470000
+----------------print status-------------------
+    √ round 53 should be executed  (25130ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999987800000
+account 6 has 99999999999987630000
+account 7 has 99999999999988220000
+account 8 has 99999999999979390000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999987800000
+account 6 has 99999999999987630000
+account 7 has 99999999999988220000
+account 8 has 99999999999979320000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999987710000
+account 6 has 99999999999987550000
+account 7 has 99999999999988150000
+account 8 has 99999999999979240000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999987710000
+account 6 has 99999999999987550000
+account 7 has 99999999999988150000
+account 8 has 99999999999979240000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999987680000
+account 6 has 99999999999987530000
+account 7 has 99999999999988120000
+account 8 has 99999999999979240000
+----------------print status-------------------
+    √ round 54 should be executed  (25670ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999987610000
+account 6 has 99999999999987450000
+account 7 has 99999999999988040000
+account 8 has 99999999999979180000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999987610000
+account 6 has 99999999999987450000
+account 7 has 99999999999988040000
+account 8 has 99999999999979100000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999987530000
+account 6 has 99999999999987370000
+account 7 has 99999999999987970000
+account 8 has 99999999999979010000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999987530000
+account 6 has 99999999999987370000
+account 7 has 99999999999987970000
+account 8 has 99999999999979010000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999987500000
+account 6 has 99999999999987340000
+account 7 has 99999999999987940000
+account 8 has 99999999999979010000
+----------------print status-------------------
+    √ round 55 should be executed  (27111ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999987430000
+account 6 has 99999999999987270000
+account 7 has 99999999999987860000
+account 8 has 99999999999978950000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999987430000
+account 6 has 99999999999987270000
+account 7 has 99999999999987860000
+account 8 has 99999999999978860000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999987350000
+account 6 has 99999999999987190000
+account 7 has 99999999999987800000
+account 8 has 99999999999978780000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999987350000
+account 6 has 99999999999987190000
+account 7 has 99999999999987800000
+account 8 has 99999999999978780000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999987320000
+account 6 has 99999999999987150000
+account 7 has 99999999999987760000
+account 8 has 99999999999978780000
+----------------print status-------------------
+    √ round 56 should be executed  (25007ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999987240000
+account 6 has 99999999999987090000
+account 7 has 99999999999987680000
+account 8 has 99999999999978720000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999987240000
+account 6 has 99999999999987090000
+account 7 has 99999999999987680000
+account 8 has 99999999999978640000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999987170000
+account 6 has 99999999999987000000
+account 7 has 99999999999987610000
+account 8 has 99999999999978550000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999987170000
+account 6 has 99999999999987000000
+account 7 has 99999999999987610000
+account 8 has 99999999999978550000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999987140000
+account 6 has 99999999999986970000
+account 7 has 99999999999987580000
+account 8 has 99999999999978550000
+----------------print status-------------------
+    √ round 57 should be executed  (25056ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999987060000
+account 6 has 99999999999986910000
+account 7 has 99999999999987500000
+account 8 has 99999999999978490000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999987060000
+account 6 has 99999999999986910000
+account 7 has 99999999999987500000
+account 8 has 99999999999978400000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999986990000
+account 6 has 99999999999986830000
+account 7 has 99999999999987420000
+account 8 has 99999999999978320000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999986990000
+account 6 has 99999999999986830000
+account 7 has 99999999999987420000
+account 8 has 99999999999978320000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999986960000
+account 6 has 99999999999986800000
+account 7 has 99999999999987400000
+account 8 has 99999999999978320000
+----------------print status-------------------
+    √ round 58 should be executed  (25795ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999986880000
+account 6 has 99999999999986710000
+account 7 has 99999999999987320000
+account 8 has 99999999999978260000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999986880000
+account 6 has 99999999999986710000
+account 7 has 99999999999987320000
+account 8 has 99999999999978180000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999986810000
+account 6 has 99999999999986650000
+account 7 has 99999999999987240000
+account 8 has 99999999999978110000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999986810000
+account 6 has 99999999999986650000
+account 7 has 99999999999987240000
+account 8 has 99999999999978110000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999986780000
+account 6 has 99999999999986610000
+account 7 has 99999999999987220000
+account 8 has 99999999999978110000
+----------------print status-------------------
+    √ round 59 should be executed  (25160ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999986700000
+account 6 has 99999999999986530000
+account 7 has 99999999999987140000
+account 8 has 99999999999978030000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999986700000
+account 6 has 99999999999986530000
+account 7 has 99999999999987140000
+account 8 has 99999999999977950000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999986610000
+account 6 has 99999999999986470000
+account 7 has 99999999999987060000
+account 8 has 99999999999977880000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999986610000
+account 6 has 99999999999986470000
+account 7 has 99999999999987060000
+account 8 has 99999999999977880000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999986600000
+account 6 has 99999999999986430000
+account 7 has 99999999999987020000
+account 8 has 99999999999977880000
+----------------print status-------------------
+    √ round 60 should be executed  (25602ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999986520000
+account 6 has 99999999999986350000
+account 7 has 99999999999986960000
+account 8 has 99999999999977800000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999986520000
+account 6 has 99999999999986350000
+account 7 has 99999999999986960000
+account 8 has 99999999999977720000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999986430000
+account 6 has 99999999999986290000
+account 7 has 99999999999986880000
+account 8 has 99999999999977650000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999986430000
+account 6 has 99999999999986290000
+account 7 has 99999999999986880000
+account 8 has 99999999999977650000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999986400000
+account 6 has 99999999999986250000
+account 7 has 99999999999986840000
+account 8 has 99999999999977650000
+----------------print status-------------------
+    √ round 61 should be executed  (25453ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999986340000
+account 6 has 99999999999986170000
+account 7 has 99999999999986780000
+account 8 has 99999999999977570000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999986340000
+account 6 has 99999999999986170000
+account 7 has 99999999999986780000
+account 8 has 99999999999977490000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999986250000
+account 6 has 99999999999986100000
+account 7 has 99999999999986700000
+account 8 has 99999999999977420000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999986250000
+account 6 has 99999999999986100000
+account 7 has 99999999999986700000
+account 8 has 99999999999977420000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999986220000
+account 6 has 99999999999986070000
+account 7 has 99999999999986660000
+account 8 has 99999999999977420000
+----------------print status-------------------
+    √ round 62 should be executed  (25886ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999986160000
+account 6 has 99999999999985990000
+account 7 has 99999999999986600000
+account 8 has 99999999999977340000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999986160000
+account 6 has 99999999999985990000
+account 7 has 99999999999986600000
+account 8 has 99999999999977260000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999986070000
+account 6 has 99999999999985910000
+account 7 has 99999999999986520000
+account 8 has 99999999999977200000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999986070000
+account 6 has 99999999999985910000
+account 7 has 99999999999986520000
+account 8 has 99999999999977200000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999986040000
+account 6 has 99999999999985900000
+account 7 has 99999999999986480000
+account 8 has 99999999999977200000
+----------------print status-------------------
+    √ round 63 should be executed  (26260ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999985980000
+account 6 has 99999999999985810000
+account 7 has 99999999999986400000
+account 8 has 99999999999977110000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999985980000
+account 6 has 99999999999985810000
+account 7 has 99999999999986400000
+account 8 has 99999999999977030000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999985900000
+account 6 has 99999999999985730000
+account 7 has 99999999999986340000
+account 8 has 99999999999976960000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999985900000
+account 6 has 99999999999985730000
+account 7 has 99999999999986340000
+account 8 has 99999999999976960000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999985860000
+account 6 has 99999999999985710000
+account 7 has 99999999999986300000
+account 8 has 99999999999976960000
+----------------print status-------------------
+    √ round 64 should be executed  (27071ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999985780000
+account 6 has 99999999999985630000
+account 7 has 99999999999986220000
+account 8 has 99999999999976880000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999985780000
+account 6 has 99999999999985630000
+account 7 has 99999999999986220000
+account 8 has 99999999999976820000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999985710000
+account 6 has 99999999999985550000
+account 7 has 99999999999986160000
+account 8 has 99999999999976730000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999985710000
+account 6 has 99999999999985550000
+account 7 has 99999999999986160000
+account 8 has 99999999999976730000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999985680000
+account 6 has 99999999999985520000
+account 7 has 99999999999986120000
+account 8 has 99999999999976730000
+----------------print status-------------------
+    √ round 65 should be executed  (26596ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999985600000
+account 6 has 99999999999985450000
+account 7 has 99999999999986040000
+account 8 has 99999999999976650000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999985600000
+account 6 has 99999999999985450000
+account 7 has 99999999999986040000
+account 8 has 99999999999976590000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999985530000
+account 6 has 99999999999985370000
+account 7 has 99999999999985980000
+account 8 has 99999999999976500000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999985530000
+account 6 has 99999999999985370000
+account 7 has 99999999999985980000
+account 8 has 99999999999976500000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999985500000
+account 6 has 99999999999985340000
+account 7 has 99999999999985940000
+account 8 has 99999999999976500000
+----------------print status-------------------
+    √ round 66 should be executed  (26163ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999985420000
+account 6 has 99999999999985270000
+account 7 has 99999999999985860000
+account 8 has 99999999999976420000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999985420000
+account 6 has 99999999999985270000
+account 7 has 99999999999985860000
+account 8 has 99999999999976360000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999985350000
+account 6 has 99999999999985190000
+account 7 has 99999999999985800000
+account 8 has 99999999999976280000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999985350000
+account 6 has 99999999999985190000
+account 7 has 99999999999985800000
+account 8 has 99999999999976280000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999985320000
+account 6 has 99999999999985160000
+account 7 has 99999999999985760000
+account 8 has 99999999999976280000
+----------------print status-------------------
+    √ round 67 should be executed  (26918ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999985240000
+account 6 has 99999999999985090000
+account 7 has 99999999999985680000
+account 8 has 99999999999976200000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999985240000
+account 6 has 99999999999985090000
+account 7 has 99999999999985680000
+account 8 has 99999999999976130000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999985160000
+account 6 has 99999999999985010000
+account 7 has 99999999999985610000
+account 8 has 99999999999976050000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999985160000
+account 6 has 99999999999985010000
+account 7 has 99999999999985610000
+account 8 has 99999999999976050000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999985140000
+account 6 has 99999999999984980000
+account 7 has 99999999999985580000
+account 8 has 99999999999976050000
+----------------print status-------------------
+    √ round 68 should be executed  (26792ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999985060000
+account 6 has 99999999999984900000
+account 7 has 99999999999985500000
+account 8 has 99999999999975960000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999985060000
+account 6 has 99999999999984900000
+account 7 has 99999999999985500000
+account 8 has 99999999999975900000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999984980000
+account 6 has 99999999999984830000
+account 7 has 99999999999985420000
+account 8 has 99999999999975820000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999984980000
+account 6 has 99999999999984830000
+account 7 has 99999999999985420000
+account 8 has 99999999999975820000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999984960000
+account 6 has 99999999999984800000
+account 7 has 99999999999985400000
+account 8 has 99999999999975820000
+----------------print status-------------------
+    √ round 69 should be executed  (27007ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999984880000
+account 6 has 99999999999984710000
+account 7 has 99999999999985320000
+account 8 has 99999999999975740000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999984880000
+account 6 has 99999999999984710000
+account 7 has 99999999999985320000
+account 8 has 99999999999975670000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999984800000
+account 6 has 99999999999984650000
+account 7 has 99999999999985240000
+account 8 has 99999999999975590000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999984800000
+account 6 has 99999999999984650000
+account 7 has 99999999999985240000
+account 8 has 99999999999975590000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999984760000
+account 6 has 99999999999984620000
+account 7 has 99999999999985200000
+account 8 has 99999999999975590000
+----------------print status-------------------
+    √ round 70 should be executed  (27679ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999984700000
+account 6 has 99999999999984530000
+account 7 has 99999999999985140000
+account 8 has 99999999999975520000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999984700000
+account 6 has 99999999999984530000
+account 7 has 99999999999985140000
+account 8 has 99999999999975440000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999984620000
+account 6 has 99999999999984470000
+account 7 has 99999999999985060000
+account 8 has 99999999999975360000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999984620000
+account 6 has 99999999999984470000
+account 7 has 99999999999985060000
+account 8 has 99999999999975360000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999984580000
+account 6 has 99999999999984440000
+account 7 has 99999999999985030000
+account 8 has 99999999999975360000
+----------------print status-------------------
+    √ round 71 should be executed  (27264ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999984520000
+account 6 has 99999999999984350000
+account 7 has 99999999999984960000
+account 8 has 99999999999975300000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999984520000
+account 6 has 99999999999984350000
+account 7 has 99999999999984960000
+account 8 has 99999999999975210000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999984440000
+account 6 has 99999999999984290000
+account 7 has 99999999999984880000
+account 8 has 99999999999975130000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999984440000
+account 6 has 99999999999984290000
+account 7 has 99999999999984880000
+account 8 has 99999999999975130000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999984400000
+account 6 has 99999999999984250000
+account 7 has 99999999999984840000
+account 8 has 99999999999975130000
+----------------print status-------------------
+    √ round 72 should be executed  (27451ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999984340000
+account 6 has 99999999999984170000
+account 7 has 99999999999984780000
+account 8 has 99999999999975060000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999984340000
+account 6 has 99999999999984170000
+account 7 has 99999999999984780000
+account 8 has 99999999999974980000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999984250000
+account 6 has 99999999999984090000
+account 7 has 99999999999984700000
+account 8 has 99999999999974900000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999984250000
+account 6 has 99999999999984090000
+account 7 has 99999999999984700000
+account 8 has 99999999999974900000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999984220000
+account 6 has 99999999999984070000
+account 7 has 99999999999984660000
+account 8 has 99999999999974900000
+----------------print status-------------------
+    √ round 73 should be executed  (29306ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999984140000
+account 6 has 99999999999984000000
+account 7 has 99999999999984600000
+account 8 has 99999999999974830000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999984140000
+account 6 has 99999999999984000000
+account 7 has 99999999999984600000
+account 8 has 99999999999974750000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999984070000
+account 6 has 99999999999983910000
+account 7 has 99999999999984520000
+account 8 has 99999999999974670000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999984070000
+account 6 has 99999999999983910000
+account 7 has 99999999999984520000
+account 8 has 99999999999974670000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999984040000
+account 6 has 99999999999983900000
+account 7 has 99999999999984480000
+account 8 has 99999999999974670000
+----------------print status-------------------
+    √ round 74 should be executed  (35540ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999983960000
+account 6 has 99999999999983810000
+account 7 has 99999999999984400000
+account 8 has 99999999999974600000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999983960000
+account 6 has 99999999999983810000
+account 7 has 99999999999984400000
+account 8 has 99999999999974520000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999983900000
+account 6 has 99999999999983730000
+account 7 has 99999999999984340000
+account 8 has 99999999999974460000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999983900000
+account 6 has 99999999999983730000
+account 7 has 99999999999984340000
+account 8 has 99999999999974460000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999983860000
+account 6 has 99999999999983700000
+account 7 has 99999999999984300000
+account 8 has 99999999999974460000
+----------------print status-------------------
+    √ round 75 should be executed  (28521ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999983780000
+account 6 has 99999999999983630000
+account 7 has 99999999999984220000
+account 8 has 99999999999974380000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999983780000
+account 6 has 99999999999983630000
+account 7 has 99999999999984220000
+account 8 has 99999999999974300000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999983710000
+account 6 has 99999999999983550000
+account 7 has 99999999999984160000
+account 8 has 99999999999974230000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999983710000
+account 6 has 99999999999983550000
+account 7 has 99999999999984160000
+account 8 has 99999999999974230000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999983680000
+account 6 has 99999999999983520000
+account 7 has 99999999999984120000
+account 8 has 99999999999974230000
+----------------print status-------------------
+    √ round 76 should be executed  (27613ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999983600000
+account 6 has 99999999999983450000
+account 7 has 99999999999984040000
+account 8 has 99999999999974150000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999983600000
+account 6 has 99999999999983450000
+account 7 has 99999999999984040000
+account 8 has 99999999999974060000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999983520000
+account 6 has 99999999999983370000
+account 7 has 99999999999983980000
+account 8 has 99999999999974000000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999983520000
+account 6 has 99999999999983370000
+account 7 has 99999999999983980000
+account 8 has 99999999999974000000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999983500000
+account 6 has 99999999999983340000
+account 7 has 99999999999983940000
+account 8 has 99999999999974000000
+----------------print status-------------------
+    √ round 77 should be executed  (27647ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999983420000
+account 6 has 99999999999983270000
+account 7 has 99999999999983860000
+account 8 has 99999999999973920000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999983420000
+account 6 has 99999999999983270000
+account 7 has 99999999999983860000
+account 8 has 99999999999973830000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999983340000
+account 6 has 99999999999983190000
+account 7 has 99999999999983800000
+account 8 has 99999999999973770000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999983340000
+account 6 has 99999999999983190000
+account 7 has 99999999999983800000
+account 8 has 99999999999973770000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999983300000
+account 6 has 99999999999983160000
+account 7 has 99999999999983760000
+account 8 has 99999999999973770000
+----------------print status-------------------
+    √ round 78 should be executed  (27554ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999983240000
+account 6 has 99999999999983090000
+account 7 has 99999999999983680000
+account 8 has 99999999999973690000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999983240000
+account 6 has 99999999999983090000
+account 7 has 99999999999983680000
+account 8 has 99999999999973600000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999983160000
+account 6 has 99999999999983010000
+account 7 has 99999999999983620000
+account 8 has 99999999999973540000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999983160000
+account 6 has 99999999999983010000
+account 7 has 99999999999983620000
+account 8 has 99999999999973540000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999983120000
+account 6 has 99999999999982980000
+account 7 has 99999999999983580000
+account 8 has 99999999999973540000
+----------------print status-------------------
+    √ round 79 should be executed  (27450ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999983060000
+account 6 has 99999999999982900000
+account 7 has 99999999999983500000
+account 8 has 99999999999973460000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999983060000
+account 6 has 99999999999982900000
+account 7 has 99999999999983500000
+account 8 has 99999999999973380000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999982980000
+account 6 has 99999999999982830000
+account 7 has 99999999999983420000
+account 8 has 99999999999973310000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999982980000
+account 6 has 99999999999982830000
+account 7 has 99999999999983420000
+account 8 has 99999999999973310000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999982940000
+account 6 has 99999999999982800000
+account 7 has 99999999999983400000
+account 8 has 99999999999973310000
+----------------print status-------------------
+    √ round 80 should be executed  (28720ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999982880000
+account 6 has 99999999999982710000
+account 7 has 99999999999983320000
+account 8 has 99999999999973230000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999982880000
+account 6 has 99999999999982710000
+account 7 has 99999999999983320000
+account 8 has 99999999999973160000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999982800000
+account 6 has 99999999999982650000
+account 7 has 99999999999983240000
+account 8 has 99999999999973080000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999982800000
+account 6 has 99999999999982650000
+account 7 has 99999999999983240000
+account 8 has 99999999999973080000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999982760000
+account 6 has 99999999999982620000
+account 7 has 99999999999983200000
+account 8 has 99999999999973080000
+----------------print status-------------------
+    √ round 81 should be executed  (28054ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999982680000
+account 6 has 99999999999982530000
+account 7 has 99999999999983140000
+account 8 has 99999999999973000000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999982680000
+account 6 has 99999999999982530000
+account 7 has 99999999999983140000
+account 8 has 99999999999972930000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999982620000
+account 6 has 99999999999982470000
+account 7 has 99999999999983060000
+account 8 has 99999999999972850000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999982620000
+account 6 has 99999999999982470000
+account 7 has 99999999999983060000
+account 8 has 99999999999972850000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999982580000
+account 6 has 99999999999982440000
+account 7 has 99999999999983030000
+account 8 has 99999999999972850000
+----------------print status-------------------
+    √ round 82 should be executed  (29859ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999982500000
+account 6 has 99999999999982350000
+account 7 has 99999999999982960000
+account 8 has 99999999999972770000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999982500000
+account 6 has 99999999999982350000
+account 7 has 99999999999982960000
+account 8 has 99999999999972700000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999982440000
+account 6 has 99999999999982290000
+account 7 has 99999999999982880000
+account 8 has 99999999999972620000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999982440000
+account 6 has 99999999999982290000
+account 7 has 99999999999982880000
+account 8 has 99999999999972620000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999982400000
+account 6 has 99999999999982260000
+account 7 has 99999999999982850000
+account 8 has 99999999999972620000
+----------------print status-------------------
+    √ round 83 should be executed  (30455ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999982320000
+account 6 has 99999999999982170000
+account 7 has 99999999999982780000
+account 8 has 99999999999972540000
+We are at step:  2
+    2) round 84 should be executed
+    > No events were emitted
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999982260000
+account 6 has 99999999999982100000
+account 7 has 99999999999982700000
+account 8 has 99999999999972400000
+We are at step:  2
+    3) round 85 should be executed
+    > No events were emitted
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999982170000
+account 6 has 99999999999982030000
+account 7 has 99999999999982620000
+account 8 has 99999999999972230000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999982170000
+account 6 has 99999999999982030000
+account 7 has 99999999999982620000
+account 8 has 99999999999972030000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999982080000
+account 6 has 99999999999981900000
+account 7 has 99999999999982490000
+account 8 has 99999999999971950000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999982080000
+account 6 has 99999999999981900000
+account 7 has 99999999999982490000
+account 8 has 99999999999971950000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999982040000
+account 6 has 99999999999981860000
+account 7 has 99999999999982470000
+account 8 has 99999999999971950000
+----------------print status-------------------
+    √ round 86 should be executed  (30071ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999981960000
+account 6 has 99999999999981780000
+account 7 has 99999999999982390000
+account 8 has 99999999999971870000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999981960000
+account 6 has 99999999999981780000
+account 7 has 99999999999982390000
+account 8 has 99999999999971670000
+We are at step:  3
+    4) round 87 should be executed
+
+    Events emitted during test:
+    ---------------------------
+
+    PrsLog(price: 3, priceAt: 1519936967)
+    PrsLog(price: 3, priceAt: 1519936967)
+    PrsLog(price: 3, priceAt: 1519936967)
+
+    ---------------------------
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999981800000
+account 6 has 99999999999975060000
+account 7 has 99999999999975650000
+account 8 has 99999999999964920000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999981800000
+account 6 has 99999999999975060000
+account 7 has 99999999999975650000
+account 8 has 99999999999964860000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999981730000
+account 6 has 99999999999974980000
+account 7 has 99999999999975590000
+account 8 has 99999999999964770000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999981730000
+account 6 has 99999999999974980000
+account 7 has 99999999999975590000
+account 8 has 99999999999964770000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999981700000
+account 6 has 99999999999974950000
+account 7 has 99999999999975560000
+account 8 has 99999999999964770000
+----------------print status-------------------
+    √ round 88 should be executed  (29383ms)
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+account 5 has 99999999999981620000
+account 6 has 99999999999974880000
+account 7 has 99999999999975470000
+account 8 has 99999999999964700000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999981620000
+account 6 has 99999999999974880000
+account 7 has 99999999999975470000
+account 8 has 99999999999964630000
+We are at step:  3
+    5) round 89 should be executed
+    > No events were emitted
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999974900000
+account 6 has 99999999999974700000
+account 7 has 99999999999975300000
+account 8 has 99999999999964460000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999974900000
+account 6 has 99999999999974700000
+account 7 has 99999999999975300000
+account 8 has 99999999999964400000
+We are at step:  3
+    6) round 90 should be executed
+    > No events were emitted
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999968180000
+account 6 has 99999999999967950000
+account 7 has 99999999999968560000
+account 8 has 99999999999957650000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999968180000
+account 6 has 99999999999967950000
+account 7 has 99999999999968560000
+account 8 has 99999999999957580000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999968100000
+account 6 has 99999999999967890000
+account 7 has 99999999999968480000
+account 8 has 99999999999957500000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999968100000
+account 6 has 99999999999967890000
+account 7 has 99999999999968480000
+account 8 has 99999999999957500000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999968070000
+account 6 has 99999999999967850000
+account 7 has 99999999999968440000
+account 8 has 99999999999957500000
+----------------print status-------------------
+    √ round 91 should be executed  (36674ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999968000000
+account 6 has 99999999999967770000
+account 7 has 99999999999968380000
+account 8 has 99999999999957420000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999968000000
+account 6 has 99999999999967770000
+account 7 has 99999999999968380000
+account 8 has 99999999999957350000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999967920000
+account 6 has 99999999999967700000
+account 7 has 99999999999968300000
+account 8 has 99999999999957270000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999967920000
+account 6 has 99999999999967700000
+account 7 has 99999999999968300000
+account 8 has 99999999999957270000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999967890000
+account 6 has 99999999999967670000
+account 7 has 99999999999968260000
+account 8 has 99999999999957270000
+----------------print status-------------------
+    √ round 92 should be executed  (24202ms)
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999967820000
+account 6 has 99999999999967600000
+account 7 has 99999999999968200000
+account 8 has 99999999999957190000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999967820000
+account 6 has 99999999999967600000
+account 7 has 99999999999968200000
+account 8 has 99999999999957120000
+We are at step:  3
+    7) round 93 should be executed
+    > No events were emitted
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999961070000
+account 6 has 99999999999967410000
+account 7 has 99999999999968000000
+account 8 has 99999999999956960000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999961070000
+account 6 has 99999999999967410000
+account 7 has 99999999999968000000
+account 8 has 99999999999956900000
+We are at step:  3
+    8) round 94 should be executed
+    > No events were emitted
+We are at step:  1
+Step 1 done.
+account 5 has 99999999999954370000
+account 6 has 99999999999960680000
+account 7 has 99999999999961270000
+account 8 has 99999999999950140000
+We are at step:  2
+Step 2 done.
+account 5 has 99999999999954370000
+account 6 has 99999999999960680000
+account 7 has 99999999999961270000
+account 8 has 99999999999950080000
+We are at step:  3
+Step 3 done.
+account 5 has 99999999999954290000
+account 6 has 99999999999960600000
+account 7 has 99999999999961200000
+account 8 has 99999999999950000000
+We are at step:  4
+Step 4 done.
+account 5 has 99999999999954290000
+account 6 has 99999999999960600000
+account 7 has 99999999999961200000
+account 8 has 99999999999950000000
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+account 5 has 99999999999954260000
+account 6 has 99999999999960560000
+account 7 has 99999999999961170000
+account 8 has 99999999999950000000
+----------------print status-------------------
+    √ round 95 should be executed  (33022ms)
+JSON saved
+JSON saved
+We are at step:  1
+    9) round 96 should be executed
+    > No events were emitted
+
+
+  88 passing (39m)
+  9 failing
+
+  1) Contract: simpletest round 1 should be executed :
+     Error: VM Exception while processing transaction: revert
+      at Object.InvalidResponse (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:43303:16)
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:331156:36
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:314196:9
+      at XMLHttpRequest.request.onreadystatechange (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:315621:13)
+      at XMLHttpRequestEventTarget.dispatchEvent (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70159:18)
+      at XMLHttpRequest._setReadyState (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70449:12)
+      at XMLHttpRequest._onHttpResponseEnd (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70604:12)
+      at IncomingMessage.<anonymous> (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70564:24)
+      at endReadableNT (_stream_readable.js:1101:12)
+
+  2) Contract: simpletest round 84 should be executed :
+     Error: VM Exception while processing transaction: revert
+      at Object.InvalidResponse (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:43303:16)
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:331156:36
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:314196:9
+      at XMLHttpRequest.request.onreadystatechange (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:315621:13)
+      at XMLHttpRequestEventTarget.dispatchEvent (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70159:18)
+      at XMLHttpRequest._setReadyState (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70449:12)
+      at XMLHttpRequest._onHttpResponseEnd (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70604:12)
+      at IncomingMessage.<anonymous> (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70564:24)
+      at endReadableNT (_stream_readable.js:1101:12)
+
+  3) Contract: simpletest round 85 should be executed :
+     Error: VM Exception while processing transaction: revert
+      at Object.InvalidResponse (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:43303:16)
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:331156:36
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:314196:9
+      at XMLHttpRequest.request.onreadystatechange (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:315621:13)
+      at XMLHttpRequestEventTarget.dispatchEvent (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70159:18)
+      at XMLHttpRequest._setReadyState (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70449:12)
+      at XMLHttpRequest._onHttpResponseEnd (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70604:12)
+      at IncomingMessage.<anonymous> (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70564:24)
+      at endReadableNT (_stream_readable.js:1101:12)
+
+  4) Contract: simpletest round 87 should be executed :
+     Error: VM Exception while processing transaction: revert
+      at Object.InvalidResponse (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:43303:16)
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:331156:36
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:314196:9
+      at XMLHttpRequest.request.onreadystatechange (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:315621:13)
+      at XMLHttpRequestEventTarget.dispatchEvent (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70159:18)
+      at XMLHttpRequest._setReadyState (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70449:12)
+      at XMLHttpRequest._onHttpResponseEnd (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70604:12)
+      at IncomingMessage.<anonymous> (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70564:24)
+      at endReadableNT (_stream_readable.js:1101:12)
+
+  5) Contract: simpletest round 89 should be executed :
+     Error: VM Exception while processing transaction: revert
+      at Object.InvalidResponse (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:43303:16)
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:331156:36
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:314196:9
+      at XMLHttpRequest.request.onreadystatechange (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:315621:13)
+      at XMLHttpRequestEventTarget.dispatchEvent (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70159:18)
+      at XMLHttpRequest._setReadyState (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70449:12)
+      at XMLHttpRequest._onHttpResponseEnd (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70604:12)
+      at IncomingMessage.<anonymous> (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70564:24)
+      at endReadableNT (_stream_readable.js:1101:12)
+
+  6) Contract: simpletest round 90 should be executed :
+     Error: VM Exception while processing transaction: revert
+      at Object.InvalidResponse (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:43303:16)
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:331156:36
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:314196:9
+      at XMLHttpRequest.request.onreadystatechange (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:315621:13)
+      at XMLHttpRequestEventTarget.dispatchEvent (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70159:18)
+      at XMLHttpRequest._setReadyState (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70449:12)
+      at XMLHttpRequest._onHttpResponseEnd (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70604:12)
+      at IncomingMessage.<anonymous> (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70564:24)
+      at endReadableNT (_stream_readable.js:1101:12)
+
+  7) Contract: simpletest round 93 should be executed :
+     Error: VM Exception while processing transaction: revert
+      at Object.InvalidResponse (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:43303:16)
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:331156:36
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:314196:9
+      at XMLHttpRequest.request.onreadystatechange (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:315621:13)
+      at XMLHttpRequestEventTarget.dispatchEvent (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70159:18)
+      at XMLHttpRequest._setReadyState (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70449:12)
+      at XMLHttpRequest._onHttpResponseEnd (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70604:12)
+      at IncomingMessage.<anonymous> (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70564:24)
+      at endReadableNT (_stream_readable.js:1101:12)
+
+  8) Contract: simpletest round 94 should be executed :
+     Error: VM Exception while processing transaction: revert
+      at Object.InvalidResponse (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:43303:16)
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:331156:36
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:314196:9
+      at XMLHttpRequest.request.onreadystatechange (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:315621:13)
+      at XMLHttpRequestEventTarget.dispatchEvent (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70159:18)
+      at XMLHttpRequest._setReadyState (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70449:12)
+      at XMLHttpRequest._onHttpResponseEnd (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70604:12)
+      at IncomingMessage.<anonymous> (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70564:24)
+      at endReadableNT (_stream_readable.js:1101:12)
+
+  9) Contract: simpletest round 96 should be executed :
+     TypeError: Cannot read property '0' of undefined
+      at execute (C:/Users/qianc/Documents/Thesis/Code/SimpleMonitor/test/simpletest.js:370:55)
+      at C:/Users/qianc/Documents/Thesis/Code/SimpleMonitor/test/simpletest.js:282:33
+      at step (C:/Users/qianc/Documents/Thesis/Code/SimpleMonitor/test/simpletest.js:280:13)
+      at _callee$ (C:/Users/qianc/Documents/Thesis/Code/SimpleMonitor/test/simpletest.js:485:11)
+      at tryCatch (node_modules\regenerator-runtime\runtime.js:65:40)
+      at Generator.invoke [as _invoke] (node_modules\regenerator-runtime\runtime.js:303:22)
+      at Generator.prototype.(anonymous function) [as next] (node_modules\regenerator-runtime\runtime.js:117:21)
+      at step (test\simpletest.js:97:191)
+      at test\simpletest.js:97:437
+      at new Promise (<anonymous>)
+
+
+
+
+C:\Users\qianc\Documents\Thesis\Code\SimpleMonitor>cmd | log_p88f9.txt
+'log_p88f9.txt' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\qianc\Documents\Thesis\Code\SimpleMonitor>
