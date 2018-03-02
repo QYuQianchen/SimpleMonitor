@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "csvtojson": "^1.1.9",
+    "json2csv": "^4.0.0",
     "truffle-contract": "^3.0.1",
     "web3": "^0.20.1"
   }

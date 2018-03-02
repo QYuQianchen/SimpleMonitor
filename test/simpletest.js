@@ -398,7 +398,7 @@ function checkAllDeviceStatus(_database) {
                   _database[element.device_type][element.id][name].push([result[0].toNumber(), result[1].toNumber()]); //add some data
                   // console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber(), result[1].toNumber());
                 } else {
-                  _database[element.device_type][element.id][name].push(result[0]); //add some data
+                  _database[element.device_type][element.id][name].push(result[0].toNumber()); //add some data
                   // console.log(" -> " + element.device_name + " -- " + name + " : ", result[0].toNumber());
                 }
               } else {
@@ -478,7 +478,7 @@ function WriteJson(filename, _database) {
 
 async function oneRound(currentRound) {
 
-  var asyncPromises = [];
+  // var asyncPromises = [];
 
   for (let currentStep = 1; currentStep < 6; currentStep++) {   // looping from step 1 to step 5
     console.log("We are at step: ", currentStep);
@@ -493,9 +493,12 @@ async function oneRound(currentRound) {
     await jumpTime(12);
   }
 
-  asyncPromises.push(WriteJson("record_step_4", database_4));
-  asyncPromises.push(WriteJson("record_step_5", database_5));
-  return Promise.all(asyncPromises);
+  await WriteJson("record_step_4", database_4);
+  await WriteJson("record_step_5", database_5);
+
+  // asyncPromises.push(WriteJson("record_step_4", database_4));
+  // asyncPromises.push(WriteJson("record_step_5", database_5));
+  // return Promise.all(asyncPromises);
 
 }
 
