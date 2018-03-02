@@ -10,7 +10,6 @@ const Json2csvTransform = json2csv.Transform;
 const readFile = require('util').promisify(fs.readFile);
 
 var csv = require('csv-parser');
-// var json2csv = require('json2csv');
 
 const looping = ['ConsumptionE','ConsumptionH', 'Wallet'];
 
@@ -33,34 +32,17 @@ var unwind = null;
 var myData = null;
 
 function readJson(_dir) {
-  // _dir = "../output/record_10.json"
   return readFile(_dir)
-      // .then(e => console.log(e.toString()))
       .then(e => {
           myData = JSON.parse(e);
       })
       .catch(e => console.log('FOOBAR ' + e));
 }
 
-// readJson("./record_10.json").then(function(){
-
-//   try {
-//     const parser = new Json2csvParser(opts);  //{ fields, unwind: ['items', 'items.items'] } 
-//     const csv = parser.parse(myData.house[0]);
-//     console.log(opts);
-//     console.log(csv);
-
-//   } catch (err) {
-//     console.error(err);
-//   }
-
-// })
-
 function parsing(datasource, option) {
   try {
     const parser = new Json2csvParser(option);  //{ fields, unwind: ['items', 'items.items'] } 
     const csv = parser.parse(datasource);
-    // console.log(csv);
     return csv;
   
   } catch (err) {
@@ -96,7 +78,7 @@ function parsing(datasource, option) {
 //       .on('end', function(){
 //         const parser_new = new Json2csvParser({fields: Object.keys(dataArray[0])});
 //         var result_new = parser_new.parse({ data: dataArray});
-//         fs.writeFileSync('./record_10.csv', result_new);
+//         
 //       });
 //   });
 //   // console.log(csvArray);
@@ -136,6 +118,8 @@ readJson("./record_10.json").then(function(){
     console.error(err);
   }
   
+}).then(function(csv) {
+  fs.writeFileSync('./record_10.csv', csv);
 });
 
 
