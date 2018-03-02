@@ -18,7 +18,8 @@ var unwind = null;
 
 // const fields = ['ConsumptionE','ConsumptionH', 'Wallet']; // ,'ConsumptionH', 'Wallet'
 // const unwind = ['ConsumptionE','ConsumptionH', 'Wallet'];
-// const flatten = false;
+const flatten = true;
+const ops = {flatten};
 // const opts = { fields, unwind, flatten};
 
 // const fields = [{
@@ -50,40 +51,6 @@ function parsing(datasource, option) {
   }
 }
 
-// // const output = fs.createWriteStream(outputPath, { encoding: 'utf8' });
-
-// readJson("./record_10.json").then(function(){
-
-//   var csvArray = [];
-//   var dataArray = [];
-
-//   console.log(myData.house[0]);
-
-//   looping.forEach(element => {
-//     fields = [element];
-//     unwind = [element];
-//     var opts = { fields, unwind };
-//     // console.log(opts);
-//     var result = parsing(myData.house[0], opts);
-//     csvArray.push(result);
-//     fs.writeFileSync('./record_10.csv', result);
-//     console.log(result);
-
-//     fs.createReadStream('./record_10.csv')
-//       .pipe(csv())
-//       .on('data', function (data) {
-//         data.result[0] = result;
-//         dataArray.push(data);
-//       })
-//       .on('end', function(){
-//         const parser_new = new Json2csvParser({fields: Object.keys(dataArray[0])});
-//         var result_new = parser_new.parse({ data: dataArray});
-//         
-//       });
-//   });
-//   // console.log(csvArray);
-// });
-
 readJson("./record_10.json").then(function(){
 
   console.log(myData.house[0]);
@@ -106,17 +73,11 @@ readJson("./record_10.json").then(function(){
     json_result["house0"].push(tempObj)
   }
   console.log(json_result)
+  return json_result;
 
-  try {
-    const flatten = true;
-    const parser = new Json2csvParser({flatten});  //{ fields, unwind: ['items', 'items.items'] } 
-    const csv = parser.parse(json_result["house0"]);
-    console.log(csv);
-    return csv;
-  
-  } catch (err) {
-    console.error(err);
-  }
+}).then(function(json_result) {
+
+  return parsing(json_result["house0"], ops);
   
 }).then(function(csv) {
   fs.writeFileSync('./record_10.csv', csv);
