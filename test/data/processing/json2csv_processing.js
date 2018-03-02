@@ -51,36 +51,44 @@ function parsing(datasource, option) {
   }
 }
 
-readJson("./record_10.json").then(function(){
-
-  console.log(myData.house[0]);
-
+function transpose(element) {
   var json_result = {};
-  json_result["house0"] = [];
+  json_result["temp"] = [];
 
-  for (let i = 0; i < myData.house[0].ConsumptionE.length; i++) {
+  var keys = Object.keys(element);
+
+  for (let i = 0; i < element.ConsumptionE.length; i++) {
     tempObj = new Object()
-    for (var key in myData.house[0]) {
-      if (Array.isArray(myData.house[0][key][i])) {
-        tempObj[key] = {}
-        for (var subkey in myData.house[0][key][i]) {
-          tempObj[key][subkey] = myData.house[0][key][i][subkey];
+    keys.forEach(subelement => {
+      if (Array.isArray(element[subelement][i])) {
+        tempObj[subelement] = {}
+        for (var subkey in element[subelement][i]) {
+          tempObj[subelement][subkey] = element[subelement][i][subkey];
         }
       } else {
-        tempObj[key] = myData.house[0][key][i];
+        tempObj[subelement] = element[subelement][i];
       }
-    }
-    json_result["house0"].push(tempObj)
+    });
+    json_result["temp"].push(tempObj)
   }
   console.log(json_result)
   return json_result;
+}
+
+readJson("./record_10.json").then(function(){
+
+  console.log(Object.keys(myData.house[0]));
+
+  return transpose(myData.house[0]);
 
 }).then(function(json_result) {
 
-  return parsing(json_result["house0"], ops);
+  return parsing(json_result["temp"], ops);
   
 }).then(function(csv) {
+
   fs.writeFileSync('./record_10.csv', csv);
+
 });
 
 
