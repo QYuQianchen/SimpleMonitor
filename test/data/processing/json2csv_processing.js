@@ -11,26 +11,16 @@ const readFile = require('util').promisify(fs.readFile);
 
 var csv = require('csv-parser');
 
-const looping = ['ConsumptionE','ConsumptionH', 'Wallet'];
-
-var fields = null;
-var unwind = null;
-
-// const fields = ['ConsumptionE','ConsumptionH', 'Wallet']; // ,'ConsumptionH', 'Wallet'
-// const unwind = ['ConsumptionE','ConsumptionH', 'Wallet'];
-const flatten = true;
-const ops = {flatten};
-// const opts = { fields, unwind, flatten};
-
-// const fields = [{
-//   label: 'house.ConsumptionE',
-//   value: 'consumptionE'
-// },{
-//   label: 'house.ConsumptionH',
-//   value: 'consumptionH'
-// }];
-
 var myData = null;
+var flatten = true;
+var myResult = {
+  "house" : [],
+  "pv" : [],
+  "battery" : [],
+  "grid" : [],
+  "watertank" : [],
+  "heatpump" : []
+};
 
 function readJson(_dir) {
   return readFile(_dir)
@@ -40,10 +30,10 @@ function readJson(_dir) {
       .catch(e => console.log('FOOBAR ' + e));
 }
 
-function parsing(datasource, option) {
+function parsing(datasource) {
   try {
-    const parser = new Json2csvParser(option);  //{ fields, unwind: ['items', 'items.items'] } 
-    const csv = parser.parse(datasource);
+    var parser = new Json2csvParser({flatten});  //{ fields, unwind: ['items', 'items.items'] } 
+    var csv = parser.parse(datasource);
     return csv;
   
   } catch (err) {
@@ -57,7 +47,7 @@ function transpose(element) {
 
   var keys = Object.keys(element);
 
-  for (let i = 0; i < element.ConsumptionE.length; i++) {
+  for (let i = 0; i < element[keys[0]].length; i++) {
     tempObj = new Object()
     keys.forEach(subelement => {
       if (Array.isArray(element[subelement][i])) {
@@ -75,20 +65,23 @@ function transpose(element) {
   return json_result;
 }
 
-readJson("./record_10.json").then(function(){
+async function saveOneDevice(_deviceType, i) {
+  var registerString = './' + prefix + '_' + _deviceType + '_' + i + '.csv';
+  var json_result = await transpose(myData[_deviceType][i]);
+  console.log(json_result);
+  var csv = parsing(json_result["temp"]); 
+  console.log(csv);
+  await fs.writeFileSync(registerString, csv);
+}
 
-  console.log(Object.keys(myData.house[0]));
+var prefix = "record_10";
 
-  return transpose(myData.house[0]);
-
-}).then(function(json_result) {
-
-  return parsing(json_result["temp"], ops);
-  
-}).then(function(csv) {
-
-  fs.writeFileSync('./record_10.csv', csv);
-
+readJson(prefix + ".json").then(function(){
+  for (const _deviceType in myResult) {
+    for (let i = 0; i < myData[_deviceType].length; i++) {
+      saveOneDevice(_deviceType,i);
+    }
+  }
 });
 
 
