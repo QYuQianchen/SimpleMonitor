@@ -4,6 +4,7 @@
 // json2csv -i record_10.json unwind:[house, house.ConsumptionE, house.ConsumptionH, house.Wallet] --no-header -o record_10_house_detail.csv
 
 const fs = require('fs');
+const path = require('path');
 var json2csv = require('json2csv');
 const Json2csvParser = json2csv.Parser;
 const Json2csvTransform = json2csv.Transform;
@@ -21,6 +22,16 @@ var myResult = {
   "watertank" : [],
   "heatpump" : []
 };
+
+var prefix = "../output/round_try/record_step_5";
+
+readJson(prefix + ".json").then(function(){
+  for (const _deviceType in myResult) {
+    for (let i = 0; i < myData[_deviceType].length; i++) {
+      saveOneDevice(_deviceType,i);
+    }
+  }
+});
 
 function readJson(_dir) {
   return readFile(_dir)
@@ -66,6 +77,7 @@ function transpose(element) {
 }
 
 async function saveOneDevice(_deviceType, i) {
+  mkdirSync(path.resolve('../output/round_try/result'));
   var registerString = './' + prefix + '_' + _deviceType + '_' + i + '.csv';
   var json_result = await transpose(myData[_deviceType][i]);
   console.log(json_result);
@@ -74,16 +86,10 @@ async function saveOneDevice(_deviceType, i) {
   await fs.writeFileSync(registerString, csv);
 }
 
-var prefix = "record_10";
-
-readJson(prefix + ".json").then(function(){
-  for (const _deviceType in myResult) {
-    for (let i = 0; i < myData[_deviceType].length; i++) {
-      saveOneDevice(_deviceType,i);
-    }
+const mkdirSync = function (dirPath) {
+  try {
+    fs.mkdirSync(dirPath)
+  } catch (err) {
+    if (err.code !== 'EEXIST') throw err
   }
-});
-
-
-
-
+}
