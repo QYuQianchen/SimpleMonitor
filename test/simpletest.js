@@ -112,6 +112,8 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       console.log("Here we are starting the 1st round.. ."); 
       return OpenJson();
+    }).then(function (result) {
+      return getGasConsump();
 
     //   // try with function
     // }).then(function (result) {

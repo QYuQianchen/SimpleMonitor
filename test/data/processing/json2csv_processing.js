@@ -24,10 +24,14 @@ var myResult = {
 };
 
 var prefix = "../output/round_try/record_step_5";
+// var prefix = "../input/dyn_input";
 
 readJson(prefix + ".json").then(function(){
   for (const _deviceType in myResult) {
     for (let i = 0; i < myData[_deviceType].length; i++) {
+      // for (const key in myData[_deviceType][i]) {
+      //   console.log(_deviceType + i + ' -> ' + key + ' -> ' + myData[_deviceType][i][key].length);
+      // }
       saveOneDevice(_deviceType,i);
     }
   }
@@ -82,7 +86,6 @@ async function saveOneDevice(_deviceType, i) {
   var json_result = await transpose(myData[_deviceType][i]);
   console.log(json_result);
   var csv = parsing(json_result["temp"]); 
-  console.log(csv);
   await fs.writeFileSync(registerString, csv);
 }
 
