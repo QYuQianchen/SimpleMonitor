@@ -23,10 +23,11 @@ var myResult = {
   "heatpump" : []
 };
 
-var prefix = "../output/round_try/record_step_5";
+var prefix = "../output/round96_p96f1/";
+var filename = "record_step_5"
 // var prefix = "../input/dyn_input";
 
-readJson(prefix + ".json").then(function(){
+readJson(prefix + filename + ".json").then(function(){
   for (const _deviceType in myResult) {
     for (let i = 0; i < myData[_deviceType].length; i++) {
       // for (const key in myData[_deviceType][i]) {
@@ -81,8 +82,8 @@ function transpose(element) {
 }
 
 async function saveOneDevice(_deviceType, i) {
-  mkdirSync(path.resolve('../output/round_try/result'));
-  var registerString = './' + prefix + '_' + _deviceType + '_' + i + '.csv';
+  mkdirSync(path.resolve(prefix + 'result'));
+  var registerString = './' + prefix + 'result/' + filename + '_' + _deviceType + '_' + i + '.csv';
   var json_result = await transpose(myData[_deviceType][i]);
   console.log(json_result);
   var csv = parsing(json_result["temp"]); 
