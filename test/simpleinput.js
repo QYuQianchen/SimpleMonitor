@@ -65,7 +65,7 @@ exports.config = {
     {
       "id": 0,
       "address": 0,
-      "capacity": 20,
+      "capacity": 200,
       "volume": 5,
       "contract_address": 0
     }

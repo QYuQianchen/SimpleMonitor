@@ -7,8 +7,8 @@ contract IGrid is GeneralDevice {
   uint    priceTimeOut = 5 minutes;
   uint    priceStatusAt;            // timestamp of the update (price)
   
-  uint    posBackup = 10000;         // Assume that the grid is ready to supply the microgrid for 100kwh
-  uint    negBackup = 10000;         // Assume that the grid is ready to absort 100kwh of excess energy from microgrid
+  uint    posBackup = 100;         // Assume that the grid is ready to supply the microgrid for 100kwh
+  uint    negBackup = 100;         // Assume that the grid is ready to absort 100kwh of excess energy from microgrid
 //  int     wallet;                   // To record loss & gain
 
   function getPrice() public view returns (uint prs, bool updatedOrNot);
