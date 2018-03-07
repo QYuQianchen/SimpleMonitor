@@ -6,8 +6,10 @@ var fs = require('fs');
 const readFile = require('util').promisify(fs.readFile);
 var record = require("./data/output/record_struc.json");
 var recordPath = "./test/data/output/record_struc.json";
+var gasRecordPath = "./test/data/input/gas_struc.json";
 var database_4 = null;
 var database_5 = null;
+var database_gas = null;
 
 var Configuration = artifacts.require("./Configuration.sol");
 var SingleHouse = artifacts.require("./SingleHouse.sol");
@@ -113,6 +115,7 @@ contract('simpletest', function(accounts) {
       console.log("Here we are starting the 1st round.. ."); 
       return OpenJson();
     }).then(function (result) {
+      console.log(database_gas);
       return getGasConsump();
 
     //   // try with function
@@ -429,9 +432,15 @@ function getNow() {
 }
 
 function getGasConsump() {
-  for (let i = 5; i < 9; i++) { // 5 - 9
-    console.log("account " + i + " has " + web3.eth.getBalance(web3.eth.accounts[i]).toNumber());
-  }
+  var getGasArray = [2, 5, 8, 9, 12];
+  getGasArray.forEach(element => {
+    var result =  web3.eth.getBalance(web3.eth.accounts[element]).toNumber();
+    // console.log("account " + element + " has " + result);
+    database_gas[element].push(result);
+  });
+  // for (let i = 5; i < 9; i++) { // 5 - 9
+  //   console.log("account " + i + " has " + web3.eth.getBalance(web3.eth.accounts[i]).toNumber());
+  // }
 }
 
 function printDevice(_config) {
@@ -461,6 +470,12 @@ function OpenJson() {
       .then(e => {
         database_4 = JSON.parse(e);
         database_5 = JSON.parse(e);
+        // console.log(database);
+      })
+      .catch(e => console.log('FOOBAR ' + e)));
+    addPromise.push(readFile(gasRecordPath)
+      .then(e => {
+        database_gas = JSON.parse(e);
         // console.log(database);
       })
       .catch(e => console.log('FOOBAR ' + e)));
@@ -497,6 +512,8 @@ async function oneRound(currentRound) {
 
   await WriteJson("record_step_4", database_4);
   await WriteJson("record_step_5", database_5);
+  await WriteJson("record_gas", database_gas);
+
 
   // asyncPromises.push(WriteJson("record_step_4", database_4));
   // asyncPromises.push(WriteJson("record_step_5", database_5));
