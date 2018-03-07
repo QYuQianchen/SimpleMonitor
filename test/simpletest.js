@@ -132,8 +132,8 @@ contract('simpletest', function(accounts) {
   });
 
   for(let i = 1; i < 97; i++) {   // i should be until 96
-    it('round ' + i  + ' should be executed ',  function() {
-      return oneRound(i);
+    it('round ' + i  + ' should be executed ',  async function() {
+      return await oneRound(i);
     });
   }
 
