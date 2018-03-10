@@ -6,12 +6,12 @@ const csv = require('csvtojson')
 // parseHouse(2);
 // parsePV(0);
 // parsePV(1);
-// parsePV(2);
-parseGrid(0);
-parseBattery(0);
-parseWatertank(0);
-parseWatertank(1);
-parseWatertank(2);
+parsePV(2);
+// parseGrid(0);
+// parseBattery(0);
+// parseWatertank(0);
+// parseWatertank(1);
+// parseWatertank(2);
 
 
 function parseHouse(fileNo) {
