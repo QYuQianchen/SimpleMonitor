@@ -1,4 +1,4 @@
-exports.inputs = require("./data/input/dyn_input.json");
+exports.inputs = require("./data/input/dyn_input_sce3.json");
 
 exports.config = {
   "admin": [
