@@ -1,12 +1,12 @@
 const fs = require('fs');
 const csv = require('csvtojson')
 
-// parseHouse(0);
-// parseHouse(1);
-// parseHouse(2);
+parseHouse(0);
+parseHouse(1);
+parseHouse(2);
 // parsePV(0);
 // parsePV(1);
-parsePV(2);
+// parsePV(2);
 // parseGrid(0);
 // parseBattery(0);
 // parseWatertank(0);
@@ -35,6 +35,7 @@ function parseHouse(fileNo) {
 
     .on('json',(jsonObj) => {
         house["consumption"].push(parseInt(jsonObj["consumption"],10));
+        // house["consumptionH"].push(parseInt(jsonObj["consumptionH"],10));
         house["consumptionH"].push([parseInt(jsonObj["consumptionH_M"],10),parseInt(jsonObj["consumptionH_H"],10)]);
     })
 

@@ -182,7 +182,8 @@ contract SingleBattery is GeneralDevice, IBattery {
     currentVolume += takeoutvol;
     volStatusAt = now;
     VolLog(owner,currentVolume,volStatusAt);
-    consumption = consumption.clearEnergyTransfer(takeoutvol, address(this));
+    consumption -= takeoutvol;
+    // consumption = consumption.clearEnergyTransfer(takeoutvol, address(this));
     wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
     return (takeoutvol); 
   }
@@ -304,7 +305,8 @@ contract SingleBattery is GeneralDevice, IBattery {
   function goExcess(uint vol) public timed(5) returns (uint takeVol, uint prs) {
     prs = priceForBuy;
     takeVol = vol.findMin(capacity-currentVolume);
-    currentVolume = currentVolume.clearExcessTransfer(takeVol, address(this));
+    currentVolume -= takeVol;
+    // currentVolume = currentVolume.clearExcessTransfer(takeVol, address(this));
     wallet -= int(takeVol*prs);
   }
 

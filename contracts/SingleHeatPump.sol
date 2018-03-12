@@ -123,7 +123,8 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
     
     require(connectedDevice[2].assertInside(adrDevice) || connectedDevice[1].assertInside(adrDevice));
     takeoutvol = consumptionElec.findMin(giveoutvol);
-    consumptionElec = consumptionElec.clearEnergyTransfer(takeoutvol, address(this));
+    consumptionElec -= takeoutvol;
+    // consumptionElec = consumptionElec.clearEnergyTransfer(takeoutvol, address(this));
     //wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
     wallet -= takeoutvol.payment(draftPriceMap.prsTable[adrDevice].prs);
     // Set the price for heat pump
@@ -147,7 +148,8 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
     // require(grid != 0x0);
     if (grid != 0x0 && consumptionElec > 0) {
       (whatDeviceAccept, unitPrs) = IGrid(grid).goExtra(consumptionElec);
-      consumptionElec = consumptionElec.clearEnergyTransfer(whatDeviceAccept, address(this));
+      consumptionElec -= whatDeviceAccept;
+      // consumptionElec = consumptionElec.clearEnergyTransfer(whatDeviceAccept, address(this));
       //wallet -= int(whatDeviceAccept * unitPrs);
       wallet -= whatDeviceAccept.payment(unitPrs);
       // Set the price for heat pump
