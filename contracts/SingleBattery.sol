@@ -186,9 +186,11 @@ contract SingleBattery is GeneralDevice, IBattery {
     currentVolume += takeoutvol;
     volStatusAt = now;
     VolLog(owner,currentVolume,volStatusAt);
-    consumption -= takeoutvol;
+    if (consumption > 0) {
+      consumption -= takeoutvol;
+    }
     // consumption = consumption.clearEnergyTransfer(takeoutvol, address(this));
-    wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
+    wallet += int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
     return (takeoutvol); 
   }
 
