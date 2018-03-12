@@ -13,6 +13,7 @@ contract IHeatPump is GeneralDevice {
 
   function getPrice() public view returns (uint prs, bool updatedOrNot);
   function getSortedPrice() view external returns(uint consum, uint rank, uint tot, bool updated);
+  function goNoGo(uint giveoutvol) public timed(4) returns (uint);
   function getConsumptionE() external view returns (uint consum) {
     consum = consumptionElec;
   }

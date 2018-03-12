@@ -23,8 +23,8 @@ var myResult = {
   "heatpump" : []
 };
 
-var prefix = "../output/round8_sce1Again/";
-var filename = "record_step_5"
+var prefix = "../output/test10_sce1/";
+var filename = "record_step_4"
 // var prefix = "../input/dyn_input";
 
 readJson(prefix + filename + ".json").then(function(){

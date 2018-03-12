@@ -435,15 +435,12 @@ function getNow() {
 }
 
 function getGasConsump() {
-  var getGasArray = [2, 5, 8, 9, 12]; //2, 5, 8, 9, 12 // 0,1
+  var getGasArray = [0,1]; //2, 5, 8, 9, 12 // 0,1
   getGasArray.forEach(element => {
     var result =  web3.eth.getBalance(web3.eth.accounts[element]).toNumber();
     // console.log("account " + element + " has " + result);
     database_gas[element].push(result);
   });
-  // for (let i = 5; i < 9; i++) { // 5 - 9
-  //   console.log("account " + i + " has " + web3.eth.getBalance(web3.eth.accounts[i]).toNumber());
-  // }
 }
 
 function printDevice(_config) {

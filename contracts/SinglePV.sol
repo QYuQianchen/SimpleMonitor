@@ -240,6 +240,11 @@ contract SinglePV is GeneralDevice, IPV {
         production -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;
         wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
+        } else if (connectedDevice[3].assertInside(adr)) {
+        whatDeviceAccept = IHeatPump(adr).goNoGo(giveoutVol);
+        production -= whatDeviceAccept;
+        receivedMoney = whatDeviceAccept*price;
+        wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else {
         whatDeviceAccept = 0;
       }
