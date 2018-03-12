@@ -27,7 +27,8 @@ library PriceLib {
     _prm.prsTable[_adr].vol = _v;
   }
 
-  function calPrice(PriceMap storage _prm, uint _pOld, uint _vOld, uint _vCurrent) public view returns (uint) {
+  function calPrice(PriceMap storage _prm, uint _pOld, uint _vCurrent) public view returns (uint) {
+  // function calPrice(PriceMap storage _prm, uint _pOld, uint _vOld, uint _vCurrent) public view returns (uint) {
     uint _pNew;
     uint pavg;
     uint temp1;
@@ -43,8 +44,8 @@ library PriceLib {
       temp2 += _prm.prsTable[_prm.order[i]].vol * _prm.prsTable[_prm.order[i]].prs;
     }
 
-    if (_vOld - temp1 > 0) {
-      temp1 = _vOld - temp1;
+    if (_vCurrent - temp1 > 0) {
+      temp1 = _vCurrent - temp1; // temp1 = _vOld - temp1;
     } else {
       temp1 = 0;
     }

@@ -31,7 +31,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
 
   uint    capacity;                 // maximum volume of water
   uint    currentVolume;            // current volume of water
-  uint    previousVolume;
+  // uint    previousVolume;
   uint    consumption;              // amount of water that needs to be supplied by HP (estimed by the water tank) for the next 10 min
   uint    price;
   bool    waterType;                // two types of water : false - medium temperature and true - high temperature
@@ -59,7 +59,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
 
   function setVolume(uint vol) public adminOnly {
     // Can only be triggered once....Should be moved into the constructor...Once the initial volumne is set, can only be changed by energy trading.
-    previousVolume = currentVolume;
+    // previousVolume = currentVolume;
     currentVolume = vol;
     volStatusAt = now;
     VolLog(owner,vol,volStatusAt);
@@ -99,7 +99,8 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
     }
     prsMap.totalLength = connectedDevice[3].length;
     // calculate price
-    price = prsMap.calPrice(price,previousVolume,currentVolume);
+    // price = prsMap.calPrice(price,previousVolume,currentVolume);
+    price = prsMap.calPrice(price,currentVolume);
     priceStatusAt = now;
     PrsLog(price,priceStatusAt);
 

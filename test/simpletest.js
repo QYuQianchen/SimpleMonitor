@@ -7,9 +7,12 @@ const readFile = require('util').promisify(fs.readFile);
 var record = require("./data/output/record_struc.json");
 var recordPath = "./test/data/output/record_struc.json";
 var gasRecordPath = "./test/data/input/gas_struc.json";
+var priceRecordPath = "./test/data/input/price_struc.json";
+
 var database_4 = null;
 var database_5 = null;
 var database_gas = null;
+var database_price = null;
 
 var Configuration = artifacts.require("./Configuration.sol");
 var SingleHouse = artifacts.require("./SingleHouse.sol");
@@ -115,7 +118,7 @@ contract('simpletest', function(accounts) {
       console.log("Here we are starting the 1st round.. ."); 
       return OpenJson();
     }).then(function (result) {
-      console.log(database_gas);
+      console.log(database_price);
       return getGasConsump();
 
     //   // try with function
@@ -432,7 +435,7 @@ function getNow() {
 }
 
 function getGasConsump() {
-  var getGasArray = [2, 5, 8, 9, 12];
+  var getGasArray = [2, 5, 8, 9, 12]; //2, 5, 8, 9, 12 // 0,1
   getGasArray.forEach(element => {
     var result =  web3.eth.getBalance(web3.eth.accounts[element]).toNumber();
     // console.log("account " + element + " has " + result);
@@ -476,6 +479,12 @@ function OpenJson() {
     addPromise.push(readFile(gasRecordPath)
       .then(e => {
         database_gas = JSON.parse(e);
+        // console.log(database);
+      })
+      .catch(e => console.log('FOOBAR ' + e)));
+    addPromise.push(readFile(priceRecordPath)
+      .then(e => {
+        database_price = JSON.parse(e);
         // console.log(database);
       })
       .catch(e => console.log('FOOBAR ' + e)));

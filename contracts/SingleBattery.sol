@@ -92,8 +92,12 @@ contract SingleBattery is GeneralDevice, IBattery {
   }
 
   function setConsumption(uint v) public timed(1) ownerOnly {
-    require(currentVolume + v <= capacity);
-    consumption = v;
+    if (currentVolume + v <= capacity) {
+      consumption = v;
+    } else {
+      consumption = 0;
+    }
+    // require(currentVolume + v <= capacity);
   }
 
   function getConsumption() view public returns (uint) {return consumption;}
@@ -288,6 +292,9 @@ contract SingleBattery is GeneralDevice, IBattery {
       if (connectedDevice[0].assertInside(adr)) {
         whatDeviceAccept = IHouseE(adr).goNoGo(giveoutVol);
         //setVolume(currentVolume-whatDeviceAccept);
+        if (currentVolume < whatDeviceAccept) {
+          whatDeviceAccept = currentVolume;
+        }
         currentVolume -= whatDeviceAccept;
         volStatusAt = now;
         VolLog(owner,currentVolume,volStatusAt);
@@ -305,6 +312,9 @@ contract SingleBattery is GeneralDevice, IBattery {
   function goExcess(uint vol) public timed(5) returns (uint takeVol, uint prs) {
     prs = priceForBuy;
     takeVol = vol.findMin(capacity-currentVolume);
+    if (currentVolume < takeVol) {
+      takeVol = currentVolume;
+    }
     currentVolume -= takeVol;
     // currentVolume = currentVolume.clearExcessTransfer(takeVol, address(this));
     wallet -= int(takeVol*prs);
