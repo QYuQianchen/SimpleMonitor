@@ -435,7 +435,7 @@ function getNow() {
 }
 
 function getGasConsump() {
-  var getGasArray = [0,1]; //2, 5, 8, 9, 12 // 0,1
+  var getGasArray = [0, 1, 2, 5, 8, 9, 12]; //2, 5, 8, 9, 12 // 0,1
   getGasArray.forEach(element => {
     var result =  web3.eth.getBalance(web3.eth.accounts[element]).toNumber();
     // console.log("account " + element + " has " + result);
