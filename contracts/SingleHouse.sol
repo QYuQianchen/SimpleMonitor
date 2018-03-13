@@ -118,8 +118,8 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
     uint takeoutvol;
     require(connectedDevice[2].assertInside(adrDevice) || connectedDevice[1].assertInside(adrDevice));
     takeoutvol = consumption.findMin(giveoutvol);
-    // consumption -= takeoutvol;
-    consumption = consumption.clearEnergyTransfer(takeoutvol, address(this));
+    consumption -= takeoutvol;
+    // consumption = consumption.clearEnergyTransfer(takeoutvol, address(this));
     //wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
     wallet -= takeoutvol.payment(draftPriceMap.prsTable[adrDevice].prs);
     return (takeoutvol);
