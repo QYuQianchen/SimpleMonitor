@@ -134,7 +134,7 @@ contract('simpletest', function(accounts) {
     });
   });
 
-  for(let i = 1; i < 2; i++) {   // i should be until 96
+  for(let i = 1; i < 97; i++) {   // i should be until 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });
@@ -435,7 +435,7 @@ function getNow() {
 }
 
 function getGasConsump() {
-  var getGasArray = [0,1]; //2, 5, 8, 9, 12 // 0,1
+  var getGasArray = [2, 5, 8, 9, 12]; //2, 5, 8, 9, 12 // 0,1
   getGasArray.forEach(element => {
     var result =  web3.eth.getBalance(web3.eth.accounts[element]).toNumber();
     // console.log("account " + element + " has " + result);
@@ -517,49 +517,72 @@ async function oneRound(currentRound) {
   }
 
   // do the calculation and write to this json
-  getPVPrice(currentRound);
+  await getPVPrice(currentRound);
 
   // change the value of inputs
-  calculatePVPrice(currentRound);
+  await calculatePVPrice(currentRound);
 
   await WriteJson("record_step_4", database_4);
   await WriteJson("record_step_5", database_5);
   await WriteJson("record_gas", database_gas);
-
-  // check
-  await console.log(database_price);
+  await WriteJson("record_price", database_price);
 }
 
 function getPVPrice(currentRound) {
+  var getPromises = [];
   for (let i = 0; i < 3; i++) {   // looping from PV0 to PV3
     // write get price and production of 3 PVs of current round into json file
-    var tempStep1 = inputs.pv[i].production[currentRound-1];
-    var tempLastPrice = inputs.pv[i].price[currentRound-1];
-    var tempStep4 = database_4.pv[i].production[currentRound-1];
-    var tempStep5 = database_5.pv[i].production[currentRound-1];
-    var factor = (tempStep1-tempStep4)/(tempStep1-tempStep5);
+    var tempStep1 = inputs.pv[i].production[currentRound];
+    var tempLastPrice = inputs.pv[i].price[currentRound];
+   
+    // if(database_4.pv[i].Production.length >= currentRound) {
+      var tempStep4 = database_4.pv[i].Production[database_4.pv[i].Production.length-1];
+    // } else {
+    //   var tempStep4 = tempStep1;
+    // }
+    // if(database_5.pv[i].Production.length >= currentRound) {
+      var tempStep5 = database_5.pv[i].Production[database_4.pv[i].Production.length-1];
+    // } else {
+    //   var tempStep5 = tempStep1;
+    // }
 
-    database_price.pvPrice[i].step1.push(tempStep1);
-    database_price.pvPrice[i].step4.push(tempStep4);
-    database_price.pvPrice[i].step5.push(tempStep5);
-    database_price.pvPrice[i].deltaC.push(tempStep1-tempStep4);
-    database_price.pvPrice[i].deltaG.push(tempStep4-tempStep5);
-    database_price.pvPrice[i].factor.push(factor);
-    database_price.pvPrice[i].lastPrice.push(tempLastPrice);
+    if (tempStep1 == tempStep5) {
+      var factor = 0;
+    } else {
+      var factor = (tempStep1-tempStep4)/(tempStep1-tempStep5)*10;
+    }
+
+    getPromises.push(database_price.pvPrice[i].step1.push(tempStep1));
+    getPromises.push(database_price.pvPrice[i].step4.push(tempStep4));
+    getPromises.push(database_price.pvPrice[i].step5.push(tempStep5));
+    getPromises.push(database_price.pvPrice[i].deltaC.push(tempStep1-tempStep4));
+    getPromises.push(database_price.pvPrice[i].deltaG.push(tempStep4-tempStep5));
+    getPromises.push(database_price.pvPrice[i].factor.push(factor));
+    getPromises.push(database_price.pvPrice[i].lastPrice.push(tempLastPrice));
 
   }
+  return Promise.all(getPromises);
 }
 
 function calculatePVPrice(currentRound) {
-  for (let i = 0; i < 3; i++) {   // looping from PV0 to PV3
+  var calPromises = [];
+  for (let i = 0; i < 3; i++) {   // looping from PV0 to 
+    var tL = database_4.pv[i].Production.length - 1;
     // write get price and production of 3 PVs of current round into json file
     var a = (i+1) % 3;
     var b = (i+2) % 3;
-    if (database_price.pvPrice[i].factor[currentRound-1] < database_price.pvPrice[a].factor && database_price.pvPrice[i].factor[currentRound-1] < database_price.pvPrice[b].factor && inputs.pv[i].price[currentRound] > 10) {
-      database_price.pvPrice[i].newPrice.push(inputs.pv[i].price[currentRound]-2);
-      inputs.pv[i].price[currentRound] -= 2;
+    // console.log(i + ' - ' + a + ' - ' + b);
+    // console.log("input value: " + inputs.pv[i].price[currentRound+1]);
+    if (database_price.pvPrice[i].factor[tL] <= database_price.pvPrice[a].factor[tL] && database_price.pvPrice[i].factor[tL] <= database_price.pvPrice[b].factor[tL] && database_price.pvPrice[i].lastPrice[tL] > 10) {
+      calPromises.push(database_price.pvPrice[i].newPrice.push(database_price.pvPrice[i].lastPrice[tL]-2));
+      calPromises.push(inputs.pv[i].price[currentRound+1] -= 2);
+      // console.log('true');
     } else {
-      database_price.pvPrice[i].newPrice.push(inputs.pv[i].price[currentRound]);
+      calPromises.push(database_price.pvPrice[i].newPrice.push(database_price.pvPrice[i].lastPrice[tL]));
+      // console.log('false');
     }
+    // console.log("input value: " + inputs.pv[i].price[currentRound+1]);
+    return Promise.all(calPromises);
+
   }
 }
