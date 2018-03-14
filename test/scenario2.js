@@ -134,7 +134,7 @@ contract('simpletest', function(accounts) {
     });
   });
 
-  for(let i = 66; i < 70; i++) {   // i should be 0 - 96
+  for(let i = 0; i < 96; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });
@@ -488,7 +488,7 @@ function getNow() {
 }
 
 function getGasConsump() {
-  var getGasArray = [0, 1, 2, 5, 8]; //2, 5, 8, 9, 12 // 0,1
+  var getGasArray = [2, 5, 8]; //2, 5, 8, 9, 12 // 0,1
   getGasArray.forEach(element => {
     var result =  web3.eth.getBalance(web3.eth.accounts[element]).toNumber();
     // console.log("account " + element + " has " + result);

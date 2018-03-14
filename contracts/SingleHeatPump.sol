@@ -84,13 +84,13 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
     bool tF = false;
     maxSupplyPrice = 0;
     draftPriceMap.initPrsTable();
-    for (uint i = 0; i < connectedDevice[2].length; i++) {
-      (tP,tF) = IBattery(connectedDevice[2][i]).getSalePrice();
-      draftPriceMap.addToPrsTable(connectedDevice[2][i],tP,tF);
-    }
     for (i = 0; i < connectedDevice[1].length; i++) {
       (tP,tF) = IPV(connectedDevice[1][i]).getPrice();
       draftPriceMap.addToPrsTable(connectedDevice[1][i],tP,tF);
+    }
+    for (uint i = 0; i < connectedDevice[2].length; i++) {
+      (tP,tF) = IBattery(connectedDevice[2][i]).getSalePrice();
+      draftPriceMap.addToPrsTable(connectedDevice[2][i],tP,tF);
     }
     lastPriceQueryAt = now;
   }
