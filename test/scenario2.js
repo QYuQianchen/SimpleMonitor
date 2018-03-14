@@ -113,7 +113,7 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       
       console.log("Linking of devices done.");
-      return printDevice(config);
+      //return printDevice(config);
     }).then(function (result) {
       console.log("Here we are starting the 1st round.. ."); 
       return OpenJson();
@@ -134,13 +134,66 @@ contract('simpletest', function(accounts) {
     });
   });
 
-  for(let i = 0; i < 96; i++) {   // i should be 0 - 96
+  for(let i = 66; i < 70; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });
   }
 
-});
+    // for(let i = 66; i < 67; i++) {   // i should be 0 - 96
+    // it('round ' + i  + ' should be executed ',  function() {
+    //     console.log("We are at step: 1");
+    //     return step(i,1).then(function(){
+    //         console.log("Step 1 done.");
+    //         return getGasConsump();
+    //     }).then(function (result) {
+    //         return jumpTime(12);
+    //     }).then(function (result) {    
+    //         console.log("We are at step: 2");
+    //         return step(i,2);
+    //     }).then(function (result) {
+    //         console.log("Step 2 done.");
+    //         return getGasConsump();
+    //     }).then(function (result) {
+    //         return jumpTime(12);
+    //     }).then(function (result) { 
+    //         console.log("We are at step: 3");
+    //         return step(i,3);
+    //     }).then(function (result) {
+    //         console.log("Step 3 done.");
+    //         return getGasConsump();
+    //     }).then(function (result) {
+    //         return jumpTime(12);
+    //     }).then(function (result) { 
+    //         console.log("We are at step: 4");
+    //         return step(i,4);
+    //     }).then(function (result) {
+    //         console.log("Step 4 done.");
+    //         return getGasConsump();
+    //     }).then(function (result) {
+    //         return checkAllDeviceStatus(database_4);
+    //     }).then(function (result) {
+    //         return jumpTime(12);
+    //     }).then(function (result) { 
+    //         console.log("We are at step: 5");
+    //         return step(i,5);
+    //     }).then(function (result) {
+    //         console.log("Step 5 done.");
+    //         return getGasConsump();
+    //     }).then(function (result) {
+    //         return checkAllDeviceStatus(database_5);
+    //     }).then(function (result) {
+    //         return jumpTime(12);
+    //     }).then(function (result) {
+    //         return WriteJson("record_step_4", database_4);
+    //     }).then(function (result) {
+    //         return WriteJson("record_step_5", database_5);
+    //     }).then(function (result) {
+    //         return WriteJson("record_gas", database_gas);
+    //     });
+    // });
+    // }
+}); 
 
 
 //// ---------------------
@@ -435,7 +488,7 @@ function getNow() {
 }
 
 function getGasConsump() {
-  var getGasArray = [0, 1, 2, 5, 8, 9, 12]; //2, 5, 8, 9, 12 // 0,1
+  var getGasArray = [0, 1, 2, 5, 8]; //2, 5, 8, 9, 12 // 0,1
   getGasArray.forEach(element => {
     var result =  web3.eth.getBalance(web3.eth.accounts[element]).toNumber();
     // console.log("account " + element + " has " + result);
@@ -515,3 +568,27 @@ async function oneRound(currentRound) {
   await WriteJson("record_gas", database_gas);
 
 }
+
+// async function oneRound(currentRound) {
+
+//     var asyncPromises = [];
+  
+//     for (let currentStep = 1; currentStep < 6; currentStep++) {   // looping from step 1 to step 5
+//       console.log("We are at step: ", currentStep);
+//       asyncPromises.push(step(currentRound,currentStep));
+//       console.log("Step " + currentStep + " done.");
+//       asyncPromises.push(getGasConsump());
+//       if (currentStep == 4) {
+//         asyncPromises.push(checkAllDeviceStatus(database_4));
+//       } else if (currentStep == 5) {
+//         asyncPromises.push(checkAllDeviceStatus(database_5));
+//       }
+//       asyncPromises.push(jumpTime(12));
+//     }
+  
+//     asyncPromises.push(await WriteJson("record_step_4", database_4));
+//     asyncPromises.push(await WriteJson("record_step_5", database_5));
+//     asyncPromises.push(await WriteJson("record_gas", database_gas));
+  
+//     return Promise.all(asyncPromises);
+// }

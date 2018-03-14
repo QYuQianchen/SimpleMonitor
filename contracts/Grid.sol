@@ -81,6 +81,7 @@ contract Grid is GeneralDevice, IGrid {
     prs = price;
     takeVol = vol.findMin(posBackup);
     // posBackup -= takeVol;
-    wallet = wallet.clearMoneyTransfer(takeVol*prs,msg.sender, address(this));
+    wallet += int(takeVol*prs);
+    // wallet = wallet.clearMoneyTransfer(takeVol*prs,msg.sender, address(this));
   }
 }

@@ -134,7 +134,18 @@ contract SinglePV is GeneralDevice, IPV {
       (tP,tF) = IGrid(grid).getPrice();
       setPriceQueryInfo(grid,tP,tF);
       sortedPriceQueryInfo[num] = grid;
-    }*/
+    }
+    uint consum;
+    uint rank;
+    uint tot;
+    bool updated;
+    for (uint i = 0; i < connectedDevice[3].length; i++) {
+      (consum,rank,tot,updated) = IHeatPump(connectedDevice[3][i]).getSortedPrice();
+      if (updated) {
+        draftRankMap.addToRnkTable(connectedDevice[3][i],consum, rank, tot);
+      }
+    }
+    lastRankingAt = now;*/
   }
 
   function getSortedRank(uint _id) view public returns(address adr, uint consum, uint rank, uint tot) {
@@ -240,7 +251,7 @@ contract SinglePV is GeneralDevice, IPV {
         production -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;
         wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
-        } else if (connectedDevice[3].assertInside(adr)) {
+      } else if (connectedDevice[3].assertInside(adr)) {
         whatDeviceAccept = IHeatPump(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;
