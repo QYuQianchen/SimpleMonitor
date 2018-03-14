@@ -242,22 +242,30 @@ contract SinglePV is GeneralDevice, IPV {
     uint tot;
     uint whatDeviceAccept;
     uint receivedMoney;
+    uint tStamp;
+    uint other;
       //adr = sortedRankingInfo[_id];
       (adr,consum,rank,tot) = getSortedRank(_id);
       giveoutVol = production.findMin(consum);
       if (connectedDevice[2].assertInside(adr)) {
+        (consum, tStamp, other)= IBattery(adr).getVolumeCapacity();
+        giveoutVol = production.findMin(consum);
         whatDeviceAccept = IBattery(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;
         wallet += int(receivedMoney);
         // wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else if (connectedDevice[0].assertInside(adr)) {
+        (consum, tStamp)= IHouseE(adr).getConsumptionE();
+        giveoutVol = production.findMin(consum);
         whatDeviceAccept = IHouseE(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;
         wallet += int(receivedMoney);
         // wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else if (connectedDevice[3].assertInside(adr)) {
+        consum = IHeatPump(adr).getConsumptionE();
+        giveoutVol = production.findMin(consum);
         whatDeviceAccept = IHeatPump(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;

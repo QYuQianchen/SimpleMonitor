@@ -293,21 +293,21 @@ contract SingleBattery is GeneralDevice, IBattery {
     uint tot;
     uint whatDeviceAccept;
     uint receivedMoney;
+    uint tStamp;
  
       (adr,consum,rank,tot) = getSortedRank(_id);
-      giveoutVol = currentVolume.findMin(consum);
       if (connectedDevice[0].assertInside(adr)) {
+        (consum, tStamp)= IHouseE(adr).getConsumptionE();
+        giveoutVol = currentVolume.findMin(consum);
         whatDeviceAccept = IHouseE(adr).goNoGo(giveoutVol);
-        //setVolume(currentVolume-whatDeviceAccept);
-        // if (currentVolume < whatDeviceAccept) {
-        //   whatDeviceAccept = currentVolume;
-        // }
         currentVolume -= whatDeviceAccept;
         volStatusAt = now;
         VolLog(owner,currentVolume,volStatusAt);
         receivedMoney = whatDeviceAccept*priceForSale;
         wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else if (connectedDevice[3].assertInside(adr)) {
+        consum = IHeatPump(adr).getConsumptionE();
+        giveoutVol = currentVolume.findMin(consum);
         whatDeviceAccept = IHeatPump(adr).goNoGo(giveoutVol);
         currentVolume -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*priceForSale;

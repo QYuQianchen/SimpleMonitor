@@ -134,7 +134,7 @@ contract('simpletest', function(accounts) {
     });
   });
 
-  for(let i = 0; i < 2; i++) {   // i should be 0 - 96
+  for(let i = 0; i < 96; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });
@@ -312,15 +312,15 @@ async function step(period, currentStep) {
           })(element, action);
         }
       } else if (device_type == "pv") { // actions[device_type][currentStep] == ["sellEnergy"] // start executing among "pv" and "battery"
-        // for (let i = 0; i < totalStages; i++) {
-        //   startCordination(i);
-        // }
-        // console.log(">>> start cordination - phase 0");
-        await startCordination(0);
-        // console.log(">>> start cordination - phase 1");
-        await startCordination(1);
-        // console.log(">>> start cordination - phase 2");
-        await startCordination(2);
+        for (let i = 0; i < totalStages; i++) {
+          await startCordination(i);
+        }
+        // // console.log(">>> start cordination - phase 0");
+        // await startCordination(0);
+        // // console.log(">>> start cordination - phase 1");
+        // await startCordination(1);
+        // // console.log(">>> start cordination - phase 2");
+        // await startCordination(2);
       } else {
         // console.log("Nothing to do at this step <-- " + device_type);
       }
@@ -377,7 +377,7 @@ function startCordination(i) {
         element.counter = 0;
       }
       (function(_element) {
-        console.log("start coordination" + _element.device_name + "<-- " + _element.counter);
+        console.log("start coordination " + _element.device_name + " <-- " + _element.counter);
         cordinationPromisese.push(cordinateSellEnergy(i,_element).then(function (result) {
           console.log(_element.device_name + " finished coordination" + " <--" + i + " <-- " + _element.counter);
         }));
