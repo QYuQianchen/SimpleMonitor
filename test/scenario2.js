@@ -134,7 +134,7 @@ contract('simpletest', function(accounts) {
     });
   });
 
-  for(let i = 0; i < 96; i++) {   // i should be 0 - 96
+  for(let i = 46; i < 48; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });
@@ -323,7 +323,7 @@ function checkStep() {
   return configuration.getTime.call({from: config.admin[0].address, gas: 2000000});
 }
 
-function step(period, currentStep) {
+async function step(period, currentStep) {
   var stepPromises = [];
 
   if (currentStep == 1) {
@@ -365,22 +365,26 @@ function step(period, currentStep) {
             }));
           })(element, action);
         }
-      } else if (actions[device_type][currentStep] == ["sellEnergy"]) {
-        for (let i = 0; i < totalStages; i++) {
-          for (var device_id in config[device_type]) {
-            var element = config[device_type][device_id];
-            if (i == 0) {
-              // initialization
-              element.counter = 0;
-            }
-            (function(_element) {
-              // console.log("Executing verifySellEnergy() <-- " + _element.device_name);
-              stepPromises.push(cordinateSellEnergy(i,_element).then(function (result) {
-                // console.log(_element.device_name + " doing verifySellEnergy is done");
-              }));
-            })(element);
-          }
-        }
+      } else if (device_type == "pv") { // actions[device_type][currentStep] == ["sellEnergy"] // start executing among "pv" and "battery"
+        // for (let i = 0; i < totalStages; i++) {
+        //   startCordination(i);
+        // }
+        console.log(">>> start cordination - phase 0");
+        await startCordination(0);
+        console.log(">>> start cordination - phase 1");
+        await startCordination(1);
+        console.log(">>> start cordination - phase 2");
+        await startCordination(2);
+        // stepPromises.push(startCordination(0).then(function (result) {
+        //   console.log(">>> start cordination - phase 1");
+        //   startCordination(1);
+        // }).then(function (result){
+        //   console.log(">>> start cordination - phase 2");
+        //   startCordination(2);
+        // }).then(function (result){
+        //   console.log(">>> start cordination - phase 3");
+        //   startCordination(3);
+        // }));
       } else {
         // console.log("Nothing to do at this step <-- " + device_type);
       }
@@ -416,8 +420,37 @@ function step(period, currentStep) {
 }
 
 function cordinateSellEnergy(i,element) {
-  element.counter = element.contract["verifySellEnergy"](i, element.counter, { from: element.address, gas: 6700000});
+  // console.log("going to check" + i + ", " + element.counter);
+  return element.contract["verifySellEnergy"](i, element.counter, { from: element.address, gas: 6700000}).then(function(result) {
+    console.log("cordinate sellEnergy of " + i + " - " + element.device_name);
+    return element.contract["getNewCounter"].call({ from: element.address});
+  }).then(function(result) {
+    element.counter = result.toNumber();
+    console.log(element.counter);
+  });
 }
+
+function startCordination(i) {
+  var d_type = ["pv", "battery"];
+  var cordinationPromisese = [];
+  d_type.forEach(d_type_element => {
+    for (var device_id in config[d_type_element]) {
+      var element = config[d_type_element][device_id];
+      if (i == 0) {
+        // initialization
+        element.counter = 0;
+      }
+      (function(_element) {
+        console.log("Executing verifySellEnergy() <-- " + _element.device_name + "<-- " + _element.counter);
+        cordinationPromisese.push(cordinateSellEnergy(i,_element).then(function (result) {
+          console.log(_element.device_name + " doing verifySellEnergy is done" + " <--" + i + " <-- " + _element.counter);
+        }));
+      })(element);
+    }
+  });
+  return Promise.all(cordinationPromisese);
+}
+
 
 function execute(element, action, input) {
   // var action = "set"+ action_type.substr(1,1).toUpperCase() + action_type.slice(1,action_type.length);
@@ -488,7 +521,7 @@ function getNow() {
 }
 
 function getGasConsump() {
-  var getGasArray = [2, 5, 8]; //2, 5, 8, 9, 12 // 0,1
+  var getGasArray = [2, 5, 8, 9, 12]; //2, 5, 8, 9, 12 // 0,1
   getGasArray.forEach(element => {
     var result =  web3.eth.getBalance(web3.eth.accounts[element]).toNumber();
     // console.log("account " + element + " has " + result);

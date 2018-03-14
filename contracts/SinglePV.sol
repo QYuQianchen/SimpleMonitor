@@ -38,6 +38,7 @@ contract SinglePV is GeneralDevice, IPV {
 
   uint    production;               // Production of electricity (supply: negative)
   uint    price;
+  uint    newCounter;
 
   SortRLib.RankMap draftRankMap;
 
@@ -156,7 +157,7 @@ contract SinglePV is GeneralDevice, IPV {
 
   // @ param i is the current index (stage);
   //         counter is the number of transactions that have been executed/passed, ranging from 0 to (totalNumber - 1);
-  function verifySellEnergy(uint i, uint counter) public timed(4) returns (uint newCounter) {
+  function verifySellEnergy(uint i, uint counter) public timed(4) {
     uint totalNumber = draftRankMap.totalLength;
 
     address adr;
@@ -171,8 +172,8 @@ contract SinglePV is GeneralDevice, IPV {
 
         if (rank == i) {
             // time to make transaction
-            initiateTransaction(counter);
             counter++;
+            initiateTransaction(counter);
           } else if (rank < i) {
             // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
             counter++;
@@ -184,7 +185,10 @@ contract SinglePV is GeneralDevice, IPV {
     }
 
     newCounter = counter;
+  }
 
+  function getNewCounter() public view returns (uint) {
+    return newCounter;
   }
 
   function sellEnergy() public timed(4) {
@@ -230,7 +234,7 @@ contract SinglePV is GeneralDevice, IPV {
     return;
   }
 
-  function initiateTransaction(uint _id) private returns (uint, uint) { // timed(4) 
+  function initiateTransaction(uint _id) private { // timed(4) returns (uint, uint)
     uint giveoutVol;
     address adr;
     uint consum;
@@ -245,21 +249,24 @@ contract SinglePV is GeneralDevice, IPV {
         whatDeviceAccept = IBattery(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;
-        wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
+        wallet += int(receivedMoney);
+        // wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else if (connectedDevice[0].assertInside(adr)) {
         whatDeviceAccept = IHouseE(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;
-        wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
+        wallet += int(receivedMoney);
+        // wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else if (connectedDevice[3].assertInside(adr)) {
         whatDeviceAccept = IHeatPump(adr).goNoGo(giveoutVol);
         production -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*price;
-        wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
+        wallet += int(receivedMoney);
+        // wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else {
         whatDeviceAccept = 0;
       }
-      return(giveoutVol, whatDeviceAccept);
+      // return(giveoutVol, whatDeviceAccept);
   }
 
   // --- 5. Deal with excess energy ---

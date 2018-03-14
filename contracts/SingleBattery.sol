@@ -43,6 +43,7 @@ contract SingleBattery is GeneralDevice, IBattery {
                                     //and will be finally (anyway) fulfilled b either the network or from the grid...
   uint    priceForSale;
   uint    priceForBuy;              // lower than market price (ForExcessEnergy)
+  uint    newCounter;
 
   SortPLib.PriceMap draftPriceMap;
   SortRLib.RankMap draftRankMap;
@@ -129,13 +130,13 @@ contract SingleBattery is GeneralDevice, IBattery {
   function sortPrice() public timed(2) {
     if (connectedDevice[1].length > 0) {
       draftPriceMap.sortPrsTable();
-      // if the grid is connected -> add the price from the grid to the end of the sorted list 
-      if (grid != 0x0) {
-        uint tP = 0;
-        bool tF = false;
-        (tP,tF) = IGrid(grid).getPrice();
-        draftPriceMap.addToPrsTable(grid,tP,tF);
-      }
+      // // if the grid is connected -> add the price from the grid to the end of the sorted list 
+      // if (grid != 0x0) {
+      //   uint tP = 0;
+      //   bool tF = false;
+      //   (tP,tF) = IGrid(grid).getPrice();
+      //   draftPriceMap.addToPrsTable(grid,tP,tF);
+      // }
     }
   }
 
@@ -196,7 +197,7 @@ contract SingleBattery is GeneralDevice, IBattery {
 
   // @ param i is the current index (stage);
   //         counter is the number of transactions that have been executed/passed, ranging from 0 to (totalNumber - 1);
-  function verifySellEnergy(uint i, uint counter) public timed(4) returns (uint newCounter) {
+  function verifySellEnergy(uint i, uint counter) public timed(4) {
     uint totalNumber = draftRankMap.totalLength;
 
     address adr;
@@ -211,8 +212,8 @@ contract SingleBattery is GeneralDevice, IBattery {
 
         if (rank == i) {
             // time to make transaction
-            initiateTransaction(counter);
             counter++;
+            initiateTransaction(counter);
           } else if (rank < i) {
             // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
             counter++;
@@ -225,6 +226,10 @@ contract SingleBattery is GeneralDevice, IBattery {
 
     newCounter = counter;
 
+  }
+  
+  function getNewCounter() public view returns (uint) {
+    return newCounter;
   }
 
   function sellEnergy() public timed(4) returns (bool) {
@@ -280,7 +285,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     return true;
   }
 
-  function initiateTransaction(uint _id) private returns (uint, uint) { //public timed(4)
+  function initiateTransaction(uint _id) private  { //public timed(4) returns (uint, uint)
     uint giveoutVol;
     address adr;
     uint consum;
@@ -310,7 +315,7 @@ contract SingleBattery is GeneralDevice, IBattery {
       } else {
         whatDeviceAccept = 0; 
       }
-      return(giveoutVol, whatDeviceAccept);
+      // return(giveoutVol, whatDeviceAccept);
     //}
   }
 

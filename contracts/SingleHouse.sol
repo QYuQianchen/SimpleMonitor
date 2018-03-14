@@ -96,12 +96,12 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
   function sortPrice() public timed(2) { // try out 
     draftPriceMap.sortPrsTable();
     // if the grid is connected -> add the price from the grid to the end of the sorted list
-    if (grid != 0x0) {
-      uint tP = 0;
-      bool tF = false;
-      (tP, tF) = IGrid(grid).getPrice();
-      draftPriceMap.addToPrsTable(grid,tP,tF);
-    }
+    // if (grid != 0x0) {
+    //   uint tP = 0;
+    //   bool tF = false;
+    //   (tP, tF) = IGrid(grid).getPrice();
+    //   draftPriceMap.addToPrsTable(grid,tP,tF);
+    // }
   }
 
   function getSortedPrice() external returns(uint consum, uint rank, uint tot, bool updated) {
@@ -153,8 +153,8 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
     require(grid != 0x0);
     if (consumption > 0) {
       (whatDeviceAccept, unitPrs) = IGrid(grid).goExtra(consumption);
-      // consumption -= whatDeviceAccept;
-      consumption = consumption.clearEnergyTransfer(whatDeviceAccept, address(this));
+      consumption -= whatDeviceAccept;
+      // consumption = consumption.clearEnergyTransfer(whatDeviceAccept, address(this));
       receivedMoney = whatDeviceAccept*unitPrs;
       wallet -= int(receivedMoney);
     }
