@@ -37,8 +37,8 @@ library SortRLib {
       con = _rnk.rnkTable[_rnk.sortedRnk[i]].consump;
       rk = _rnk.rnkTable[_rnk.sortedRnk[i]].rank;
       tot = _rnk.rnkTable[_rnk.sortedRnk[i]].total;
-      tf = false;
       for (uint j = i+1; j < _rnk.totalLength; j++) {
+        tf = false;
         var r = _rnk.rnkTable[_rnk.sortedRnk[j]].rank;
         if (r < rk) {
           tf = true;

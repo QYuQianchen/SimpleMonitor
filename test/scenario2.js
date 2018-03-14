@@ -31,7 +31,7 @@ var contracts = {
   "heatpump": artifacts.require("./SingleHeatPump.sol")
 };
 
-var totalStages = 5; // There are 5 stages in Step 4
+var totalStages = 6; // There are 5 stages in Step 4
 
 var configuration = null;
 
@@ -134,7 +134,7 @@ contract('simpletest', function(accounts) {
     });
   });
 
-  for(let i = 0; i < 96; i++) {   // i should be 0 - 96
+  for(let i = 40; i < 42; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });

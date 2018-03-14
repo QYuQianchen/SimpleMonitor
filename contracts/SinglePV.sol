@@ -173,7 +173,9 @@ contract SinglePV is GeneralDevice, IPV {
         if (rank == i) {
           // time to make transaction
           counter++;
-          initiateTransaction(counter);
+          if (production > 0) {
+            initiateTransaction(counter);
+          }
         } else if (rank < i) {
           // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
           counter++;
@@ -244,6 +246,7 @@ contract SinglePV is GeneralDevice, IPV {
     uint receivedMoney;
     uint tStamp;
     uint other;
+
       //adr = sortedRankingInfo[_id];
       (adr,consum,rank,tot) = getSortedRank(_id);
       giveoutVol = production.findMin(consum);

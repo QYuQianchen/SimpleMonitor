@@ -213,7 +213,9 @@ contract SingleBattery is GeneralDevice, IBattery {
         if (rank == i) {
           // time to make transaction
           counter++;
-          initiateTransaction(counter);
+          if (currentVolume > 0) {
+            initiateTransaction(counter);
+          }
         } else if (rank < i) {
           // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
           counter++;
@@ -293,21 +295,24 @@ contract SingleBattery is GeneralDevice, IBattery {
     uint tot;
     uint whatDeviceAccept;
     uint receivedMoney;
-    uint tStamp;
+    // uint tStamp;
  
       (adr,consum,rank,tot) = getSortedRank(_id);
+      giveoutVol = currentVolume.findMin(consum);
       if (connectedDevice[0].assertInside(adr)) {
-        (consum, tStamp)= IHouseE(adr).getConsumptionE();
-        giveoutVol = currentVolume.findMin(consum);
+        // (consum, tStamp)= IHouseE(adr).getConsumptionE();
         whatDeviceAccept = IHouseE(adr).goNoGo(giveoutVol);
+        if (currentVolume < whatDeviceAccept) { 
+          whatDeviceAccept = currentVolume; 
+        } 
         currentVolume -= whatDeviceAccept;
         volStatusAt = now;
         VolLog(owner,currentVolume,volStatusAt);
         receivedMoney = whatDeviceAccept*priceForSale;
         wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else if (connectedDevice[3].assertInside(adr)) {
-        consum = IHeatPump(adr).getConsumptionE();
-        giveoutVol = currentVolume.findMin(consum);
+        // consum = IHeatPump(adr).getConsumptionE();
+        // giveoutVol = currentVolume.findMin(consum);
         whatDeviceAccept = IHeatPump(adr).goNoGo(giveoutVol);
         currentVolume -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*priceForSale;
