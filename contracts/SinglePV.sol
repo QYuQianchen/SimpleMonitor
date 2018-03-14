@@ -171,16 +171,16 @@ contract SinglePV is GeneralDevice, IPV {
         (adr,consum,rank,tot) = getSortedRank(counter);
 
         if (rank == i) {
-            // time to make transaction
-            counter++;
-            initiateTransaction(counter);
-          } else if (rank < i) {
-            // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
-            counter++;
-          } else {
-            // when rank > i, need to wait
-            break;
-          }
+          // time to make transaction
+          counter++;
+          initiateTransaction(counter);
+        } else if (rank < i) {
+          // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
+          counter++;
+        } else {
+          // when rank > i, need to wait
+          break;
+        }
       }
     }
 

@@ -134,65 +134,11 @@ contract('simpletest', function(accounts) {
     });
   });
 
-  for(let i = 46; i < 48; i++) {   // i should be 0 - 96
+  for(let i = 0; i < 2; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });
   }
-
-    // for(let i = 66; i < 67; i++) {   // i should be 0 - 96
-    // it('round ' + i  + ' should be executed ',  function() {
-    //     console.log("We are at step: 1");
-    //     return step(i,1).then(function(){
-    //         console.log("Step 1 done.");
-    //         return getGasConsump();
-    //     }).then(function (result) {
-    //         return jumpTime(12);
-    //     }).then(function (result) {    
-    //         console.log("We are at step: 2");
-    //         return step(i,2);
-    //     }).then(function (result) {
-    //         console.log("Step 2 done.");
-    //         return getGasConsump();
-    //     }).then(function (result) {
-    //         return jumpTime(12);
-    //     }).then(function (result) { 
-    //         console.log("We are at step: 3");
-    //         return step(i,3);
-    //     }).then(function (result) {
-    //         console.log("Step 3 done.");
-    //         return getGasConsump();
-    //     }).then(function (result) {
-    //         return jumpTime(12);
-    //     }).then(function (result) { 
-    //         console.log("We are at step: 4");
-    //         return step(i,4);
-    //     }).then(function (result) {
-    //         console.log("Step 4 done.");
-    //         return getGasConsump();
-    //     }).then(function (result) {
-    //         return checkAllDeviceStatus(database_4);
-    //     }).then(function (result) {
-    //         return jumpTime(12);
-    //     }).then(function (result) { 
-    //         console.log("We are at step: 5");
-    //         return step(i,5);
-    //     }).then(function (result) {
-    //         console.log("Step 5 done.");
-    //         return getGasConsump();
-    //     }).then(function (result) {
-    //         return checkAllDeviceStatus(database_5);
-    //     }).then(function (result) {
-    //         return jumpTime(12);
-    //     }).then(function (result) {
-    //         return WriteJson("record_step_4", database_4);
-    //     }).then(function (result) {
-    //         return WriteJson("record_step_5", database_5);
-    //     }).then(function (result) {
-    //         return WriteJson("record_gas", database_gas);
-    //     });
-    // });
-    // }
 }); 
 
 
@@ -369,22 +315,12 @@ async function step(period, currentStep) {
         // for (let i = 0; i < totalStages; i++) {
         //   startCordination(i);
         // }
-        console.log(">>> start cordination - phase 0");
+        // console.log(">>> start cordination - phase 0");
         await startCordination(0);
-        console.log(">>> start cordination - phase 1");
+        // console.log(">>> start cordination - phase 1");
         await startCordination(1);
-        console.log(">>> start cordination - phase 2");
+        // console.log(">>> start cordination - phase 2");
         await startCordination(2);
-        // stepPromises.push(startCordination(0).then(function (result) {
-        //   console.log(">>> start cordination - phase 1");
-        //   startCordination(1);
-        // }).then(function (result){
-        //   console.log(">>> start cordination - phase 2");
-        //   startCordination(2);
-        // }).then(function (result){
-        //   console.log(">>> start cordination - phase 3");
-        //   startCordination(3);
-        // }));
       } else {
         // console.log("Nothing to do at this step <-- " + device_type);
       }
@@ -426,7 +362,7 @@ function cordinateSellEnergy(i,element) {
     return element.contract["getNewCounter"].call({ from: element.address});
   }).then(function(result) {
     element.counter = result.toNumber();
-    console.log(element.counter);
+    // console.log(element.counter);
   });
 }
 
@@ -441,9 +377,9 @@ function startCordination(i) {
         element.counter = 0;
       }
       (function(_element) {
-        console.log("Executing verifySellEnergy() <-- " + _element.device_name + "<-- " + _element.counter);
+        console.log("start coordination" + _element.device_name + "<-- " + _element.counter);
         cordinationPromisese.push(cordinateSellEnergy(i,_element).then(function (result) {
-          console.log(_element.device_name + " doing verifySellEnergy is done" + " <--" + i + " <-- " + _element.counter);
+          console.log(_element.device_name + " finished coordination" + " <--" + i + " <-- " + _element.counter);
         }));
       })(element);
     }
