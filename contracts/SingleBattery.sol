@@ -212,17 +212,17 @@ contract SingleBattery is GeneralDevice, IBattery {
     if (counter < totalNumber) {
 
       for (uint j = counter; j < totalNumber; j++) {
-        (adr,consum,rank,tot) = getSortedRank(counter);
+        (adr,consum,rank,tot) = getSortedRank(j);
         CounterLog(j,counter,i);
         TestLog2(rank,consum);
 
         if (rank == i) {
           // time to make transaction
-          counter++;
-          newCounter = counter;
           if (currentVolume > 0 && consum > 0) {
             initiateTransaction(counter);
           }
+          counter++;
+          newCounter = counter;
         } else if (rank < i) {
           // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
           counter++;
