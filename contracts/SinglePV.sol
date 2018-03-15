@@ -194,48 +194,48 @@ contract SinglePV is GeneralDevice, IPV {
     return newCounter;
   }
 
-  function sellEnergy() public timed(4) {
-    uint counter = 0;
-    uint tL = draftRankMap.totalLength;
-    bool waiting = true;
-    uint i;
+  // function sellEnergy() public timed(4) {
+  //   uint counter = 0;
+  //   uint tL = draftRankMap.totalLength;
+  //   bool waiting = true;
+  //   uint i;
 
-    address adr;
-    uint consum;
-    uint rank;
-    uint tot;
+  //   address adr;
+  //   uint consum;
+  //   uint rank;
+  //   uint tot;
 
-    uint lastIndex;
-    uint lastITime = now - 15 seconds;
+  //   uint lastIndex;
+  //   uint lastITime = now - 15 seconds;
 
-    while (waiting) {
-      if (lastITime + 1 seconds <= now) {
-      i = getTimerIndex();
-      for (uint j = counter; j < tL; j++) {
-        (adr,consum,rank,tot) = getSortedRank(counter);
-        if (rank == i) {
-          // time to make transaction
-          initiateTransaction(counter);
-          counter++;
-        } else if (rank < i) {
-          // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
-          counter++;
-        } else {
-          // when rank > i, need to wait
-          lastIndex = i;  // note down the index that has been requested last time.
-          lastITime = now;  // The next query should be ideally in 15s...
-          break;
-        }
-      }
-      if (counter >= tL) {
-        waiting = false;
-        break;
-        return;
-      }
-      }
-    }
-    return;
-  }
+  //   while (waiting) {
+  //     if (lastITime + 1 seconds <= now) {
+  //     i = getTimerIndex();
+  //     for (uint j = counter; j < tL; j++) {
+  //       (adr,consum,rank,tot) = getSortedRank(counter);
+  //       if (rank == i) {
+  //         // time to make transaction
+  //         initiateTransaction(counter);
+  //         counter++;
+  //       } else if (rank < i) {
+  //         // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
+  //         counter++;
+  //       } else {
+  //         // when rank > i, need to wait
+  //         lastIndex = i;  // note down the index that has been requested last time.
+  //         lastITime = now;  // The next query should be ideally in 15s...
+  //         break;
+  //       }
+  //     }
+  //     if (counter >= tL) {
+  //       waiting = false;
+  //       break;
+  //       return;
+  //     }
+  //     }
+  //   }
+  //   return;
+  // }
 
   function initiateTransaction(uint _id) private { // timed(4) returns (uint, uint)
     uint giveoutVol;

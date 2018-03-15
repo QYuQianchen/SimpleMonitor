@@ -54,11 +54,11 @@ contract SingleBattery is GeneralDevice, IBattery {
 
   event VolLog(address adr, uint vol, uint volAt);
   event PriceUpdate(uint updateAt);
-  event TestLog(uint totalLength);
-  event CounterLog(uint j, uint counter, uint round);
-  event TestLog2(uint rank, uint stepNum_j);
-  event DeviceIDLog(uint deviceID);
-  event TestLog3(uint firstValue, uint secondValue);
+  // event TestLog(uint totalLength);
+  // event CounterLog(uint j, uint counter, uint round);
+  // event TestLog2(uint rank, uint stepNum_j);
+  // event DeviceIDLog(uint deviceID);
+  // event TestLog3(uint firstValue, uint secondValue);
 
 // ======= Basic Functionalities =======
 
@@ -202,7 +202,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   //         counter is the number of transactions that have been executed/passed, ranging from 0 to (totalNumber - 1);
   function verifySellEnergy(uint i, uint counter) public timed(4) {
     uint totalNumber = draftRankMap.totalLength;
-    TestLog(totalNumber);
+    // TestLog(totalNumber);
 
     address adr;
     uint consum;
@@ -213,8 +213,8 @@ contract SingleBattery is GeneralDevice, IBattery {
 
       for (uint j = counter; j < totalNumber; j++) {
         (adr,consum,rank,tot) = getSortedRank(counter);
-        CounterLog(j,counter,i);
-        TestLog2(rank,consum);
+        // CounterLog(j,counter,i);
+        // TestLog2(rank,consum);
 
         if (rank == i) {
           // time to make transaction
@@ -240,49 +240,49 @@ contract SingleBattery is GeneralDevice, IBattery {
     return newCounter;
   }
 
-  function sellEnergy() public timed(4) returns (bool) {
-    uint counter = 0;
-    uint tL = draftRankMap.totalLength;
-    bool waiting = true;
-    uint i;
+  // function sellEnergy() public timed(4) returns (bool) {
+  //   uint counter = 0;
+  //   uint tL = draftRankMap.totalLength;
+  //   bool waiting = true;
+  //   uint i;
 
-    address adr;
-    uint consum;
-    uint rank;
-    uint tot;
+  //   address adr;
+  //   uint consum;
+  //   uint rank;
+  //   uint tot;
 
-    uint lastIndex;
-    uint lastITime = now - 15 seconds;
+  //   uint lastIndex;
+  //   uint lastITime = now - 15 seconds;
 
-    do {
-      if (lastITime + 1 seconds <= now) {
-      i = getTimerIndex();
-      for (uint j = counter; j < tL; j++) {
-        (adr,consum,rank,tot) = getSortedRank(counter);
-        if (rank == i) {
-          // time to make transaction
-          initiateTransaction(counter);
-          counter++;
-        } else if (rank < i) {
-          // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
-          counter++;
-        } else {
-          // when rank > i, need to wait
-          lastIndex = i;  // note down the index that has been requested last time. 
-          lastITime = now;  // The next query should be ideally in 15s...
-          break;
-        }
+  //   do {
+  //     if (lastITime + 1 seconds <= now) {
+  //     i = getTimerIndex();
+  //     for (uint j = counter; j < tL; j++) {
+  //       (adr,consum,rank,tot) = getSortedRank(counter);
+  //       if (rank == i) {
+  //         // time to make transaction
+  //         initiateTransaction(counter);
+  //         counter++;
+  //       } else if (rank < i) {
+  //         // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
+  //         counter++;
+  //       } else {
+  //         // when rank > i, need to wait
+  //         lastIndex = i;  // note down the index that has been requested last time. 
+  //         lastITime = now;  // The next query should be ideally in 15s...
+  //         break;
+  //       }
 
-      }
-      if (counter >= tL) {
-        waiting = false;
-        break;
-        return;
-      }
-      }
-    } while (waiting);
-    return true;
-  }
+  //     }
+  //     if (counter >= tL) {
+  //       waiting = false;
+  //       break;
+  //       return;
+  //     }
+  //     }
+  //   } while (waiting);
+  //   return true;
+  // }
 
   function initiateTransaction(uint _id) private  { //public timed(4) returns (uint, uint)
     uint giveoutVol;
@@ -297,22 +297,22 @@ contract SingleBattery is GeneralDevice, IBattery {
       (adr,consum,rank,tot) = getSortedRank(_id);
       giveoutVol = currentVolume.findMin(consum);
       if (connectedDevice[0].assertInside(adr)) {
-        DeviceIDLog(0);
+        // DeviceIDLog(0);
         (consum, tStamp)= IHouseE(adr).getConsumptionE();
-        TestLog3(consum,tStamp);
+        // TestLog3(consum,tStamp);
         giveoutVol = currentVolume.findMin(consum);
         whatDeviceAccept = IHouseE(adr).goNoGo(giveoutVol);
-        TestLog3(whatDeviceAccept, giveoutVol);
+        // TestLog3(whatDeviceAccept, giveoutVol);
         if (currentVolume < whatDeviceAccept) { 
           whatDeviceAccept = currentVolume; 
         }
         currentVolume -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*priceForSale;
-        TestLog3(currentVolume, receivedMoney);
+        // TestLog3(currentVolume, receivedMoney);
         wallet += int(receivedMoney);
         // wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else if (connectedDevice[3].assertInside(adr)) {
-        DeviceIDLog(3);
+        // DeviceIDLog(3);
         consum = IHeatPump(adr).getConsumptionE();
         giveoutVol = currentVolume.findMin(consum);
         whatDeviceAccept = IHeatPump(adr).goNoGo(giveoutVol);
@@ -324,7 +324,7 @@ contract SingleBattery is GeneralDevice, IBattery {
         wallet += int(receivedMoney);
         // wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else {
-        DeviceIDLog(99);
+        // DeviceIDLog(99);
         whatDeviceAccept = 0; 
       }
         volStatusAt = now;

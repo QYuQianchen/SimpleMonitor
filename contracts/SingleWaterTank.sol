@@ -46,7 +46,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
   event VolLog(address adr, uint vol, uint volAt);
   event PrsLog(uint price, uint priceAt);
   event ConsumptionUpdate(uint updateAt);
-  event TestLog(uint tl, uint readytoSell);
+  // event TestLog(uint tl, uint readytoSell);
 
 // ======= Basic Functionalities =======
 
@@ -123,10 +123,10 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
       if (waterType == false) {   //Medium temperature water tank
         //draftRankMap.addToRnkTable(connectedDevice[0][i],consum, rank, tot);
         volMap[i] = consumMT;
-        TestLog(2,volMap[i]);
+        // TestLog(2,volMap[i]);
       } else {
         volMap[i] = consumHT;
-        TestLog(3,volMap[i]);
+        // TestLog(3,volMap[i]);
       }
     }
     needStatusAt = now;
@@ -157,11 +157,11 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
 
     for (uint i = 0; i < connectedDevice[0].length; i++) {
       giveoutVol = currentVolume.findMin(volMap[i]);
-      TestLog(10, giveoutVol);
+      // TestLog(10, giveoutVol);
       whatDeviceAccept = IHouseH(connectedDevice[0][i]).goNoGoHeating(giveoutVol,price,waterType);
-      TestLog(11, whatDeviceAccept);
+      // TestLog(11, whatDeviceAccept);
       currentVolume -= whatDeviceAccept;
-      TestLog(12, currentVolume);
+      // TestLog(12, currentVolume);
       volStatusAt = now;
       VolLog(owner,currentVolume,volStatusAt);
       wallet += int(whatDeviceAccept * price);
