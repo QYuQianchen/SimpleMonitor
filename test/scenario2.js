@@ -118,7 +118,6 @@ contract('simpletest', function(accounts) {
       console.log("Here we are starting the 1st round.. ."); 
       return OpenJson();
     }).then(function (result) {
-      console.log(database_price);
       return getGasConsump();
 
     //   // try with function
@@ -134,7 +133,7 @@ contract('simpletest', function(accounts) {
     });
   });
 
-  for(let i = 0; i < 2; i++) {   // i should be 0 - 96
+  for(let i = 40; i < 44; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });

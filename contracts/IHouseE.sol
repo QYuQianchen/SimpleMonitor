@@ -17,8 +17,7 @@ contract IHouseE is GeneralDevice {
   function goNoGo(uint giveoutvol) public timed(4) returns (uint);
 
   function getConsumptionE() external view returns (uint consum, uint consumAt) {
-    consum = consumption;
-    consumAt = consumStatusAt;
+    return(consumption, consumStatusAt);
   }
   
 }
