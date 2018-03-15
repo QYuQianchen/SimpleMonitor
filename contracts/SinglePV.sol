@@ -172,21 +172,22 @@ contract SinglePV is GeneralDevice, IPV {
 
         if (rank == i) {
           // time to make transaction
-          counter++;
-          if (production > 0) {
+          if (production > 0 && consum > 0) {
             initiateTransaction(counter);
           }
+          counter++;
+          newCounter = counter;
         } else if (rank < i) {
           // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
           counter++;
+          newCounter = counter;
         } else {
           // when rank > i, need to wait
-          break;
+          return;
         }
       }
     }
-
-    newCounter = counter;
+    return;
   }
 
   function getNewCounter() public view returns (uint) {

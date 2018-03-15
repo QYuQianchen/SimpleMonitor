@@ -212,7 +212,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     if (counter < totalNumber) {
 
       for (uint j = counter; j < totalNumber; j++) {
-        (adr,consum,rank,tot) = getSortedRank(j);
+        (adr,consum,rank,tot) = getSortedRank(counter);
         CounterLog(j,counter,i);
         TestLog2(rank,consum);
 
