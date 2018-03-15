@@ -134,7 +134,7 @@ contract('simpletest', function(accounts) {
     });
   });
 
-  for(let i = 40; i < 42; i++) {   // i should be 0 - 96
+  for(let i = 0; i < 96; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });
@@ -534,7 +534,7 @@ async function oneRound(currentRound) {
 
   await WriteJson("record_step_4", database_4);
   await WriteJson("record_step_5", database_5);
-  await WriteJson("record_gas", database_gas);
+  return await WriteJson("record_gas", database_gas);
 
 }
 

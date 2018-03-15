@@ -86,7 +86,7 @@ contract Configuration {
       } else {
         contractList[adr] = singleWaterTankFactory.createSingleWaterTank(adr,capacity,g);
       }
-      if (g && _deviceType < 3) {
+      if (_deviceType < 3) { //g && // should assert whether the device wants to get connected to the grid... here we assume all of them are connected.
         IGeneralDevice(contractList[adr]).setGridAdr(gridAdr);
         IGeneralDevice(gridAdr).addConnectedDevice(_deviceType, contractList[adr]);
       }

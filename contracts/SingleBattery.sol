@@ -54,7 +54,7 @@ contract SingleBattery is GeneralDevice, IBattery {
 
   event VolLog(address adr, uint vol, uint volAt);
   event PriceUpdate(uint updateAt);
-  event TestLog(uint stepNum_i);
+  event TestLog(uint totalLength);
   event TestLog2(uint rank, uint stepNum_j);
 
 // ======= Basic Functionalities =======
@@ -170,7 +170,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   }
 
   function sortRank() public timed(3) {
-    draftRankMap.sortRnkTable();
+    // draftRankMap.sortRnkTable();
   }
 
   function getSortedRank(uint _id) view public returns(address adr, uint consum, uint rank, uint tot) {
@@ -199,6 +199,7 @@ contract SingleBattery is GeneralDevice, IBattery {
   //         counter is the number of transactions that have been executed/passed, ranging from 0 to (totalNumber - 1);
   function verifySellEnergy(uint i, uint counter) public timed(4) {
     uint totalNumber = draftRankMap.totalLength;
+    TestLog(totalNumber);
 
     address adr;
     uint consum;
@@ -209,6 +210,7 @@ contract SingleBattery is GeneralDevice, IBattery {
 
       for (uint j = counter; j < totalNumber; j++) {
         (adr,consum,rank,tot) = getSortedRank(counter);
+        TestLog(rank);
 
         if (rank == i) {
           // time to make transaction
@@ -295,31 +297,37 @@ contract SingleBattery is GeneralDevice, IBattery {
     uint tot;
     uint whatDeviceAccept;
     uint receivedMoney;
-    // uint tStamp;
+    uint tStamp;
  
       (adr,consum,rank,tot) = getSortedRank(_id);
       giveoutVol = currentVolume.findMin(consum);
       if (connectedDevice[0].assertInside(adr)) {
-        // (consum, tStamp)= IHouseE(adr).getConsumptionE();
+        (consum, tStamp)= IHouseE(adr).getConsumptionE();
+        giveoutVol = currentVolume.findMin(consum);
         whatDeviceAccept = IHouseE(adr).goNoGo(giveoutVol);
         if (currentVolume < whatDeviceAccept) { 
           whatDeviceAccept = currentVolume; 
         } 
         currentVolume -= whatDeviceAccept;
-        volStatusAt = now;
-        VolLog(owner,currentVolume,volStatusAt);
         receivedMoney = whatDeviceAccept*priceForSale;
-        wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
+        wallet += int(receivedMoney);
+        // wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else if (connectedDevice[3].assertInside(adr)) {
-        // consum = IHeatPump(adr).getConsumptionE();
-        // giveoutVol = currentVolume.findMin(consum);
+        consum = IHeatPump(adr).getConsumptionE();
+        giveoutVol = currentVolume.findMin(consum);
         whatDeviceAccept = IHeatPump(adr).goNoGo(giveoutVol);
+        if (currentVolume < whatDeviceAccept) { 
+          whatDeviceAccept = currentVolume; 
+        } 
         currentVolume -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*priceForSale;
-        wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
+        wallet += int(receivedMoney);
+        // wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else {
         whatDeviceAccept = 0; 
       }
+        volStatusAt = now;
+        VolLog(owner,currentVolume,volStatusAt);
       // return(giveoutVol, whatDeviceAccept);
     //}
   }
