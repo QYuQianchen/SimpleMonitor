@@ -31,7 +31,7 @@ var contracts = {
   "heatpump": artifacts.require("./SingleHeatPump.sol")
 };
 
-var totalStages = 5; // There are 5 stages in Step 4
+var totalStages = 6; // There are 5 stages in Step 4
 
 var configuration = null;
 
@@ -113,34 +113,21 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       
       console.log("Linking of devices done.");
-      return printDevice(config);
+      //return printDevice(config);
     }).then(function (result) {
       console.log("Here we are starting the 1st round.. ."); 
       return OpenJson();
     }).then(function (result) {
-      console.log(database_price);
       return getGasConsump();
-
-    //   // try with function
-    // }).then(function (result) {
-    //   return allRounds(1,30);      // here indicates the total rounds ... should be 96
-    // }).then(function (result) {
-    //   return allRounds(31,60);      // here indicates the total rounds ... should be 96
-    // }).then(function (result) {
-    //   return allRounds(61,96);      // here indicates the total rounds ... should be 96
-    // }).then(function (result) {
-    //   console.log("Finished");
-      // done();
     });
   });
 
-  for(let i = 1; i < 97; i++) {   // i should be until 96
+  for(let i = 0; i < 96; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });
   }
-
-});
+}); 
 
 
 //// ---------------------
@@ -270,7 +257,7 @@ function checkStep() {
   return configuration.getTime.call({from: config.admin[0].address, gas: 2000000});
 }
 
-function step(period, currentStep) {
+async function step(period, currentStep) {
   var stepPromises = [];
 
   if (currentStep == 1) {
@@ -312,24 +299,10 @@ function step(period, currentStep) {
             }));
           })(element, action);
         }
-      } else if (actions[device_type][currentStep] == ["sellEnergy"]) {
+      } else if (device_type == "pv") { // actions[device_type][currentStep] == ["sellEnergy"] // start executing among "pv" and "battery"
         for (let i = 0; i < totalStages; i++) {
-          for (var device_id in config[device_type]) {
-            var element = config[device_type][device_id];
-            if (i == 0) {
-              // initialization
-              element.counter = 0;
-            }
-            (function(_element) {
-              // console.log("Executing verifySellEnergy() <-- " + _element.device_name);
-              stepPromises.push(cordinateSellEnergy(i,_element).then(function (result) {
-                // console.log(_element.device_name + " doing verifySellEnergy is done");
-              }));
-            })(element);
-          }
+          await startCordination(i);
         }
-      } else {
-        // console.log("Nothing to do at this step <-- " + device_type);
       }
     }
   } else {
@@ -362,9 +335,38 @@ function step(period, currentStep) {
   return Promise.all(stepPromises)
 }
 
-function cordinateSellEnergy(i,element) {
-  element.counter = element.contract["verifySellEnergy"](i, element.counter, { from: element.address, gas: 6700000});
+async function cordinateSellEnergy(i,element) {
+  // console.log(" -- just to log i: " + i + ", " + element.counter);
+  return element.contract["verifySellEnergy"](i, element.counter, { from: element.address, gas: 6700000}).then(function(result) {
+    // console.log("cordinate sellEnergy of " + i + " - " + element.device_name);
+    return element.contract["getNewCounter"].call({ from: element.address});
+  }).then(function(result) {
+    element.counter = result.toNumber();
+    // console.log(element.counter);
+  });
 }
+
+function startCordination(i) {
+  var d_type = ["pv", "battery"];
+  var cordinationPromisese = [];
+  d_type.forEach(d_type_element => {
+    for (var device_id in config[d_type_element]) {
+      var element = config[d_type_element][device_id];
+      if (i == 0) {
+        // initialization
+        element.counter = 0;
+      }
+      (function(_element) {
+        // console.log("start coordination " + _element.device_name + " <-- " + _element.counter);
+        cordinationPromisese.push(cordinateSellEnergy(i,_element).then(function (result) {
+          // console.log(_element.device_name + " finished coordination" + " <--" + i + " <-- " + _element.counter);
+        }));
+      })(element);
+    }
+  });
+  return Promise.all(cordinationPromisese);
+}
+
 
 function execute(element, action, input) {
   // var action = "set"+ action_type.substr(1,1).toUpperCase() + action_type.slice(1,action_type.length);
@@ -458,12 +460,6 @@ function printDevice(_config) {
 }
 
 function OpenJson() {
-  // return fs.readFile(recordPath, 'utf8', function readFileCallback(err, data){
-  //   if (err){
-  //     console.log(err);
-  //   } else {
-  //   database = JSON.parse(data); //now it an object
-  // }});
 
     var addPromise = [];
     addPromise.push(readFile(recordPath)
@@ -518,6 +514,6 @@ async function oneRound(currentRound) {
 
   await WriteJson("record_step_4", database_4);
   await WriteJson("record_step_5", database_5);
-  await WriteJson("record_gas", database_gas);
+  return await WriteJson("record_gas", database_gas);
 
 }

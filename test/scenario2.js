@@ -133,7 +133,7 @@ contract('simpletest', function(accounts) {
     });
   });
 
-  for(let i = 40; i < 44; i++) {   // i should be 0 - 96
+  for(let i = 0; i < 96; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });
@@ -355,9 +355,9 @@ async function step(period, currentStep) {
 }
 
 async function cordinateSellEnergy(i,element) {
-  console.log(" -- just to log i: " + i + ", " + element.counter);
+  // console.log(" -- just to log i: " + i + ", " + element.counter);
   return element.contract["verifySellEnergy"](i, element.counter, { from: element.address, gas: 6700000}).then(function(result) {
-    console.log("cordinate sellEnergy of " + i + " - " + element.device_name);
+    // console.log("cordinate sellEnergy of " + i + " - " + element.device_name);
     return element.contract["getNewCounter"].call({ from: element.address});
   }).then(function(result) {
     element.counter = result.toNumber();
@@ -376,9 +376,9 @@ function startCordination(i) {
         element.counter = 0;
       }
       (function(_element) {
-        console.log("start coordination " + _element.device_name + " <-- " + _element.counter);
+        // console.log("start coordination " + _element.device_name + " <-- " + _element.counter);
         cordinationPromisese.push(cordinateSellEnergy(i,_element).then(function (result) {
-          console.log(_element.device_name + " finished coordination" + " <--" + i + " <-- " + _element.counter);
+          // console.log(_element.device_name + " finished coordination" + " <--" + i + " <-- " + _element.counter);
         }));
       })(element);
     }
@@ -456,7 +456,7 @@ function getNow() {
 }
 
 function getGasConsump() {
-  var getGasArray = [2, 5, 8, 9, 12]; //2, 5, 8, 9, 12 // 0,1
+  var getGasArray = [0, 1, 2, 5, 8, 9, 12]; //2, 5, 8, 9, 12 // 0,1
   getGasArray.forEach(element => {
     var result =  web3.eth.getBalance(web3.eth.accounts[element]).toNumber();
     // console.log("account " + element + " has " + result);
