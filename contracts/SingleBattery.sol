@@ -55,7 +55,10 @@ contract SingleBattery is GeneralDevice, IBattery {
   event VolLog(address adr, uint vol, uint volAt);
   event PriceUpdate(uint updateAt);
   event TestLog(uint totalLength);
+  event CounterLog(uint j, uint counter, uint round);
   event TestLog2(uint rank, uint stepNum_j);
+  event DeviceIDLog(uint deviceID);
+  event TestLog3(uint firstValue, uint secondValue);
 
 // ======= Basic Functionalities =======
 
@@ -210,26 +213,27 @@ contract SingleBattery is GeneralDevice, IBattery {
 
       for (uint j = counter; j < totalNumber; j++) {
         (adr,consum,rank,tot) = getSortedRank(counter);
-        TestLog(rank);
+        CounterLog(j,counter,i);
+        TestLog2(rank,consum);
 
         if (rank == i) {
           // time to make transaction
           counter++;
-          if (currentVolume > 0) {
+          newCounter = counter;
+          if (currentVolume > 0 && consum > 0) {
             initiateTransaction(counter);
           }
         } else if (rank < i) {
           // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
           counter++;
+          newCounter = counter;
         } else {
           // when rank > i, need to wait
-          break;
+          return;
         }
       }
     }
-
-    newCounter = counter;
-
+    return;
   }
   
   function getNewCounter() public view returns (uint) {
@@ -251,41 +255,32 @@ contract SingleBattery is GeneralDevice, IBattery {
     uint lastITime = now - 15 seconds;
 
     do {
-      // TestLog(31);
       if (lastITime + 1 seconds <= now) {
       i = getTimerIndex();
-      // TestLog(i);
       for (uint j = counter; j < tL; j++) {
         (adr,consum,rank,tot) = getSortedRank(counter);
-        // TestLog2(rank,j);
         if (rank == i) {
           // time to make transaction
           initiateTransaction(counter);
           counter++;
-          // TestLog(99);
         } else if (rank < i) {
           // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
           counter++;
-          // TestLog(98);
         } else {
           // when rank > i, need to wait
           lastIndex = i;  // note down the index that has been requested last time. 
           lastITime = now;  // The next query should be ideally in 15s...
-          // TestLog(97);
           break;
         }
 
       }
       if (counter >= tL) {
-        // TestLog(tL);
         waiting = false;
         break;
         return;
       }
       }
-      // TestLog(32);
     } while (waiting);
-    TestLog(33);
     return true;
   }
 
@@ -302,17 +297,22 @@ contract SingleBattery is GeneralDevice, IBattery {
       (adr,consum,rank,tot) = getSortedRank(_id);
       giveoutVol = currentVolume.findMin(consum);
       if (connectedDevice[0].assertInside(adr)) {
+        DeviceIDLog(0);
         (consum, tStamp)= IHouseE(adr).getConsumptionE();
+        TestLog3(consum,tStamp);
         giveoutVol = currentVolume.findMin(consum);
         whatDeviceAccept = IHouseE(adr).goNoGo(giveoutVol);
+        TestLog3(whatDeviceAccept, giveoutVol);
         if (currentVolume < whatDeviceAccept) { 
           whatDeviceAccept = currentVolume; 
-        } 
+        }
         currentVolume -= whatDeviceAccept;
         receivedMoney = whatDeviceAccept*priceForSale;
+        TestLog3(currentVolume, receivedMoney);
         wallet += int(receivedMoney);
         // wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else if (connectedDevice[3].assertInside(adr)) {
+        DeviceIDLog(3);
         consum = IHeatPump(adr).getConsumptionE();
         giveoutVol = currentVolume.findMin(consum);
         whatDeviceAccept = IHeatPump(adr).goNoGo(giveoutVol);
@@ -324,6 +324,7 @@ contract SingleBattery is GeneralDevice, IBattery {
         wallet += int(receivedMoney);
         // wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
       } else {
+        DeviceIDLog(99);
         whatDeviceAccept = 0; 
       }
         volStatusAt = now;

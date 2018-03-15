@@ -116,11 +116,9 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
     uint consumMT;
     uint consumHT;
     uint consumAt;
-    TestLog(0, 0);
 
     // draftRankMap.initRnkTable();
     for (uint i = 0; i < connectedDevice[0].length; i++) {
-      TestLog(i,volMap[i]);
       (consumMT, consumHT, consumAt) = IHouseH(connectedDevice[0][i]).getConsumptionH();
       if (waterType == false) {   //Medium temperature water tank
         //draftRankMap.addToRnkTable(connectedDevice[0][i],consum, rank, tot);

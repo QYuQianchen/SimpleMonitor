@@ -134,7 +134,7 @@ contract('simpletest', function(accounts) {
     });
   });
 
-  for(let i = 0; i < 96; i++) {   // i should be 0 - 96
+  for(let i = 0; i < 2; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });
@@ -355,8 +355,8 @@ async function step(period, currentStep) {
   return Promise.all(stepPromises)
 }
 
-function cordinateSellEnergy(i,element) {
-  // console.log("going to check" + i + ", " + element.counter);
+async function cordinateSellEnergy(i,element) {
+  console.log(" -- just to log i: " + i + ", " + element.counter);
   return element.contract["verifySellEnergy"](i, element.counter, { from: element.address, gas: 6700000}).then(function(result) {
     console.log("cordinate sellEnergy of " + i + " - " + element.device_name);
     return element.contract["getNewCounter"].call({ from: element.address});

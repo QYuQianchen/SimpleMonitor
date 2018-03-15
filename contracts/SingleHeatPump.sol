@@ -45,7 +45,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
   // ======= Event Logs =======
 
   event PriceUpdate(uint updateAt);
-  event TestLog(uint water_tank_log);
+  event TestLog(uint water_tank_log, uint WTlength);
 
   // ======= Basic Functionalities =======
 
@@ -177,7 +177,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
       //giveoutVol = currentVolume.findMin(volMap[i]);
       whatDeviceAccept = IWaterTank(connectedDevice[4][i]).goNoGo(waterFlow,waterPrice);
       // whatDeviceAccept = waterFlow;   // for testing
-      TestLog(whatDeviceAccept);
+      TestLog(whatDeviceAccept, connectedDevice[4].length);
       waterFlow -= whatDeviceAccept;
       consumptionWater -= whatDeviceAccept;
       wallet +=  int(whatDeviceAccept * waterPrice * 2); // here 2 is factor to gain money...
