@@ -133,11 +133,30 @@ contract('simpletest', function(accounts) {
     });
   });
 
+  // it('rounds should be executed ',  function() {
+  //   return oneRound(40).then(function(result){
+  //     return oneRound(41);
+  //   }).then(function(result) {
+  //     return oneRound(42);
+  //   }).then(function(result) {
+  //     return oneRound(43);
+  //   }).then(function(result) {
+  //     return oneRound(44);
+  //   });
+  // });
+
   for(let i = 0; i < 96; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });
   }
+
+  it('write to file', async function() {
+    await WriteJson("record_step_4", database_4);
+    await WriteJson("record_step_5", database_5);
+    await WriteJson("record_gas", database_gas);
+  })
+
 }); 
 
 
@@ -522,19 +541,20 @@ async function oneRound(currentRound) {
     console.log("We are at step: ", currentStep);
     await step(currentRound,currentStep);
     console.log("Step " + currentStep + " done.");
-    await getGasConsump();
+    
     if (currentStep == 4) {
       await checkAllDeviceStatus(database_4);
     } else if (currentStep == 5) {
       await checkAllDeviceStatus(database_5);
     }
-    await jumpTime(12);
+    await getGasConsump();
+    // await jumpTime(12);
   }
 
-  await WriteJson("record_step_4", database_4);
-  await WriteJson("record_step_5", database_5);
-  return await WriteJson("record_gas", database_gas);
-
+  // await WriteJson("record_step_4", database_4);
+  // await WriteJson("record_step_5", database_5);
+  // await WriteJson("record_gas", database_gas);
+  return;
 }
 
 // async function oneRound(currentRound) {

@@ -71,14 +71,14 @@ contract Grid is GeneralDevice, IGrid {
   }*/
 
   function goExcess(uint vol) timed(5) public returns (uint, uint) {
-    uint takeVol = vol.findMin(negBackup);
+    uint takeVol = vol;//.findMin(negBackup);
     // negBackup = negBackup.clearEnergyTransfer(takeVol, address(this));
     wallet -= int(takeVol*priceFeedIn);
     return (takeVol,priceFeedIn);
   }
 
   function goExtra(uint vol) timed(5) public returns (uint, uint) { // when houses have not sufficient energy supply from microgrid
-    uint takeVol = vol.findMin(posBackup);
+    uint takeVol = vol;//.findMin(posBackup);
     // posBackup -= takeVol;
     wallet += int(takeVol*price);
     // wallet = wallet.clearMoneyTransfer(takeVol*prs,msg.sender, address(this));
