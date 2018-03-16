@@ -152,8 +152,8 @@ contract('simpletest', function(accounts) {
     //   return allRounds(31,60);      // here indicates the total rounds ... should be 96
     // }).then(function (result) {
     //   return allRounds(61,96);      // here indicates the total rounds ... should be 96
-    // }).then(function (result) {
-    //   console.log("Finished");
+    }).then(function (result) {
+      console.log("Let's start running tests...");
       // done();
     });
   });

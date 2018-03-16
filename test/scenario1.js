@@ -119,14 +119,44 @@ contract('simpletest', function(accounts) {
       return OpenJson();
     }).then(function (result) {
       return getGasConsump();
+
+    //   // try with function
+    // }).then(function (result) {
+    //   return allRounds(1,30);      // here indicates the total rounds ... should be 96
+    // }).then(function (result) {
+    //   return allRounds(31,60);      // here indicates the total rounds ... should be 96
+    // }).then(function (result) {
+    //   return allRounds(61,96);      // here indicates the total rounds ... should be 96
+    // }).then(function (result) {
+    //   console.log("Finished");
+      // done();
     });
   });
+
+  // it('rounds should be executed ',  function() {
+  //   return oneRound(40).then(function(result){
+  //     return oneRound(41);
+  //   }).then(function(result) {
+  //     return oneRound(42);
+  //   }).then(function(result) {
+  //     return oneRound(43);
+  //   }).then(function(result) {
+  //     return oneRound(44);
+  //   });
+  // });
 
   for(let i = 0; i < 96; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });
   }
+
+  it('write to file', async function() {
+    await WriteJson("record_step_4", database_4);
+    await WriteJson("record_step_5", database_5);
+    await WriteJson("record_gas", database_gas);
+  })
+
 }); 
 
 
@@ -303,6 +333,14 @@ async function step(period, currentStep) {
         for (let i = 0; i < totalStages; i++) {
           await startCordination(i);
         }
+        // // console.log(">>> start cordination - phase 0");
+        // await startCordination(0);
+        // // console.log(">>> start cordination - phase 1");
+        // await startCordination(1);
+        // // console.log(">>> start cordination - phase 2");
+        // await startCordination(2);
+      } else {
+        // console.log("Nothing to do at this step <-- " + device_type);
       }
     }
   } else {
@@ -503,17 +541,42 @@ async function oneRound(currentRound) {
     console.log("We are at step: ", currentStep);
     await step(currentRound,currentStep);
     console.log("Step " + currentStep + " done.");
-    await getGasConsump();
+    
     if (currentStep == 4) {
       await checkAllDeviceStatus(database_4);
     } else if (currentStep == 5) {
       await checkAllDeviceStatus(database_5);
     }
-    await jumpTime(12);
+    await getGasConsump();
+    // await jumpTime(12);
   }
 
-  await WriteJson("record_step_4", database_4);
-  await WriteJson("record_step_5", database_5);
-  return await WriteJson("record_gas", database_gas);
-
+  // await WriteJson("record_step_4", database_4);
+  // await WriteJson("record_step_5", database_5);
+  // await WriteJson("record_gas", database_gas);
+  return;
 }
+
+// async function oneRound(currentRound) {
+
+//     var asyncPromises = [];
+  
+//     for (let currentStep = 1; currentStep < 6; currentStep++) {   // looping from step 1 to step 5
+//       console.log("We are at step: ", currentStep);
+//       asyncPromises.push(step(currentRound,currentStep));
+//       console.log("Step " + currentStep + " done.");
+//       asyncPromises.push(getGasConsump());
+//       if (currentStep == 4) {
+//         asyncPromises.push(checkAllDeviceStatus(database_4));
+//       } else if (currentStep == 5) {
+//         asyncPromises.push(checkAllDeviceStatus(database_5));
+//       }
+//       asyncPromises.push(jumpTime(12));
+//     }
+  
+//     asyncPromises.push(await WriteJson("record_step_4", database_4));
+//     asyncPromises.push(await WriteJson("record_step_5", database_5));
+//     asyncPromises.push(await WriteJson("record_gas", database_gas));
+  
+//     return Promise.all(asyncPromises);
+// }
