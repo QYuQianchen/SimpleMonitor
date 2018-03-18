@@ -9,7 +9,6 @@ import "./IBattery.sol";
 import "./IHouseE.sol";
 import "./IHouseH.sol";
 import "./GeneralDevice.sol";
-//import "./IGeneralDevice.sol";
 import "./DeviceFactoryInterface.sol";
 
 
@@ -71,7 +70,7 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
     consumptionHTWater = consum3;
     consumStatusAt = now;
     consumWaterStatusAt = now;
-    ConsumptionLog(owner, consumption, consumStatusAt);
+    ConsumptionLog(owner, consumptionHTWater+consumptionMTWater, consumStatusAt);
   }
 
   // --- 2. ask for connected PV / batteries / grid for price of electricity supply ---
@@ -95,13 +94,6 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
 
   function sortPrice() public timed(2) { // try out 
     draftPriceMap.sortPrsTable();
-    // if the grid is connected -> add the price from the grid to the end of the sorted list
-    // if (grid != 0x0) {
-    //   uint tP = 0;
-    //   bool tF = false;
-    //   (tP, tF) = IGrid(grid).getPrice();
-    //   draftPriceMap.addToPrsTable(grid,tP,tF);
-    // }
   }
 
   function getSortedPrice() external returns(uint consum, uint rank, uint tot, bool updated) {
@@ -111,6 +103,7 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
   }
 
   // --- 4. PV/Battery ask House to confirm ...
+
     // --- 4.1 energy transaction ---
 
   function goNoGo(uint giveoutvol) public timed(4) returns (uint) {
@@ -120,16 +113,19 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
     takeoutvol = consumption.findMin(giveoutvol);
     consumption -= takeoutvol;
     // consumption = consumption.clearEnergyTransfer(takeoutvol, address(this));
-    //wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
-    wallet -= takeoutvol.payment(draftPriceMap.prsTable[adrDevice].prs);
+    wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
+    // wallet -= takeoutvol.payment(draftPriceMap.prsTable[adrDevice].prs);
     return (takeoutvol);
   }
-    // --- 4.1 heating transaction ---
+
+    // --- 4.2 heating transaction ---
+
   function goNoGoHeating(uint giveoutvol, uint prs, bool wType) public timed(4) returns (uint) {
     // possible to overload the function with goNoGo -> simplify the code of calling
     address adrDevice = msg.sender;
     uint takeoutvol;
     require(connectedDevice[4].assertInside(adrDevice));
+    
     if (wType == false) {
       takeoutvol = consumptionMTWater.findMin(giveoutvol);
       consumptionMTWater -= takeoutvol;

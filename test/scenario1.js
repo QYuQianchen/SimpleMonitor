@@ -120,32 +120,10 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       return getGasConsump();
 
-    //   // try with function
-    // }).then(function (result) {
-    //   return allRounds(1,30);      // here indicates the total rounds ... should be 96
-    // }).then(function (result) {
-    //   return allRounds(31,60);      // here indicates the total rounds ... should be 96
-    // }).then(function (result) {
-    //   return allRounds(61,96);      // here indicates the total rounds ... should be 96
-    // }).then(function (result) {
-    //   console.log("Finished");
-      // done();
     });
   });
 
-  // it('rounds should be executed ',  function() {
-  //   return oneRound(40).then(function(result){
-  //     return oneRound(41);
-  //   }).then(function(result) {
-  //     return oneRound(42);
-  //   }).then(function(result) {
-  //     return oneRound(43);
-  //   }).then(function(result) {
-  //     return oneRound(44);
-  //   });
-  // });
-
-  for(let i = 0; i < 96; i++) {   // i should be 0 - 96
+  for(let i = 41; i < 44; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });
@@ -157,7 +135,75 @@ contract('simpletest', function(accounts) {
     await WriteJson("record_gas", database_gas);
   })
 
+  it('get sorted rank of PV0', function() {
+    var testingElement = config["pv"][0];
+    return testingElement.contract["getSortedRank"].call(0, { from: testingElement.address}).then(function (result) {
+      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+      return testingElement.contract["getSortedRank"].call(1, { from: testingElement.address});
+    }).then(function (result) {
+      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+      return testingElement.contract["getSortedRank"].call(2, { from: testingElement.address});
+    }).then(function (result) {
+      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+      return testingElement.contract["getSortedRankDetail"].call(config["house"][0].contract_address, { from: testingElement.address});
+    }).then(function (result) {
+      console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
+      return testingElement.contract["getSortedRankDetail"].call(config["battery"][0].contract_address, { from: testingElement.address});
+    }).then(function (result) {
+      console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
+      return testingElement.contract["getSortedRankDetail"].call(config["heatpump"][0].contract_address, { from: testingElement.address});
+    }).then(function (result) {
+      console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
+      return testingElement.contract["getSortedRankLength"].call({ from: testingElement.address});
+    }).then(function (result) {
+      console.log(result[0].toNumber() + " - " + result[1].toNumber() + " - " + result[2].toNumber() + " : " + result[3].toNumber());
+    });
+  });
+
+  it('get sorted rank of PV1', function() {
+    var testingElement = config["pv"][1];
+    return testingElement.contract["getSortedRank"].call(0, { from: testingElement.address}).then(function (result) {
+      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+      return testingElement.contract["getSortedRank"].call(1, { from: testingElement.address});
+    }).then(function (result) {
+      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+      return testingElement.contract["getSortedRank"].call(2, { from: testingElement.address});
+    }).then(function (result) {
+      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+      return testingElement.contract["getSortedRankDetail"].call(config["house"][1].address, { from: testingElement.address});
+    }).then(function (result) {
+      console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
+    });
+  });
+
+  it('get sorted rank of PV2', function() {
+    var testingElement = config["pv"][2];
+    return testingElement.contract["getSortedRank"].call(0, { from: testingElement.address}).then(function (result) {
+      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+      return testingElement.contract["getSortedRank"].call(1, { from: testingElement.address});
+    }).then(function (result) {
+      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+      return testingElement.contract["getSortedRank"].call(2, { from: testingElement.address});
+    }).then(function (result) {
+      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+    });
+  });
+
+  it('get sorted rank of Battery0', function() {
+    var testingElement = config["battery"][0];
+    return testingElement.contract["getSortedRank"].call(0, { from: testingElement.address}).then(function (result) {
+      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+      return testingElement.contract["getSortedRank"].call(1, { from: testingElement.address});
+    }).then(function (result) {
+      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+      return testingElement.contract["getSortedRank"].call(2, { from: testingElement.address});
+    }).then(function (result) {
+      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+    });
+  });
+
 }); 
+
 
 
 //// ---------------------
@@ -233,7 +279,7 @@ function linkDevices(_config) {
   var house_id = 0;
   var pv_id = 0;
   console.log("Linking house[" + house_id + "] with pv[" + pv_id + "]");
-  linkDevicesPromises.push(configuration.linkDevices(_config.house[house_id].address, _config.pv[pv_id].address, { from: _config.admin[0].address, gas: 2000000 }));
+  linkDevicesPromises.push(configuration.linkDevices(_config.house[0].address, _config.pv[0].address, { from: _config.admin[0].address, gas: 2000000 }));
   
   // linking house1,2 with pv1,2
   var house_list = [1,2];
@@ -302,17 +348,25 @@ async function step(period, currentStep) {
             var action = actions[device_type][currentStep][currentAction];
             var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
 
-            (function(_element, _action, _input) {
-              // console.log("Executing " + _action + "(" + _input + ") <-- " + _element.device_name);
-              stepPromises.push(execute(_element, _action, _input).then(function (result) {
-                // console.log(_element.device_name + " doing " + _action + " is done");
-              }));
-            })(element, action, input);
+            // (function(_element, _action, _input) {
+            //   // console.log("Executing " + _action + "(" + _input + ") <-- " + _element.device_name);
+            //   stepPromises.push(execute(_element, _action, _input).then(function (result) {
+            //     // console.log(_element.device_name + " doing " + _action + " is done");
+            //   }));
+            // })(element, action, input);
+            await execute(element, action, input);
           }
         }
-      } else {
-        // console.log("Nothing to do at this step <-- " + device_type);
       }
+      // if (device_type == "watertank") {
+      //   await execute(config["watertank"][0], "setConsumption", inputs["watertank"][0]["consumption"][period]);
+      //   await execute(config["watertank"][1], "setConsumption", inputs["watertank"][1]["consumption"][period]);
+      //   await execute(config["watertank"][2], "setConsumption", inputs["watertank"][2]["consumption"][period]);
+      // }
+      // if (device_type == "battery") {
+      //   await execute(config["battery"][0], "setConsumption", inputs["battery"][0]["consumption"][period]);
+      //   await execute(config["battery"][0], "setPrice", inputs["battery"][0]["price"][period]);
+      // }
     }
   } else if (currentStep == 4) {
     // when selling, there is competition. Order of execution matters.
@@ -322,30 +376,23 @@ async function step(period, currentStep) {
         for (var device_id in config[device_type]) {
           var element = config[device_type][device_id];
           var action = "sellEnergy";
-          (function(_element, _action) {
-            // console.log("Executing " + _action + " <-- " + _element.device_name);
-            stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
-              // console.log(_element.device_name + " has passed through <--" + _action);
-            }));
-          })(element, action);
+          // (function(_element, _action) {
+          //   // console.log("Executing " + _action + " <-- " + _element.device_name);
+          //   stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
+          //     // console.log(_element.device_name + " has passed through <--" + _action);
+          //   }));
+          // })(element, action);
+          await element.contract[action]({ from: element.address, gas: 6700000});
         }
       } else if (device_type == "pv") { // actions[device_type][currentStep] == ["sellEnergy"] // start executing among "pv" and "battery"
         for (let i = 0; i < totalStages; i++) {
           await startCordination(i);
         }
-        // // console.log(">>> start cordination - phase 0");
-        // await startCordination(0);
-        // // console.log(">>> start cordination - phase 1");
-        // await startCordination(1);
-        // // console.log(">>> start cordination - phase 2");
-        // await startCordination(2);
-      } else {
-        // console.log("Nothing to do at this step <-- " + device_type);
       }
     }
   } else {
+    
     for (var device_type in actions) {
-
       if (actions[device_type][currentStep] != undefined) {
         for (var currentAction in actions[device_type][currentStep]) {
           // var stepPromises = [];
@@ -356,21 +403,42 @@ async function step(period, currentStep) {
             // var account = element.address;
             // var name = element.device_name;
             // var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
-            (function(_element, _action) {
-              // console.log("Executing " + _action + " <-- " + _element.device_name);
-              stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
-                // console.log(_element.device_name + " has passed through <--" + _action);
-              }));
-            })(element, action);
+            // (function(_element, _action) {
+            //   // console.log("Executing " + _action + " <-- " + _element.device_name);
+            //   stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
+            //     // console.log(_element.device_name + " has passed through <--" + _action);
+            //   }));
+            // })(element, action);
+            await element.contract[action]({ from: element.address, gas: 6700000});
+            console.log(element.device_name + " has passed through <--" + action);
           }
         }
-      } else {
-        // console.log("Nothing to do at this step <-- " + device_type);
       }
+      if (currentStep == 3 && device_type == "pv") {
+        await config["pv"][0].contract["askForRank"]({ from: config["pv"][0].address, gas: 6700000});
+        console.log("pv0 ask for rank on purpose");
+      }
+      if (currentStep == 2 && device_type == "house") {
+        await config["house"][0].contract["askForPrice"]({ from: config["house"][0].address, gas: 6700000});
+        await config["house"][0].contract["sortPrice"]({ from: config["house"][0].address, gas: 6700000});
+        console.log("house0 sortPrice on purpose");
+      }
+      if (currentStep == 2 && device_type == "heatpump") {
+        await config["heatpump"][0].contract["askForConsump"]({ from: config["heatpump"][0].address, gas: 6700000});
+        await config["heatpump"][0].contract["askForPrice"]({ from: config["heatpump"][0].address, gas: 6700000});
+        await config["heatpump"][0].contract["sortPrice"]({ from: config["heatpump"][0].address, gas: 6700000});
+        console.log("heatpump0 sortPrice on purpose");
+      }
+      // if (currentStep == 2 && device_type == "battery") {
+      //   await config["battery"][0].contract["askForConsump"]({ from: config["heatpump"][0].address, gas: 6700000});
+      //   await config["heatpump"][0].contract["askForPrice"]({ from: config["heatpump"][0].address, gas: 6700000});
+      //   await config["heatpump"][0].contract["sortPrice"]({ from: config["heatpump"][0].address, gas: 6700000});
+      //   console.log("heatpump0 sortPrice on purpose");
+      // }
     }
   }
 
-  return Promise.all(stepPromises)
+  // return Promise.all(stepPromises)
 }
 
 async function cordinateSellEnergy(i,element) {
@@ -387,7 +455,22 @@ async function cordinateSellEnergy(i,element) {
 function startCordination(i) {
   var d_type = ["pv", "battery"];
   var cordinationPromisese = [];
-  d_type.forEach(d_type_element => {
+  // d_type.forEach(d_type_element => {
+  //   for (var device_id in config[d_type_element]) {
+  //     var element = config[d_type_element][device_id];
+  //     if (i == 0) {
+  //       // initialization
+  //       element.counter = 0;
+  //     }
+  //     (function(_element) {
+  //       // console.log("start coordination " + _element.device_name + " <-- " + _element.counter);
+  //       cordinationPromisese.push(cordinateSellEnergy(i,_element).then(function (result) {
+  //         // console.log(_element.device_name + " finished coordination" + " <--" + i + " <-- " + _element.counter);
+  //       }));
+  //     })(element);
+  //   }
+  // });
+  var d_type_element = "pv";
     for (var device_id in config[d_type_element]) {
       var element = config[d_type_element][device_id];
       if (i == 0) {
@@ -400,8 +483,21 @@ function startCordination(i) {
           // console.log(_element.device_name + " finished coordination" + " <--" + i + " <-- " + _element.counter);
         }));
       })(element);
+    }     
+  d_type_element = "battery";
+    for (device_id in config[d_type_element]) {
+      element = config[d_type_element][device_id];
+      if (i == 0) {
+        // initialization
+        element.counter = 0;
+      }
+      (function(_element) {
+        // console.log("start coordination " + _element.device_name + " <-- " + _element.counter);
+        cordinationPromisese.push(cordinateSellEnergy(i,_element).then(function (result) {
+          // console.log(_element.device_name + " finished coordination" + " <--" + i + " <-- " + _element.counter);
+        }));
+      })(element);
     }
-  });
   return Promise.all(cordinationPromisese);
 }
 
@@ -541,13 +637,12 @@ async function oneRound(currentRound) {
     console.log("We are at step: ", currentStep);
     await step(currentRound,currentStep);
     console.log("Step " + currentStep + " done.");
-    
+    // await getGasConsump();
     if (currentStep == 4) {
       await checkAllDeviceStatus(database_4);
     } else if (currentStep == 5) {
       await checkAllDeviceStatus(database_5);
     }
-    await getGasConsump();
     // await jumpTime(12);
   }
 
@@ -556,27 +651,3 @@ async function oneRound(currentRound) {
   // await WriteJson("record_gas", database_gas);
   return;
 }
-
-// async function oneRound(currentRound) {
-
-//     var asyncPromises = [];
-  
-//     for (let currentStep = 1; currentStep < 6; currentStep++) {   // looping from step 1 to step 5
-//       console.log("We are at step: ", currentStep);
-//       asyncPromises.push(step(currentRound,currentStep));
-//       console.log("Step " + currentStep + " done.");
-//       asyncPromises.push(getGasConsump());
-//       if (currentStep == 4) {
-//         asyncPromises.push(checkAllDeviceStatus(database_4));
-//       } else if (currentStep == 5) {
-//         asyncPromises.push(checkAllDeviceStatus(database_5));
-//       }
-//       asyncPromises.push(jumpTime(12));
-//     }
-  
-//     asyncPromises.push(await WriteJson("record_step_4", database_4));
-//     asyncPromises.push(await WriteJson("record_step_5", database_5));
-//     asyncPromises.push(await WriteJson("record_gas", database_gas));
-  
-//     return Promise.all(asyncPromises);
-// }

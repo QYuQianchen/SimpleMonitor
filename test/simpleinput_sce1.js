@@ -82,7 +82,7 @@ exports.config = {
     { 
       "id": 1, 
       "address": 0, 
-      "watertype": false, 
+      "watertype": true, 
       "contact_address": 0,
       "price": 4
     }, 
@@ -107,7 +107,7 @@ exports.config = {
     {
       "id": 1,
       "address": 0,
-      "watertype": false, 
+      "watertype": true, 
       "volume": 80, 
       "capacity": 100,
       "contact_address": 0

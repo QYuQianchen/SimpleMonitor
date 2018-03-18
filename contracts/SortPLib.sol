@@ -46,27 +46,29 @@ library SortPLib {
   function sortPrsTable(PriceMap storage _prm) public {
     uint minTemp;
     uint _id;
-    for (uint i = 0; i < _prm.totalLength-1; i++) {
-      minTemp = _prm.prsTable[_prm.sortedPrs[i]].prs; 
-      _id = i;
-      for (uint j = i+1; j < _prm.totalLength; j++) {
-        var p = _prm.prsTable[_prm.sortedPrs[j]].prs;
-        if (p <= minTemp) {
-          minTemp = p;
-          _id = j;
+    if (_prm.totalLength > 1) {
+      for (uint i = 0; i < _prm.totalLength-1; i++) {
+        minTemp = _prm.prsTable[_prm.sortedPrs[i]].prs; 
+        _id = i;
+        for (uint j = i+1; j < _prm.totalLength; j++) {
+          var p = _prm.prsTable[_prm.sortedPrs[j]].prs;
+          if (p < minTemp) {
+            minTemp = p;
+            _id = j;
+          }
         }
+        swap(_prm,i,_id);
       }
-      swap(_prm,i,_id);
-    }
-    // put the non-updated price (if exists, false) to the end of the list
-    if (_prm.fLength != 0) {
-      uint nF = 0;
-      for (i = 0; i < _prm.totalLength + _prm.fLength; i++) {
-        if (_prm.prsTable[_prm.sortedPrs[i]].updated == false) {
-          nF++;
-          swap(_prm,i,nF+_prm.totalLength);
-        } else {
-          swap(_prm,i,i-nF);
+      // put the non-updated price (if exists, false) to the end of the list
+      if (_prm.fLength != 0) {
+        uint nF = 0;
+        for (i = 0; i < _prm.totalLength + _prm.fLength; i++) {
+          if (_prm.prsTable[_prm.sortedPrs[i]].updated == false) {
+            nF++;
+            swap(_prm,i,nF+_prm.totalLength);
+          } else {
+            swap(_prm,i,i-nF);
+          }
         }
       }
     }

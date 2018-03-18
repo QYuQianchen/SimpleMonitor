@@ -31,32 +31,33 @@ library SortRLib {
     uint rk;
     uint tot;
     bool tf;
-
-    for (uint i = 0; i < _rnk.totalLength-1; i++) {
-      _id = i;
-      con = _rnk.rnkTable[_rnk.sortedRnk[i]].consump;
-      rk = _rnk.rnkTable[_rnk.sortedRnk[i]].rank;
-      tot = _rnk.rnkTable[_rnk.sortedRnk[i]].total;
-      for (uint j = i+1; j < _rnk.totalLength; j++) {
-        tf = false;
-        var r = _rnk.rnkTable[_rnk.sortedRnk[j]].rank;
-        if (r < rk) {
-          tf = true;
-        } else if (r == rk) {
-          if (_rnk.rnkTable[_rnk.sortedRnk[j]].total < tot) {
+    if (_rnk.totalLength > 1) {
+      for (uint i = 0; i < _rnk.totalLength-1; i++) {
+        _id = i;
+        con = _rnk.rnkTable[_rnk.sortedRnk[i]].consump;
+        rk = _rnk.rnkTable[_rnk.sortedRnk[i]].rank;
+        tot = _rnk.rnkTable[_rnk.sortedRnk[i]].total;
+        for (uint j = i+1; j < _rnk.totalLength; j++) {
+          tf = false;
+          var r = _rnk.rnkTable[_rnk.sortedRnk[j]].rank;
+          if (r < rk) {
             tf = true;
-          } else if (_rnk.rnkTable[_rnk.sortedRnk[j]].total == tot && _rnk.rnkTable[_rnk.sortedRnk[j]].consump < con) {
-            tf = true;   
+          } else if (r == rk) {
+            if (_rnk.rnkTable[_rnk.sortedRnk[j]].total < tot) {
+              tf = true;
+            } else if (_rnk.rnkTable[_rnk.sortedRnk[j]].total == tot && _rnk.rnkTable[_rnk.sortedRnk[j]].consump < con) {
+              tf = true;   
+            }
+          }
+          if (tf == true) {
+            _id = j;
+            con = _rnk.rnkTable[_rnk.sortedRnk[j]].consump;
+            rk = r;
+            tot = _rnk.rnkTable[_rnk.sortedRnk[j]].total;  
           }
         }
-        if (tf == true) {
-          _id = j;
-          con = _rnk.rnkTable[_rnk.sortedRnk[j]].consump;
-          rk = r;
-          tot = _rnk.rnkTable[_rnk.sortedRnk[j]].total;  
-        }
+        swap(_rnk,i,_id);
       }
-      swap(_rnk,i,_id);
     }
   }
 
@@ -74,5 +75,14 @@ library SortRLib {
     consum = _rnk.rnkTable[_rnk.sortedRnk[a]].consump;
     rank = _rnk.rnkTable[_rnk.sortedRnk[a]].rank;
     tot = _rnk.rnkTable[_rnk.sortedRnk[a]].total;
+  }
+
+
+  function getTotalLength(RankMap storage _rnk) public view returns(uint) {
+    return _rnk.totalLength;
+  }
+
+  function getRankTable(RankMap storage _rnk, address adr) public view returns (uint, uint, uint) {
+    return (_rnk.rnkTable[adr].consump, _rnk.rnkTable[adr].rank, _rnk.rnkTable[adr].total);
   }
 }

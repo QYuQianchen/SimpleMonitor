@@ -114,7 +114,7 @@ contract SinglePV is GeneralDevice, IPV {
   }
 
   function sortRank() public timed(3) {
-    draftRankMap.sortRnkTable();
+    // draftRankMap.sortRnkTable();
   }
 
   function getSortedRank(uint _id) view public returns(address adr, uint consum, uint rank, uint tot) {
