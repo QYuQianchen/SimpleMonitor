@@ -138,12 +138,12 @@ contract SinglePV is GeneralDevice, IPV {
     if (counter < totalNumber) {
 
       for (uint j = counter; j < totalNumber; j++) {
-        (adr,consum,rank,tot) = getSortedRank(counter);
+        (adr,consum,rank,tot) = getSortedRank(j);
 
         if (rank == i) {
           // time to make transaction
           if (production > 0 && consum > 0) {
-            initiateTransaction(counter);
+            initiateTransaction(j);
           }
           counter++;
         } else if (rank < i) {

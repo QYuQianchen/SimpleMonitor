@@ -177,6 +177,9 @@ contract('simpletest', function(accounts) {
     return getSortedPVDetails(testingElement);
   });
 
+  it('round ' + 43  + ' should be executed ',  async function() {
+    return await oneRound(43);
+  });
 
   it('write to file', async function() {
     await WriteJson("record_step_4", database_4);
@@ -485,6 +488,7 @@ async function step(period, currentStep) {
 
       if (device_type == "pv") {
         for (let i = 1; i < totalStages; i++) {
+          await startCordination(i);
           await startCordination(i);
         }
       }
