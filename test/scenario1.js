@@ -666,7 +666,7 @@ async function checkAllDeviceStatus(_database) {
       }
     }
   }
-  await Promise.all(allDeviceStatusPromises)
+  return await Promise.all(allDeviceStatusPromises)
 
 }
 
@@ -756,11 +756,11 @@ async function oneRound(currentRound) {
       // getGasConsump();
       await checkAllDeviceStatus(database_5);
     }
-    // await jumpTime(12);
+    await jumpTime(12);
   }
 
   // await WriteJson("record_step_4", database_4);
   // await WriteJson("record_step_5", database_5);
   // await WriteJson("record_gas", database_gas);
-  return;
+  return await jumpTime(12);
 }
