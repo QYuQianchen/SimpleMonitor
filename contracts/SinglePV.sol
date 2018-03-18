@@ -111,6 +111,7 @@ contract SinglePV is GeneralDevice, IPV {
       }
     }
     lastRankingAt = now;
+    return;
   }
 
   function sortRank() public timed(3) {
@@ -206,6 +207,7 @@ contract SinglePV is GeneralDevice, IPV {
       receivedMoney = whatDeviceAccept*price;
       wallet += int(receivedMoney);
       // return(giveoutVol, whatDeviceAccept);
+      return;
   }
 
   // --- 5. Deal with excess energy ---

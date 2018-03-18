@@ -165,6 +165,7 @@ contract SingleBattery is GeneralDevice, IBattery {
       }
     }
     lastRankingAt = now;
+    return;
   }
 
   function sortRank() public timed(3) {
@@ -282,6 +283,7 @@ contract SingleBattery is GeneralDevice, IBattery {
       VolLog(owner,currentVolume,volStatusAt);
       // return(giveoutVol, whatDeviceAccept);
     //}
+    return;
   }
 
   // --- 5. Deal with excess energy --- 

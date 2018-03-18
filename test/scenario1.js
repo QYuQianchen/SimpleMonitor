@@ -134,69 +134,23 @@ contract('simpletest', function(accounts) {
 
   it('get sorted rank of PV0', function() {
     var testingElement = config["pv"][0];
-    return testingElement.contract["getSortedRank"].call(0, { from: testingElement.address}).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(1, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(2, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-    //   return testingElement.contract["getSortedRankDetail"].call(config["house"][0].contract_address, { from: testingElement.address});
-    // }).then(function (result) {
-    //   console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
-    //   return testingElement.contract["getSortedRankDetail"].call(config["battery"][0].contract_address, { from: testingElement.address});
-    // }).then(function (result) {
-    //   console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
-    //   return testingElement.contract["getSortedRankDetail"].call(config["heatpump"][0].contract_address, { from: testingElement.address});
-    // }).then(function (result) {
-    //   console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
-      return testingElement.contract["getSortedRankLength"].call({ from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0].toNumber() + " - " + result[1].toNumber() + " - " + result[2].toNumber() + " : " + result[3].toNumber());
-    });
+    return getSortedPVDetails(testingElement);
   });
+
 
   it('get sorted rank of PV1', function() {
     var testingElement = config["pv"][1];
-    return testingElement.contract["getSortedRank"].call(0, { from: testingElement.address}).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(1, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(2, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRankDetail"].call(config["house"][1].address, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
-    });
+    return getSortedPVDetails(testingElement);
   });
 
   it('get sorted rank of PV2', function() {
     var testingElement = config["pv"][2];
-    return testingElement.contract["getSortedRank"].call(0, { from: testingElement.address}).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(1, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(2, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-    });
+    return getSortedPVDetails(testingElement);
   });
 
   it('get sorted rank of Battery0', function() {
     var testingElement = config["battery"][0];
-    return testingElement.contract["getSortedRank"].call(0, { from: testingElement.address}).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(1, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(2, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-    });
+    return getSortedPVDetails(testingElement);
   });
 
   it('round ' + 42  + ' should be executed ',  async function() {
@@ -205,69 +159,22 @@ contract('simpletest', function(accounts) {
 
   it('get sorted rank of PV0', function() {
     var testingElement = config["pv"][0];
-    return testingElement.contract["getSortedRank"].call(0, { from: testingElement.address}).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(1, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(2, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-    //   return testingElement.contract["getSortedRankDetail"].call(config["house"][0].contract_address, { from: testingElement.address});
-    // }).then(function (result) {
-    //   console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
-    //   return testingElement.contract["getSortedRankDetail"].call(config["battery"][0].contract_address, { from: testingElement.address});
-    // }).then(function (result) {
-    //   console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
-    //   return testingElement.contract["getSortedRankDetail"].call(config["heatpump"][0].contract_address, { from: testingElement.address});
-    // }).then(function (result) {
-    //   console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
-      return testingElement.contract["getSortedRankLength"].call({ from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0].toNumber() + " - " + result[1].toNumber() + " - " + result[2].toNumber() + " : " + result[3].toNumber());
-    });
+    return getSortedPVDetails(testingElement);
   });
 
   it('get sorted rank of PV1', function() {
     var testingElement = config["pv"][1];
-    return testingElement.contract["getSortedRank"].call(0, { from: testingElement.address}).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(1, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(2, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRankDetail"].call(config["house"][1].address, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
-    });
+    return getSortedPVDetails(testingElement);
   });
 
   it('get sorted rank of PV2', function() {
     var testingElement = config["pv"][2];
-    return testingElement.contract["getSortedRank"].call(0, { from: testingElement.address}).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(1, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(2, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-    });
+    return getSortedPVDetails(testingElement);
   });
 
   it('get sorted rank of Battery0', function() {
     var testingElement = config["battery"][0];
-    return testingElement.contract["getSortedRank"].call(0, { from: testingElement.address}).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(1, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-      return testingElement.contract["getSortedRank"].call(2, { from: testingElement.address});
-    }).then(function (result) {
-      console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
-    });
+    return getSortedPVDetails(testingElement);
   });
 
 
@@ -554,23 +461,23 @@ async function step(period, currentStep) {
     // when selling, there is competition. Order of execution matters.
     // Therefore, we need to introduce the 
     for (var device_type in actions) {
-      if (device_type == "watertank") { 
-        for (var device_id in config[device_type]) {
-          var element = config[device_type][device_id];
-          var action = "sellEnergy";
-          (function(_element, _action) {
-            // console.log("Executing " + _action + " <-- " + _element.device_name);
-            stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
-              // console.log(_element.device_name + " has passed through <--" + _action);
-            }));
-          })(element, action);
-          // await element.contract[action]({ from: element.address, gas: 6700000});
-        }
-      } else if (device_type == "pv") { // actions[device_type][currentStep] == ["sellEnergy"] // start executing among "pv" and "battery"
-        for (let i = 0; i < totalStages; i++) {
-          await startCordination(i);
-        }
-      } 
+      // if (device_type == "watertank") { 
+      //   for (var device_id in config[device_type]) {
+      //     var element = config[device_type][device_id];
+      //     var action = "sellEnergy";
+      //     (function(_element, _action) {
+      //       // console.log("Executing " + _action + " <-- " + _element.device_name);
+      //       stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
+      //         // console.log(_element.device_name + " has passed through <--" + _action);
+      //       }));
+      //     })(element, action);
+      //     // await element.contract[action]({ from: element.address, gas: 6700000});
+      //   }
+      // } else if (device_type == "pv") { // actions[device_type][currentStep] == ["sellEnergy"] // start executing among "pv" and "battery"
+      //   for (let i = 0; i < totalStages; i++) {
+      //     await startCordination(i);
+      //   }
+      // } 
 
       if (device_type == "pv") {
         for (let i = 0; i < totalStages; i++) {
@@ -641,24 +548,9 @@ async function cordinateSellEnergy(i,element) {
 }
 
 async function startCordination(i) {
-  var d_type = ["pv", "battery"];
-  var cordinationPromisese = [];
-  d_type.forEach(d_type_element => {
-    for (var device_id in config[d_type_element]) {
-      var element = config[d_type_element][device_id];
-      if (i == 0) {
-        // initialization
-        element.counter = 0;
-      }
-      (function(_element) {
-        // console.log("start coordination " + _element.device_name + " <-- " + _element.counter);
-        cordinationPromisese.push(cordinateSellEnergy(i,_element).then(function (result) {
-          // console.log(_element.device_name + " finished coordination" + " <--" + i + " <-- " + _element.counter);
-        }));
-      })(element);
-    }
-  });
-  // var d_type_element = "pv";
+  // var d_type = ["pv", "battery"];
+  // var cordinationPromisese = [];
+  // d_type.forEach(d_type_element => {
   //   for (var device_id in config[d_type_element]) {
   //     var element = config[d_type_element][device_id];
   //     if (i == 0) {
@@ -671,24 +563,22 @@ async function startCordination(i) {
   //         // console.log(_element.device_name + " finished coordination" + " <--" + i + " <-- " + _element.counter);
   //       }));
   //     })(element);
-  //     // await cordinateSellEnergy(i,element);
-  //   }     
-  // d_type_element = "battery";
-  //   for (device_id in config[d_type_element]) {
-  //     element = config[d_type_element][device_id];
-  //     if (i == 0) {
-  //       // initialization
-  //       element.counter = 0;
-  //     }
-  //     (function(_element) {
-  //       // console.log("start coordination " + _element.device_name + " <-- " + _element.counter);
-  //       cordinationPromisese.push(cordinateSellEnergy(i,_element).then(function (result) {
-  //         // console.log(_element.device_name + " finished coordination" + " <--" + i + " <-- " + _element.counter);
-  //       }));
-  //     })(element);
-  //     // await cordinateSellEnergy(i,element);
   //   }
-  return await Promise.all(cordinationPromisese);
+  // });
+  // return await Promise.all(cordinationPromisese);
+
+  if (i == 0) {
+  // initialization
+  config["pv"][0].counter = 0;
+  config["pv"][1].counter = 0;
+  config["pv"][2].counter = 0;
+  config["battery"][0].counter = 0;
+  }
+  await cordinateSellEnergy(i,config["pv"][0]);
+  await cordinateSellEnergy(i,config["pv"][1]);
+  await cordinateSellEnergy(i,config["pv"][2]);
+  await cordinateSellEnergy(i,config["battery"][0]);
+  return;
 }
 
 
@@ -842,4 +732,28 @@ async function oneRound(currentRound) {
   // await WriteJson("record_step_5", database_5);
   // await WriteJson("record_gas", database_gas);
   return await jumpTime(12);
+}
+
+function getSortedPVDetails(testingElement) {
+  return testingElement.contract["getSortedRank"].call(0, { from: testingElement.address}).then(function (result) {
+    console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+    return testingElement.contract["getSortedRank"].call(1, { from: testingElement.address});
+  }).then(function (result) {
+    console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+    return testingElement.contract["getSortedRank"].call(2, { from: testingElement.address});
+  }).then(function (result) {
+    console.log(result[0],result[1].toNumber(), result[2].toNumber(), result[3].toNumber());
+  //   return testingElement.contract["getSortedRankDetail"].call(config["house"][0].contract_address, { from: testingElement.address});
+  // }).then(function (result) {
+  //   console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
+  //   return testingElement.contract["getSortedRankDetail"].call(config["battery"][0].contract_address, { from: testingElement.address});
+  // }).then(function (result) {
+  //   console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
+  //   return testingElement.contract["getSortedRankDetail"].call(config["heatpump"][0].contract_address, { from: testingElement.address});
+  // }).then(function (result) {
+  //   console.log(result[0].toNumber(),result[1].toNumber(), result[2].toNumber());
+  //   return testingElement.contract["getSortedRankLength"].call({ from: testingElement.address});
+  // }).then(function (result) {
+  //   console.log(result[0].toNumber() + " - " + result[1].toNumber() + " - " + result[2].toNumber() + " : " + result[3].toNumber());
+  });
 }
