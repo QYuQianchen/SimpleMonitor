@@ -203,7 +203,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     uint consum;
     uint rank;
     uint tot;
-    
+
     if (counter < totalNumber) {
 
       for (uint j = counter; j < totalNumber; j++) {
@@ -215,17 +215,19 @@ contract SingleBattery is GeneralDevice, IBattery {
             initiateTransaction(counter);
           }
           counter++;
-          newCounter = counter;
         } else if (rank < i) {
           // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
           counter++;
-          newCounter = counter;
         } else {
           // when rank > i, need to wait
+          newCounter = counter;
           return;
         }
+        
       }
     }
+    newCounter = counter;
+
     return;
   }
   
@@ -244,8 +246,8 @@ contract SingleBattery is GeneralDevice, IBattery {
     // uint tStamp;
  
       (adr,consum,rank,tot) = getSortedRank(_id);
-      // giveoutVol = currentVolume.findMin(consum);
-      giveoutVol = currentVolume;
+      giveoutVol = currentVolume.findMin(consum);
+      // giveoutVol = currentVolume;
       if (connectedDevice[0].assertInside(adr)) {
         // DeviceIDLog(0);
         // (consum, tStamp)= IHouseE(adr).getConsumptionE();

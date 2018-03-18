@@ -456,6 +456,10 @@ async function step(period, currentStep) {
         await config[device_type][2].contract["askForNeed"]({ from: config[device_type][2].address, gas: 6700000});
       }
     }
+    await getSortedPVDetails(config["pv"][0]);
+    await getSortedPVDetails(config["pv"][1]);
+    await getSortedPVDetails(config["pv"][2]);
+    await getSortedPVDetails(config["battery"][0]);
     return await Promise.all(stepPromises);
   } else if (currentStep == 4) {
     // when selling, there is competition. Order of execution matters.
@@ -480,7 +484,7 @@ async function step(period, currentStep) {
       // } 
 
       if (device_type == "pv") {
-        for (let i = 0; i < totalStages; i++) {
+        for (let i = 1; i < totalStages; i++) {
           await startCordination(i);
         }
       }
@@ -543,8 +547,14 @@ async function cordinateSellEnergy(i,element) {
     return element.contract["getNewCounter"].call({ from: element.address});
   }).then(function(result) {
     element.counter = result.toNumber();
-    // console.log(element.counter);
+    console.log("     at stage" + i + ", the counter of " + element.device_name + " is " + element.counter);
+
   });
+  // await element.contract["verifySellEnergy"](i, element.counter, { from: element.address, gas: 6700000});
+  // let result = await element.contract["getNewCounter"].call({ from: element.address});
+  // element.counter = result.toNumber();
+  // console.log("     at stage" + i + ", the counter of " + element.device_name + " is " + element.counter);
+  // return;
 }
 
 async function startCordination(i) {
@@ -567,13 +577,18 @@ async function startCordination(i) {
   // });
   // return await Promise.all(cordinationPromisese);
 
-  if (i == 0) {
+  if (i == 1) {
   // initialization
   config["pv"][0].counter = 0;
   config["pv"][1].counter = 0;
   config["pv"][2].counter = 0;
   config["battery"][0].counter = 0;
   }
+  console.log("     before stage" + i + ", the counter of pv0 is " + config["pv"][0].counter);
+  console.log("     before stage" + i + ", the counter of pv1 is " + config["pv"][1].counter);
+  console.log("     before stage" + i + ", the counter of pv2 is " + config["pv"][2].counter);
+  console.log("     before stage" + i + ", the counter of battery0 is " + config["battery"][0].counter);
+
   await cordinateSellEnergy(i,config["pv"][0]);
   await cordinateSellEnergy(i,config["pv"][1]);
   await cordinateSellEnergy(i,config["pv"][2]);

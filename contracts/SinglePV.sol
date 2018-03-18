@@ -133,7 +133,8 @@ contract SinglePV is GeneralDevice, IPV {
     uint consum;
     uint rank;
     uint tot;
-    
+
+
     if (counter < totalNumber) {
 
       for (uint j = counter; j < totalNumber; j++) {
@@ -145,17 +146,19 @@ contract SinglePV is GeneralDevice, IPV {
             initiateTransaction(counter);
           }
           counter++;
-          newCounter = counter;
         } else if (rank < i) {
           // the transaction of this ranking has been done globally. No more transaction should be made for this ranking.
           counter++;
-          newCounter = counter;
         } else {
           // when rank > i, need to wait
+          newCounter = counter;
           return;
         }
       }
     }
+
+    newCounter = counter;
+
     return;
   }
 
@@ -174,8 +177,8 @@ contract SinglePV is GeneralDevice, IPV {
     // uint tStamp;
 
       (adr,consum,rank,tot) = getSortedRank(_id);
-      // giveoutVol = production.findMin(consum);
-      giveoutVol = production;
+      giveoutVol = production.findMin(consum);
+      // giveoutVol = production;
       if (connectedDevice[2].assertInside(adr)) {
         // consum= IBattery(adr).getConsumption();
         // giveoutVol = production.findMin(consum);

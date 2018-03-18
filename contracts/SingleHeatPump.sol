@@ -120,8 +120,8 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
     takeoutvol = consumptionElec.findMin(giveoutvol);
     consumptionElec -= takeoutvol;
     // consumptionElec = consumptionElec.clearEnergyTransfer(takeoutvol, address(this));
-    //wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
-    wallet -= takeoutvol.payment(draftPriceMap.prsTable[adrDevice].prs);
+    wallet -= int(takeoutvol*draftPriceMap.prsTable[adrDevice].prs);
+    // wallet -= takeoutvol.payment(draftPriceMap.prsTable[adrDevice].prs);
     // Set the price for heat pump
     if (draftPriceMap.prsTable[adrDevice].prs > maxSupplyPrice) {
       maxSupplyPrice = draftPriceMap.prsTable[adrDevice].prs;
@@ -175,7 +175,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
       // TestLog(whatDeviceAccept, connectedDevice[4].length);
       waterFlow -= whatDeviceAccept;
       consumptionWater -= whatDeviceAccept;
-      wallet +=  int(whatDeviceAccept * waterPrice * 2); // here 2 is factor to gain money...
+      wallet += int(whatDeviceAccept * waterPrice * 2); // here 2 is factor to gain money...
     }
  
   }
@@ -188,7 +188,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
   
   // not yet set the phase
   
-  function setPrice() ownerOnly private {
+  function setPrice() private {
     price = maxSupplyPrice;
     priceStatusAt = now;
     PriceUpdate(now);
