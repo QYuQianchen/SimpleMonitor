@@ -123,7 +123,7 @@ contract('simpletest', function(accounts) {
     });
   });
 
-  for(let i = 41; i < 45; i++) {   // i should be 0 - 96
+  for(let i = 0; i < 96; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
       return await oneRound(i);
     });

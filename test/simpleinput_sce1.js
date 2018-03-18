@@ -66,7 +66,7 @@ exports.config = {
       "id": 0,
       "address": 0,
       "capacity": 200,
-      "volume": 5,
+      "volume": 100,
       "contract_address": 0
     }
   ],
@@ -141,7 +141,7 @@ exports.actions = {
   },
   "battery" : {
     1 : ["setConsumption", "setPrice"],   // remove the "setVolume"
-    2 : ["askForPrice", "sortPrice"],
+    // 2 : ["askForPrice", "sortPrice"],
     3 : ["askForRank", "sortRank"],
     4 : ["sellEnergy"]
   },
