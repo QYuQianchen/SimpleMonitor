@@ -61,12 +61,14 @@ contract SinglePV is GeneralDevice, IPV {
     production = produc;
     prodStatusAt = now;
     ProductionLog(owner, production, prodStatusAt);
+    return;
   }
 
   function setPrice(uint prs) public timed(1) ownerOnly {
     price = prs;
     priceStatusAt = now;
     PriceUpdate(now);
+    return;
   }
 
   function getProduction() external view returns (uint prod, uint prodAt) {//timed(queryTime,prodTimeOut)
@@ -116,6 +118,7 @@ contract SinglePV is GeneralDevice, IPV {
 
   function sortRank() public timed(3) {
     draftRankMap.sortRnkTable();
+    return;
   }
 
   function getSortedRank(uint _id) view public returns(address adr, uint consum, uint rank, uint tot) {
@@ -241,6 +244,7 @@ contract SinglePV is GeneralDevice, IPV {
         // wallet = wallet.clearMoneyTransfer(receivedMoney,grid, address(this));
       }
     }
+    return;
   }
 
   function getTimeToNext() public returns (uint) {

@@ -59,6 +59,7 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
     consumption = consum;
     consumStatusAt = now;
     ConsumptionLog(owner, consumption, consumStatusAt);
+    return;
   }
 
   // overload function of setConsumption
@@ -71,6 +72,7 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
     consumStatusAt = now;
     consumWaterStatusAt = now;
     ConsumptionLog(owner, consumptionHTWater+consumptionMTWater, consumStatusAt);
+    return;
   }
 
   // --- 2. ask for connected PV / batteries / grid for price of electricity supply ---
@@ -88,12 +90,14 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
       draftPriceMap.addToPrsTable(connectedDevice[2][i],tP,tF);
     }
     lastPriceQueryAt = now;
+    return;
   }
 
   // --- 3. House sorts all the information internally ---
 
   function sortPrice() public timed(2) { // try out 
     draftPriceMap.sortPrsTable();
+    return;
   }
 
   function getSortedPrice() external returns(uint consum, uint rank, uint tot, bool updated) {
@@ -154,6 +158,7 @@ contract SingleHouse is GeneralDevice, IHouseE, IHouseH {
       receivedMoney = whatDeviceAccept*unitPrs;
       wallet -= int(receivedMoney);
     }
+    return;
   }
 
 

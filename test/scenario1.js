@@ -123,63 +123,64 @@ contract('simpletest', function(accounts) {
     });
   });
 
-  // for(let i = 41; i < 45; i++) {   // i should be 0 - 96
-  //   it('round ' + i  + ' should be executed ',  async function() {
-  //     return await oneRound(i);
-  //   });
-  // }
-  it('round ' + 41  + ' should be executed ',  async function() {
-    return await oneRound(41);
-  });
+  for(let i = 41; i < 45; i++) {   // i should be 0 - 96
+    it('round ' + i  + ' should be executed ',  async function() {
+      return await oneRound(i);
+    });
+  }
 
-  it('get sorted rank of PV0', function() {
-    var testingElement = config["pv"][0];
-    return getSortedPVDetails(testingElement);
-  });
+  // it('round ' + 41  + ' should be executed ',  async function() {
+  //   return await oneRound(41);
+  // });
+
+  // it('get sorted rank of PV0', function() {
+  //   var testingElement = config["pv"][0];
+  //   return getSortedPVDetails(testingElement);
+  // });
 
 
-  it('get sorted rank of PV1', function() {
-    var testingElement = config["pv"][1];
-    return getSortedPVDetails(testingElement);
-  });
+  // it('get sorted rank of PV1', function() {
+  //   var testingElement = config["pv"][1];
+  //   return getSortedPVDetails(testingElement);
+  // });
 
-  it('get sorted rank of PV2', function() {
-    var testingElement = config["pv"][2];
-    return getSortedPVDetails(testingElement);
-  });
+  // it('get sorted rank of PV2', function() {
+  //   var testingElement = config["pv"][2];
+  //   return getSortedPVDetails(testingElement);
+  // });
 
-  it('get sorted rank of Battery0', function() {
-    var testingElement = config["battery"][0];
-    return getSortedPVDetails(testingElement);
-  });
+  // it('get sorted rank of Battery0', function() {
+  //   var testingElement = config["battery"][0];
+  //   return getSortedPVDetails(testingElement);
+  // });
 
-  it('round ' + 42  + ' should be executed ',  async function() {
-    return await oneRound(42);
-  });
+  // it('round ' + 42  + ' should be executed ',  async function() {
+  //   return await oneRound(42);
+  // });
 
-  it('get sorted rank of PV0', function() {
-    var testingElement = config["pv"][0];
-    return getSortedPVDetails(testingElement);
-  });
+  // it('get sorted rank of PV0', function() {
+  //   var testingElement = config["pv"][0];
+  //   return getSortedPVDetails(testingElement);
+  // });
 
-  it('get sorted rank of PV1', function() {
-    var testingElement = config["pv"][1];
-    return getSortedPVDetails(testingElement);
-  });
+  // it('get sorted rank of PV1', function() {
+  //   var testingElement = config["pv"][1];
+  //   return getSortedPVDetails(testingElement);
+  // });
 
-  it('get sorted rank of PV2', function() {
-    var testingElement = config["pv"][2];
-    return getSortedPVDetails(testingElement);
-  });
+  // it('get sorted rank of PV2', function() {
+  //   var testingElement = config["pv"][2];
+  //   return getSortedPVDetails(testingElement);
+  // });
 
-  it('get sorted rank of Battery0', function() {
-    var testingElement = config["battery"][0];
-    return getSortedPVDetails(testingElement);
-  });
+  // it('get sorted rank of Battery0', function() {
+  //   var testingElement = config["battery"][0];
+  //   return getSortedPVDetails(testingElement);
+  // });
 
-  it('round ' + 43  + ' should be executed ',  async function() {
-    return await oneRound(43);
-  });
+  // it('round ' + 43  + ' should be executed ',  async function() {
+  //   return await oneRound(43);
+  // });
 
   it('write to file', async function() {
     await WriteJson("record_step_4", database_4);
@@ -459,10 +460,10 @@ async function step(period, currentStep) {
         await config[device_type][2].contract["askForNeed"]({ from: config[device_type][2].address, gas: 6700000});
       }
     }
-    await getSortedPVDetails(config["pv"][0]);
-    await getSortedPVDetails(config["pv"][1]);
-    await getSortedPVDetails(config["pv"][2]);
-    await getSortedPVDetails(config["battery"][0]);
+    // await getSortedPVDetails(config["pv"][0]);
+    // await getSortedPVDetails(config["pv"][1]);
+    // await getSortedPVDetails(config["pv"][2]);
+    // await getSortedPVDetails(config["battery"][0]);
     return await Promise.all(stepPromises);
   } else if (currentStep == 4) {
     // when selling, there is competition. Order of execution matters.
@@ -551,7 +552,7 @@ async function cordinateSellEnergy(i,element) {
     return element.contract["getNewCounter"].call({ from: element.address});
   }).then(function(result) {
     element.counter = result.toNumber();
-    console.log("     at stage" + i + ", the counter of " + element.device_name + " is " + element.counter);
+    // console.log("     at stage" + i + ", the counter of " + element.device_name + " is " + element.counter);
 
   });
   // await element.contract["verifySellEnergy"](i, element.counter, { from: element.address, gas: 6700000});
@@ -588,10 +589,10 @@ async function startCordination(i) {
   config["pv"][2].counter = 0;
   config["battery"][0].counter = 0;
   }
-  console.log("     before stage" + i + ", the counter of pv0 is " + config["pv"][0].counter);
-  console.log("     before stage" + i + ", the counter of pv1 is " + config["pv"][1].counter);
-  console.log("     before stage" + i + ", the counter of pv2 is " + config["pv"][2].counter);
-  console.log("     before stage" + i + ", the counter of battery0 is " + config["battery"][0].counter);
+  // console.log("     before stage" + i + ", the counter of pv0 is " + config["pv"][0].counter);
+  // console.log("     before stage" + i + ", the counter of pv1 is " + config["pv"][1].counter);
+  // console.log("     before stage" + i + ", the counter of pv2 is " + config["pv"][2].counter);
+  // console.log("     before stage" + i + ", the counter of battery0 is " + config["battery"][0].counter);
 
   await cordinateSellEnergy(i,config["pv"][0]);
   await cordinateSellEnergy(i,config["pv"][1]);

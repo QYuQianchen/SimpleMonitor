@@ -73,6 +73,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
       consumptionElec = consumptionWater.convertToElec(waterType);
     }
     lastConsumpQueryAt = now;
+    return;
   }
 
   /*function convertConsumption() private timed(1) {    // can also move into phase 2
@@ -95,12 +96,14 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
       draftPriceMap.addToPrsTable(connectedDevice[2][i],tP,tF);
     }
     lastPriceQueryAt = now;
+    return;
   }
 
     // --- 3. HP sorts all the information internally ---
 
   function sortPrice() public  { //timed(2)
     draftPriceMap.sortPrsTable();
+    return;
   }
 
   function getSortedPrice() view external returns(uint consum, uint rank, uint tot, bool updated) {
@@ -157,6 +160,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
 
       initiateTransaction(whatDeviceAccept);
     } 
+    return;
   }
 
   // transact to water tank (also give out prs information.)
@@ -193,6 +197,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
     price = maxSupplyPrice;
     priceStatusAt = now;
     PriceUpdate(now);
+    return;
   }
 
   function getPrice() public view returns (uint prs, bool updatedOrNot) { //connectedHouseOnly external

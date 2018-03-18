@@ -63,6 +63,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
     currentVolume = vol;
     volStatusAt = now;
     VolLog(owner,vol,volStatusAt);
+    return;
   }
 
   function getVolume() external view returns (uint) {
@@ -75,6 +76,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
     consumption = consum;
     consumStatusAt = now;
     ConsumptionUpdate(consumStatusAt);
+    return;
   }
 
   function getConsumption() public view returns (uint consum, bool updatedOrNot) { // connectedHouseOnly external
@@ -103,7 +105,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
     price = prsMap.calPrice(price,currentVolume);
     priceStatusAt = now;
     PrsLog(price,priceStatusAt);
-
+    return;
   }
 
   function getPrice() external view returns(uint prs) {
@@ -130,6 +132,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
       }
     }
     needStatusAt = now;
+    return;
   }
 
   // --- 4. HP sell water to water tank ---
@@ -167,6 +170,7 @@ contract SingleWaterTank is GeneralDevice, IWaterTank {
       wallet += int(whatDeviceAccept * price);
       volMap[i] -= whatDeviceAccept;
     }
+    return;
   }
 
   // // --- 5. Deal with excess energy --- 

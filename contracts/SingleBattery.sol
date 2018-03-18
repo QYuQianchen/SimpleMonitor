@@ -74,6 +74,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     currentVolume = vol;
     volStatusAt = now;
     VolLog(owner,vol,volStatusAt);
+    return;
   }
 
   // --- 1. set and get the active purchase volume (if battery wants) and selling price every 15 min (or less) ---
@@ -83,6 +84,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     priceForBuy = prsBuy;
     priceStatusAt = now;
     PriceUpdate(priceStatusAt);
+    return;
   }
 
   function getSalePrice() public view returns (uint prs, bool updatedOrNot) { // connectedHouseOnly external
@@ -103,6 +105,7 @@ contract SingleBattery is GeneralDevice, IBattery {
       consumption = 0;
     }
     // require(currentVolume + v <= capacity);
+    return;
   }
 
   function getConsumption() view public returns (uint) {return consumption;}
@@ -129,13 +132,15 @@ contract SingleBattery is GeneralDevice, IBattery {
       }
       lastPriceQueryAt = now;
     // }
+    return;
   }
 
   function sortPrice() public timed(2) {
     
     if (connectedDevice[1].length > 0) {
       draftPriceMap.sortPrsTable();
-    } 
+    }
+    return;
   }
 
   function getSortedPrice() external returns(uint consum, uint rank, uint tot, bool updated) {
@@ -170,6 +175,7 @@ contract SingleBattery is GeneralDevice, IBattery {
 
   function sortRank() public timed(3) {
     draftRankMap.sortRnkTable();
+    return;
   }
 
   function getSortedRank(uint _id) view public returns(address adr, uint consum, uint rank, uint tot) {
@@ -299,6 +305,7 @@ contract SingleBattery is GeneralDevice, IBattery {
     currentVolume += takeVol;
     // currentVolume = currentVolume.clearExcessTransfer(takeVol, address(this));
     wallet -= int(takeVol*prs);
+    return;
   }
 
 }
