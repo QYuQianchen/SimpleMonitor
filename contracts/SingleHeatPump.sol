@@ -177,6 +177,7 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
       consumptionWater -= whatDeviceAccept;
       wallet += int(whatDeviceAccept * waterPrice * 2); // here 2 is factor to gain money...
     }
+    return;
  
   }
 
