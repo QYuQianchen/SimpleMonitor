@@ -53,8 +53,8 @@ function parseHouse(fileNo) {
 
 function parsePV(fileNo) {
 
-    var csvFilePath = "./pv_" + fileNo + ".csv";
-    var jsonFileName = "pv_" + fileNo + ".json"
+    var csvFilePath = "./pv_" + fileNo + "scaledup.csv";
+    var jsonFileName = "pv_" + fileNo + "scaledup.json"
 
     var pv= {
         "production" : [],
