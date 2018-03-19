@@ -235,14 +235,13 @@ contract SinglePV is GeneralDevice, IPV {
           wallet += int(receivedMoney);
           // wallet = wallet.clearMoneyTransfer(receivedMoney,adr, address(this));
         }
-      } else {
-        //ToGrid (by default, it's connected to grid)
-        (whatDeviceAccept, unitPrs) = IGrid(grid).goExcess(production);
-        production -= whatDeviceAccept;
-        receivedMoney = whatDeviceAccept*unitPrs;
-        wallet += int(receivedMoney);
-        // wallet = wallet.clearMoneyTransfer(receivedMoney,grid, address(this));
       }
+      //ToGrid (by default, it's connected to grid)
+      (whatDeviceAccept, unitPrs) = IGrid(grid).goExcess(production);
+      production -= whatDeviceAccept;
+      receivedMoney = whatDeviceAccept*unitPrs;
+      wallet += int(receivedMoney);
+      // wallet = wallet.clearMoneyTransfer(receivedMoney,grid, address(this));
     }
     return;
   }
