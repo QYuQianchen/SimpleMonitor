@@ -38,32 +38,7 @@ var configuration = null;
 var simpleinputs = require("./simpleinput_sce3");
 var config = simpleinputs.config;
 var actions = simpleinputs.actions;
-// var inputs = simpleinputs.inputs;
-var inputs = {"house":[
-  {"consumption":[3,1,5,1,3,1,3,3,2,3,1,3,3,3,1,3,2,1,5,2,2,1,2,4,3,2,1,3,4,2,1,2,3,2,21,20,21,19,22,20,22,21,21,22,20,22,20,23,20,22,21,21,22,20,22,21,19,23,20,22,20,21,20,22,21,17,2,1,3,1,3,3,2,3,1,3,4,2,1,3,1,5,2,1,3,1,3,3,3,2,2,2,4,2,2,2],"consumptionH":[[3,0],[3,0],[3,0],[3,0],[1,0],[1,0],[1,0],[1,0],[1,0],[1,0],[1,0],[1,0],[1,0],[1,0],[1,0],[1,0],[1,0],[1,0],[1,0],[1,0],[2,0],[2,0],[2,0],[2,0],[3,0],[3,0],[3,0],[3,0],[7,0],[7,0],[7,0],[7,0],[7,0],[7,0],[7,0],[7,0],[2,0],[2,0],[2,0],[2,0],[2,0],[2,0],[2,0],[2,0],[3,0],[3,0],[3,0],[3,0],[7,0],[7,0],[7,0],[7,0],[6,0],[6,0],[6,0],[6,0],[3,0],[3,0],[3,0],[3,0],[2,0],[2,0],[2,0],[2,0],[1,0],[1,0],[1,0],[1,0],[1,0],[1,0],[1,0],[1,0],[2,0],[2,0],[2,0],[2,0],[3,0],[3,0],[3,0],[3,0],[8,0],[8,0],[8,0],[8,0],[8,0],[8,0],[8,0],[8,0],[7,0],[7,0],[7,0],[7,0],[5,0],[5,0],[5,0],[5,0]]},
-  {"consumption":[2,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,2,1,1,1,2,1,3,4,3,11,11,12,11,29,31,27,25,25,25,24,25,25,25,25,27,26,26,26,25,26,26,26,26,26,25,25,26,25,29,29,29,29,29,30,28,29,28,25,19,9,7,7,6,5,2,1,1,1,3,2,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1],"consumptionH":[[0,6],[0,6],[0,6],[0,6],[0,2],[0,2],[0,2],[0,2],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,3],[0,3],[0,3],[0,3],[0,6],[0,6],[0,6],[0,6],[0,12],[0,12],[0,12],[0,12],[0,13],[0,13],[0,13],[0,13],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,6],[0,6],[0,6],[0,6],[0,13],[0,13],[0,13],[0,13],[0,11],[0,11],[0,11],[0,11],[0,6],[0,6],[0,6],[0,6],[0,4],[0,4],[0,4],[0,4],[0,3],[0,3],[0,3],[0,3],[0,2],[0,2],[0,2],[0,2],[0,3],[0,3],[0,3],[0,3],[0,6],[0,6],[0,6],[0,6],[0,14],[0,14],[0,14],[0,14],[0,15],[0,15],[0,15],[0,15],[0,13],[0,13],[0,13],[0,13],[0,8],[0,8],[0,8],[0,8]]},
-  {"consumption":[2,1,2,12,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,5,7,4,5,10,12,10,9,5,7,10,10,10,11,12,29,26,35,31,23,25,15,13,12,12,12,13,13,11,15,15,13,12,11,11,11,23,10,6,11,9,3,2,2,3,2,3,3,2,3,2,2,2,3,4,2,2,2,2,2,2,2,2,2,2,2,2],"consumptionH":[[0,5],[0,5],[0,5],[0,5],[0,2],[0,2],[0,2],[0,2],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,2],[0,2],[0,2],[0,2],[0,5],[0,5],[0,5],[0,5],[0,10],[0,10],[0,10],[0,10],[0,11],[0,11],[0,11],[0,11],[0,4],[0,4],[0,4],[0,4],[0,3],[0,3],[0,3],[0,3],[0,5],[0,5],[0,5],[0,5],[0,11],[0,11],[0,11],[0,11],[0,9],[0,9],[0,9],[0,9],[0,5],[0,5],[0,5],[0,5],[0,3],[0,3],[0,3],[0,3],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,3],[0,3],[0,3],[0,3],[0,5],[0,5],[0,5],[0,5],[0,12],[0,12],[0,12],[0,12],[0,13],[0,13],[0,13],[0,13],[0,10],[0,10],[0,10],[0,10],[0,7],[0,7],[0,7],[0,7]]}
-],
-
-"pv":[
-  {"production":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,0,0,4,11,15,8,16,18,19,19,19,21,22,21,23,23,23,23,23,23,22,23,22,21,22,18,19,19,17,14,13,14,12,6,12,0,9,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"price":[10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,15,10,10,28,16,15,19,14,14,14,14,14,13,13,13,13,13,13,13,13,13,13,13,13,13,13,14,14,14,14,15,15,15,16,22,16,10,18,22,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]},
-  {"production":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,8,0,3,12,2,13,12,11,11,13,13,15,14,15,14,15,14,15,15,15,14,14,13,13,13,11,15,9,6,15,1,14,0,8,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"price":[11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,20,19,11,27,18,31,17,18,18,18,17,17,16,17,16,17,16,17,16,16,16,17,17,17,17,17,18,16,18,21,16,38,17,11,19,20,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11]},
-  {"production":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,6,10,4,9,11,11,13,12,11,9,14,11,12,9,14,10,8,12,10,7,13,8,11,10,11,13,10,9,5,8,2,4,6,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"price":[6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,20,24,19,26,20,17,17,15,16,17,20,14,17,16,20,14,19,21,16,19,22,15,21,17,19,17,15,19,20,25,21,29,26,24,20,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6]}
-],
-
-"battery":[
-  {"consumption":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"price":[[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3]]}
-],
-
-"grid":[
-  {"price":[[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3],[20,3]]}
-],
-
-"watertank":[
-  {"consumption":[10,0,0,0,0,0,0,0,1,15,7,1,1,1,1,1,1,1,1,1,1,2,2,2,2,3,3,3,3,7,7,7,7,7,7,7,7,2,2,2,2,2,2,2,2,3,3,3,3,7,7,7,7,6,6,6,6,3,3,3,3,2,2,2,2,1,1,1,1,1,1,1,1,2,2,2,2,3,3,3,3,8,8,8,8,8,8,8,8,7,7,7,7,5,5,5]},
-  {"consumption":[0,0,0,14,12,0,0,0,16,0,0,0,4,0,0,0,0,0,0,0,0,0,17,0,0,0,0,9,10,0,0,35,15,0,0,23,27,0,0,0,0,1,25,0,0,0,0,36,0,0,0,9,12,9,4,0,44,27,0,0,0,0,30,0,0,0,0,11,0,0,0,5,0,0,0,0,0,16,8,0,0,39,0,0,13,30,17,0,0,24,43,0,0,22,22,0]},
-  {"consumption":[11,0,0,0,0,0,0,0,0,0,0,6,11,10,0,0,0,0,0,0,0,0,0,5,10,0,0,0,0,0,0,7,23,25,22,14,7,2,0,0,0,0,0,0,0,11,17,13,12,12,11,10,6,4,5,10,1,12,6,4,4,0,0,10,3,2,0,4,7,6,3,3,2,0,0,0,0,0,0,0,13,18,21,18,0,0,0,0,5,0,10,32,24,17,17,18]}
-]};
+var inputs = simpleinputs.inputs;
 var checkStatusActions = simpleinputs.checkStatusActions;
 var category_nums = simpleinputs.category_nums;
 var actionInputs = simpleinputs.actionInputs;
@@ -145,30 +120,8 @@ contract('simpletest', function(accounts) {
     }).then(function (result) {
       return getGasConsump();
 
-    //   // try with function
-    // }).then(function (result) {
-    //   return allRounds(1,30);      // here indicates the total rounds ... should be 96
-    // }).then(function (result) {
-    //   return allRounds(31,60);      // here indicates the total rounds ... should be 96
-    // }).then(function (result) {
-    //   return allRounds(61,96);      // here indicates the total rounds ... should be 96
-    }).then(function (result) {
-      console.log("Let's start running tests...");
-      // done();
     });
   });
-
-  // it('rounds should be executed ',  function() {
-  //   return oneRound(40).then(function(result){
-  //     return oneRound(41);
-  //   }).then(function(result) {
-  //     return oneRound(42);
-  //   }).then(function(result) {
-  //     return oneRound(43);
-  //   }).then(function(result) {
-  //     return oneRound(44);
-  //   });
-  // });
 
   for(let i = 0; i < 96; i++) {   // i should be 0 - 96
     it('round ' + i  + ' should be executed ',  async function() {
@@ -176,14 +129,67 @@ contract('simpletest', function(accounts) {
     });
   }
 
+  // it('round ' + 41  + ' should be executed ',  async function() {
+  //   return await oneRound(41);
+  // });
+
+  // it('get sorted rank of PV0', function() {
+  //   var testingElement = config["pv"][0];
+  //   return getSortedPVDetails(testingElement);
+  // });
+
+
+  // it('get sorted rank of PV1', function() {
+  //   var testingElement = config["pv"][1];
+  //   return getSortedPVDetails(testingElement);
+  // });
+
+  // it('get sorted rank of PV2', function() {
+  //   var testingElement = config["pv"][2];
+  //   return getSortedPVDetails(testingElement);
+  // });
+
+  // it('get sorted rank of Battery0', function() {
+  //   var testingElement = config["battery"][0];
+  //   return getSortedPVDetails(testingElement);
+  // });
+
+  // it('round ' + 42  + ' should be executed ',  async function() {
+  //   return await oneRound(42);
+  // });
+
+  // it('get sorted rank of PV0', function() {
+  //   var testingElement = config["pv"][0];
+  //   return getSortedPVDetails(testingElement);
+  // });
+
+  // it('get sorted rank of PV1', function() {
+  //   var testingElement = config["pv"][1];
+  //   return getSortedPVDetails(testingElement);
+  // });
+
+  // it('get sorted rank of PV2', function() {
+  //   var testingElement = config["pv"][2];
+  //   return getSortedPVDetails(testingElement);
+  // });
+
+  // it('get sorted rank of Battery0', function() {
+  //   var testingElement = config["battery"][0];
+  //   return getSortedPVDetails(testingElement);
+  // });
+
+  // it('round ' + 43  + ' should be executed ',  async function() {
+  //   return await oneRound(43);
+  // });
+
   it('write to file', async function() {
     await WriteJson("record_step_4", database_4);
     await WriteJson("record_step_5", database_5);
     await WriteJson("record_gas", database_gas);
-    await WriteJson("record_price", database_price);
   })
 
 }); 
+
 
 
 //// ---------------------
@@ -259,7 +265,7 @@ function linkDevices(_config) {
   var house_id = 0;
   var pv_id = 0;
   console.log("Linking house[" + house_id + "] with pv[" + pv_id + "]");
-  linkDevicesPromises.push(configuration.linkDevices(_config.house[house_id].address, _config.pv[pv_id].address, { from: _config.admin[0].address, gas: 2000000 }));
+  linkDevicesPromises.push(configuration.linkDevices(_config.house[0].address, _config.pv[0].address, { from: _config.admin[0].address, gas: 2000000 }));
   
   // linking house1,2 with pv1,2
   var house_list = [1,2];
@@ -328,50 +334,175 @@ async function step(period, currentStep) {
             var action = actions[device_type][currentStep][currentAction];
             var input = inputs[device_type][device_id][actionInputs[actions[device_type][currentStep][currentAction]]][period];
 
-            (function(_element, _action, _input) {
-              // console.log("Executing " + _action + "(" + _input + ") <-- " + _element.device_name);
-              stepPromises.push(execute(_element, _action, _input).then(function (result) {
-                // console.log(_element.device_name + " doing " + _action + " is done");
-              }));
-            })(element, action, input);
+            // (function(_element, _action, _input) {
+            //   // console.log("Executing " + _action + "(" + _input + ") <-- " + _element.device_name);
+            //   stepPromises.push(execute(_element, _action, _input).then(function (result) {
+            //     // console.log(_element.device_name + " doing " + _action + " is done");
+            //   }));
+            // })(element, action, input);
+            await execute(element, action, input);
           }
         }
-      } else {
-        // console.log("Nothing to do at this step <-- " + device_type);
+      }
+      if (device_type == "house") {
+        await config[device_type][0].contract["setConsumption"]( inputs[device_type][0]["consumption"][period], { from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][0].contract["setConsumptionH"]( inputs[device_type][0]["consumptionH"][period][0], inputs[device_type][0]["consumptionH"][period][1], { from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][1].contract["setConsumption"]( inputs[device_type][1]["consumption"][period], { from: config[device_type][1].address, gas: 6700000});
+        await config[device_type][1].contract["setConsumptionH"]( inputs[device_type][1]["consumptionH"][period][0], inputs[device_type][0]["consumptionH"][period][1], { from: config[device_type][1].address, gas: 6700000});
+        await config[device_type][2].contract["setConsumption"]( inputs[device_type][2]["consumption"][period], { from: config[device_type][2].address, gas: 6700000});
+        await config[device_type][2].contract["setConsumptionH"]( inputs[device_type][2]["consumptionH"][period][0], inputs[device_type][0]["consumptionH"][period][1], { from: config[device_type][2].address, gas: 6700000});
+      }
+      if (device_type == "pv") {
+        await config[device_type][0].contract["setProduction"]( inputs[device_type][0]["production"][period], { from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][0].contract["setPrice"]( inputs[device_type][0]["price"][period], { from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][1].contract["setProduction"]( inputs[device_type][1]["production"][period], { from: config[device_type][1].address, gas: 6700000});
+        await config[device_type][1].contract["setPrice"]( inputs[device_type][1]["price"][period], { from: config[device_type][1].address, gas: 6700000});
+        await config[device_type][2].contract["setProduction"]( inputs[device_type][2]["production"][period], { from: config[device_type][2].address, gas: 6700000});
+        await config[device_type][2].contract["setPrice"]( inputs[device_type][2]["price"][period], { from: config[device_type][2].address, gas: 6700000});
+      }
+      if (device_type == "watertank") {
+        await config[device_type][0].contract["setConsumption"]( inputs[device_type][0]["consumption"][period], { from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][1].contract["setConsumption"]( inputs[device_type][1]["consumption"][period], { from: config[device_type][1].address, gas: 6700000});
+        await config[device_type][2].contract["setConsumption"]( inputs[device_type][2]["consumption"][period], { from: config[device_type][2].address, gas: 6700000});
+      }
+      if (device_type == "battery") {
+        await config[device_type][0].contract["setConsumption"](inputs[device_type][0]["consumption"][period], { from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][0].contract["setPrice"](inputs[device_type][0]["price"][period][0], inputs[device_type][0]["price"][period][1], { from: config[device_type][0].address, gas: 6700000});
+      }
+      if (device_type == "grid") {
+        await config[device_type][0].contract["setPrice"](inputs[device_type][0]["price"][period][0], inputs[device_type][0]["price"][period][1], { from: config[device_type][0].address, gas: 6700000});
       }
     }
+    return;
+  } else if (currentStep == 2) {
+    for (var device_type in actions) {
+      if (actions[device_type][currentStep] != undefined) {
+        for (var currentAction in actions[device_type][currentStep]) {
+          // var stepPromises = [];
+          for (var device_id in config[device_type]) {
+            // var period = 0;
+            var element = config[device_type][device_id];
+            var action = actions[device_type][currentStep][currentAction];
+            (function(_element, _action, _input) {
+              // console.log("Executing " + _action + "(" + _input + ") <-- " + _element.device_name);
+              stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
+                // console.log(element.device_name + " has passed through <--" + action);
+              }));
+            })(element, action);
+            // await element.contract[action]({ from: element.address, gas: 6700000});
+          }
+        }
+      }
+      if (device_type == "house") {
+        await config[device_type][0].contract["askForPrice"]({ from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][0].contract["sortPrice"]({ from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][1].contract["askForPrice"]({ from: config[device_type][1].address, gas: 6700000});
+        await config[device_type][1].contract["sortPrice"]({ from: config[device_type][1].address, gas: 6700000});
+        await config[device_type][2].contract["askForPrice"]({ from: config[device_type][2].address, gas: 6700000});
+        await config[device_type][2].contract["sortPrice"]({ from: config[device_type][2].address, gas: 6700000});
+      }
+      if (device_type == "heatpump") {
+        await config["heatpump"][0].contract["askForConsump"]({ from: config["heatpump"][0].address, gas: 6700000});
+        await config["heatpump"][0].contract["askForPrice"]({ from: config["heatpump"][0].address, gas: 6700000});
+        await config["heatpump"][0].contract["sortPrice"]({ from: config["heatpump"][0].address, gas: 6700000});
+        await config["heatpump"][1].contract["askForConsump"]({ from: config["heatpump"][1].address, gas: 6700000});
+        await config["heatpump"][1].contract["askForPrice"]({ from: config["heatpump"][1].address, gas: 6700000});
+        await config["heatpump"][1].contract["sortPrice"]({ from: config["heatpump"][1].address, gas: 6700000});
+        await config["heatpump"][2].contract["askForConsump"]({ from: config["heatpump"][2].address, gas: 6700000});
+        await config["heatpump"][2].contract["askForPrice"]({ from: config["heatpump"][2].address, gas: 6700000});
+        await config["heatpump"][2].contract["sortPrice"]({ from: config["heatpump"][2].address, gas: 6700000});
+      }
+      if (device_type == "watertank") {
+        await config["watertank"][0].contract["askForPrice"]({ from: config["watertank"][0].address, gas: 6700000});
+        await config["watertank"][1].contract["askForPrice"]({ from: config["watertank"][1].address, gas: 6700000});
+        await config["watertank"][2].contract["askForPrice"]({ from: config["watertank"][2].address, gas: 6700000});
+      }
+      if (device_type == "battery") {
+        await config[device_type][0].contract["askForPrice"]({ from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][0].contract["sortPrice"]({ from: config[device_type][0].address, gas: 6700000});
+      }
+    }
+    return;
+  } else if (currentStep == 3) {
+    for (var device_type in actions) {
+      if (actions[device_type][currentStep] != undefined) {
+        for (var currentAction in actions[device_type][currentStep]) {
+          // var stepPromises = [];
+          for (var device_id in config[device_type]) {
+            // var period = 0;
+            var element = config[device_type][device_id];
+            var action = actions[device_type][currentStep][currentAction];
+            (function(_element, _action, _input) {
+              // console.log("Executing " + _action + "(" + _input + ") <-- " + _element.device_name);
+              stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
+                // console.log(element.device_name + " has passed through <--" + action);
+              }));
+            })(element, action);
+            // await element.contract[action]({ from: element.address, gas: 6700000});
+          }
+        }
+      }
+      if (device_type == "pv") {
+        await config[device_type][0].contract["askForRank"]({ from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][0].contract["sortRank"]({ from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][1].contract["askForRank"]({ from: config[device_type][1].address, gas: 6700000});
+        await config[device_type][1].contract["sortRank"]({ from: config[device_type][1].address, gas: 6700000});
+        await config[device_type][2].contract["askForRank"]({ from: config[device_type][2].address, gas: 6700000});
+        await config[device_type][2].contract["sortRank"]({ from: config[device_type][2].address, gas: 6700000});
+      }
+      if (device_type == "battery") {
+        await config[device_type][0].contract["askForRank"]({ from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][0].contract["sortRank"]({ from: config[device_type][0].address, gas: 6700000});
+      }
+      if (device_type == "watertank") {
+        await config[device_type][0].contract["askForNeed"]({ from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][1].contract["askForNeed"]({ from: config[device_type][1].address, gas: 6700000});
+        await config[device_type][2].contract["askForNeed"]({ from: config[device_type][2].address, gas: 6700000});
+      }
+    }
+    // await getSortedPVDetails(config["pv"][0]);
+    // await getSortedPVDetails(config["pv"][1]);
+    // await getSortedPVDetails(config["pv"][2]);
+    // await getSortedPVDetails(config["battery"][0]);
+    return await Promise.all(stepPromises);
   } else if (currentStep == 4) {
     // when selling, there is competition. Order of execution matters.
     // Therefore, we need to introduce the 
     for (var device_type in actions) {
-      if (device_type == "watertank") { 
-        for (var device_id in config[device_type]) {
-          var element = config[device_type][device_id];
-          var action = "sellEnergy";
-          (function(_element, _action) {
-            // console.log("Executing " + _action + " <-- " + _element.device_name);
-            stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
-              // console.log(_element.device_name + " has passed through <--" + _action);
-            }));
-          })(element, action);
-        }
-      } else if (device_type == "pv") { // actions[device_type][currentStep] == ["sellEnergy"] // start executing among "pv" and "battery"
-        for (let i = 0; i < totalStages; i++) {
+      // if (device_type == "watertank") { 
+      //   for (var device_id in config[device_type]) {
+      //     var element = config[device_type][device_id];
+      //     var action = "sellEnergy";
+      //     (function(_element, _action) {
+      //       // console.log("Executing " + _action + " <-- " + _element.device_name);
+      //       stepPromises.push(_element.contract[_action]({ from: _element.address, gas: 6700000}).then(function (result) {
+      //         // console.log(_element.device_name + " has passed through <--" + _action);
+      //       }));
+      //     })(element, action);
+      //     // await element.contract[action]({ from: element.address, gas: 6700000});
+      //   }
+      // } else if (device_type == "pv") { // actions[device_type][currentStep] == ["sellEnergy"] // start executing among "pv" and "battery"
+      //   for (let i = 0; i < totalStages; i++) {
+      //     await startCordination(i);
+      //   }
+      // } 
+
+      if (device_type == "pv") {
+        for (let i = 1; i < totalStages; i++) {
+          await startCordination(i);
           await startCordination(i);
         }
-        // // console.log(">>> start cordination - phase 0");
-        // await startCordination(0);
-        // // console.log(">>> start cordination - phase 1");
-        // await startCordination(1);
-        // // console.log(">>> start cordination - phase 2");
-        // await startCordination(2);
-      } else {
-        // console.log("Nothing to do at this step <-- " + device_type);
+      }
+      if (device_type == "watertank") {
+        await config[device_type][0].contract["sellEnergy"]({ from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][1].contract["sellEnergy"]({ from: config[device_type][1].address, gas: 6700000});
+        await config[device_type][2].contract["sellEnergy"]({ from: config[device_type][2].address, gas: 6700000});
       }
     }
+    return;
   } else {
+    
     for (var device_type in actions) {
-
       if (actions[device_type][currentStep] != undefined) {
         for (var currentAction in actions[device_type][currentStep]) {
           // var stepPromises = [];
@@ -388,15 +519,30 @@ async function step(period, currentStep) {
                 // console.log(_element.device_name + " has passed through <--" + _action);
               }));
             })(element, action);
+            // await element.contract[action]({ from: element.address, gas: 6700000});
+            // console.log(element.device_name + " has passed through <--" + action);
           }
         }
-      } else {
-        // console.log("Nothing to do at this step <-- " + device_type);
+      }
+      if (device_type == "pv") {
+        await config[device_type][0].contract["sellExcess"]({ from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][1].contract["sellExcess"]({ from: config[device_type][1].address, gas: 6700000});
+        await config[device_type][2].contract["sellExcess"]({ from: config[device_type][2].address, gas: 6700000});
+      }
+      if (device_type == "house") {
+        await config[device_type][0].contract["buyExtra"]({ from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][1].contract["buyExtra"]({ from: config[device_type][1].address, gas: 6700000});
+        await config[device_type][2].contract["buyExtra"]({ from: config[device_type][2].address, gas: 6700000});
+      }
+      if (device_type == "heatpump") {
+        await config[device_type][0].contract["buyExtra"]({ from: config[device_type][0].address, gas: 6700000});
+        await config[device_type][1].contract["buyExtra"]({ from: config[device_type][1].address, gas: 6700000});
+        await config[device_type][2].contract["buyExtra"]({ from: config[device_type][2].address, gas: 6700000});
       }
     }
+    return await Promise.all(stepPromises);
   }
-
-  return Promise.all(stepPromises)
+  return await Promise.all(stepPromises);
 }
 
 async function cordinateSellEnergy(i,element) {
@@ -406,33 +552,57 @@ async function cordinateSellEnergy(i,element) {
     return element.contract["getNewCounter"].call({ from: element.address});
   }).then(function(result) {
     element.counter = result.toNumber();
-    // console.log(element.counter);
+    // console.log("     at stage" + i + ", the counter of " + element.device_name + " is " + element.counter);
+
   });
+  // await element.contract["verifySellEnergy"](i, element.counter, { from: element.address, gas: 6700000});
+  // let result = await element.contract["getNewCounter"].call({ from: element.address});
+  // element.counter = result.toNumber();
+  // console.log("     at stage" + i + ", the counter of " + element.device_name + " is " + element.counter);
+  // return;
 }
 
-function startCordination(i) {
-  var d_type = ["pv", "battery"];
-  var cordinationPromisese = [];
-  d_type.forEach(d_type_element => {
-    for (var device_id in config[d_type_element]) {
-      var element = config[d_type_element][device_id];
-      if (i == 0) {
-        // initialization
-        element.counter = 0;
-      }
-      (function(_element) {
-        // console.log("start coordination " + _element.device_name + " <-- " + _element.counter);
-        cordinationPromisese.push(cordinateSellEnergy(i,_element).then(function (result) {
-          // console.log(_element.device_name + " finished coordination" + " <--" + i + " <-- " + _element.counter);
-        }));
-      })(element);
-    }
-  });
-  return Promise.all(cordinationPromisese);
+async function startCordination(i) {
+  // var d_type = ["pv", "battery"];
+  // var cordinationPromisese = [];
+  // d_type.forEach(d_type_element => {
+  //   for (var device_id in config[d_type_element]) {
+  //     var element = config[d_type_element][device_id];
+  //     if (i == 0) {
+  //       // initialization
+  //       element.counter = 0;
+  //     }
+  //     (function(_element) {
+  //       // console.log("start coordination " + _element.device_name + " <-- " + _element.counter);
+  //       cordinationPromisese.push(cordinateSellEnergy(i,_element).then(function (result) {
+  //         // console.log(_element.device_name + " finished coordination" + " <--" + i + " <-- " + _element.counter);
+  //       }));
+  //     })(element);
+  //   }
+  // });
+  // return await Promise.all(cordinationPromisese);
+
+  if (i == 1) {
+  // initialization
+  config["pv"][0].counter = 0;
+  config["pv"][1].counter = 0;
+  config["pv"][2].counter = 0;
+  config["battery"][0].counter = 0;
+  }
+  // console.log("     before stage" + i + ", the counter of pv0 is " + config["pv"][0].counter);
+  // console.log("     before stage" + i + ", the counter of pv1 is " + config["pv"][1].counter);
+  // console.log("     before stage" + i + ", the counter of pv2 is " + config["pv"][2].counter);
+  // console.log("     before stage" + i + ", the counter of battery0 is " + config["battery"][0].counter);
+
+  await cordinateSellEnergy(i,config["pv"][0]);
+  await cordinateSellEnergy(i,config["pv"][1]);
+  await cordinateSellEnergy(i,config["pv"][2]);
+  await cordinateSellEnergy(i,config["battery"][0]);
+  return;
 }
 
 
-function execute(element, action, input) {
+async function execute(element, action, input) {
   // var action = "set"+ action_type.substr(1,1).toUpperCase() + action_type.slice(1,action_type.length);
   // console.log(" -- the action that we will take is: "+ action + ".");
 
@@ -449,10 +619,10 @@ function execute(element, action, input) {
       var executePromise = element.contract[action](input[0], input[1], { from: element.address, gas: 2000000});
     }
   }
-  return executePromise;
+  return await executePromise;
 }  
 
-function checkAllDeviceStatus(_database) {
+async function checkAllDeviceStatus(_database) {
   var allDeviceStatusPromises = [];
 
   console.log("----------------print status-------------------");
@@ -485,7 +655,7 @@ function checkAllDeviceStatus(_database) {
       }
     }
   }
-  return Promise.all(allDeviceStatusPromises)
+  return await Promise.all(allDeviceStatusPromises)
 
 }
 

@@ -1,0 +1,145 @@
+{
+  "house" : [
+    {
+      "ConsumptionE" : [
+      ],
+      "ConsumptionH" : [
+      ],
+      "Wallet" : [
+      ]
+    },
+
+    {
+      "ConsumptionE" : [
+      ],
+      "ConsumptionH" : [
+      ],
+      "Wallet" : [
+      ]
+    },
+
+    {
+      "ConsumptionE" : [
+      ],
+      "ConsumptionH" : [
+      ],
+      "Wallet" : [
+      ]
+    }
+  ],
+
+  "pv" : [
+    {
+      "Production" : [
+      ],
+      "Price" : [
+      ],
+      "Wallet" : [
+      ]
+    },
+
+    {
+      "Production" : [
+      ],
+      "Price" : [
+      ],
+      "Wallet" : [
+      ]
+    },
+
+    {
+      "Production" : [
+      ],
+      "Price" : [
+      ],
+      "Wallet" : [
+      ]
+    }
+  ],
+
+  "battery" : [
+    {
+      "Consumption" : [
+      ],
+      "VolumeCapacity" : [
+      ],
+      "SalePrice" : [
+      ],
+      "Wallet" : [
+      ]
+    }
+  ],
+  "grid" : [
+    {
+      "Price" : [
+      ],
+      "Wallet" : [
+      ]
+    }
+  ],
+  "watertank" : [
+    {
+      "Consumption" : [
+      ],
+      "Volume" : [
+      ],
+      "Price" : [
+      ],
+      "Wallet" : [
+      ]
+    },
+    {
+      "Consumption" : [
+      ],
+      "Volume" : [
+      ],
+      "Price" : [
+      ],
+      "Wallet" : [
+      ]
+    },
+    {
+      "Consumption" : [
+      ],
+      "Volume" : [
+      ],
+      "Price" : [
+      ],
+      "Wallet" : [
+      ]
+    }
+  ],
+  "heatpump" : [
+    {
+      "ConsumptionE" : [
+      ],
+      "ConsumptionW" : [
+      ],
+      "Price" : [
+      ],
+      "Wallet" : [
+      ]
+    },
+    {
+      "ConsumptionE" : [
+      ],
+      "ConsumptionW" : [
+      ],
+      "Price" : [
+      ],
+      "Wallet" : [
+      ]
+    },
+    {
+      "ConsumptionE" : [
+      ],
+      "ConsumptionW" : [
+      ],
+      "Price" : [
+      ],
+      "Wallet" : [
+      ]
+    }
+  ]
+
+}
