@@ -805,8 +805,12 @@ function calculatePVPrice(currentRound) {
     // console.log(i + ' - ' + a + ' - ' + b);
     // console.log("input value: " + inputs.pv[i].price[currentRound+1]);
     if (database_price.pvPrice[i].factor[tL] <= database_price.pvPrice[a].factor[tL] && database_price.pvPrice[i].factor[tL] <= database_price.pvPrice[b].factor[tL] && database_price.pvPrice[i].lastPrice[tL] > 10) {
-      calPromises.push(database_price.pvPrice[i].newPrice.push(database_price.pvPrice[i].lastPrice[tL]-2));
-      calPromises.push(inputs.pv[i].price[currentRound+1] -= 2);
+      // // price reduced by 2
+      // calPromises.push(database_price.pvPrice[i].newPrice.push(database_price.pvPrice[i].lastPrice[tL]-2));
+      // calPromises.push(inputs.pv[i].price[currentRound+1] -= 2);
+      // price reduced by 20%
+      calPromises.push(database_price.pvPrice[i].newPrice.push(database_price.pvPrice[i].lastPrice[tL] * 0.8));
+      calPromises.push(inputs.pv[i].price[currentRound+1] = inputs.pv[i].price[currentRound+1] * 0.8);
       // console.log('true');
     } else {
       calPromises.push(database_price.pvPrice[i].newPrice.push(database_price.pvPrice[i].lastPrice[tL]));
