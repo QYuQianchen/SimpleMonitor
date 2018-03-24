@@ -118,6 +118,9 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
   function goNoGo(uint giveoutvol) public timed(4) returns (uint) {
     address adrDevice = msg.sender;
     uint takeoutvol;
+    uint waterFlow;
+    uint waterPrice;
+    uint whatDeviceAccept_2;
     
     require(connectedDevice[2].assertInside(adrDevice) || connectedDevice[1].assertInside(adrDevice));
     takeoutvol = consumptionElec.findMin(giveoutvol);
@@ -133,7 +136,19 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
     
 
     // Here HP trigger the transaction to water tank...
-    initiateTransaction(takeoutvol);
+    // initiateTransaction(takeoutvol);
+    waterFlow = takeoutvol.convertToHeat(waterType);
+    waterPrice = price.convertToElec(waterType);
+
+    for (uint i = 0; i < connectedDevice[4].length; i++) {
+      //giveoutVol = currentVolume.findMin(volMap[i]);
+      whatDeviceAccept_2 = IWaterTank(connectedDevice[4][i]).goNoGo(waterFlow,waterPrice);
+      // whatDeviceAccept = waterFlow;   // for testing
+      // TestLog(whatDeviceAccept, connectedDevice[4].length);
+      waterFlow -= whatDeviceAccept_2;
+      consumptionWater -= whatDeviceAccept_2;
+      wallet += int(whatDeviceAccept_2 * waterPrice * 2); // here 2 is factor to gain money...
+    }
     return (takeoutvol);
   }
 
@@ -143,6 +158,9 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
     // when houses still have extra needs...
     uint whatDeviceAccept;
     uint unitPrs;
+    uint whatDeviceAccept_2;
+    uint waterFlow;
+    uint waterPrice;
     // require(grid != 0x0);
     if (grid != 0x0 && consumptionElec > 0) {
       (whatDeviceAccept, unitPrs) = IGrid(grid).goExtra(consumptionElec);
@@ -158,7 +176,19 @@ contract SingleHeatPump is GeneralDevice, IHeatPump {
       
       // Here HP trigger the transaction to water tank...
 
-      initiateTransaction(whatDeviceAccept);
+      // initiateTransaction(whatDeviceAccept);
+      waterFlow = whatDeviceAccept.convertToHeat(waterType);
+      waterPrice = price.convertToElec(waterType);
+
+      for (uint i = 0; i < connectedDevice[4].length; i++) {
+        //giveoutVol = currentVolume.findMin(volMap[i]);
+        whatDeviceAccept_2 = IWaterTank(connectedDevice[4][i]).goNoGo(waterFlow,waterPrice);
+        // whatDeviceAccept = waterFlow;   // for testing
+        // TestLog(whatDeviceAccept, connectedDevice[4].length);
+        waterFlow -= whatDeviceAccept_2;
+        consumptionWater -= whatDeviceAccept_2;
+        wallet += int(whatDeviceAccept_2 * waterPrice * 2); // here 2 is factor to gain money...
+      }
     } 
     return;
   }
