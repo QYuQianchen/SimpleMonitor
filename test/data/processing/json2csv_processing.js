@@ -23,7 +23,7 @@ var myResult = {
   "heatpump" : []
 };
 
-var prefix = "../output/test35_sce1_hp/";
+var prefix = "../output/test37_sce3_jsmodif/";
 var filename = "record_step_5"
 // var prefix = "../input/dyn_input";
 

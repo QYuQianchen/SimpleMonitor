@@ -536,8 +536,8 @@ async function step(period, currentStep) {
       }
       if (device_type == "heatpump") {
         await config[device_type][0].contract["buyExtra"]({ from: config[device_type][0].address, gas: 6700000});
-        await config[device_type][1].contract["buyExtra"]({ from: config[device_type][1].address, gas: 6700000});
-        await config[device_type][2].contract["buyExtra"]({ from: config[device_type][2].address, gas: 6700000});
+        // await config[device_type][1].contract["buyExtra"]({ from: config[device_type][1].address, gas: 6700000});
+        // await config[device_type][2].contract["buyExtra"]({ from: config[device_type][2].address, gas: 6700000});
       }
     }
     return await Promise.all(stepPromises);

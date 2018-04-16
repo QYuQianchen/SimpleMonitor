@@ -754,7 +754,7 @@ async function oneRound(currentRound) {
 
   // await WriteJson("record_step_4", database_4);
   // await WriteJson("record_step_5", database_5);
-  // await WriteJson("record_gas", database_gas);
+  await WriteJson("record_gas", database_gas);
   // await WriteJson("record_price", database_price);
   return;
 }
@@ -809,8 +809,8 @@ function calculatePVPrice(currentRound) {
       // calPromises.push(database_price.pvPrice[i].newPrice.push(database_price.pvPrice[i].lastPrice[tL]-2));
       // calPromises.push(inputs.pv[i].price[currentRound+1] -= 2);
       // price reduced by 20%
-      calPromises.push(database_price.pvPrice[i].newPrice.push(database_price.pvPrice[i].lastPrice[tL] * 0.8));
-      calPromises.push(inputs.pv[i].price[currentRound+1] = inputs.pv[i].price[currentRound+1] * 0.8);
+      calPromises.push(database_price.pvPrice[i].newPrice.push(database_price.pvPrice[i].lastPrice[tL]-2));
+      calPromises.push(inputs.pv[i].price[currentRound+1] = inputs.pv[i].price[currentRound+1]-2);
       // console.log('true');
     } else {
       calPromises.push(database_price.pvPrice[i].newPrice.push(database_price.pvPrice[i].lastPrice[tL]));

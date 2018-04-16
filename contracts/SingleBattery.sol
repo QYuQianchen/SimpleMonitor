@@ -297,10 +297,12 @@ contract SingleBattery is GeneralDevice, IBattery {
   // --- 5. Deal with excess energy --- 
 
   function goExcess(uint vol) public timed(5) returns (uint takeVol, uint prs) {
-    takeVol = vol.findMin(capacity-currentVolume);
-    // if (currentVolume < takeVol) {
-    //   takeVol = currentVolume;
-    // }
+    // takeVol = vol.findMin(capacity-currentVolume);
+    if (currentVolume + vol <= capacity) {
+      takeVol = vol;
+    } else {
+      takeVol = capacity - currentVolume;
+    }
     currentVolume += takeVol;
     // currentVolume = currentVolume.clearExcessTransfer(takeVol, address(this));
     wallet -= int(takeVol*priceForBuy);
