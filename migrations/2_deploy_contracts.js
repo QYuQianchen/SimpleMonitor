@@ -1,45 +1,84 @@
-var SortLib = artifacts.require("./SortLib.sol");
+var SortPLib = artifacts.require("./SortPLib.sol");
 var SortRLib = artifacts.require("./SortRLib.sol");
 var AdrLib = artifacts.require("./AdrLib.sol");
-var TransacLib = artifacts.require("./TransactLib.sol");
-var IPV = artifacts.require("./IPV.sol");
-var IHouse = artifacts.require("./IHouse.sol");
-var IBattery = artifacts.require("./IBattery.sol");
-var SinglePV = artifacts.require("./SinglePV.sol");
-var SingleHouse = artifacts.require("./SingleHouse.sol");
-var SingleBattery = artifacts.require("./SingleBattery.sol");
+var TransactLib = artifacts.require("./TransactLib.sol");
+var PriceLib = artifacts.require("./PriceLib.sol");
+var ConvertLib = artifacts.require("./ConvertLib.sol");
 var Grid = artifacts.require("./Grid.sol");
+var GlobalTimer = artifacts.require("./GlobalTimer.sol");
 var Configuration = artifacts.require("./Configuration.sol");
+
+var GeneralDevice = artifacts.require("GeneralDevice.sol")
+
+var SingleHouseFactory = artifacts.require("SingleHouseFactory");
+var SinglePVFactory = artifacts.require("SinglePVFactory");
+var SingleBatteryFactory = artifacts.require("SingleBatteryFactory");
+var SingleHeatPumpFactory = artifacts.require("SingleHeatPumpFactory");
+var SingleWaterTankFactory = artifacts.require("SingleWaterTankFactory");
+var GridFactory = artifacts.require("GridFactory");
 
 
 
 module.exports = function(deployer) {
-  //deployer.deploy(IPV);
-  //deployer.deploy(IHouse);
-  //deployer.link(IPV,[SinglePV,SingleHouse]);
-  //deployer.link(IHouse,[SingleHouse]);
-  // No need to deploy abstract contract?!?
-  deployer.deploy(SortRLib);
-  deployer.link(SortRLib,[SinglePV,SingleBattery,Configuration]);
 
-  deployer.deploy(SortLib);
-  deployer.link(SortLib,[SingleHouse,SingleBattery,Configuration]);
+  console.log("migrations deploying...");
 
-  deployer.deploy(AdrLib);
-  deployer.link(AdrLib,[SingleHouse,SinglePV,SingleBattery,Configuration]);
+  deployer.deploy(SortRLib).then(function() {
 
-  deployer.deploy(TransacLib);
-  deployer.link(TransacLib,[SingleHouse,SinglePV,SingleBattery,Grid,Configuration]);
+    return deployer.link(SortRLib,[SinglePVFactory,SingleBatteryFactory,Configuration]);
+  }).then(function() {
+    return deployer.deploy(SortPLib);
+  }).then(function() {
+    return deployer.link(SortPLib,[SingleHouseFactory,SingleBatteryFactory,SingleHeatPumpFactory,Configuration]);
+  }).then(function() {
+    return deployer.deploy(AdrLib);
+  }).then(function() {
+    return deployer.link(AdrLib,[SingleHouseFactory,SinglePVFactory,SingleBatteryFactory,SingleHeatPumpFactory,SingleWaterTankFactory,Configuration]);
+  }).then(function() {
+    return deployer.deploy(TransactLib);
+  }).then(function() {
+    return deployer.link(TransactLib,[GridFactory, SingleHouseFactory,SinglePVFactory,SingleBatteryFactory,SingleHeatPumpFactory,Configuration]);
+  }).then(function() {
+    return deployer.deploy(PriceLib);
+  }).then(function() {
+    return deployer.link(PriceLib, [SingleWaterTankFactory, Configuration]);
+  }).then(function() {
+    return deployer.deploy(ConvertLib);
+  }).then(function() {
+    return deployer.link(ConvertLib, [SingleHeatPumpFactory, Configuration]);
+  }).then(function() {
 
-  deployer.deploy(SinglePV);
-  deployer.deploy(SingleHouse);
-  deployer.deploy(SingleBattery);
-  deployer.deploy(Grid);
-  //deployer.deploy(HouseLib);
-  //deployer.link(SortLib,MatchableHouse);
-  //deployer.link(HouseLib, MatchableHouse);
-  //deployer.deploy(MatchableHouse);
-  //deployer.link(SortLib,Configuration);
-  deployer.deploy(Configuration,3,3,1);
-  //deployer.deploy(ElecTransac);
-};
+
+    return deployer.deploy(SingleHouseFactory);
+  }).then(function() {
+    console.log("SingleHouseFactory ADDRESS: " + SingleHouseFactory.address);
+
+    return deployer.deploy(SinglePVFactory);
+  }).then(function() {
+    console.log("SinglePVFactory ADDRESS: " + SinglePVFactory.address);
+
+    return deployer.deploy(SingleBatteryFactory);
+  }).then(function() {
+    console.log("SingleBatteryFactory ADDRESS: " + SingleBatteryFactory.address);
+
+    return deployer.deploy(SingleHeatPumpFactory);
+  }).then(function() {
+    console.log("SingleHeatPumpFactory ADDRESS: " + SingleHeatPumpFactory.address);
+
+    return deployer.deploy(SingleWaterTankFactory);
+  }).then(function() {
+    console.log("SingleWaterTankFactory ADDRESS: " + SingleWaterTankFactory.address);
+
+    return deployer.deploy(GridFactory);
+  }).then(function() {
+    console.log("GridFactory ADDRESS: " + GridFactory.address);
+
+    return deployer.deploy(Configuration, GridFactory.address, SingleHouseFactory.address, SinglePVFactory.address, SingleBatteryFactory.address, SingleHeatPumpFactory.address,  SingleWaterTankFactory.address);
+
+  }).then(function() {
+
+    console.log("Configuration ADDRESS: " + Configuration.address);
+
+    console.log("\n\n----------------\nDEPLOYMENT DONE!\n----------------\n\n");
+  });
+}

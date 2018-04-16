@@ -1,0 +1,1433 @@
+
+C:\Users\qianc\Desktop>cd C:\Users\qianc\Documents\Thesis\Code\SimpleMonitor
+
+C:\Users\qianc\Documents\Thesis\Code\SimpleMonitor>cmd /k truffle test ./test/scenario2.js
+Using network 'development'.
+
+migrations deploying...
+SingleHouseFactory ADDRESS: 0x22fb6184bd8f803debb3d95f1c3762dca0ebe7b6
+SinglePVFactory ADDRESS: 0xda0eab1586c4357e7989fe7b4aa4e76373e014e8
+SingleBatteryFactory ADDRESS: 0x880ca4eaa73c511b32e01becc8a878663a93e045
+SingleHeatPumpFactory ADDRESS: 0x4b6ec297499565bae9d5946128dd3e8723ee464c
+SingleWaterTankFactory ADDRESS: 0xc580e7062650a0a94919b09b0ceae6a92779bb90
+GridFactory ADDRESS: 0xef805ab6e6e36e42f01f352831dc0445d4ede380
+Configuration ADDRESS: 0x0bcf19aa6d0505a92cff475e08f4be6723a2158d
+
+
+----------------
+DEPLOYMENT DONE!
+----------------
+
+
+Device name: admin0, account No. :0
+Device name: grid0, account No. :1
+Device name: house0, account No. :2
+Device name: house1, account No. :3
+Device name: house2, account No. :4
+Device name: pv0, account No. :5
+Device name: pv1, account No. :6
+Device name: pv2, account No. :7
+Device name: battery0, account No. :8
+Device name: heatpump0, account No. :9
+Device name: heatpump1, account No. :10
+Device name: heatpump2, account No. :11
+Device name: watertank0, account No. :12
+Device name: watertank1, account No. :13
+Device name: watertank2, account No. :14
+
+
+  Contract: simpletest
+Starting to register devices...
+Registering grid 0
+adding device type grid --> 5
+Registering house 0
+adding device type house --> 0
+Registering house 1
+adding device type house --> 0
+Registering house 2
+adding device type house --> 0
+Registering pv 0
+adding device type pv --> 1
+Registering pv 1
+adding device type pv --> 1
+Registering pv 2
+adding device type pv --> 1
+Registering battery 0
+adding device type battery --> 2
+Registering heatpump 0
+adding device type heatpump --> 3
+Registering heatpump 1
+adding device type heatpump --> 3
+Registering heatpump 2
+adding device type heatpump --> 3
+Registering watertank 0
+adding device type watertank --> 4
+Registering watertank 1
+adding device type watertank --> 4
+Registering watertank 2
+adding device type watertank --> 4
+All participants registered
+Starting to get contract addresses...
+grid0 0xf3e2fc0b7d0baf552926bb75e36881db6d1ab5e0
+house0 0x8b64fb00ea52c6338adba730f00d7c705da9b8b0
+house1 0x947c5aae7c40a76f1ce0d6ab610c73f98784d637
+house2 0x2fae10635aefc4f56139ffb460ea4469c1e6e472
+pv0 0x18fb0a8a2fd89da00390213128a74c8f13f4a741
+pv1 0x47dc7f6a78592437bcc8774d5e52612e2afd292e
+pv2 0x702a9b49c78304108b1ee3a4fa3fdd15a7a2c84b
+battery0 0x5d5ac90eb0626edc3c40fb34824488f0e43bc46e
+heatpump0 0x707fe55396cbee5da7dfcab0d7a987b73c2f06bb
+heatpump1 0x1aa4f57a8a77f8254d3730a91713f3de33caa016
+heatpump2 0x77240c129557ba7c49d8ca36dd39ccd589b763fd
+watertank0 0xe6092626979d4e82e396bc043bfe67014253050a
+watertank1 0xd18f325ca721c48890688d866dc9dd73092d1d06
+watertank2 0x47360c83131896953b75b9c7ed6172828e3bbfe7
+Got all contract addresses!
+Starting to instatiate contracts...
+Contracts instantiated!
+Contract Creator =  0xf3e2fc0b7d0baf552926bb75e36881db6d1ab5e0
+Linking devices:
+Linking house[0] with pv[0]
+Linking house[1] with pv[1]
+Linking house[1] with pv[2]
+Linking house[2] with pv[1]
+Linking house[2] with pv[2]
+Linking battery[0] with house[0]
+Linking battery[0] with house[2]
+Linking battery[0] with pv[0]
+Linking house[0] with watertank[0]
+Linking watertank[0] with heatpump[0]
+Linking pv[0] with heatpump[0]
+Linking house[1] with watertank[1]
+Linking watertank[1] with heatpump[1]
+Linking pv[1] with heatpump[1]
+Linking house[2] with watertank[2]
+Linking watertank[2] with heatpump[2]
+Linking pv[2] with heatpump[2]
+Linking battery[0] with heatpump[0]
+Linking of devices done.
+Here we are starting the 1st round.. .
+    v Should do all prep work (13585ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+    1) round 0 should be executed
+
+    Events emitted during test:
+    ---------------------------
+
+    ConsumptionLog(adr: 0xf43b29c267b9da4fd5afff922ef121485b16fe0a, consum: 3, consumAt: 1521181914)
+    ConsumptionLog(adr: 0x7f64c5bfdf7786e809f257d85eebbb7191e97617, consum: 2, consumAt: 1521181914)
+    ConsumptionLog(adr: 0xbcadab37cea29bfdc05804cf0242740018df7da2, consum: 2, consumAt: 1521181914)
+    ConsumptionLog(adr: 0xf43b29c267b9da4fd5afff922ef121485b16fe0a, consum: 3, consumAt: 1521181914)
+    ConsumptionLog(adr: 0x7f64c5bfdf7786e809f257d85eebbb7191e97617, consum: 2, consumAt: 1521181914)
+    ConsumptionLog(adr: 0xbcadab37cea29bfdc05804cf0242740018df7da2, consum: 2, consumAt: 1521181914)
+    ProductionLog(adr: 0x405ebfb2a6bde04c05d49441cc67470948a54c73, produc: 0, prodAt: 1521181914)
+    ProductionLog(adr: 0x79b0d146c6bdbb9b119dbb58eb4841be1031ea80, produc: 0, prodAt: 1521181914)
+    ProductionLog(adr: 0x4858e5dc2acce8ab4902328ff28d678afb52a42e, produc: 0, prodAt: 1521181914)
+    PriceUpdate(updateAt: 1521181914)
+    PriceUpdate(updateAt: 1521181914)
+    PriceUpdate(updateAt: 1521181914)
+    PriceUpdate(updateAt: 1521181915)
+    ConsumptionUpdate(updateAt: 1521181915)
+    ConsumptionUpdate(updateAt: 1521181915)
+    ConsumptionUpdate(updateAt: 1521181915)
+
+    ---------------------------
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 1 should be executed  (45680ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 2 should be executed  (39401ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 3 should be executed  (40359ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 4 should be executed  (39659ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 5 should be executed  (40449ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 6 should be executed  (38457ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 7 should be executed  (41108ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 8 should be executed  (38877ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 9 should be executed  (39214ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 10 should be executed  (36894ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 11 should be executed  (39991ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 12 should be executed  (35146ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 13 should be executed  (37317ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 14 should be executed  (36499ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 15 should be executed  (36686ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 16 should be executed  (37389ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 17 should be executed  (35346ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 18 should be executed  (37531ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 19 should be executed  (35139ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 20 should be executed  (38192ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 21 should be executed  (52114ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 22 should be executed  (87955ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 23 should be executed  (48269ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 24 should be executed  (45260ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 25 should be executed  (49772ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 26 should be executed  (49430ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 27 should be executed  (45858ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 28 should be executed  (37273ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 29 should be executed  (43491ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 30 should be executed  (47141ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 31 should be executed  (47006ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 32 should be executed  (48309ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 33 should be executed  (46965ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 34 should be executed  (50531ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 35 should be executed  (46045ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 36 should be executed  (43584ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 37 should be executed  (36075ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 38 should be executed  (39275ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 39 should be executed  (36452ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 40 should be executed  (39070ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 41 should be executed  (36333ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 42 should be executed  (37350ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 43 should be executed  (37649ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 44 should be executed  (37855ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 45 should be executed  (37319ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 46 should be executed  (36939ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 47 should be executed  (38550ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 48 should be executed  (36744ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 49 should be executed  (40123ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 50 should be executed  (37205ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 51 should be executed  (43189ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 52 should be executed  (36070ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 53 should be executed  (38021ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 54 should be executed  (37711ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 55 should be executed  (37536ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 56 should be executed  (37971ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 57 should be executed  (37459ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 58 should be executed  (39294ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 59 should be executed  (37317ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 60 should be executed  (42257ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 61 should be executed  (36299ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 62 should be executed  (39600ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 63 should be executed  (36641ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 64 should be executed  (38669ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 65 should be executed  (38657ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 66 should be executed  (38399ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 67 should be executed  (36857ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 68 should be executed  (38099ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 69 should be executed  (38983ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 70 should be executed  (35806ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 71 should be executed  (40261ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 72 should be executed  (35996ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 73 should be executed  (39656ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 74 should be executed  (36804ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 75 should be executed  (37823ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 76 should be executed  (38060ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 77 should be executed  (36830ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 78 should be executed  (37701ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 79 should be executed  (35636ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 80 should be executed  (39497ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 81 should be executed  (36082ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 82 should be executed  (40802ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 83 should be executed  (35413ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+    2) round 84 should be executed
+
+    Events emitted during test:
+    ---------------------------
+
+    ConsumptionLog(adr: 0xf43b29c267b9da4fd5afff922ef121485b16fe0a, consum: 3, consumAt: 1521185276)
+    ConsumptionLog(adr: 0x7f64c5bfdf7786e809f257d85eebbb7191e97617, consum: 1, consumAt: 1521185276)
+    ConsumptionLog(adr: 0xf43b29c267b9da4fd5afff922ef121485b16fe0a, consum: 3, consumAt: 1521185276)
+    ConsumptionLog(adr: 0xbcadab37cea29bfdc05804cf0242740018df7da2, consum: 2, consumAt: 1521185276)
+    ConsumptionLog(adr: 0x7f64c5bfdf7786e809f257d85eebbb7191e97617, consum: 1, consumAt: 1521185276)
+    ConsumptionLog(adr: 0xbcadab37cea29bfdc05804cf0242740018df7da2, consum: 2, consumAt: 1521185276)
+    ProductionLog(adr: 0x405ebfb2a6bde04c05d49441cc67470948a54c73, produc: 0, prodAt: 1521185276)
+    ProductionLog(adr: 0x79b0d146c6bdbb9b119dbb58eb4841be1031ea80, produc: 0, prodAt: 1521185276)
+    PriceUpdate(updateAt: 1521185276)
+    ProductionLog(adr: 0x4858e5dc2acce8ab4902328ff28d678afb52a42e, produc: 0, prodAt: 1521185276)
+    PriceUpdate(updateAt: 1521185276)
+    PriceUpdate(updateAt: 1521185276)
+    PriceUpdate(updateAt: 1521185277)
+    ConsumptionUpdate(updateAt: 1521185277)
+    ConsumptionUpdate(updateAt: 1521185277)
+    ConsumptionUpdate(updateAt: 1521185277)
+    PrsLog(price: 3, priceAt: 1521185284)
+    PrsLog(price: 3, priceAt: 1521185284)
+    PrsLog(price: 3, priceAt: 1521185284)
+    VolLog(adr: 0x2f65d1c192f9695f2f37d242cb841c495955e5e9, vol: 82, volAt: 1521185301)
+    VolLog(adr: 0xaf39b6491cb7f33a4819978c89eb9801ddea89bc, vol: 25, volAt: 1521185301)
+    VolLog(adr: 0x491a569f1f2b84322333f5f18208b329f886e4cf, vol: 76, volAt: 1521185301)
+
+    ---------------------------
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 85 should be executed  (42675ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 86 should be executed  (26079ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 87 should be executed  (31530ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 88 should be executed  (40688ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 89 should be executed  (37339ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 90 should be executed  (38510ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 91 should be executed  (38297ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 92 should be executed  (41141ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 93 should be executed  (38472ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 94 should be executed  (40827ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 95 should be executed  (37212ms)
+    v write to file
+
+
+  96 passing (2h)
+  2 failing
+
+  1) Contract: simpletest round 0 should be executed :
+     Error: VM Exception while processing transaction: revert
+      at Object.InvalidResponse (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:43303:16)
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:331156:36
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:314196:9
+      at XMLHttpRequest.request.onreadystatechange (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:315621:13)
+      at XMLHttpRequestEventTarget.dispatchEvent (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70159:18)
+      at XMLHttpRequest._setReadyState (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70449:12)
+      at XMLHttpRequest._onHttpResponseEnd (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70604:12)
+      at IncomingMessage.<anonymous> (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:70564:24)
+      at endReadableNT (_stream_readable.js:1101:12)
+
+  2) Contract: simpletest round 84 should be executed :
+     Error: Invalid JSON RPC response: undefined
+      at ProviderError.ExtendableError (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:9328:17)
+      at new ProviderError (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:314009:24)
+      at C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:314133:17
+      at HttpProvider.send (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:314171:22)
+      at RequestManager.send (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:331128:32)
+      at Eth.send [as getBalance] (C:\Users\qianc\AppData\Roaming\npm\node_modules\truffle\build\cli.bundled.js:39621:58)
+      at C:/Users/qianc/Documents/Thesis/Code/SimpleMonitor/test/scenario2.js:480:28
+      at Array.forEach (<anonymous>)
+      at getGasConsump (C:/Users/qianc/Documents/Thesis/Code/SimpleMonitor/test/scenario2.js:479:15)
+      at _callee5$ (C:/Users/qianc/Documents/Thesis/Code/SimpleMonitor/test/scenario2.js:550:11)
+
+
+
+
+C:\Users\qianc\Documents\Thesis\Code\SimpleMonitor>
+C:\Users\qianc\Documents\Thesis\Code\SimpleMonitor>
+C:\Users\qianc\Documents\Thesis\Code\SimpleMonitor>

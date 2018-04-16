@@ -1,0 +1,1683 @@
+
+C:\Users\qianc\Desktop>cd C:\Users\qianc\Documents\Thesis\Code\SimpleMonitor
+
+C:\Users\qianc\Documents\Thesis\Code\SimpleMonitor>cmd /k truffle test ./test/scenario2.js
+Using network 'development'.
+
+migrations deploying...
+SingleHouseFactory ADDRESS: 0x95989df22addb9f7594405d9b75f8b0e8bf6c251
+SinglePVFactory ADDRESS: 0x56930d9ca4b89464ef2f6232e5acb9c11a800c83
+SingleBatteryFactory ADDRESS: 0x528d8be053e3c2c72c4d2200c2845e11379ba913
+SingleHeatPumpFactory ADDRESS: 0x1703b405981d81da4f385692c8dce51b96fb05f3
+SingleWaterTankFactory ADDRESS: 0x5ab620faacbc8b806fa197f140779a6191f3a094
+GridFactory ADDRESS: 0xc630a09ea0e674fc0899c76961b3b8667bcf62f7
+Configuration ADDRESS: 0xb579a50dba545af483c16ec46534626c585e3f5c
+
+
+----------------
+DEPLOYMENT DONE!
+----------------
+
+
+Device name: admin0, account No. :0
+Device name: grid0, account No. :1
+Device name: house0, account No. :2
+Device name: house1, account No. :3
+Device name: house2, account No. :4
+Device name: pv0, account No. :5
+Device name: pv1, account No. :6
+Device name: pv2, account No. :7
+Device name: battery0, account No. :8
+Device name: heatpump0, account No. :9
+Device name: heatpump1, account No. :10
+Device name: heatpump2, account No. :11
+Device name: watertank0, account No. :12
+Device name: watertank1, account No. :13
+Device name: watertank2, account No. :14
+
+
+  Contract: simpletest
+Starting to register devices...
+Registering grid 0
+adding device type grid --> 5
+Registering house 0
+adding device type house --> 0
+Registering house 1
+adding device type house --> 0
+Registering house 2
+adding device type house --> 0
+Registering pv 0
+adding device type pv --> 1
+Registering pv 1
+adding device type pv --> 1
+Registering pv 2
+adding device type pv --> 1
+Registering battery 0
+adding device type battery --> 2
+Registering heatpump 0
+adding device type heatpump --> 3
+Registering heatpump 1
+adding device type heatpump --> 3
+Registering heatpump 2
+adding device type heatpump --> 3
+Registering watertank 0
+adding device type watertank --> 4
+Registering watertank 1
+adding device type watertank --> 4
+Registering watertank 2
+adding device type watertank --> 4
+All participants registered
+Starting to get contract addresses...
+grid0 0xe386744895f92695ccdfeffeef34864f28b37ae3
+house0 0xf0af7c8d444c839a2dbc490dcdc2019750b7e007
+house1 0x610a60d57af7767502d9c3a7b01cd6046fb3e544
+house2 0x0ef28f1ee65ef9c405d052209549e49eb28d078b
+pv0 0x797d1bbf05259444ab14d4c0d92051cb41dbb2a1
+pv1 0x7c2f2184f305e8f499c22bac9b2d4319035906cc
+pv2 0x390ccd44b51692c71329acd450dc52b22ab23ef3
+battery0 0xba5f83b5a808e7c188a2f473d90086c3162ed17c
+heatpump0 0x783b16fcc94611d7f1614526d4a0fc06335a784d
+heatpump1 0x40198f54bad4d1c24497f5da11b1e0d1749cb0f0
+heatpump2 0xa955076801adab5b1b7edf13dc35ea2d05ab8417
+watertank0 0x7e104924588a9cc71f86b2724c9e90a48d963687
+watertank1 0x75e90c3b9f24c8c9891cd19f898b2ecb5cf408e0
+watertank2 0x6c29f4cd581b8be9070be9146a60706cb25af367
+Got all contract addresses!
+Starting to instatiate contracts...
+Contracts instantiated!
+Contract Creator =  0xe386744895f92695ccdfeffeef34864f28b37ae3
+Linking devices:
+Linking house[0] with pv[0]
+Linking house[1] with pv[1]
+Linking house[1] with pv[2]
+Linking house[2] with pv[1]
+Linking house[2] with pv[2]
+Linking battery[0] with house[0]
+Linking battery[0] with house[2]
+Linking battery[0] with pv[0]
+Linking house[0] with watertank[0]
+Linking watertank[0] with heatpump[0]
+Linking pv[0] with heatpump[0]
+Linking house[1] with watertank[1]
+Linking watertank[1] with heatpump[1]
+Linking pv[1] with heatpump[1]
+Linking house[2] with watertank[2]
+Linking watertank[2] with heatpump[2]
+Linking pv[2] with heatpump[2]
+Linking battery[0] with heatpump[0]
+Linking of devices done.
+Single HeatPump[0] has
+Single HeatPump[1] has
+Single HeatPump[2] has
+heatpump2has connected WT as0x7e104924588a9cc71f86b2724c9e90a48d963687
+heatpump2has connected WT as0x75e90c3b9f24c8c9891cd19f898b2ecb5cf408e0
+heatpump2has connected WT as0x6c29f4cd581b8be9070be9146a60706cb25af367
+Here we are starting the 1st round.. .
+{ pvPrice:
+   [ { step1: [],
+       step4: [],
+       step5: [],
+       deltaC: [],
+       deltaG: [],
+       factor: [],
+       lastPrice: [],
+       newPrice: [] },
+     { step1: [],
+       step4: [],
+       step5: [],
+       deltaC: [],
+       deltaG: [],
+       factor: [],
+       lastPrice: [],
+       newPrice: [] },
+     { step1: [],
+       step4: [],
+       step5: [],
+       deltaC: [],
+       deltaG: [],
+       factor: [],
+       lastPrice: [],
+       newPrice: [] } ] }
+    v Should do all prep work (8512ms)
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 0 should be executed  (36140ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 1 should be executed  (34887ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 2 should be executed  (33619ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 3 should be executed  (32272ms)
+JSON saved
+We are at step:  1
+JSON saved
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 4 should be executed  (31888ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 5 should be executed  (31152ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 6 should be executed  (31781ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 7 should be executed  (32966ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 8 should be executed  (37400ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 9 should be executed  (32314ms)
+JSON saved
+We are at step:  1
+JSON saved
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 10 should be executed  (29526ms)
+We are at step:  1
+JSON saved
+JSON saved
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 11 should be executed  (30709ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 12 should be executed  (29501ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 13 should be executed  (28431ms)
+JSON saved
+We are at step:  1
+JSON saved
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 14 should be executed  (28748ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 15 should be executed  (40141ms)
+We are at step:  1
+JSON saved
+JSON saved
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 16 should be executed  (29463ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 17 should be executed  (30076ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 18 should be executed  (32607ms)
+We are at step:  1
+JSON saved
+JSON saved
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 19 should be executed  (34008ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 20 should be executed  (35652ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 21 should be executed  (38404ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 22 should be executed  (34139ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 23 should be executed  (30196ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 24 should be executed  (30000ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 25 should be executed  (29576ms)
+We are at step:  1
+JSON saved
+JSON saved
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 26 should be executed  (28718ms)
+JSON saved
+We are at step:  1
+JSON saved
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 27 should be executed  (28469ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 28 should be executed  (28638ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 29 should be executed  (37153ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 30 should be executed  (32098ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 31 should be executed  (33435ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 32 should be executed  (34142ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 33 should be executed  (32631ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 34 should be executed  (28413ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 35 should be executed  (27498ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 36 should be executed  (27873ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 37 should be executed  (27440ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 38 should be executed  (30474ms)
+JSON saved
+We are at step:  1
+JSON saved
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 39 should be executed  (30142ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 40 should be executed  (29441ms)
+JSON saved
+We are at step:  1
+JSON saved
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 41 should be executed  (29332ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 42 should be executed  (31139ms)
+We are at step:  1
+JSON saved
+JSON saved
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 43 should be executed  (31744ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 44 should be executed  (31877ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 45 should be executed  (29362ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 46 should be executed  (29718ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 47 should be executed  (30624ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 48 should be executed  (31475ms)
+JSON saved
+We are at step:  1
+JSON saved
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 49 should be executed  (31085ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 50 should be executed  (32103ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 51 should be executed  (34033ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 52 should be executed  (33779ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 53 should be executed  (31787ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 54 should be executed  (32655ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 55 should be executed  (31013ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 56 should be executed  (33239ms)
+JSON saved
+We are at step:  1
+JSON saved
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 57 should be executed  (30944ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 58 should be executed  (30351ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 59 should be executed  (30744ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 60 should be executed  (31197ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 61 should be executed  (31015ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 62 should be executed  (33227ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 63 should be executed  (32381ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 64 should be executed  (31003ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 65 should be executed  (39010ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 66 should be executed  (40120ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 67 should be executed  (36976ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 68 should be executed  (34060ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 69 should be executed  (33557ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 70 should be executed  (31819ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 71 should be executed  (31816ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 72 should be executed  (33655ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 73 should be executed  (35536ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 74 should be executed  (32631ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 75 should be executed  (32638ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 76 should be executed  (32477ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 77 should be executed  (33186ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 78 should be executed  (32752ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 79 should be executed  (37219ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 80 should be executed  (34070ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 81 should be executed  (36396ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 82 should be executed  (38807ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 83 should be executed  (40598ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 84 should be executed  (37653ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 85 should be executed  (34121ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 86 should be executed  (37290ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 87 should be executed  (35922ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 88 should be executed  (34233ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 89 should be executed  (38898ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 90 should be executed  (33963ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 91 should be executed  (34071ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 92 should be executed  (34552ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 93 should be executed  (34205ms)
+JSON saved
+JSON saved
+JSON saved
+We are at step:  1
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 94 should be executed  (34398ms)
+JSON saved
+JSON saved
+We are at step:  1
+JSON saved
+Step 1 done.
+We are at step:  2
+Step 2 done.
+We are at step:  3
+Step 3 done.
+We are at step:  4
+Step 4 done.
+----------------print status-------------------
+We are at step:  5
+Step 5 done.
+----------------print status-------------------
+    v round 95 should be executed  (40761ms)
+
+
+  97 passing (53m)
+
+JSON saved
+JSON saved
+JSON saved
+
+C:\Users\qianc\Documents\Thesis\Code\SimpleMonitor>

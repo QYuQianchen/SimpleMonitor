@@ -1,25 +1,23 @@
 pragma solidity ^0.4.4;
 
-contract IBattery {
+import "./GeneralDevice.sol";
 
-  address Admin;                    // shall be defined at the creation of contract or to be defined manually
-  int     wallet;                   // To record loss & gain 
-  address grid = 0x0;                     // contract address of grid
+contract IBattery is GeneralDevice {
 
-  modifier adminOnly {
-    if (msg.sender == Admin) {
-      _;
-    } else {
-      revert();
-    }
-  }
+//  int     wallet;                   // To record loss & gain
+  
+  //uint    volTimeOut = 5 minutes;
+  uint    priceTimeOut = 5 minutes;
+  
+  uint    priceStatusAt;            // timestamp of the update (price)
+  uint    volStatusAt;              // timestamp of the update
+  uint    lastPriceQueryAt;
+  uint    lastRankingAt;
 
-  function getSalePrice() returns (uint prs, bool updatedOrNot);
-  function goExcess(uint vol) returns ( uint takeVol, uint prs);
-  function getSortedPVInfo() returns(uint consum, uint rank, uint tot, bool updated);
-  function goNoGo(uint giveoutvol) returns (uint);
-
-  function setGridAdr(address adr) adminOnly external{
-    grid = adr;
-  }
+  function getSalePrice() public view returns (uint prs, bool updatedOrNot);
+  function getSortedPrice() external returns(uint consum, uint rank, uint tot, bool updated);
+  function goNoGo(uint giveoutvol) public timed(4) returns (uint);
+  function goExcess(uint vol) public timed(5) returns ( uint takeVol, uint prs);
+  function getConsumption() view public returns (uint);
+  function getVolumeCapacity () external view returns (uint vol, uint volAt, uint cap);
 }
