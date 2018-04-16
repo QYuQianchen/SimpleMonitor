@@ -67,13 +67,14 @@ contract GeneralDevice {
   }
 
   modifier timed (uint shouldStatus) {
+    // only for testing
     if(shouldStatus == getTimerStatus()) {
       _;
     } else {
       ITimer(globalTimer).testSetStep(shouldStatus);
     }
     
-    // comment out in order for testing
+    // to be used
     // if(shouldStatus == getTimerStatus()) {
     //   _;
     // } else {
